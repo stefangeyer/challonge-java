@@ -19,7 +19,7 @@ public class ApiTest {
     public void setUp() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream(new File("src/test/java/com/exsoloscript/challonge/user.properties")));
+            properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
         } catch (IOException e) {
             e.printStackTrace();
         }

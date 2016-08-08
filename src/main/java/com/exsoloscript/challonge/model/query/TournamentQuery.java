@@ -4,7 +4,8 @@ import com.exsoloscript.challonge.model.Tournament;
 import com.google.gson.annotations.SerializedName;
 import org.joda.time.DateTime;
 
-public class TournamentQuery {
+public class
+TournamentQuery {
     private String name;
     @SerializedName("tournament_type")
     private Tournament.TournamentType tournamentType;

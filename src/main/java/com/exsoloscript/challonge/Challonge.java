@@ -26,25 +26,10 @@ class Challonge {
 
     Challonge(String username, String apiKey) {
         String baseUrl = "https://api.challonge.com/";
-
-        // add custom deserializers
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(TournamentQuery.GrandFinalsModifier.class, new GrandFinalsModifierAdapter())
-                .registerTypeAdapter(Tournament.RankedBy.class, new RankedByAdapter())
-                .registerTypeAdapter(TournamentQuery.TournamentQueryState.class, new TournamentQueryStateAdapter())
-                .registerTypeAdapter(Tournament.TournamentState.class, new TournamentStateAdapter())
-                .registerTypeAdapter(Tournament.TournamentType.class, new TournamentTypeAdapter())
-                .create();
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
         String credentials = username + ":" + apiKey;
         final String basic = "Basic " + Base64.encodeBase64String(credentials.getBytes());
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -60,6 +45,22 @@ class Challonge {
                 return chain.proceed(request);
             }
         });
+
+        // add custom adapters
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(TournamentQuery.GrandFinalsModifier.class, new GrandFinalsModifierAdapter())
+                .registerTypeAdapter(Tournament.RankedBy.class, new RankedByAdapter())
+                .registerTypeAdapter(TournamentQuery.TournamentQueryState.class, new TournamentQueryStateAdapter())
+                .registerTypeAdapter(Tournament.TournamentState.class, new TournamentStateAdapter())
+                .registerTypeAdapter(Tournament.TournamentType.class, new TournamentTypeAdapter())
+                .create();
+
+        OkHttpClient client = httpClient.build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
         this.sync = new SyncChallongeHandler(retrofit);
         this.async = new AsyncChallongeHandler(retrofit);

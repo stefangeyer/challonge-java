@@ -35,8 +35,10 @@ public class TournamentHandler {
         return null;
     }
 
-    public Call<Tournament> deleteTournament(String name) {
-        return null;
+    public Tournament deleteTournament(String name) throws IOException {
+        Call<Tournament> tournamentCall = this.retrofitHandler.deleteTournament(name);
+        Response<Tournament> callResponse = tournamentCall.execute();
+        return callResponse.body();
     }
 
     public Call<Tournament> processCheckIns(String name, boolean includeParticipants, boolean includeMatches) {

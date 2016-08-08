@@ -1,4 +1,4 @@
-package com.exsoloscript.challonge.handler;
+package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.ParticipantBase;
@@ -7,7 +7,7 @@ import retrofit2.http.*;
 
 import java.util.List;
 
-public interface ParticipantHandler {
+public interface RetrofitParticipantHandler {
 
     @GET("/tournaments/{tournament}/participants.json")
     Call<List<Participant>> getParticipants(@Path("tournament") String tournamentName);

@@ -1,4 +1,4 @@
-package com.exsoloscript.challonge.handler;
+package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.AttachmentBase;
@@ -7,7 +7,7 @@ import retrofit2.http.*;
 
 import java.util.List;
 
-public interface AttachmentHandler {
+public interface RetrofitAttachmentHandler {
 
     @GET("/tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
     Call<Attachment> getAttachment(@Path("tournament") String tournamentName,

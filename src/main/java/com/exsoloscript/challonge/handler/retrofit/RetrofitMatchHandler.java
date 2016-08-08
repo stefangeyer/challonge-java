@@ -1,4 +1,4 @@
-package com.exsoloscript.challonge.handler;
+package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.Match.MatchState;
@@ -8,7 +8,7 @@ import retrofit2.http.*;
 
 import java.util.List;
 
-public interface MatchHandler {
+public interface RetrofitMatchHandler {
 
     @GET("/tournaments/{tournament}/matches.json")
     Call<List<Match>> getMatches(@Path("tournament") String tournamentName,

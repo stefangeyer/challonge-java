@@ -2,13 +2,13 @@ package com.exsoloscript.challonge;
 
 import com.exsoloscript.challonge.handler.sync.TournamentHandler;
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.query.TournamentQuery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -20,13 +20,9 @@ public class ApiTest {
     private Challonge challonge;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
         this.challonge = ChallongeApi.getFor(properties.getProperty("username"), properties.getProperty("api-key"));
     }
 

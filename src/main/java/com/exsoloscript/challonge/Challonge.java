@@ -13,6 +13,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -30,6 +31,11 @@ class Challonge {
         final String basic = "Basic " + Base64.encodeBase64String(credentials.getBytes());
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        //TODO debug
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClient.addInterceptor(loggingInterceptor);
 
         httpClient.addInterceptor(new Interceptor() {
             @Override

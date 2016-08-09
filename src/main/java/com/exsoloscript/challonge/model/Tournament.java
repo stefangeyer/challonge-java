@@ -1,16 +1,16 @@
 package com.exsoloscript.challonge.model;
 
+import com.exsoloscript.challonge.model.enumerations.RankedBy;
+import com.exsoloscript.challonge.model.enumerations.TournamentState;
+import com.exsoloscript.challonge.model.enumerations.TournamentType;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class Tournament {
     private String name;
     @SerializedName("tournament_type")
-    //type
     private TournamentType tournamentType;
     private String url;
     private String subdomain;
@@ -32,7 +32,6 @@ public class Tournament {
     @SerializedName("swiss_rounds")
     private int swissRounds;
     @SerializedName("ranked_by")
-    //rankedby
     private RankedBy rankedBy;
     @SerializedName("rr_pts_for_game_win")
     private float rrPtsForGameWin;
@@ -99,7 +98,6 @@ public class Tournament {
     @SerializedName("started_at")
     private ZonedDateTime startedAt;
     private String startedCheckingInAt;
-    //state
     private TournamentState state;
     private boolean teams;
     @SerializedName("tie_breaks")
@@ -129,67 +127,255 @@ public class Tournament {
     @SerializedName("group_stages_were_started")
     private boolean groupStagesWereStarted;
 
-    public enum TournamentType {
-        SINGLE_ELIMINATION("single elimination"), DOUBLE_ELIMINATION("double elimination"), ROUND_ROBIN("round robin"), SWISS("swiss");
-
-        private String lowerCase;
-
-        TournamentType(String lowerCase) {
-            this.lowerCase = lowerCase;
-        }
-
-        public static TournamentType fromString(String name) {
-            Optional<TournamentType> optType = Arrays.stream(values()).filter(type -> type.toString().equals(name.toLowerCase())).findFirst();
-            return optType.isPresent() ? optType.get() : null;
-        }
-
-        @Override
-        public String toString() {
-            return this.lowerCase;
-        }
+    public String getName() {
+        return name;
     }
 
-    public enum TournamentState {
-        PENDING("pending"),
-        UNDERWAY("underway"),
-        GROUP_STAGES_UNDERWAY("group_stages_underway"),
-        GROUP_STAGES_FINALIZED("group_stages_finalized"),
-        AWAITING_REVIEW("awaiting_review"),
-        COMPLETE("complete");
-
-        private String lowerCase;
-
-        TournamentState(String lowerCase) {
-            this.lowerCase = lowerCase;
-        }
-
-        public static TournamentState fromString(String name) {
-            return valueOf(name.toUpperCase());
-        }
-
-        @Override
-        public String toString() {
-            return this.lowerCase;
-        }
+    public TournamentType getTournamentType() {
+        return tournamentType;
     }
 
-    public enum RankedBy {
-        MATCH_WINS("match wins"), GAME_WINS("game wins"), POINT_SCORED("point scored"), POINTS_DIFFERENCE("points difference"), CUSTOM("custom");
+    public String getUrl() {
+        return url;
+    }
 
-        private String lowerCase;
+    public String getSubdomain() {
+        return subdomain;
+    }
 
-        RankedBy(String lowerCase) {
-            this.lowerCase = lowerCase;
-        }
+    public String getDescription() {
+        return description;
+    }
 
-        public static RankedBy fromString(String name) {
-            Optional<RankedBy> optRankedBy = Arrays.stream(values()).filter(rankedBy -> rankedBy.toString().equals(name.toLowerCase())).findFirst();
-            return optRankedBy.isPresent() ? optRankedBy.get() : null;
-        }
+    public boolean isOpenSignup() {
+        return openSignup;
+    }
 
-        @Override
-        public String toString() {
-            return this.lowerCase;
-        }
+    public boolean isHoldThirdPlaceMatch() {
+        return holdThirdPlaceMatch;
+    }
+
+    public float getPtsForMatchWin() {
+        return ptsForMatchWin;
+    }
+
+    public float getPtsForMatchTie() {
+        return ptsForMatchTie;
+    }
+
+    public float getPtsForGameWin() {
+        return ptsForGameWin;
+    }
+
+    public float getPtsForGameTie() {
+        return ptsForGameTie;
+    }
+
+    public float getPtsForBye() {
+        return ptsForBye;
+    }
+
+    public int getSwissRounds() {
+        return swissRounds;
+    }
+
+    public RankedBy getRankedBy() {
+        return rankedBy;
+    }
+
+    public float getRrPtsForGameWin() {
+        return rrPtsForGameWin;
+    }
+
+    public float getRrPtsForGameTie() {
+        return rrPtsForGameTie;
+    }
+
+    public float getRrPtsForMatchWin() {
+        return rrPtsForMatchWin;
+    }
+
+    public float getRrPtsForMatchTie() {
+        return rrPtsForMatchTie;
+    }
+
+    public boolean isAcceptAttachments() {
+        return acceptAttachments;
+    }
+
+    public boolean isHideForum() {
+        return hideForum;
+    }
+
+    public boolean isShowRounds() {
+        return showRounds;
+    }
+
+    public boolean is_private() {
+        return _private;
+    }
+
+    public boolean isNotifyUsersWhenTheTournamentEnds() {
+        return notifyUsersWhenTheTournamentEnds;
+    }
+
+    public boolean isSequentialPairings() {
+        return sequentialPairings;
+    }
+
+    public int getSignupCap() {
+        return signupCap;
+    }
+
+    public String getStartAt() {
+        return startAt;
+    }
+
+    public int getCheckInDuration() {
+        return checkInDuration;
+    }
+
+    public boolean isAllowParticipantMatchReporting() {
+        return allowParticipantMatchReporting;
+    }
+
+    public boolean isAnonymousVoting() {
+        return anonymousVoting;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public ZonedDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public boolean isCreatedByApi() {
+        return createdByApi;
+    }
+
+    public boolean isCreditCapped() {
+        return creditCapped;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public boolean isGroupStagesEnabled() {
+        return groupStagesEnabled;
+    }
+
+    public boolean isHideSeeds() {
+        return hideSeeds;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getMaxPredictionsPerUser() {
+        return maxPredictionsPerUser;
+    }
+
+    public boolean isNotifyUsersWhenMatchesOpen() {
+        return notifyUsersWhenMatchesOpen;
+    }
+
+    public int getParticipantsCount() {
+        return participantsCount;
+    }
+
+    public int getPredictionMethod() {
+        return predictionMethod;
+    }
+
+    public String getPredictionsOpenedAt() {
+        return predictionsOpenedAt;
+    }
+
+    public int getProgressMeter() {
+        return progressMeter;
+    }
+
+    public boolean isQuickAdvance() {
+        return quickAdvance;
+    }
+
+    public boolean isRequireScoreAgreement() {
+        return requireScoreAgreement;
+    }
+
+    public ZonedDateTime getStartedAt() {
+        return startedAt;
+    }
+
+    public String getStartedCheckingInAt() {
+        return startedCheckingInAt;
+    }
+
+    public TournamentState getState() {
+        return state;
+    }
+
+    public boolean isTeams() {
+        return teams;
+    }
+
+    public List<String> getTieBreaks() {
+        return tieBreaks;
+    }
+
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getDescriptionSource() {
+        return descriptionSource;
+    }
+
+    public String getFullChallongeUrl() {
+        return fullChallongeUrl;
+    }
+
+    public String getLiveImageUrl() {
+        return liveImageUrl;
+    }
+
+    public String getSignUpUrl() {
+        return signUpUrl;
+    }
+
+    public boolean isReviewBeforeFinalizing() {
+        return reviewBeforeFinalizing;
+    }
+
+    public boolean isAcceptingPredictions() {
+        return acceptingPredictions;
+    }
+
+    public boolean isParticipantsLocked() {
+        return participantsLocked;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public boolean isParticipantsSwappable() {
+        return participantsSwappable;
+    }
+
+    public boolean isTeamConvertable() {
+        return teamConvertable;
+    }
+
+    public boolean isGroupStagesWereStarted() {
+        return groupStagesWereStarted;
     }
 }

@@ -1,11 +1,11 @@
 package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.Tournament.RankedBy;
-import com.exsoloscript.challonge.model.Tournament.TournamentState;
-import com.exsoloscript.challonge.model.Tournament.TournamentType;
-import com.exsoloscript.challonge.model.query.TournamentQuery.GrandFinalsModifier;
-import com.exsoloscript.challonge.model.query.TournamentQuery.TournamentQueryState;
+import com.exsoloscript.challonge.model.enumerations.RankedBy;
+import com.exsoloscript.challonge.model.enumerations.TournamentState;
+import com.exsoloscript.challonge.model.enumerations.TournamentType;
+import com.exsoloscript.challonge.model.enumerations.query.GrandFinalsModifier;
+import com.exsoloscript.challonge.model.enumerations.query.TournamentQueryState;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -57,6 +57,7 @@ public class AdapterSuite {
     }
 
     private Map<Class, GsonAdapter> createTypeAdapters() {
+        // use class values so constructor isnt called before excluding --> no stack overflow
         Map<Class, Class> classes = typeMappings();
         Map<Class, GsonAdapter> adapters = new HashMap<>();
 

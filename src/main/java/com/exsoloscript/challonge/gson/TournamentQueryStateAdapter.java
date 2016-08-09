@@ -1,6 +1,6 @@
 package com.exsoloscript.challonge.gson;
 
-import com.exsoloscript.challonge.model.query.TournamentQuery.TournamentQueryState;
+import com.exsoloscript.challonge.model.enumerations.query.TournamentQueryState;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

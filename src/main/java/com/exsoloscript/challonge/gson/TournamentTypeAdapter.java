@@ -1,6 +1,6 @@
 package com.exsoloscript.challonge.gson;
 
-import com.exsoloscript.challonge.model.Tournament.TournamentType;
+import com.exsoloscript.challonge.model.enumerations.TournamentType;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

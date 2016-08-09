@@ -1,6 +1,6 @@
 package com.exsoloscript.challonge.gson;
 
-import com.exsoloscript.challonge.model.Tournament.RankedBy;
+import com.exsoloscript.challonge.model.enumerations.RankedBy;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

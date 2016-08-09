@@ -1,7 +1,8 @@
-package com.exsoloscript.challonge.model.enumerations.query;
+package com.exsoloscript.challonge.model.enumeration.query;
 
+//TODO might be obsolete
 public enum TournamentQueryType {
-    SINGLE_ELIMINATION("single_elimination"), DOUBLE_ELIMINATION("double_elimination"), ROUND_ROBIN("round_robin"), SWISS("swiss");
+    SINGLE_ELIMINATION("single elimination"), DOUBLE_ELIMINATION("double elimination"), ROUND_ROBIN("round robin"), SWISS("swiss");
 
     private String lowerCase;
 

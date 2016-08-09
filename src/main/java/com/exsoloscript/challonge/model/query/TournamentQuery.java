@@ -1,16 +1,18 @@
 package com.exsoloscript.challonge.model.query;
 
-import com.exsoloscript.challonge.model.enumerations.RankedBy;
-import com.exsoloscript.challonge.model.enumerations.TournamentType;
-import com.exsoloscript.challonge.model.enumerations.query.GrandFinalsModifier;
+import com.exsoloscript.challonge.model.enumeration.RankedBy;
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
+import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryType;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.Validate;
 
 import java.util.Calendar;
 
 public class TournamentQuery {
     private String name;
     @SerializedName("tournament_type")
-    private TournamentType tournamentType;
+    private TournamentQueryType tournamentType;
     private String url;
     private String subdomain;
     private String description;
@@ -61,7 +63,7 @@ public class TournamentQuery {
     @SerializedName("grand_finals_modifier")
     private GrandFinalsModifier grandFinalsModifier;
 
-    private TournamentQuery(String name, TournamentType tournamentType, String url, String subdomain, String description, boolean openSignup, boolean holdThirdPlaceMatch, float ptsForMatchWin, float ptsForMatchTie, float ptsForGameWin, float ptsForGameTie, float ptsForBye, int swissRounds, RankedBy rankedBy, float rrPtsForGameWin, float rrPtsForGameTie, float rrPtsForMatchWin, float rrPtsForMatchTie, boolean acceptAttachments, boolean hideForum, boolean showRounds, boolean _private, boolean notifyUsersWhenTheTournamentEnds, boolean sequentialPairings, int signupCap, Calendar startAt, int checkInDuration, GrandFinalsModifier grandFinalsModifier) {
+    private TournamentQuery(String name, TournamentQueryType tournamentType, String url, String subdomain, String description, boolean openSignup, boolean holdThirdPlaceMatch, float ptsForMatchWin, float ptsForMatchTie, float ptsForGameWin, float ptsForGameTie, float ptsForBye, int swissRounds, RankedBy rankedBy, float rrPtsForGameWin, float rrPtsForGameTie, float rrPtsForMatchWin, float rrPtsForMatchTie, boolean acceptAttachments, boolean hideForum, boolean showRounds, boolean _private, boolean notifyUsersWhenTheTournamentEnds, boolean sequentialPairings, int signupCap, Calendar startAt, int checkInDuration, GrandFinalsModifier grandFinalsModifier) {
         this.name = name;
         this.tournamentType = tournamentType;
         this.url = url;
@@ -96,7 +98,7 @@ public class TournamentQuery {
         return name;
     }
 
-    public TournamentType getTournamentType() {
+    public TournamentQueryType getTournamentType() {
         return tournamentType;
     }
 
@@ -206,7 +208,7 @@ public class TournamentQuery {
 
     public static class Builder {
         private String name;
-        private TournamentType tournamentType;
+        private TournamentQueryType tournamentType;
         private String url;
         private String subdomain;
         private String description;
@@ -241,7 +243,7 @@ public class TournamentQuery {
             return this;
         }
 
-        public Builder setTournamentType(TournamentType tournamentType) {
+        public Builder setTournamentType(TournamentQueryType tournamentType) {
             this.tournamentType = tournamentType;
             return this;
         }
@@ -377,6 +379,9 @@ public class TournamentQuery {
         }
 
         public TournamentQuery build() {
+            Validate.notBlank(name, "Name can't be blank");
+            Validate.notBlank(url, "URL can't be blank");
+            Validate.isTrue(signupCap > 3, "Participant / Signup Cap must be greater than 3");
             return new TournamentQuery(name, tournamentType, url, subdomain, description, openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie, ptsForBye, swissRounds, rankedBy, rrPtsForGameWin, rrPtsForGameTie, rrPtsForMatchWin, rrPtsForMatchTie, acceptAttachments, hideForum, showRounds, aPrivate, notifyUsersWhenTheTournamentEnds, sequentialPairings, signupCap, startAt, checkInDuration, grandFinalsModifier);
         }
     }

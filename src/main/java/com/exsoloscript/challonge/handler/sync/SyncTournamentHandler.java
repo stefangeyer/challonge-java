@@ -2,11 +2,9 @@ package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.enumerations.TournamentState;
-import com.exsoloscript.challonge.model.enumerations.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.TournamentState;
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;

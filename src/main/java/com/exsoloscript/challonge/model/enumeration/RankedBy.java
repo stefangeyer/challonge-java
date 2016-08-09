@@ -1,4 +1,4 @@
-package com.exsoloscript.challonge.model.enumerations;
+package com.exsoloscript.challonge.model.enumeration;
 
 import java.util.Arrays;
 import java.util.Optional;

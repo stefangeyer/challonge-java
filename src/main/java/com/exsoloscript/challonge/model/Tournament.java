@@ -1,8 +1,8 @@
 package com.exsoloscript.challonge.model;
 
-import com.exsoloscript.challonge.model.enumerations.RankedBy;
-import com.exsoloscript.challonge.model.enumerations.TournamentState;
-import com.exsoloscript.challonge.model.enumerations.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.RankedBy;
+import com.exsoloscript.challonge.model.enumeration.TournamentState;
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;

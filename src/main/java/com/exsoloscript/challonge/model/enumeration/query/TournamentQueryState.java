@@ -1,4 +1,4 @@
-package com.exsoloscript.challonge.model.enumerations.query;
+package com.exsoloscript.challonge.model.enumeration.query;
 
 public enum TournamentQueryState {
     ALL("all"), PENDING("pending"), IN_PROGRESS("in_progress"), ENDED("ended");

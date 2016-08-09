@@ -1,11 +1,12 @@
 package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.enumerations.RankedBy;
-import com.exsoloscript.challonge.model.enumerations.TournamentState;
-import com.exsoloscript.challonge.model.enumerations.TournamentType;
-import com.exsoloscript.challonge.model.enumerations.query.GrandFinalsModifier;
-import com.exsoloscript.challonge.model.enumerations.query.TournamentQueryState;
+import com.exsoloscript.challonge.model.enumeration.RankedBy;
+import com.exsoloscript.challonge.model.enumeration.TournamentState;
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
+import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
+import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -47,9 +48,10 @@ public class AdapterSuite {
         // enum
         classes.put(GrandFinalsModifier.class, GrandFinalsModifierAdapter.class);
         classes.put(RankedBy.class, RankedByAdapter.class);
-        classes.put(TournamentQueryState.class, TournamentQueryStateAdapter.class);
         classes.put(TournamentState.class, TournamentStateAdapter.class);
         classes.put(TournamentType.class, TournamentTypeAdapter.class);
+        classes.put(TournamentQueryState.class, TournamentQueryStateAdapter.class);
+        classes.put(TournamentQueryType.class, TournamentQueryTypeAdapter.class);
         // other
         classes.put(ZonedDateTime.class, ZonedDateTimeAdapter.class);
 

@@ -19,13 +19,13 @@ public interface RetrofitAttachmentHandler {
                                           @Query("match_id") int matchId);
 
     @POST("tournaments/{tournament}/matches/{match_id}/attachments.json")
-    // use multipart to fix?
+        // use multipart to fix?
     Call<Attachment> createAttachment(@Path("tournament") String tournamentName,
                                       @Query("match_id") int matchId,
                                       @Body AttachmentBase attachment);
 
     @PUT("/tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
-    // use multipart to fix?
+        // use multipart to fix?
     Call<Attachment> updateAttachment(@Path("tournament") String tournamentName,
                                       @Query("match_id") int matchId,
                                       @Query("attachment_id") int attachmentId,

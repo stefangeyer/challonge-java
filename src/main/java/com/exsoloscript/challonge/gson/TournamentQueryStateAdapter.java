@@ -5,7 +5,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class TournamentQueryStateAdapter implements JsonSerializer<TournamentQueryState>, JsonDeserializer<TournamentQueryState> {
+public class TournamentQueryStateAdapter implements GsonAdapter, JsonSerializer<TournamentQueryState>, JsonDeserializer<TournamentQueryState> {
     @Override
     public TournamentQueryState deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return TournamentQueryState.fromString(jsonElement.getAsString());

@@ -2,8 +2,8 @@ package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.Tournament.TournamentState;
-import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.exsoloscript.challonge.model.Tournament.TournamentType;
+import com.exsoloscript.challonge.model.query.TournamentQuery;
 import retrofit2.Call;
 import retrofit2.http.*;
 

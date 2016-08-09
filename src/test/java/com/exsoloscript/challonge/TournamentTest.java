@@ -1,21 +1,25 @@
 package com.exsoloscript.challonge;
 
+import com.exsoloscript.challonge.gson.AdapterSuite;
 import com.exsoloscript.challonge.handler.sync.TournamentHandler;
 import com.exsoloscript.challonge.model.Tournament;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
-public class ApiTest {
+public class TournamentTest {
 
     private Challonge challonge;
 
@@ -27,10 +31,10 @@ public class ApiTest {
     }
 
     @Test
-    public void getTournamentsTest() throws IOException {
+    public void getTournamentTest() throws IOException {
         TournamentHandler handler = new TournamentHandler(this.challonge.sync().tournaments());
-        List<Tournament> tournaments = handler.getTournaments(Tournament.TournamentState.ALL, Tournament.TournamentType.DOUBLE_ELIMINATION, null, null, null);
-        assertTrue(tournaments != null);
+        Tournament tournament = handler.getTournament("mk4ahit", false, false);
+        assertTrue(tournament != null);
     }
 
     @After

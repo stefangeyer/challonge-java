@@ -5,7 +5,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class GrandFinalsModifierAdapter implements JsonSerializer<GrandFinalsModifier>, JsonDeserializer<GrandFinalsModifier> {
+public class GrandFinalsModifierAdapter implements GsonAdapter, JsonSerializer<GrandFinalsModifier>, JsonDeserializer<GrandFinalsModifier> {
 
     @Override
     public GrandFinalsModifier deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

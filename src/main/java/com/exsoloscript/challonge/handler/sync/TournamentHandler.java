@@ -18,13 +18,11 @@ public class TournamentHandler {
     }
 
     public List<Tournament> getTournaments(Tournament.TournamentState state, Tournament.TournamentType type, String createdAfter, String createdBefore, String subdomain) throws IOException {
-        Call<List<Tournament>> tournamentCall = this.retrofitHandler.getTournaments(state, type, createdAfter, createdBefore, subdomain);
-        Response<List<Tournament>> callResponse = tournamentCall.execute();
-        return callResponse.body();
+        return this.retrofitHandler.getTournaments(state, type, createdAfter, createdBefore, subdomain).execute().body();
     }
 
-    public Call<Tournament> getTournament(String name, boolean includeParticipants, boolean includeMatches) {
-        return null;
+    public Tournament getTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
+        return this.retrofitHandler.getTournament(name, includeParticipants, includeMatches).execute().body();
     }
 
     public Call<Tournament> createTournament(TournamentQuery tournament) {

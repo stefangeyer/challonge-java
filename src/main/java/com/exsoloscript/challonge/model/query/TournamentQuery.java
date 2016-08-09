@@ -2,7 +2,8 @@ package com.exsoloscript.challonge.model.query;
 
 import com.exsoloscript.challonge.model.Tournament;
 import com.google.gson.annotations.SerializedName;
-import org.joda.time.DateTime;
+
+import java.util.Calendar;
 
 public class
 TournamentQuery {
@@ -53,11 +54,30 @@ TournamentQuery {
     @SerializedName("signup_cap")
     private int signupCap;
     @SerializedName("start_at")
-    private DateTime startAt;
+    private Calendar startAt;
     @SerializedName("check_in_duration")
     private int checkInDuration;
     @SerializedName("grand_finals_modifier")
     private GrandFinalsModifier grandFinalsModifier;
+
+    public enum TournamentQueryType {
+        SINGLE_ELIMINATION("single_elimination"), DOUBLE_ELIMINATION("double_elimination"), ROUND_ROBIN("round_robin"), SWISS("swiss");
+
+        private String lowerCase;
+
+        TournamentQueryType(String lowerCase) {
+            this.lowerCase = lowerCase;
+        }
+
+        public static TournamentQueryType fromString(String name) {
+            return valueOf(name.toUpperCase());
+        }
+
+        @Override
+        public String toString() {
+            return this.lowerCase;
+        }
+    }
 
     public enum TournamentQueryState {
         ALL("all"), PENDING("pending"), IN_PROGRESS("in_progress"), ENDED("ended");
@@ -68,13 +88,13 @@ TournamentQuery {
             this.lowerCase = lowerCase;
         }
 
+        public static TournamentQueryState fromString(String name) {
+            return valueOf(name.toUpperCase());
+        }
+
         @Override
         public String toString() {
             return this.lowerCase;
-        }
-
-        public static TournamentQueryState fromString(String name) {
-            return valueOf(name.toUpperCase());
         }
     }
 
@@ -87,13 +107,13 @@ TournamentQuery {
             this.lowerCase = lowerCase;
         }
 
+        public static GrandFinalsModifier fromString(String name) {
+            return valueOf(name.toUpperCase());
+        }
+
         @Override
         public String toString() {
             return this.lowerCase;
-        }
-
-        public static GrandFinalsModifier fromString(String name) {
-            return valueOf(name.toUpperCase());
         }
     }
 }

@@ -1,24 +1,21 @@
 package com.exsoloscript.challonge;
 
-import com.exsoloscript.challonge.gson.*;
+import com.exsoloscript.challonge.gson.AdapterSuite;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitMatchHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
-import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.apache.commons.codec.binary.Base64;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
-import org.apache.commons.codec.binary.Base64;
 
 class Challonge {
 
@@ -32,34 +29,20 @@ class Challonge {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-        //TODO debug
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        httpClient.addInterceptor(loggingInterceptor);
+        httpClient.addInterceptor(chain -> {
+            Request original = chain.request();
 
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
+            Request.Builder requestBuilder = original.newBuilder()
+                    .header("Authorization", basic)
+                    .header("Accept", "application/json")
+                    .method(original.method(), original.body());
 
-                Request.Builder requestBuilder = original.newBuilder()
-                        .header("Authorization", basic)
-                        .header("Accept", "application/json")
-                        .method(original.method(), original.body());
-
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
         });
 
         // add custom adapters
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(TournamentQuery.GrandFinalsModifier.class, new GrandFinalsModifierAdapter())
-                .registerTypeAdapter(Tournament.RankedBy.class, new RankedByAdapter())
-                .registerTypeAdapter(TournamentQuery.TournamentQueryState.class, new TournamentQueryStateAdapter())
-                .registerTypeAdapter(Tournament.TournamentState.class, new TournamentStateAdapter())
-                .registerTypeAdapter(Tournament.TournamentType.class, new TournamentTypeAdapter())
-                .create();
+        Gson gson = AdapterSuite.createGson();
 
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = new Retrofit.Builder()

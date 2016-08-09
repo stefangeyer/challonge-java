@@ -1,13 +1,16 @@
 package com.exsoloscript.challonge.model;
 
 import com.google.gson.annotations.SerializedName;
-import org.joda.time.DateTime;
 
+import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Tournament {
     private String name;
     @SerializedName("tournament_type")
+    //type
     private TournamentType tournamentType;
     private String url;
     private String subdomain;
@@ -29,6 +32,7 @@ public class Tournament {
     @SerializedName("swiss_rounds")
     private int swissRounds;
     @SerializedName("ranked_by")
+    //rankedby
     private RankedBy rankedBy;
     @SerializedName("rr_pts_for_game_win")
     private float rrPtsForGameWin;
@@ -53,7 +57,7 @@ public class Tournament {
     @SerializedName("signup_cap")
     private int signupCap;
     @SerializedName("start_at")
-    private DateTime startAt;
+    private String startAt;
     @SerializedName("check_in_duration")
     private int checkInDuration;
     @SerializedName("allow_participant_match_reporting")
@@ -62,9 +66,9 @@ public class Tournament {
     private boolean anonymousVoting;
     private String category;
     @SerializedName("completed_at")
-    private DateTime completedAt;
+    private ZonedDateTime completedAt;
     @SerializedName("created_at")
-    private DateTime createdAt;
+    private ZonedDateTime createdAt;
     @SerializedName("created_by_api")
     private boolean createdByApi;
     @SerializedName("credit_capped")
@@ -85,7 +89,7 @@ public class Tournament {
     @SerializedName("prediction_method")
     private int predictionMethod;
     @SerializedName("predictions_opened_at")
-    private DateTime predictionsOpenedAt;
+    private String predictionsOpenedAt;
     @SerializedName("progress_meter")
     private int progressMeter;
     @SerializedName("quick_advance")
@@ -93,15 +97,15 @@ public class Tournament {
     @SerializedName("require_score_agreement")
     private boolean requireScoreAgreement;
     @SerializedName("started_at")
-    private DateTime startedAt;
-    @SerializedName("started_checking_in_at")
-    private DateTime startedCheckingInAt;
+    private ZonedDateTime startedAt;
+    private String startedCheckingInAt;
+    //state
     private TournamentState state;
     private boolean teams;
     @SerializedName("tie_breaks")
     private List<String> tieBreaks;
     @SerializedName("updated_at")
-    private DateTime updatedAt;
+    private ZonedDateTime updatedAt;
     @SerializedName("description_source")
     private String descriptionSource;
     @SerializedName("full_challonge_url")
@@ -126,7 +130,7 @@ public class Tournament {
     private boolean groupStagesWereStarted;
 
     public enum TournamentType {
-        SINGLE_ELIMINATION("single_elimination"), DOUBLE_ELIMINATION("double_elimination"), ROUND_ROBIN("round_robin"), SWISS("swiss");
+        SINGLE_ELIMINATION("single elimination"), DOUBLE_ELIMINATION("double elimination"), ROUND_ROBIN("round robin"), SWISS("swiss");
 
         private String lowerCase;
 
@@ -135,7 +139,8 @@ public class Tournament {
         }
 
         public static TournamentType fromString(String name) {
-            return valueOf(name.toUpperCase());
+            Optional<TournamentType> optType = Arrays.stream(values()).filter(type -> type.toString().equals(name.toLowerCase())).findFirst();
+            return optType.isPresent() ? optType.get() : null;
         }
 
         @Override
@@ -145,7 +150,12 @@ public class Tournament {
     }
 
     public enum TournamentState {
-        ALL("all"), PENDING("pending"), IN_PROGRESS("in_progress"), ENDED("ended");
+        PENDING("pending"),
+        UNDERWAY("underway"),
+        GROUP_STAGES_UNDERWAY("group_stages_underway"),
+        GROUP_STAGES_FINALIZED("group_stages_finalized"),
+        AWAITING_REVIEW("awaiting_review"),
+        COMPLETE("complete");
 
         private String lowerCase;
 
@@ -173,7 +183,8 @@ public class Tournament {
         }
 
         public static RankedBy fromString(String name) {
-            return valueOf(name.toUpperCase());
+            Optional<RankedBy> optRankedBy = Arrays.stream(values()).filter(rankedBy -> rankedBy.toString().equals(name.toLowerCase())).findFirst();
+            return optRankedBy.isPresent() ? optRankedBy.get() : null;
         }
 
         @Override

@@ -5,7 +5,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class RankedByAdapter implements JsonSerializer<RankedBy>, JsonDeserializer<RankedBy> {
+public class RankedByAdapter implements GsonAdapter, JsonSerializer<RankedBy>, JsonDeserializer<RankedBy> {
 
     @Override
     public RankedBy deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

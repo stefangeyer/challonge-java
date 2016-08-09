@@ -5,7 +5,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class TournamentStateAdapter implements JsonSerializer<TournamentState>, JsonDeserializer<TournamentState> {
+public class TournamentStateAdapter implements GsonAdapter, JsonSerializer<TournamentState>, JsonDeserializer<TournamentState> {
 
     @Override
     public JsonElement serialize(TournamentState tournamentState, Type type, JsonSerializationContext jsonSerializationContext) {

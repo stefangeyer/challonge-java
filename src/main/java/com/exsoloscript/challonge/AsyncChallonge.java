@@ -4,6 +4,7 @@ import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitMatchHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
+import com.google.inject.Inject;
 import retrofit2.Retrofit;
 
 class AsyncChallonge {
@@ -12,6 +13,7 @@ class AsyncChallonge {
     private RetrofitMatchHandler matches;
     private RetrofitAttachmentHandler attachments;
 
+    @Inject
     public AsyncChallonge(Retrofit retrofit) {
         this.tournaments = retrofit.create(RetrofitTournamentHandler.class);
         this.participants = retrofit.create(RetrofitParticipantHandler.class);

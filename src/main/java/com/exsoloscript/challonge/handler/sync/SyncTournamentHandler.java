@@ -9,7 +9,7 @@ import com.exsoloscript.challonge.model.query.TournamentQuery;
 import java.io.IOException;
 import java.util.List;
 
-public class SyncTournamentHandler {
+public class SyncTournamentHandler extends SyncHandler {
 
     private RetrofitTournamentHandler retrofitHandler;
 
@@ -18,42 +18,42 @@ public class SyncTournamentHandler {
     }
 
     public List<Tournament> getTournaments(TournamentState state, TournamentType type, String createdAfter, String createdBefore, String subdomain) throws IOException {
-        return this.retrofitHandler.getTournaments(state, type, createdAfter, createdBefore, subdomain).execute().body();
+        return this.handleResponse(this.retrofitHandler.getTournaments(state, type, createdAfter, createdBefore, subdomain)).body();
     }
 
     public Tournament getTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
-        return this.retrofitHandler.getTournament(name, includeParticipants, includeMatches).execute().body();
+        return this.handleResponse(this.retrofitHandler.getTournament(name, includeParticipants, includeMatches)).body();
     }
 
     public Tournament createTournament(TournamentQuery tournament) throws IOException {
-        return this.retrofitHandler.createTournament(tournament).execute().body();
+        return this.handleResponse(this.retrofitHandler.createTournament(tournament)).body();
     }
 
     public Tournament updateTournament(String name, TournamentQuery tournament) throws IOException {
-        return this.retrofitHandler.updateTournament(name, tournament).execute().body();
+        return this.handleResponse(this.retrofitHandler.updateTournament(name, tournament)).body();
     }
 
     public Tournament deleteTournament(String name) throws IOException {
-        return this.retrofitHandler.deleteTournament(name).execute().body();
+        return this.handleResponse(this.retrofitHandler.deleteTournament(name)).body();
     }
 
     public Tournament processCheckIns(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
-        return this.retrofitHandler.processCheckIns(name, includeParticipants, includeMatches).execute().body();
+        return this.handleResponse(this.retrofitHandler.processCheckIns(name, includeParticipants, includeMatches)).body();
     }
 
     public Tournament abortCheckIn(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
-        return this.retrofitHandler.abortCheckIn(name, includeParticipants, includeMatches).execute().body();
+        return this.handleResponse(this.retrofitHandler.abortCheckIn(name, includeParticipants, includeMatches)).body();
     }
 
     public Tournament startTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
-        return this.retrofitHandler.startTournament(name, includeParticipants, includeMatches).execute().body();
+        return this.handleResponse(this.retrofitHandler.startTournament(name, includeParticipants, includeMatches)).body();
     }
 
     public Tournament finalizeTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
-        return this.retrofitHandler.finalizeTournament(name, includeParticipants, includeMatches).execute().body();
+        return this.handleResponse(this.retrofitHandler.finalizeTournament(name, includeParticipants, includeMatches)).body();
     }
 
     public Tournament resetTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException {
-        return this.retrofitHandler.resetTournament(name, includeParticipants, includeMatches).execute().body();
+        return this.handleResponse(this.retrofitHandler.resetTournament(name, includeParticipants, includeMatches)).body();
     }
 }

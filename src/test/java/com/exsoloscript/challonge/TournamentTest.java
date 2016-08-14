@@ -1,5 +1,7 @@
 package com.exsoloscript.challonge;
 
+import com.exsoloscript.challonge.handler.error.ErrorHandler;
+import com.exsoloscript.challonge.handler.error.PrintErrorHandlingStrategy;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryType;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
@@ -26,6 +28,7 @@ public class TournamentTest {
         Properties properties = new Properties();
         properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
         this.challongeApi = Challonge.getFor(properties.getProperty("username"), properties.getProperty("api-key"));
+        ErrorHandler.setStrategy(new PrintErrorHandlingStrategy());
     }
 
     @Test

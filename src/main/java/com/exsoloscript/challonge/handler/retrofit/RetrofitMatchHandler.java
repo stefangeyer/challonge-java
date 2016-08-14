@@ -1,8 +1,8 @@
 package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Match;
-import com.exsoloscript.challonge.model.Match.MatchState;
-import com.exsoloscript.challonge.model.MatchBase;
+import com.exsoloscript.challonge.model.enumeration.MatchState;
+import com.exsoloscript.challonge.model.query.MatchQuery;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -23,5 +23,5 @@ public interface RetrofitMatchHandler {
     @PUT("/tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> updateMatch(@Path("tournament") String tournamentName,
                             @Query("match_id") int matchId,
-                            @Body MatchBase match);
+                            @Body MatchQuery match);
 }

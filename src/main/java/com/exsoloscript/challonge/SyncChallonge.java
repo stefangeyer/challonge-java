@@ -8,14 +8,17 @@ import com.exsoloscript.challonge.handler.sync.SyncAttachmentHandler;
 import com.exsoloscript.challonge.handler.sync.SyncMatchHandler;
 import com.exsoloscript.challonge.handler.sync.SyncParticipantHandler;
 import com.exsoloscript.challonge.handler.sync.SyncTournamentHandler;
+import com.google.inject.Inject;
 import retrofit2.Retrofit;
 
 class SyncChallonge {
+
     private SyncTournamentHandler tournaments;
     private SyncParticipantHandler participants;
     private SyncMatchHandler matches;
     private SyncAttachmentHandler attachments;
 
+    @Inject
     public SyncChallonge(Retrofit retrofit) {
         this.tournaments = new SyncTournamentHandler(retrofit.create(RetrofitTournamentHandler.class));
         this.participants = new SyncParticipantHandler(retrofit.create(RetrofitParticipantHandler.class));

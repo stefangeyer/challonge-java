@@ -3,7 +3,7 @@ package com.exsoloscript.challonge.handler.sync;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
 import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
 import com.exsoloscript.challonge.model.Participant;
-import com.exsoloscript.challonge.model.ParticipantBase;
+import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -29,15 +29,15 @@ public class SyncParticipantHandler extends SyncHandler {
         return this.handleResponse(this.participantHandler.getParticipant(tournamentName, participantId, includeMatches)).body();
     }
 
-    public Participant addParticipant(String tournamentName, ParticipantBase participant) throws IOException, ChallongeException {
+    public Participant addParticipant(String tournamentName, ParticipantQuery participant) throws IOException, ChallongeException {
         return this.handleResponse(this.participantHandler.addParticipant(tournamentName, participant)).body();
     }
 
-    public Participant bulkAddParticipants(String tournamentName, List<ParticipantBase> participants) throws IOException, ChallongeException {
+    public Participant bulkAddParticipants(String tournamentName, List<ParticipantQuery> participants) throws IOException, ChallongeException {
         return this.handleResponse(this.participantHandler.bulkAddParticipants(tournamentName, participants)).body();
     }
 
-    public Participant updateParticipant(String tournamentName, int participantId, ParticipantBase participant) throws IOException, ChallongeException {
+    public Participant updateParticipant(String tournamentName, int participantId, ParticipantQuery participant) throws IOException, ChallongeException {
         return this.handleResponse(this.participantHandler.updateParticipant(tournamentName, participantId, participant)).body();
     }
 

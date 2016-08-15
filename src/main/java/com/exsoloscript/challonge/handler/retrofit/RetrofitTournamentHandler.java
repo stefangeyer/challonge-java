@@ -20,7 +20,7 @@ public interface RetrofitTournamentHandler {
     );
 
     @GET("v1/tournaments/{tournament}.json")
-    Call<Tournament> getTournament(@Path("tournament") String name,
+    Call<Tournament> getTournament(@Path("tournament") String url,
                                    @Query("include_participants") boolean includeParticipants,
                                    @Query("include_matches") boolean includeMatches);
 
@@ -28,34 +28,34 @@ public interface RetrofitTournamentHandler {
     Call<Tournament> createTournament(@Body TournamentQuery tournament);
 
     @PUT("v1/tournaments/{tournament}.json")
-    Call<Tournament> updateTournament(@Path("tournament") String name,
+    Call<Tournament> updateTournament(@Path("tournament") String url,
                                       @Body TournamentQuery tournament);
 
     @DELETE("v1/tournaments/{tournament}.json")
-    Call<Tournament> deleteTournament(@Path("tournament") String name);
+    Call<Tournament> deleteTournament(@Path("tournament") String url);
 
     @POST("v1/tournaments/{tournament}/process_check_ins.json")
-    Call<Tournament> processCheckIns(@Path("tournament") String name,
+    Call<Tournament> processCheckIns(@Path("tournament") String url,
                                      @Query("include_participants") boolean includeParticipants,
                                      @Query("include_matches") boolean includeMatches);
 
     @POST("v1/tournaments/{tournament}/abort_check_in.json")
-    Call<Tournament> abortCheckIn(@Path("tournament") String name,
+    Call<Tournament> abortCheckIn(@Path("tournament") String url,
                                   @Query("include_participants") boolean includeParticipants,
                                   @Query("include_matches") boolean includeMatches);
 
     @POST("v1/tournaments/{tournament}/start.json")
-    Call<Tournament> startTournament(@Path("tournament") String name,
+    Call<Tournament> startTournament(@Path("tournament") String url,
                                      @Query("include_participants") boolean includeParticipants,
                                      @Query("include_matches") boolean includeMatches);
 
     @POST("v1/tournaments/{tournament}/finalize.json")
-    Call<Tournament> finalizeTournament(@Path("tournament") String name,
+    Call<Tournament> finalizeTournament(@Path("tournament") String url,
                                         @Query("include_participants") boolean includeParticipants,
                                         @Query("include_matches") boolean includeMatches);
 
     @POST("v1/tournaments/{tournament}/reset.json")
-    Call<Tournament> resetTournament(@Path("tournament") String name,
+    Call<Tournament> resetTournament(@Path("tournament") String url,
                                      @Query("include_participants") boolean includeParticipants,
                                      @Query("include_matches") boolean includeMatches);
 }

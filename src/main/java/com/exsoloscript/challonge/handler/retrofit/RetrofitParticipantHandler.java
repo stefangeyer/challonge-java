@@ -1,7 +1,7 @@
 package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Participant;
-import com.exsoloscript.challonge.model.ParticipantBase;
+import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -19,16 +19,16 @@ public interface RetrofitParticipantHandler {
 
     @POST("/tournaments/{tournament}/participants.json")
     Call<Participant> addParticipant(@Path("tournament") String tournamentName,
-                                     @Body ParticipantBase participant);
+                                     @Body ParticipantQuery participant);
 
     @POST("/tournaments/{tournament}/participants/bulk_add.json")
     Call<Participant> bulkAddParticipants(@Path("tournament") String tournamentName,
-                                          @Body List<ParticipantBase> participants);
+                                          @Body List<ParticipantQuery> participants);
 
     @PUT("/tournaments/{tournament}/participants/{participant_id}.json")
     Call<Participant> updateParticipant(@Path("tournament") String tournamentName,
                                         @Path("participant_id") int participantId,
-                                        @Body ParticipantBase participant);
+                                        @Body ParticipantQuery participant);
 
     @POST("/tournaments/{tournament}/participants/{participant_id}/check_in.json")
     Call<Participant> checkInParticipant(@Path("tournament") String tournamentName,

@@ -6,7 +6,6 @@ import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
-import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -51,7 +50,6 @@ public class AdapterSuite {
         classes.put(TournamentState.class, TournamentStateAdapter.class);
         classes.put(TournamentType.class, TournamentTypeAdapter.class);
         classes.put(TournamentQueryState.class, TournamentQueryStateAdapter.class);
-        classes.put(TournamentQueryType.class, TournamentQueryTypeAdapter.class);
         // other
         classes.put(ZonedDateTime.class, ZonedDateTimeAdapter.class);
 

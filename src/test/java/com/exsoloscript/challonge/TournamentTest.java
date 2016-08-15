@@ -13,6 +13,7 @@ import org.junit.runners.MethodSorters;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 import static junit.framework.TestCase.assertEquals;
@@ -25,18 +26,18 @@ public class TournamentTest {
     @Before
     public void setUp() throws IOException {
         Properties properties = new Properties();
-        Properties systemProperties = System.getProperties();
-        System.out.println(systemProperties);
+        Map<String, String> env = System.getenv();
 
         String usernameKey = "challonge-username";
         String apiKeyKey = "challonge-api-key";
 
-        if (systemProperties.getProperty(usernameKey) != null && systemProperties.getProperty(apiKeyKey) != null) {
-            this.challongeApi = Challonge.getFor(systemProperties.getProperty(usernameKey), systemProperties.getProperty(apiKeyKey));
+        if (env.get(usernameKey) != null && env.get(apiKeyKey) != null) {
+            properties.putAll(env);
         } else {
             properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
-            this.challongeApi = Challonge.getFor(properties.getProperty(usernameKey), properties.getProperty(apiKeyKey));
         }
+
+        this.challongeApi = Challonge.getFor(properties.getProperty(usernameKey), properties.getProperty(apiKeyKey));
     }
 
     @Test

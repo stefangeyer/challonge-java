@@ -12,6 +12,7 @@ import org.junit.runners.MethodSorters;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -25,19 +26,16 @@ public class TournamentTest {
 
     @Before
     public void setUp() throws IOException {
-        Properties properties = new Properties();
         Map<String, String> env = System.getenv();
 
-        String usernameKey = "challonge-username";
-        String apiKeyKey = "challonge-api-key";
+        String usernameKey = "CHALLONGE_USERNAME";
+        String apiKeyKey = "CHALLONGE_API_KEY";
 
-        if (env.get(usernameKey) != null && env.get(apiKeyKey) != null) {
-            properties.putAll(env);
-        } else {
-            properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
+        if (env.get(usernameKey) == null || env.get(apiKeyKey) == null) {
+            throw new IllegalArgumentException("Provide Environment variables for CHALLONGE_USERNAME and CHALLONGE_API_KEY");
         }
 
-        this.challongeApi = Challonge.getFor(properties.getProperty(usernameKey), properties.getProperty(apiKeyKey));
+        this.challongeApi = Challonge.getFor(env.get(usernameKey), env.get(apiKeyKey));
     }
 
     @Test

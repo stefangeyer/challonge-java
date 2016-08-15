@@ -26,6 +26,7 @@ public class TournamentTest {
     public void setUp() throws IOException {
         Properties properties = new Properties();
         Properties systemProperties = System.getProperties();
+        System.out.println(systemProperties);
 
         String usernameKey = "challonge-username";
         String apiKeyKey = "challonge-api-key";

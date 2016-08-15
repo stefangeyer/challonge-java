@@ -28,7 +28,6 @@ public class TournamentTest {
         Properties properties = new Properties();
         properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
         this.challongeApi = Challonge.getFor(properties.getProperty("username"), properties.getProperty("api-key"));
-        ErrorHandler.setStrategy(new PrintErrorHandlingStrategy());
     }
 
     @Test

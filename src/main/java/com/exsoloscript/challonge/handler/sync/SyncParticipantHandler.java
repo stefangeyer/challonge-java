@@ -1,18 +1,24 @@
 package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
+import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
+import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.ParticipantBase;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.io.IOException;
 import java.util.List;
 
+@Singleton
 public class SyncParticipantHandler extends SyncHandler {
 
     private RetrofitParticipantHandler participantHandler;
 
-    public SyncParticipantHandler(RetrofitParticipantHandler participantHandler) {
-        this.participantHandler = participantHandler;
+    @Inject
+    SyncParticipantHandler(ServiceProvider provider) {
+        this.participantHandler = provider.createService(RetrofitParticipantHandler.class);
     }
 
     public List<Participant> getParticipants(String tournamentName) throws IOException {

@@ -1,7 +1,6 @@
 package com.exsoloscript.challonge.util;
 
-import com.exsoloscript.challonge.ChallongeApi;
-import com.exsoloscript.challonge.model.error.ApiError;
+import com.exsoloscript.challonge.model.exception.ApiError;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import okhttp3.ResponseBody;

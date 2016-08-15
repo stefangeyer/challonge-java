@@ -1,7 +1,6 @@
 package com.exsoloscript.challonge.model.query;
 
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
-import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryType;
 import com.google.gson.annotations.SerializedName;
@@ -236,7 +235,8 @@ public class TournamentQuery {
         private int checkInDuration;
         private GrandFinalsModifier grandFinalsModifier;
 
-        public Builder() {}
+        public Builder() {
+        }
 
         public Builder setName(String name) {
             this.name = name;

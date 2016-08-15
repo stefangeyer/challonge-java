@@ -12,12 +12,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Singleton
-public class ServiceCreator implements Provider<Retrofit> {
+public class ServiceProvider implements Provider<Retrofit> {
 
     private Retrofit retrofit;
 
     @Inject
-    private ServiceCreator(ChallongeCredentials credentials) {
+    private ServiceProvider(ChallongeCredentials credentials) {
         String baseUrl = "https://api.challonge.com/";
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

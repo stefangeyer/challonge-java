@@ -66,11 +66,7 @@ public class MatchQuery {
             if (this.winnerId != null) {
                 Validate.notNull(this.scoresCsv, "If you're updating winnerId, scoresCsv must also be provided. You may, however, update scoreCsv without providing winnerId for live score updates.");
             }
-            return new MatchQuery(
-                    winnerId != null ? winnerId : null,
-                    votesForPlayer1 != null ? votesForPlayer1 : null,
-                    votesForPlayer2 != null ? votesForPlayer2 : null,
-                    scoresCsv != null ? scoresCsv : null);
+            return new MatchQuery(winnerId, votesForPlayer1, votesForPlayer2, scoresCsv);
         }
     }
 }

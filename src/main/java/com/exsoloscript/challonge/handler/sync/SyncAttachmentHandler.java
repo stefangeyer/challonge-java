@@ -1,18 +1,24 @@
 package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
+import com.exsoloscript.challonge.handler.retrofit.RetrofitMatchHandler;
+import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
 import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.AttachmentBase;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.io.IOException;
 import java.util.List;
 
+@Singleton
 public class SyncAttachmentHandler extends SyncHandler {
 
     private RetrofitAttachmentHandler attachmentHandler;
 
-    public SyncAttachmentHandler(RetrofitAttachmentHandler attachmentHandler) {
-        this.attachmentHandler = attachmentHandler;
+    @Inject
+    SyncAttachmentHandler(ServiceProvider provider) {
+        this.attachmentHandler = provider.createService(RetrofitAttachmentHandler.class);
     }
 
     public Attachment getAttachment(String tournamentName, int matchId, int attachmentId) throws IOException {

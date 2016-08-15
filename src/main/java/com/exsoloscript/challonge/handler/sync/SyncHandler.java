@@ -13,13 +13,20 @@ public abstract class SyncHandler {
     @Inject
     private ErrorUtil errorUtil;
 
+    @Inject
+    private ErrorHandler errorHandler;
+
     public <T> Response<T> handleResponse(Call<T> call) throws IOException {
         Response<T> response = call.execute();
 
         if (response.isSuccessful()) {
             return response;
         } else {
-            ErrorHandler.handleError(this.errorUtil.parseError(response));
+            this.errorHandler
+                    .handleError(
+                            this.errorUtil.
+                                    parseError(
+                                            response));
             return response;
         }
     }

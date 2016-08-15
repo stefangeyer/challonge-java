@@ -1,18 +1,22 @@
 package com.exsoloscript.challonge.handler.error;
 
-import com.exsoloscript.challonge.model.error.ApiError;
+import com.exsoloscript.challonge.model.exception.ApiError;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.commons.lang3.Validate;
 
+@Singleton
 public class ErrorHandler {
 
-    private static ErrorHandlingStrategy strategy;
+    private ErrorHandlingStrategy strategy;
 
-    public static void handleError(ApiError error) {
-        Validate.notNull(strategy, "No error handler was set, can't handle errors.");
+    public void handleError(ApiError error) {
+        Validate.notNull(strategy, "No exception handler was set, can't handle errors.");
         strategy.handleError(error);
     }
 
-    public static void setStrategy(ErrorHandlingStrategy strategy) {
-        ErrorHandler.strategy = strategy;
+    @Inject
+    public void setStrategy(ErrorHandlingStrategy strategy) {
+        this.strategy = strategy;
     }
 }

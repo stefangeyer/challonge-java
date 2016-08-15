@@ -1,10 +1,10 @@
 package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
-import com.exsoloscript.challonge.handler.retrofit.RetrofitMatchHandler;
 import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
 import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.AttachmentBase;
+import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -21,23 +21,23 @@ public class SyncAttachmentHandler extends SyncHandler {
         this.attachmentHandler = provider.createService(RetrofitAttachmentHandler.class);
     }
 
-    public Attachment getAttachment(String tournamentName, int matchId, int attachmentId) throws IOException {
+    public Attachment getAttachment(String tournamentName, int matchId, int attachmentId) throws IOException, ChallongeException {
         return this.handleResponse(this.attachmentHandler.getAttachment(tournamentName, matchId, attachmentId)).body();
     }
 
-    public List<Attachment> getAttachments(String tournamentName, int matchId) throws IOException {
+    public List<Attachment> getAttachments(String tournamentName, int matchId) throws IOException, ChallongeException {
         return this.handleResponse(this.attachmentHandler.getAttachments(tournamentName, matchId)).body();
     }
 
-    public Attachment createAttachment(String tournamentName, int matchId, AttachmentBase attachment) throws IOException {
+    public Attachment createAttachment(String tournamentName, int matchId, AttachmentBase attachment) throws IOException, ChallongeException {
         return this.handleResponse(this.attachmentHandler.createAttachment(tournamentName, matchId, attachment)).body();
     }
 
-    public Attachment updateAttachment(String tournamentName, int matchId, int attachmentId, AttachmentBase attachment) throws IOException {
+    public Attachment updateAttachment(String tournamentName, int matchId, int attachmentId, AttachmentBase attachment) throws IOException, ChallongeException {
         return this.handleResponse(this.attachmentHandler.updateAttachment(tournamentName, matchId, attachmentId, attachment)).body();
     }
 
-    public Attachment deleteAttachment(String tournamentName, int matchId, int attachmentId) throws IOException {
+    public Attachment deleteAttachment(String tournamentName, int matchId, int attachmentId) throws IOException, ChallongeException {
         return this.handleResponse(this.attachmentHandler.deleteAttachment(tournamentName, matchId, attachmentId)).body();
     }
 }

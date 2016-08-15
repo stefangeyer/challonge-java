@@ -1,6 +1,6 @@
 package com.exsoloscript.challonge.util;
 
-import com.exsoloscript.challonge.model.exception.ApiError;
+import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import okhttp3.ResponseBody;
@@ -21,18 +21,9 @@ public class ErrorUtil {
         this.retrofit = retrofit;
     }
 
-    public ApiError parseError(Response<?> response) {
-        Converter<ResponseBody, ApiError> converter = this.retrofit.responseBodyConverter(ApiError.class, new Annotation[0]);
-
-        ApiError error;
-
-        try {
-            error = converter.convert(response.errorBody());
-        } catch (IOException e) {
-            return new ApiError();
-        }
-
-        return error;
+    public void parseException(Response<?> response) throws IOException, ChallongeException {
+        Converter<ResponseBody, ChallongeException> converter = this.retrofit.responseBodyConverter(ChallongeException.class, new Annotation[0]);
+        throw converter.convert(response.errorBody());
     }
 
 }

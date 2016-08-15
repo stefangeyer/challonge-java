@@ -1,9 +1,8 @@
 package com.exsoloscript.challonge;
 
-import com.exsoloscript.challonge.handler.error.ErrorHandler;
-import com.exsoloscript.challonge.handler.error.PrintErrorHandlingStrategy;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryType;
+import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +30,7 @@ public class TournamentTest {
     }
 
     @Test
-    public void aCreateTournamentSyncTest() throws IOException {
+    public void aCreateTournamentSyncTest() throws IOException, ChallongeException {
         TournamentQuery query = new TournamentQuery.Builder().setName("JavaApiTest")
                 .setTournamentType(TournamentQueryType.DOUBLE_ELIMINATION)
                 .setUrl("javatesttournament")
@@ -42,13 +41,13 @@ public class TournamentTest {
     }
 
     @Test
-    public void bGetTournamentSyncTest() throws IOException {
+    public void bGetTournamentSyncTest() throws IOException, ChallongeException {
         Tournament tournament = this.challongeApi.sync().tournaments().getTournament("javatesttournament", false, false);
         assertEquals(tournament.getName(), "JavaApiTest");
     }
 
     @Test
-    public void cDeleteTournamentSyncTest() throws IOException {
+    public void cDeleteTournamentSyncTest() throws IOException, ChallongeException {
         Tournament tournament = this.challongeApi.sync().tournaments().deleteTournament("javatesttournament");
         assertEquals(tournament.getName(), "JavaApiTest");
     }

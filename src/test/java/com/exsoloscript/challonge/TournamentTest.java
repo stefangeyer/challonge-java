@@ -25,8 +25,17 @@ public class TournamentTest {
     @Before
     public void setUp() throws IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
-        this.challongeApi = Challonge.getFor(properties.getProperty("username"), properties.getProperty("api-key"));
+        Properties systemProperties = System.getProperties();
+
+        String usernameKey = "challonge-username";
+        String apiKeyKey = "challonge-api-key";
+
+        if (systemProperties.getProperty(usernameKey) != null && systemProperties.getProperty(apiKeyKey) != null) {
+            this.challongeApi = Challonge.getFor(systemProperties.getProperty(usernameKey), systemProperties.getProperty(apiKeyKey));
+        } else {
+            properties.load(new FileInputStream(new File("src/test/resources/user.properties")));
+            this.challongeApi = Challonge.getFor(properties.getProperty(usernameKey), properties.getProperty(apiKeyKey));
+        }
     }
 
     @Test

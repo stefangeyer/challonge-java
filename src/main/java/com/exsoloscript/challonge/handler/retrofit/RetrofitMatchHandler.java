@@ -18,7 +18,7 @@ public interface RetrofitMatchHandler {
     @GET("/tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> getMatch(@Path("tournament") String tournamentName,
                          @Query("match_id") int matchId,
-                         @Query("include_attachments") boolean includeAttachments);
+                         @Query("include_attachments") int includeAttachments);
 
     @PUT("/tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> updateMatch(@Path("tournament") String tournamentName,

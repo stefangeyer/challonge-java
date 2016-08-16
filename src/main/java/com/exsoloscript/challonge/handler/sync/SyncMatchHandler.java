@@ -27,7 +27,7 @@ public class SyncMatchHandler extends SyncHandler {
     }
 
     public Match getMatch(String tournamentName, int matchId, boolean includeAttachments) throws IOException, ChallongeException {
-        return this.handleResponse(matchHandler.getMatch(tournamentName, matchId, includeAttachments)).body();
+        return this.handleResponse(matchHandler.getMatch(tournamentName, matchId, includeAttachments ? 1 : 0)).body();
     }
 
     public Match updateMatch(String tournamentName, int matchId, MatchQuery match) throws IOException, ChallongeException {

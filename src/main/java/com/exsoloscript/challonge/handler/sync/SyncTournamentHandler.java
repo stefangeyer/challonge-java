@@ -28,7 +28,7 @@ public class SyncTournamentHandler extends SyncHandler {
     }
 
     public Tournament getTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.tournamentHandler.getTournament(name, includeParticipants, includeMatches)).body();
+        return this.handleResponse(this.tournamentHandler.getTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0)).body();
     }
 
     public Tournament createTournament(TournamentQuery tournament) throws IOException, ChallongeException {
@@ -44,22 +44,22 @@ public class SyncTournamentHandler extends SyncHandler {
     }
 
     public Tournament processCheckIns(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.tournamentHandler.processCheckIns(name, includeParticipants, includeMatches)).body();
+        return this.handleResponse(this.tournamentHandler.processCheckIns(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0)).body();
     }
 
     public Tournament abortCheckIn(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.tournamentHandler.abortCheckIn(name, includeParticipants, includeMatches)).body();
+        return this.handleResponse(this.tournamentHandler.abortCheckIn(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0)).body();
     }
 
     public Tournament startTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.tournamentHandler.startTournament(name, includeParticipants, includeMatches)).body();
+        return this.handleResponse(this.tournamentHandler.startTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0)).body();
     }
 
     public Tournament finalizeTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.tournamentHandler.finalizeTournament(name, includeParticipants, includeMatches)).body();
+        return this.handleResponse(this.tournamentHandler.finalizeTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0)).body();
     }
 
     public Tournament resetTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.tournamentHandler.resetTournament(name, includeParticipants, includeMatches)).body();
+        return this.handleResponse(this.tournamentHandler.resetTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0)).body();
     }
 }

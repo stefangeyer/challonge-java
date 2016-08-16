@@ -3,6 +3,7 @@ package com.exsoloscript.challonge.model;
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;
@@ -16,90 +17,90 @@ public class Tournament {
     private String subdomain;
     private String description;
     @SerializedName("open_signup")
-    private boolean openSignup;
+    private Boolean openSignup;
     @SerializedName("hold_third_place_match")
-    private boolean holdThirdPlaceMatch;
+    private Boolean holdThirdPlaceMatch;
     @SerializedName("pts_for_match_win")
-    private float ptsForMatchWin;
+    private Float pointsForMatchWin;
     @SerializedName("pts_for_match_tie")
-    private float ptsForMatchTie;
+    private Float pointsForMatchTie;
     @SerializedName("pts_for_game_win")
-    private float ptsForGameWin;
+    private Float pointsForGameWin;
     @SerializedName("pts_for_game_tie")
-    private float ptsForGameTie;
+    private Float pointsForGameTie;
     @SerializedName("pts_for_bye")
-    private float ptsForBye;
+    private Float pointsForBye;
     @SerializedName("swiss_rounds")
-    private int swissRounds;
+    private Integer swissRounds;
     @SerializedName("ranked_by")
     private RankedBy rankedBy;
     @SerializedName("rr_pts_for_game_win")
-    private float rrPtsForGameWin;
+    private Float roundRobinPointsForGameWin;
     @SerializedName("rr_pts_for_game_tie")
-    private float rrPtsForGameTie;
+    private Float roundRobinPointsForGameTie;
     @SerializedName("rr_pts_for_match_win")
-    private float rrPtsForMatchWin;
+    private Float roundRobinPointsForMatchWin;
     @SerializedName("rr_pts_for_match_tie")
-    private float rrPtsForMatchTie;
+    private Float roundRobinPointsForMatchTie;
     @SerializedName("accept_attachments")
-    private boolean acceptAttachments;
+    private Boolean acceptAttachments;
     @SerializedName("hide_forum")
-    private boolean hideForum;
+    private Boolean hideForum;
     @SerializedName("show_rounds")
-    private boolean showRounds;
+    private Boolean showRounds;
     @SerializedName("private")
-    private boolean _private;
+    private Boolean _private;
     @SerializedName("notify_users_when_the_tournament_ends")
-    private boolean notifyUsersWhenTheTournamentEnds;
+    private Boolean notifyUsersWhenTheTournamentEnds;
     @SerializedName("sequential_pairings")
-    private boolean sequentialPairings;
+    private Boolean sequentialPairings;
     @SerializedName("signup_cap")
     private int signupCap;
     @SerializedName("start_at")
-    private String startAt;
+    private ZonedDateTime startAt;
     @SerializedName("check_in_duration")
     private int checkInDuration;
     @SerializedName("allow_participant_match_reporting")
-    private boolean allowParticipantMatchReporting;
+    private Boolean allowParticipantMatchReporting;
     @SerializedName("anonymous_voting")
-    private boolean anonymousVoting;
+    private Boolean anonymousVoting;
     private String category;
     @SerializedName("completed_at")
     private ZonedDateTime completedAt;
     @SerializedName("created_at")
     private ZonedDateTime createdAt;
     @SerializedName("created_by_api")
-    private boolean createdByApi;
+    private Boolean createdByApi;
     @SerializedName("credit_capped")
-    private boolean creditCapped;
+    private Boolean creditCapped;
     @SerializedName("game_id")
     private int gameId;
     @SerializedName("group_stages_enabled")
-    private boolean groupStagesEnabled;
+    private Boolean groupStagesEnabled;
     @SerializedName("hide_seeds")
-    private boolean hideSeeds;
+    private Boolean hideSeeds;
     private int id;
     @SerializedName("max_predictions_per_user")
     private int maxPredictionsPerUser;
     @SerializedName("notify_users_when_matches_open")
-    private boolean notifyUsersWhenMatchesOpen;
+    private Boolean notifyUsersWhenMatchesOpen;
     @SerializedName("participants_count")
     private int participantsCount;
     @SerializedName("prediction_method")
     private int predictionMethod;
     @SerializedName("predictions_opened_at")
-    private String predictionsOpenedAt;
+    private ZonedDateTime predictionsOpenedAt;
     @SerializedName("progress_meter")
     private int progressMeter;
     @SerializedName("quick_advance")
-    private boolean quickAdvance;
+    private Boolean quickAdvance;
     @SerializedName("require_score_agreement")
-    private boolean requireScoreAgreement;
+    private Boolean requireScoreAgreement;
     @SerializedName("started_at")
     private ZonedDateTime startedAt;
     private String startedCheckingInAt;
     private TournamentState state;
-    private boolean teams;
+    private Boolean teams;
     @SerializedName("tie_breaks")
     private List<String> tieBreaks;
     @SerializedName("updated_at")
@@ -113,19 +114,30 @@ public class Tournament {
     @SerializedName("sign_up_url")
     private String signUpUrl;
     @SerializedName("review_before_finalizing")
-    private boolean reviewBeforeFinalizing;
+    private Boolean reviewBeforeFinalizing;
     @SerializedName("accepting_predictions")
-    private boolean acceptingPredictions;
+    private Boolean acceptingPredictions;
     @SerializedName("participants_locked")
-    private boolean participantsLocked;
+    private Boolean participantsLocked;
     @SerializedName("game_name")
     private String gameName;
     @SerializedName("participants_swappable")
-    private boolean participantsSwappable;
+    private Boolean participantsSwappable;
     @SerializedName("team_convertable")
-    private boolean teamConvertable;
+    private Boolean teamConvertable;
     @SerializedName("group_stages_were_started")
-    private boolean groupStagesWereStarted;
+    private Boolean groupStagesWereStarted;
+    @SerializedName("locked_at")
+    private ZonedDateTime lockedAt;
+    @SerializedName("event_id")
+    private Integer eventId;
+    @SerializedName("public_predictions_before_start_time")
+    private Boolean publicPredictionsBeforeStartTime;
+    @SerializedName("grand_finals_modifier")
+    private GrandFinalsModifier grandFinalsModifier;
+
+    private List<Participant> participants;
+    private List<Match> matches;
 
     public String getName() {
         return name;
@@ -133,6 +145,30 @@ public class Tournament {
 
     public TournamentType getTournamentType() {
         return tournamentType;
+    }
+
+    public ZonedDateTime getLockedAt() {
+        return lockedAt;
+    }
+
+    public Integer getEventId() {
+        return eventId;
+    }
+
+    public Boolean getPublicPredictionsBeforeStartTime() {
+        return publicPredictionsBeforeStartTime;
+    }
+
+    public GrandFinalsModifier getGrandFinalsModifier() {
+        return grandFinalsModifier;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
     }
 
     public String getUrl() {
@@ -147,79 +183,79 @@ public class Tournament {
         return description;
     }
 
-    public boolean isOpenSignup() {
+    public Boolean isSignupOpen() {
         return openSignup;
     }
 
-    public boolean isHoldThirdPlaceMatch() {
+    public Boolean holdThirdPlaceMatch() {
         return holdThirdPlaceMatch;
     }
 
-    public float getPtsForMatchWin() {
-        return ptsForMatchWin;
+    public float getPointsForMatchWin() {
+        return this.pointsForMatchWin;
     }
 
-    public float getPtsForMatchTie() {
-        return ptsForMatchTie;
+    public float getPointsForMatchTie() {
+        return pointsForMatchTie;
     }
 
-    public float getPtsForGameWin() {
-        return ptsForGameWin;
+    public float getPointsForGameWin() {
+        return pointsForGameWin;
     }
 
-    public float getPtsForGameTie() {
-        return ptsForGameTie;
+    public float getPointsForGameTie() {
+        return pointsForGameTie;
     }
 
-    public float getPtsForBye() {
-        return ptsForBye;
+    public float getPointsForBye() {
+        return pointsForBye;
     }
 
     public int getSwissRounds() {
         return swissRounds;
     }
 
-    public RankedBy getRankedBy() {
+    public RankedBy rankedBy() {
         return rankedBy;
     }
 
-    public float getRrPtsForGameWin() {
-        return rrPtsForGameWin;
+    public float getRoundRobinPointsForGameWin() {
+        return roundRobinPointsForGameWin;
     }
 
-    public float getRrPtsForGameTie() {
-        return rrPtsForGameTie;
+    public float getRoundRobinPointsForGameTie() {
+        return roundRobinPointsForGameTie;
     }
 
-    public float getRrPtsForMatchWin() {
-        return rrPtsForMatchWin;
+    public float getRoundRobinPointsForMatchWin() {
+        return roundRobinPointsForMatchWin;
     }
 
-    public float getRrPtsForMatchTie() {
-        return rrPtsForMatchTie;
+    public float getRoundRobinPointsForMatchTie() {
+        return roundRobinPointsForMatchTie;
     }
 
-    public boolean isAcceptAttachments() {
+    public Boolean isAcceptAttachments() {
         return acceptAttachments;
     }
 
-    public boolean isHideForum() {
+    public Boolean isHideForum() {
         return hideForum;
     }
 
-    public boolean isShowRounds() {
+    public Boolean isShowRounds() {
         return showRounds;
     }
 
-    public boolean is_private() {
+    public Boolean isPrivate() {
         return _private;
     }
 
-    public boolean isNotifyUsersWhenTheTournamentEnds() {
+    public Boolean doesNotifyUsersWhenTheTournamentEnds() {
         return notifyUsersWhenTheTournamentEnds;
     }
 
-    public boolean isSequentialPairings() {
+    public Boolean hasSequentialPairings() {
         return sequentialPairings;
     }
 
@@ -227,7 +263,7 @@ public class Tournament {
         return signupCap;
     }
 
-    public String getStartAt() {
+    public ZonedDateTime startsAt() {
         return startAt;
     }
 
@@ -235,11 +271,11 @@ public class Tournament {
         return checkInDuration;
     }
 
-    public boolean isAllowParticipantMatchReporting() {
+    public Boolean isAllowParticipantMatchReporting() {
         return allowParticipantMatchReporting;
     }
 
-    public boolean isAnonymousVoting() {
+    public Boolean isAnonymousVoting() {
         return anonymousVoting;
     }
 
@@ -255,11 +291,11 @@ public class Tournament {
         return createdAt;
     }
 
-    public boolean isCreatedByApi() {
+    public Boolean isCreatedByApi() {
         return createdByApi;
     }
 
-    public boolean isCreditCapped() {
+    public Boolean isCreditCapped() {
         return creditCapped;
     }
 
@@ -267,11 +303,11 @@ public class Tournament {
         return gameId;
     }
 
-    public boolean isGroupStagesEnabled() {
+    public Boolean isGroupStagesEnabled() {
         return groupStagesEnabled;
     }
 
-    public boolean isHideSeeds() {
+    public Boolean areSeedsHidden() {
         return hideSeeds;
     }
 
@@ -283,7 +319,7 @@ public class Tournament {
         return maxPredictionsPerUser;
     }
 
-    public boolean isNotifyUsersWhenMatchesOpen() {
+    public Boolean doesNotifyUsersWhenMatchesOpen() {
         return notifyUsersWhenMatchesOpen;
     }
 
@@ -295,7 +331,7 @@ public class Tournament {
         return predictionMethod;
     }
 
-    public String getPredictionsOpenedAt() {
+    public ZonedDateTime predictionsOpenedAt() {
         return predictionsOpenedAt;
     }
 
@@ -303,11 +339,11 @@ public class Tournament {
         return progressMeter;
     }
 
-    public boolean isQuickAdvance() {
+    public Boolean isQuickAdvance() {
         return quickAdvance;
     }
 
-    public boolean isRequireScoreAgreement() {
+    public Boolean isRequireScoreAgreement() {
         return requireScoreAgreement;
     }
 
@@ -323,7 +359,7 @@ public class Tournament {
         return state;
     }
 
-    public boolean isTeams() {
+    public Boolean isTeams() {
         return teams;
     }
 
@@ -351,15 +387,15 @@ public class Tournament {
         return signUpUrl;
     }
 
-    public boolean isReviewBeforeFinalizing() {
+    public Boolean isReviewBeforeFinalizing() {
         return reviewBeforeFinalizing;
     }
 
-    public boolean isAcceptingPredictions() {
+    public Boolean isAcceptingPredictions() {
         return acceptingPredictions;
     }
 
-    public boolean isParticipantsLocked() {
+    public Boolean isParticipantsLocked() {
         return participantsLocked;
     }
 
@@ -367,15 +403,15 @@ public class Tournament {
         return gameName;
     }
 
-    public boolean isParticipantsSwappable() {
+    public Boolean isParticipantsSwappable() {
         return participantsSwappable;
     }
 
-    public boolean isTeamConvertable() {
+    public Boolean isTeamConvertable() {
         return teamConvertable;
     }
 
-    public boolean isGroupStagesWereStarted() {
+    public Boolean isGroupStagesWereStarted() {
         return groupStagesWereStarted;
     }
 }

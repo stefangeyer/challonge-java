@@ -26,7 +26,7 @@ public class SyncParticipantHandler extends SyncHandler {
     }
 
     public Participant getParticipant(String tournamentName, int participantId, boolean includeMatches) throws IOException, ChallongeException {
-        return this.handleResponse(this.participantHandler.getParticipant(tournamentName, participantId, includeMatches)).body();
+        return this.handleResponse(this.participantHandler.getParticipant(tournamentName, participantId, includeMatches ? 1 : 0)).body();
     }
 
     public Participant addParticipant(String tournamentName, ParticipantQuery participant) throws IOException, ChallongeException {

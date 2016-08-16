@@ -38,12 +38,14 @@ public class TournamentTest {
     public void aCreateTournamentSyncTest() throws IOException, ChallongeException {
         TournamentQuery query = new TournamentQuery.Builder()
                 .setName("JavaApiTest")
-                .setTournamentType(TournamentType.DOUBLE_ELIMINATION)
                 .setUrl("javatesttournament")
+                .setTournamentType(TournamentType.DOUBLE_ELIMINATION)
                 .setSignupCap(4)
+                .setRoundRobinPointsForGameWin(1.0F)
                 .build();
         Tournament tournament = this.challongeApi.sync().tournaments().createTournament(query);
         assertEquals(tournament.getName(), "JavaApiTest");
+        assertEquals(tournament.getRoundRobinPointsForGameWin(), 1.0F);
     }
 
     @Test

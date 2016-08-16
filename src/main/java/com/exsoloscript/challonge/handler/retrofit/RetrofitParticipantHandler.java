@@ -15,7 +15,7 @@ public interface RetrofitParticipantHandler {
     @GET("/tournaments/{tournament}/participants/{participant_id}.json")
     Call<Participant> getParticipant(@Path("tournament") String tournamentName,
                                      @Path("participant_id") int participantId,
-                                     @Query("include_matches") boolean includeMatches);
+                                     @Query("include_matches") int includeMatches);
 
     @POST("/tournaments/{tournament}/participants.json")
     Call<Participant> addParticipant(@Path("tournament") String tournamentName,

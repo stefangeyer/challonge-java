@@ -24,6 +24,7 @@
     </developers>
 
     <properties>
+        <!-- project properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- dependency versions -->
         <retrofit2.version>2.1.0</retrofit2.version>

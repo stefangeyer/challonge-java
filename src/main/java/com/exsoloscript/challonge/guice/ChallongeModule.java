@@ -1,7 +1,7 @@
 package com.exsoloscript.challonge.guice;
 
 import com.exsoloscript.challonge.ChallongeCredentials;
-import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
+import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.google.inject.AbstractModule;
 import retrofit2.Retrofit;
 
@@ -16,6 +16,6 @@ public class ChallongeModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ChallongeCredentials.class).toInstance(this.credentials);
-        bind(Retrofit.class).toProvider(ServiceProvider.class);
+        bind(Retrofit.class).toProvider(RetrofitServiceProvider.class);
     }
 }

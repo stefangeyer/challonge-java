@@ -1,37 +1,32 @@
 package com.exsoloscript.challonge;
 
+import com.exsoloscript.challonge.guice.ChallongeTestModule;
+import com.exsoloscript.challonge.guice.GuiceJUnitRunner;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
+import com.google.inject.Inject;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
-import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
 
+@RunWith(GuiceJUnitRunner.class)
+@GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TournamentTest {
 
     private ChallongeApi challongeApi;
 
-    @Before
-    public void setUp() throws IOException {
-        Map<String, String> env = System.getenv();
-
-        String usernameKey = "CHALLONGE_USERNAME";
-        String apiKeyKey = "CHALLONGE_API_KEY";
-
-        if (env.get(usernameKey) == null || env.get(apiKeyKey) == null) {
-            throw new IllegalArgumentException("Provide environment variables for CHALLONGE_USERNAME and CHALLONGE_API_KEY");
-        }
-
-        this.challongeApi = Challonge.getFor(env.get(usernameKey), env.get(apiKeyKey));
+    @Inject
+    public void setChallongeApi(ChallongeApi challongeApi) {
+        this.challongeApi = challongeApi;
     }
 
     @Test

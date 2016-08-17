@@ -12,12 +12,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Singleton
-public class ServiceProvider implements Provider<Retrofit> {
+public class RetrofitServiceProvider implements Provider<Retrofit> {
 
     private Retrofit retrofit;
 
     @Inject
-    private ServiceProvider(ChallongeCredentials credentials) {
+    private RetrofitServiceProvider(ChallongeCredentials credentials) {
         String baseUrl = "https://api.challonge.com/";
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -27,7 +27,7 @@ public class ServiceProvider implements Provider<Retrofit> {
             Request.Builder requestBuilder = original.newBuilder()
                     // Authorization Header with Basic HTTP Authentication
                     .header("Authorization", credentials.toHttpAuthString())
-                    // only accept JSON
+                    // only accept JSON as response
                     .header("Accept", "application/json")
                     .method(original.method(), original.body());
 

@@ -1,7 +1,7 @@
 package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
-import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
+import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
@@ -17,7 +17,7 @@ public class SyncParticipantHandler extends SyncHandler {
     private RetrofitParticipantHandler participantHandler;
 
     @Inject
-    SyncParticipantHandler(ServiceProvider provider) {
+    SyncParticipantHandler(RetrofitServiceProvider provider) {
         this.participantHandler = provider.createService(RetrofitParticipantHandler.class);
     }
 

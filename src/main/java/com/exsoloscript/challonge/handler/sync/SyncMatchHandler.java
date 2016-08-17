@@ -1,7 +1,7 @@
 package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitMatchHandler;
-import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
+import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.enumeration.MatchState;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
@@ -18,7 +18,7 @@ public class SyncMatchHandler extends SyncHandler {
     private RetrofitMatchHandler matchHandler;
 
     @Inject
-    SyncMatchHandler(ServiceProvider provider) {
+    SyncMatchHandler(RetrofitServiceProvider provider) {
         this.matchHandler = provider.createService(RetrofitMatchHandler.class);
     }
 

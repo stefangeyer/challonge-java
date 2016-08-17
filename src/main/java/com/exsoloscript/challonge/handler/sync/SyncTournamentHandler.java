@@ -1,7 +1,7 @@
 package com.exsoloscript.challonge.handler.sync;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
-import com.exsoloscript.challonge.handler.retrofit.ServiceProvider;
+import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
@@ -19,7 +19,7 @@ public class SyncTournamentHandler extends SyncHandler {
     private RetrofitTournamentHandler tournamentHandler;
 
     @Inject
-    SyncTournamentHandler(ServiceProvider provider) {
+    SyncTournamentHandler(RetrofitServiceProvider provider) {
         this.tournamentHandler = provider.createService(RetrofitTournamentHandler.class);
     }
 

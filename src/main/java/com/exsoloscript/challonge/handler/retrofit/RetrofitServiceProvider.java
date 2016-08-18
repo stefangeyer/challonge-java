@@ -18,7 +18,7 @@ public class RetrofitServiceProvider implements Provider<Retrofit> {
 
     @Inject
     private RetrofitServiceProvider(ChallongeCredentials credentials) {
-        String baseUrl = "https://api.challonge.com/";
+        String baseUrl = "https://api.challonge.com/v1/";
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(chain -> {

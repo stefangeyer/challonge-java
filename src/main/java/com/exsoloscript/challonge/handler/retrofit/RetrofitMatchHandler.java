@@ -10,17 +10,17 @@ import java.util.List;
 
 public interface RetrofitMatchHandler {
 
-    @GET("v1/tournaments/{tournament}/matches.json")
+    @GET("tournaments/{tournament}/matches.json")
     Call<List<Match>> getMatches(@Path("tournament") String tournamentName,
                                  @Query("participant_id") int participantId,
                                  @Query("state") MatchState state);
 
-    @GET("v1/tournaments/{tournament}/matches/{match_id}.json")
+    @GET("tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> getMatch(@Path("tournament") String tournamentName,
                          @Query("match_id") int matchId,
                          @Query("include_attachments") int includeAttachments);
 
-    @PUT("v1/tournaments/{tournament}/matches/{match_id}.json")
+    @PUT("tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> updateMatch(@Path("tournament") String tournamentName,
                             @Query("match_id") int matchId,
                             @Body MatchQuery match);

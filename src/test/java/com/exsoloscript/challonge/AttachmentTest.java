@@ -36,7 +36,7 @@ public class AttachmentTest {
                 .setFile(this.file)
                 .setDescription("This is a test file")
                 .build();
-        Attachment attachment = this.challongeApi.sync().attachments().createAttachment("mk4ahit", 40637548, query);
+        Attachment attachment = this.challongeApi.attachments().createAttachment("mk4ahit", 40637548, query).sync();
         assertEquals(attachment.getAssetFileName(), "testfile.txt");
     }
 

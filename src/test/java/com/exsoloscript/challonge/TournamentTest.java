@@ -38,14 +38,14 @@ public class TournamentTest {
                 .setSignupCap(4)
                 .setRoundRobinPointsForGameWin(1.0F)
                 .build();
-        Tournament tournament = this.challongeApi.sync().tournaments().createTournament(query);
+        Tournament tournament = this.challongeApi.tournaments().createTournament(query).sync();
         assertEquals(tournament.getName(), "JavaApiTest");
         assertEquals(tournament.getRoundRobinPointsForGameWin(), 1.0F);
     }
 
     @Test
     public void bGetTournamentSyncTest() throws IOException, ChallongeException {
-        Tournament tournament = this.challongeApi.sync().tournaments().getTournament("javatesttournament", false, false);
+        Tournament tournament = this.challongeApi.tournaments().getTournament("javatesttournament", false, false).sync();
         assertEquals(tournament.getName(), "JavaApiTest");
     }
 
@@ -60,13 +60,13 @@ public class TournamentTest {
                 .setDescription("This is a test tournament")
                 .holdThirdPlaceMatch(true)
                 .build();
-        Tournament tournament = this.challongeApi.sync().tournaments().updateTournament("javatesttournament", query);
+        Tournament tournament = this.challongeApi.tournaments().updateTournament("javatesttournament", query).sync();
         assertEquals(tournament.getName(), "JavaApiTest");
     }
 
     @Test
     public void dDeleteTournamentSyncTest() throws IOException, ChallongeException {
-        Tournament tournament = this.challongeApi.sync().tournaments().deleteTournament("javatesttournament");
+        Tournament tournament = this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
         assertEquals(tournament.getName(), "JavaApiTest");
     }
 

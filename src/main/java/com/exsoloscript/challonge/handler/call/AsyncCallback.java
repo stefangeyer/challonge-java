@@ -1,4 +1,4 @@
-package com.exsoloscript.challonge.handler.async.callback;
+package com.exsoloscript.challonge.handler.call;
 
 public interface AsyncCallback<T> {
     void handleSuccess(T response);

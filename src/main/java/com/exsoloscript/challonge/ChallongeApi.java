@@ -1,5 +1,9 @@
 package com.exsoloscript.challonge;
 
+import com.exsoloscript.challonge.handler.call.AttachmentHandler;
+import com.exsoloscript.challonge.handler.call.MatchHandler;
+import com.exsoloscript.challonge.handler.call.ParticipantHandler;
+import com.exsoloscript.challonge.handler.call.TournamentHandler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -7,19 +11,30 @@ import com.google.inject.Singleton;
 public class ChallongeApi {
 
     @Inject
-    private SyncChallonge sync;
+    private TournamentHandler tournaments;
 
     @Inject
-    private AsyncChallonge async;
+    private ParticipantHandler participants;
 
-    ChallongeApi() {
+    @Inject
+    private MatchHandler matches;
+
+    @Inject
+    private AttachmentHandler attachments;
+
+    public TournamentHandler tournaments() {
+        return tournaments;
     }
 
-    public SyncChallonge sync() {
-        return this.sync;
+    public ParticipantHandler participants() {
+        return participants;
     }
 
-    public AsyncChallonge async() {
-        return this.async;
+    public MatchHandler matches() {
+        return matches;
+    }
+
+    public AttachmentHandler attachments() {
+        return attachments;
     }
 }

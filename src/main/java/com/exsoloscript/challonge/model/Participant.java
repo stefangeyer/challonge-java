@@ -52,4 +52,116 @@ public class Participant {
     @SerializedName("checked_in")
     private Boolean checkedIn;
     private Boolean reactivatable;
+
+    public String name() {
+        return name;
+    }
+
+    public String challongeUsername() {
+        return challongeUsername;
+    }
+
+    public Integer seed() {
+        return seed;
+    }
+
+    public String misc() {
+        return misc;
+    }
+
+    public Boolean active() {
+        return active;
+    }
+
+    public ZonedDateTime checkedInAt() {
+        return checkedInAt;
+    }
+
+    public ZonedDateTime createdAt() {
+        return createdAt;
+    }
+
+    public Integer finalRank() {
+        return finalRank;
+    }
+
+    public Integer groupId() {
+        return groupId;
+    }
+
+    public String icon() {
+        return icon;
+    }
+
+    public Integer id() {
+        return id;
+    }
+
+    public Integer invitationId() {
+        return invitationId;
+    }
+
+    public String inviteEmail() {
+        return inviteEmail;
+    }
+
+    public Boolean onWaitingList() {
+        return onWaitingList;
+    }
+
+    public Integer tournamentId() {
+        return tournamentId;
+    }
+
+    public ZonedDateTime updatedAt() {
+        return updatedAt;
+    }
+
+    public String challongeEmailAddressVerified() {
+        return challongeEmailAddressVerified;
+    }
+
+    public Boolean removable() {
+        return removable;
+    }
+
+    public Boolean participatableOrInvitationAttached() {
+        return participatableOrInvitationAttached;
+    }
+
+    public Boolean confirmRemove() {
+        return confirmRemove;
+    }
+
+    public Boolean invitationPending() {
+        return invitationPending;
+    }
+
+    public String displayNameWithInvitationEmailAddress() {
+        return displayNameWithInvitationEmailAddress;
+    }
+
+    public String emailHash() {
+        return emailHash;
+    }
+
+    public String username() {
+        return username;
+    }
+
+    public String attachedParticipatablePortraitUrl() {
+        return attachedParticipatablePortraitUrl;
+    }
+
+    public Boolean canCheckIn() {
+        return canCheckIn;
+    }
+
+    public Boolean checkedIn() {
+        return checkedIn;
+    }
+
+    public Boolean reactivatable() {
+        return reactivatable;
+    }
 }

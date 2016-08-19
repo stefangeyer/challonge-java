@@ -35,9 +35,11 @@ public class AttachmentHandler {
 
     public ChallongeApiCall<Attachment> createAttachment(String tournamentName, int matchId, AttachmentQuery attachment) throws IOException, ChallongeException {
 
-        RequestBody asset = attachment.getFile() != null ? RequestBody.create(MediaType.parse("multipart/form-data"), attachment.getFile()) : null;
-        RequestBody description = attachment.getDescription() != null ? RequestBody.create(MediaType.parse("multipart/form-data"), attachment.getDescription()) : null;
-        RequestBody url = attachment.getUrl() != null ? RequestBody.create(MediaType.parse("multipart/form-data"), attachment.getUrl()) : null;
+        MediaType multipart = MediaType.parse("multipart/form-data");
+
+        RequestBody asset = attachment.getFile() != null ? RequestBody.create(multipart, attachment.getFile()) : null;
+        RequestBody description = attachment.getDescription() != null ? RequestBody.create(multipart, attachment.getDescription()) : null;
+        RequestBody url = attachment.getUrl() != null ? RequestBody.create(multipart, attachment.getUrl()) : null;
 
         return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournamentName, matchId, asset, url, description));
     }

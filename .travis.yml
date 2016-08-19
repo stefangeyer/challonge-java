@@ -4,3 +4,5 @@ jdk:
 branches:
   only:
   - master
+script:
+ - mvn test -Dtest=ChallongeTestSuite

@@ -55,11 +55,11 @@ public class Tournament {
     @SerializedName("sequential_pairings")
     private Boolean sequentialPairings;
     @SerializedName("signup_cap")
-    private int signupCap;
+    private Integer signupCap;
     @SerializedName("start_at")
     private ZonedDateTime startAt;
     @SerializedName("check_in_duration")
-    private int checkInDuration;
+    private Integer checkInDuration;
     @SerializedName("allow_participant_match_reporting")
     private Boolean allowParticipantMatchReporting;
     @SerializedName("anonymous_voting")
@@ -74,24 +74,24 @@ public class Tournament {
     @SerializedName("credit_capped")
     private Boolean creditCapped;
     @SerializedName("game_id")
-    private int gameId;
+    private Integer gameId;
     @SerializedName("group_stages_enabled")
     private Boolean groupStagesEnabled;
     @SerializedName("hide_seeds")
     private Boolean hideSeeds;
-    private int id;
+    private Integer id;
     @SerializedName("max_predictions_per_user")
-    private int maxPredictionsPerUser;
+    private Integer maxPredictionsPerUser;
     @SerializedName("notify_users_when_matches_open")
     private Boolean notifyUsersWhenMatchesOpen;
     @SerializedName("participants_count")
-    private int participantsCount;
+    private Integer participantsCount;
     @SerializedName("prediction_method")
-    private int predictionMethod;
+    private Integer predictionMethod;
     @SerializedName("predictions_opened_at")
     private ZonedDateTime predictionsOpenedAt;
     @SerializedName("progress_meter")
-    private int progressMeter;
+    private Integer progressMeter;
     @SerializedName("quick_advance")
     private Boolean quickAdvance;
     @SerializedName("require_score_agreement")
@@ -135,55 +135,30 @@ public class Tournament {
     private Boolean publicPredictionsBeforeStartTime;
     @SerializedName("grand_finals_modifier")
     private GrandFinalsModifier grandFinalsModifier;
-
     private List<Participant> participants;
     private List<Match> matches;
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public TournamentType getTournamentType() {
+    public TournamentType tournamentType() {
         return tournamentType;
     }
 
-    public ZonedDateTime getLockedAt() {
-        return lockedAt;
-    }
-
-    public Integer getEventId() {
-        return eventId;
-    }
-
-    public Boolean getPublicPredictionsBeforeStartTime() {
-        return publicPredictionsBeforeStartTime;
-    }
-
-    public GrandFinalsModifier getGrandFinalsModifier() {
-        return grandFinalsModifier;
-    }
-
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public String getUrl() {
+    public String url() {
         return url;
     }
 
-    public String getSubdomain() {
+    public String subdomain() {
         return subdomain;
     }
 
-    public String getDescription() {
+    public String description() {
         return description;
     }
 
-    public Boolean isSignupOpen() {
+    public Boolean openSignup() {
         return openSignup;
     }
 
@@ -191,27 +166,27 @@ public class Tournament {
         return holdThirdPlaceMatch;
     }
 
-    public float getPointsForMatchWin() {
-        return this.pointsForMatchWin;
+    public Float pointsForMatchWin() {
+        return pointsForMatchWin;
     }
 
-    public float getPointsForMatchTie() {
+    public Float pointsForMatchTie() {
         return pointsForMatchTie;
     }
 
-    public float getPointsForGameWin() {
+    public Float pointsForGameWin() {
         return pointsForGameWin;
     }
 
-    public float getPointsForGameTie() {
+    public Float pointsForGameTie() {
         return pointsForGameTie;
     }
 
-    public float getPointsForBye() {
+    public Float pointsForBye() {
         return pointsForBye;
     }
 
-    public int getSwissRounds() {
+    public Integer swissRounds() {
         return swissRounds;
     }
 
@@ -219,115 +194,115 @@ public class Tournament {
         return rankedBy;
     }
 
-    public float getRoundRobinPointsForGameWin() {
+    public Float roundRobinPointsForGameWin() {
         return roundRobinPointsForGameWin;
     }
 
-    public float getRoundRobinPointsForGameTie() {
+    public Float roundRobinPointsForGameTie() {
         return roundRobinPointsForGameTie;
     }
 
-    public float getRoundRobinPointsForMatchWin() {
+    public Float roundRobinPointsForMatchWin() {
         return roundRobinPointsForMatchWin;
     }
 
-    public float getRoundRobinPointsForMatchTie() {
+    public Float roundRobinPointsForMatchTie() {
         return roundRobinPointsForMatchTie;
     }
 
-    public Boolean isAcceptAttachments() {
+    public Boolean acceptAttachments() {
         return acceptAttachments;
     }
 
-    public Boolean isHideForum() {
+    public Boolean hideForum() {
         return hideForum;
     }
 
-    public Boolean isShowRounds() {
+    public Boolean showRounds() {
         return showRounds;
     }
 
-    public Boolean isPrivate() {
+    public Boolean _private() {
         return _private;
     }
 
-    public Boolean doesNotifyUsersWhenTheTournamentEnds() {
+    public Boolean notifyUsersWhenTheTournamentEnds() {
         return notifyUsersWhenTheTournamentEnds;
     }
 
-    public Boolean hasSequentialPairings() {
+    public Boolean sequentialPairings() {
         return sequentialPairings;
     }
 
-    public int getSignupCap() {
+    public Integer signupCap() {
         return signupCap;
     }
 
-    public ZonedDateTime startsAt() {
+    public ZonedDateTime startAt() {
         return startAt;
     }
 
-    public int getCheckInDuration() {
+    public Integer checkInDuration() {
         return checkInDuration;
     }
 
-    public Boolean isAllowParticipantMatchReporting() {
+    public Boolean allowParticipantMatchReporting() {
         return allowParticipantMatchReporting;
     }
 
-    public Boolean isAnonymousVoting() {
+    public Boolean anonymousVoting() {
         return anonymousVoting;
     }
 
-    public String getCategory() {
+    public String category() {
         return category;
     }
 
-    public ZonedDateTime getCompletedAt() {
+    public ZonedDateTime completedAt() {
         return completedAt;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public ZonedDateTime createdAt() {
         return createdAt;
     }
 
-    public Boolean isCreatedByApi() {
+    public Boolean createdByApi() {
         return createdByApi;
     }
 
-    public Boolean isCreditCapped() {
+    public Boolean creditCapped() {
         return creditCapped;
     }
 
-    public int getGameId() {
+    public Integer gameId() {
         return gameId;
     }
 
-    public Boolean isGroupStagesEnabled() {
+    public Boolean groupStagesEnabled() {
         return groupStagesEnabled;
     }
 
-    public Boolean areSeedsHidden() {
+    public Boolean hideSeeds() {
         return hideSeeds;
     }
 
-    public int getId() {
+    public Integer id() {
         return id;
     }
 
-    public int getMaxPredictionsPerUser() {
+    public Integer maxPredictionsPerUser() {
         return maxPredictionsPerUser;
     }
 
-    public Boolean doesNotifyUsersWhenMatchesOpen() {
+    public Boolean notifyUsersWhenMatchesOpen() {
         return notifyUsersWhenMatchesOpen;
     }
 
-    public int getParticipantsCount() {
+    public Integer participantsCount() {
         return participantsCount;
     }
 
-    public int getPredictionMethod() {
+    public Integer predictionMethod() {
         return predictionMethod;
     }
 
@@ -335,83 +310,107 @@ public class Tournament {
         return predictionsOpenedAt;
     }
 
-    public int getProgressMeter() {
+    public Integer progressMeter() {
         return progressMeter;
     }
 
-    public Boolean isQuickAdvance() {
+    public Boolean quickAdvance() {
         return quickAdvance;
     }
 
-    public Boolean isRequireScoreAgreement() {
+    public Boolean requireScoreAgreement() {
         return requireScoreAgreement;
     }
 
-    public ZonedDateTime getStartedAt() {
+    public ZonedDateTime startedAt() {
         return startedAt;
     }
 
-    public String getStartedCheckingInAt() {
+    public String startedCheckingInAt() {
         return startedCheckingInAt;
     }
 
-    public TournamentState getState() {
+    public TournamentState state() {
         return state;
     }
 
-    public Boolean isTeams() {
+    public Boolean teams() {
         return teams;
     }
 
-    public List<String> getTieBreaks() {
+    public List<String> tieBreaks() {
         return tieBreaks;
     }
 
-    public ZonedDateTime getUpdatedAt() {
+    public ZonedDateTime updatedAt() {
         return updatedAt;
     }
 
-    public String getDescriptionSource() {
+    public String descriptionSource() {
         return descriptionSource;
     }
 
-    public String getFullChallongeUrl() {
+    public String fullChallongeUrl() {
         return fullChallongeUrl;
     }
 
-    public String getLiveImageUrl() {
+    public String liveImageUrl() {
         return liveImageUrl;
     }
 
-    public String getSignUpUrl() {
+    public String signUpUrl() {
         return signUpUrl;
     }
 
-    public Boolean isReviewBeforeFinalizing() {
+    public Boolean reviewBeforeFinalizing() {
         return reviewBeforeFinalizing;
     }
 
-    public Boolean isAcceptingPredictions() {
+    public Boolean acceptingPredictions() {
         return acceptingPredictions;
     }
 
-    public Boolean isParticipantsLocked() {
+    public Boolean participantsLocked() {
         return participantsLocked;
     }
 
-    public String getGameName() {
+    public String gameName() {
         return gameName;
     }
 
-    public Boolean isParticipantsSwappable() {
+    public Boolean participantsSwappable() {
         return participantsSwappable;
     }
 
-    public Boolean isTeamConvertable() {
+    public Boolean teamConvertable() {
         return teamConvertable;
     }
 
-    public Boolean isGroupStagesWereStarted() {
+    public Boolean groupStagesWereStarted() {
         return groupStagesWereStarted;
+    }
+
+    public ZonedDateTime lockedAt() {
+        return lockedAt;
+    }
+
+    public Integer eventId() {
+        return eventId;
+    }
+
+    public Boolean publicPredictionsBeforeStartTime() {
+        return publicPredictionsBeforeStartTime;
+    }
+
+    public GrandFinalsModifier grandFinalsModifier() {
+        return grandFinalsModifier;
+    }
+
+    public List<Participant> participants() {
+        return participants;
+    }
+
+    public List<Match> matches() {
+        return matches;
     }
 }

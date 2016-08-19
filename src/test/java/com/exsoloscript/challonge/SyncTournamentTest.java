@@ -16,11 +16,12 @@ import org.junit.runners.MethodSorters;
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TournamentTest {
+public class SyncTournamentTest {
 
     private ChallongeApi challongeApi;
 
@@ -30,7 +31,7 @@ public class TournamentTest {
     }
 
     @Test
-    public void aCreateTournamentSyncTest() throws IOException, ChallongeException {
+    public void aCreateTournamentTest() throws IOException, ChallongeException {
         TournamentQuery query = new TournamentQuery.Builder()
                 .setName("JavaApiTest")
                 .setUrl("javatesttournament")
@@ -39,35 +40,46 @@ public class TournamentTest {
                 .setRoundRobinPointsForGameWin(1.0F)
                 .build();
         Tournament tournament = this.challongeApi.tournaments().createTournament(query).sync();
-        assertEquals(tournament.getName(), "JavaApiTest");
-        assertEquals(tournament.getRoundRobinPointsForGameWin(), 1.0F);
+
+        assertEquals(tournament.name(), "JavaApiTest");
+        assertEquals(tournament.url(), "javatesttournament");
+        assertEquals(tournament.signupCap(), Integer.valueOf(4));
+        assertEquals(tournament.tournamentType(), TournamentType.DOUBLE_ELIMINATION);
+        assertEquals(tournament.roundRobinPointsForGameWin(), 1.0F);
     }
 
     @Test
-    public void bGetTournamentSyncTest() throws IOException, ChallongeException {
+    public void bGetTournamentTest() throws IOException, ChallongeException {
         Tournament tournament = this.challongeApi.tournaments().getTournament("javatesttournament", false, false).sync();
-        assertEquals(tournament.getName(), "JavaApiTest");
+        assertEquals(tournament.name(), "JavaApiTest");
     }
 
     @Test
-    public void cUpdateTournamentSyncTest() throws IOException, ChallongeException {
+    public void cUpdateTournamentTest() throws IOException, ChallongeException {
         TournamentQuery query = new TournamentQuery.Builder()
                 .noName()
                 .noUrl()
                 .setTournamentType(TournamentType.SWISS)
                 .setSignupCap(6)
-                .setAcceptAttachments(false)
-                .setDescription("This is a test tournament")
+                .setAcceptAttachments(true)
+                .setDescription("TestDescription")
                 .holdThirdPlaceMatch(true)
                 .build();
         Tournament tournament = this.challongeApi.tournaments().updateTournament("javatesttournament", query).sync();
-        assertEquals(tournament.getName(), "JavaApiTest");
+
+        assertEquals(tournament.name(), "JavaApiTest");
+        assertEquals(tournament.url(), "javatesttournament");
+        assertEquals(tournament.tournamentType(), TournamentType.SWISS);
+        assertEquals(tournament.signupCap(), Integer.valueOf(6));
+        assertTrue(tournament.acceptAttachments());
+        assertEquals(tournament.description(), "TestDescription");
+        assertTrue(tournament.holdThirdPlaceMatch());
     }
 
     @Test
-    public void dDeleteTournamentSyncTest() throws IOException, ChallongeException {
+    public void dDeleteTournamentTest() throws IOException, ChallongeException {
         Tournament tournament = this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
-        assertEquals(tournament.getName(), "JavaApiTest");
+        assertEquals(tournament.name(), "JavaApiTest");
     }
 
     @After

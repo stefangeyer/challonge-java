@@ -46,91 +46,91 @@ public class Match {
     @SerializedName("prerequisite_match_ids_csv")
     private String prerequisiteMatchIdsCsv;
 
-    public Integer getAttachmentCount() {
+    public Integer attachmentCount() {
         return attachmentCount;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public ZonedDateTime createdAt() {
         return createdAt;
     }
 
-    public Integer getGroupId() {
+    public Integer groupId() {
         return groupId;
     }
 
-    public Boolean getHasAttachment() {
+    public Boolean hasAttachment() {
         return hasAttachment;
     }
 
-    public Integer getId() {
+    public Integer id() {
         return id;
     }
 
-    public String getIdentifier() {
+    public String identifier() {
         return identifier;
     }
 
-    public String getLocation() {
+    public String location() {
         return location;
     }
 
-    public Integer getLoserId() {
+    public Integer loserId() {
         return loserId;
     }
 
-    public Integer getPlayer1Id() {
+    public Integer player1Id() {
         return player1Id;
     }
 
-    public Boolean getPlayer1IsPrereqMatchLoser() {
+    public Boolean player1IsPrereqMatchLoser() {
         return player1IsPrereqMatchLoser;
     }
 
-    public Integer getPlayer1PrereqMatchId() {
+    public Integer player1PrereqMatchId() {
         return player1PrereqMatchId;
     }
 
-    public Integer getPlayer2Id() {
+    public Integer player2Id() {
         return player2Id;
     }
 
-    public Boolean getPlayer2IsPrereqMatchLoser() {
+    public Boolean player2IsPrereqMatchLoser() {
         return player2IsPrereqMatchLoser;
     }
 
-    public Integer getPlayer2PrereqMatchId() {
+    public Integer player2PrereqMatchId() {
         return player2PrereqMatchId;
     }
 
-    public Integer getRound() {
+    public Integer round() {
         return round;
     }
 
-    public ZonedDateTime getScheduledTime() {
+    public ZonedDateTime scheduledTime() {
         return scheduledTime;
     }
 
-    public ZonedDateTime getStartedAt() {
+    public ZonedDateTime startedAt() {
         return startedAt;
     }
 
-    public MatchState getState() {
+    public MatchState state() {
         return state;
     }
 
-    public Integer getTournamentId() {
+    public Integer tournamentId() {
         return tournamentId;
     }
 
-    public ZonedDateTime getUnderwayAt() {
+    public ZonedDateTime underwayAt() {
         return underwayAt;
     }
 
-    public ZonedDateTime getUpdatedAt() {
+    public ZonedDateTime updatedAt() {
         return updatedAt;
     }
 
-    public String getPrerequisiteMatchIdsCsv() {
+    public String prerequisiteMatchIdsCsv() {
         return prerequisiteMatchIdsCsv;
     }
 }

@@ -25,43 +25,43 @@ public class Attachment {
     @SerializedName("asset_url")
     private String assetUrl;
 
-    public Integer getId() {
+    public Integer id() {
         return id;
     }
 
-    public Integer getMatchId() {
+    public Integer matchId() {
         return matchId;
     }
 
-    public Integer getUserId() {
+    public Integer userId() {
         return userId;
     }
 
-    public String getOriginalFileName() {
+    public String originalFileName() {
         return originalFileName;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public ZonedDateTime createdAt() {
         return createdAt;
     }
 
-    public ZonedDateTime getUpdatedAt() {
+    public ZonedDateTime updatedAt() {
         return updatedAt;
     }
 
-    public String getAssetFileName() {
+    public String assetFileName() {
         return assetFileName;
     }
 
-    public String getAssetContentType() {
+    public String assetContentType() {
         return assetContentType;
     }
 
-    public Integer getAssetFileSize() {
+    public Integer assetFileSize() {
         return assetFileSize;
     }
 
-    public String getAssetUrl() {
+    public String assetUrl() {
         return assetUrl;
     }
 }

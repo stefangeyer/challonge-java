@@ -5,6 +5,12 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * Type adapter for the {@link GrandFinalsModifier} enum.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class GrandFinalsModifierAdapter implements GsonAdapter, JsonSerializer<GrandFinalsModifier>, JsonDeserializer<GrandFinalsModifier> {
 
     @Override

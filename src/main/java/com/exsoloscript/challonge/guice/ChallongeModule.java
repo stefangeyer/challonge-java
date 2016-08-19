@@ -5,10 +5,21 @@ import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.google.inject.AbstractModule;
 import retrofit2.Retrofit;
 
+/**
+ * Guice module for {@link com.exsoloscript.challonge.Challonge} initialization.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class ChallongeModule extends AbstractModule {
 
     private ChallongeCredentials credentials;
 
+    /**
+     * Binding the credentials, that will be injected later
+     *
+     * @param credentials ChallongeCredentials
+     */
     public ChallongeModule(ChallongeCredentials credentials) {
         this.credentials = credentials;
     }

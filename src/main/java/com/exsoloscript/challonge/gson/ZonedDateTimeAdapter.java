@@ -8,6 +8,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Type adapter for the {@link ZonedDateTime} class.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class ZonedDateTimeAdapter implements GsonAdapter, JsonSerializer<ZonedDateTime>, JsonDeserializer<ZonedDateTime> {
 
     @Override

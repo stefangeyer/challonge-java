@@ -15,12 +15,23 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Collects the type adapters and creates a Gson object with them
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class AdapterSuite {
 
     private GsonBuilder gsonBuilder;
     private Map<Class, GsonAdapter> adapters;
     private Class[] excluded;
 
+    /**
+     * Collect the adapters
+     *
+     * @param excluded Exclude a type adapter that was registered in the {@link #typeMappings()} method
+     */
     private AdapterSuite(Class... excluded) {
         this.excluded = excluded;
         this.gsonBuilder = new GsonBuilder();
@@ -31,14 +42,30 @@ public class AdapterSuite {
             gsonBuilder.registerTypeAdapter(adapter.getKey(), adapter.getValue());
     }
 
+    /**
+     * Creates the Gson object with the registered type adapters
+     *
+     * @param excluded Classes that will be given to the constructor {@link AdapterSuite#AdapterSuite(Class[])}
+     * @return Gson
+     */
     public static Gson createGson(Class... excluded) {
         return new AdapterSuite(excluded).create();
     }
 
+    /**
+     * Creates a Gson object from the builder
+     *
+     * @return Gson
+     */
     private Gson create() {
         return gsonBuilder.create();
     }
 
+    /**
+     * Type mappings for the Builder. Each mapping contains the class of the object that should be created and the class of the adapter
+     *
+     * @return mappings
+     */
     private Map<Class, Class> typeMappings() {
         Map<Class, Class> classes = new HashMap<>();
 
@@ -56,6 +83,11 @@ public class AdapterSuite {
         return classes;
     }
 
+    /**
+     * Initialize the type adapters. By initializing the type adapters late, the {@link AdapterSuite} cal be used in the adapters.
+     *
+     * @return initialized type adapters
+     */
     private Map<Class, GsonAdapter> createTypeAdapters() {
         // use class values so constructor isnt called before excluding --> no stack overflow
         Map<Class, Class> classes = typeMappings();
@@ -72,6 +104,13 @@ public class AdapterSuite {
         return adapters;
     }
 
+    /**
+     * Call default constructor of given class and return the instance.
+     *
+     * @param clazz Class
+     * @throws IllegalStateException No default constructor found
+     * @return GsonAdapter
+     */
     private GsonAdapter createDefaultInstance(Class clazz) {
         Constructor[] ctors = clazz.getDeclaredConstructors();
         Constructor ctor = null;

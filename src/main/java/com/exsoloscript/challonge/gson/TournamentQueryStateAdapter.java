@@ -5,7 +5,14 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
+/**
+ * Type adapter for the {@link TournamentQueryState} enum.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class TournamentQueryStateAdapter implements GsonAdapter, JsonSerializer<TournamentQueryState>, JsonDeserializer<TournamentQueryState> {
+
     @Override
     public TournamentQueryState deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return TournamentQueryState.fromString(jsonElement.getAsString());

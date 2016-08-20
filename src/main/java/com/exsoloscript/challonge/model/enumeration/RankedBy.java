@@ -3,6 +3,14 @@ package com.exsoloscript.challonge.model.enumeration;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * This enumeration represents the available tournament types.
+ *
+ * More information about the ranking systems can be found <a href="http://feedback.challonge.com/knowledgebase/articles/448540-rank-tie-break-statistics">here</a>
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
 public enum RankedBy {
     MATCH_WINS("match wins"),
     GAME_WINS("game wins"),

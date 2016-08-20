@@ -2,36 +2,54 @@ package com.exsoloscript.challonge.model.query;
 
 import java.io.File;
 
+/**
+ * Query for creating or updating an attachment. This class can be accessed using it's builder.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class AttachmentQuery {
-    private File file;
+
+    private File asset;
     private String url;
     private String description;
 
-    private AttachmentQuery(File file, String url, String description) {
-        this.file = file;
+    private AttachmentQuery(File asset, String url, String description) {
+        this.asset = asset;
         this.url = url;
         this.description = description;
     }
 
-    public File getFile() {
-        return file;
+    /**
+     * A file upload (250KB max, no more than 4 attachments per match).
+     * If provided, the url parameter will be ignored.
+     */
+    public File asset() {
+        return asset;
     }
 
-    public String getUrl() {
+    /**
+     * A web URL. The attachment will contain a link to the given URL.
+     */
+    public String url() {
         return url;
     }
 
-    public String getDescription() {
+    /**
+     * Text to describe the file or URL attachment,
+     * or this can simply be standalone text.
+     */
+    public String description() {
         return description;
     }
 
     public static class Builder {
-        private File file;
+        private File asset;
         private String url;
         private String description;
 
-        public Builder setFile(File file) {
-            this.file = file;
+        public Builder setAsset(File asset) {
+            this.asset = asset;
             return this;
         }
 
@@ -46,7 +64,7 @@ public class AttachmentQuery {
         }
 
         public AttachmentQuery build() {
-            return new AttachmentQuery(file, url, description);
+            return new AttachmentQuery(asset, url, description);
         }
     }
 }

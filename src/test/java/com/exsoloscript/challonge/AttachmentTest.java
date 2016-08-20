@@ -3,9 +3,7 @@ package com.exsoloscript.challonge;
 import com.exsoloscript.challonge.guice.AttachmentTestModule;
 import com.exsoloscript.challonge.guice.ChallongeTestModule;
 import com.exsoloscript.challonge.guice.GuiceJUnitRunner;
-import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
-import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.junit.FixMethodOrder;
@@ -33,7 +31,7 @@ public class AttachmentTest {
     @Test
     public void createAttachmentTest() throws IOException, ChallongeException {
 //        AttachmentQuery query = new AttachmentQuery.Builder()
-////                .setFile(this.file)
+////                .setAsset(this.file)
 //                .setUrl("")
 //                .setDescription("This is a test file")
 //                .build();

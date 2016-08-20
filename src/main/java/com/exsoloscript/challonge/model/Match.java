@@ -5,7 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;
 
+/**
+ * The POJO that will be mapped to the match requests by Gson
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
 public class Match {
+
     @SerializedName("attachment_count")
     private Integer attachmentCount;
     @SerializedName("createdAt")

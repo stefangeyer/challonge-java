@@ -4,7 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;
 
+/**
+ * The POJO that will be mapped to the attachment requests by Gson
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
 public class Attachment {
+
     private Integer id;
     @SerializedName("match_id")
     private Integer matchId;

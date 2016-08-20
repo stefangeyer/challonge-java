@@ -3,13 +3,23 @@ package com.exsoloscript.challonge.model.query;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.Validate;
 
+/**
+ * Query for updating a match. This class can be accessed using it's builder.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class MatchQuery {
+
     @SerializedName("winner_id")
     private Integer winnerId;
+
     @SerializedName("player1_votes")
     private Integer votesForPlayer1;
+
     @SerializedName("player2_votes")
     private Integer votesForPlayer2;
+
     @SerializedName("scores_csv")
     private String scoresCsv;
 
@@ -20,19 +30,33 @@ public class MatchQuery {
         this.scoresCsv = scoresCsv;
     }
 
-    public int getWinnerId() {
+    /**
+     * The participant ID of the winner or "tie" if applicable (Round Robin and Swiss).
+     * NOTE: If you change the outcome of a completed match, all matches in the bracket
+     * that branch from the updated match will be reset.
+     */
+    public Integer winnerId() {
         return winnerId;
     }
 
-    public int getVotesForPlayer1() {
+    /**
+     * Overwrites the number of votes for player 1
+     */
+    public Integer votesForPlayer1() {
         return votesForPlayer1;
     }
 
-    public int getVotesForPlayer2() {
+    /**
+     * Overwrites the number of votes for player 2
+     */
+    public Integer votesForPlayer2() {
         return votesForPlayer2;
     }
 
-    public String getScoresCsv() {
+    /**
+     * Comma separated set/game scores with player 1 score first (e.g. "1-3,3-0,3-2")
+     */
+    public String scoresCsv() {
         return scoresCsv;
     }
 
@@ -62,6 +86,15 @@ public class MatchQuery {
             return this;
         }
 
+        /**
+         * Build the builder
+         *
+         * If you're updating winner_id, scores_csv must also be provided.
+         * You may, however, update score_csv without providing winner_id
+         * for live score updates.
+         *
+         * @return The built MatchQuery
+         */
         public MatchQuery build() {
             if (this.winnerId != null) {
                 Validate.notNull(this.scoresCsv, "If you're updating winnerId, scoresCsv must also be provided. You may, however, update scoreCsv without providing winnerId for live score updates.");

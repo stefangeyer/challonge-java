@@ -1,7 +1,6 @@
 package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
-import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

@@ -3,8 +3,8 @@ package com.exsoloscript.challonge.handler.call;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.model.Participant;
-import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
+import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

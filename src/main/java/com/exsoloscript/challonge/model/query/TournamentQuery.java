@@ -1,68 +1,105 @@
 package com.exsoloscript.challonge.model.query;
 
-import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.Validate;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 
+/**
+ * Query for creating or updating a tournament. This class can be accessed using it's builder.
+ *
+ * @author EXSolo
+ * @version 20160819.1
+ */
 public class TournamentQuery {
+
     private String name;
+
     @SerializedName("tournament_type")
     private TournamentType tournamentType;
+
     private String url;
+
     private String subdomain;
+
     private String description;
+
     @SerializedName("open_signup")
-    private boolean openSignup;
+    private Boolean openSignup;
+
     @SerializedName("hold_third_place_match")
-    private boolean holdThirdPlaceMatch;
+    private Boolean holdThirdPlaceMatch;
+
     @SerializedName("pts_for_match_win")
-    private float ptsForMatchWin;
+    private Float pointsForMatchWin;
+
     @SerializedName("pts_for_match_tie")
-    private float ptsForMatchTie;
+    private Float pointsForMatchTie;
+
     @SerializedName("pts_for_game_win")
-    private float ptsForGameWin;
+    private Float pointsForGameWin;
+
     @SerializedName("pts_for_game_tie")
-    private float ptsForGameTie;
+    private Float pointsForGameTie;
+
     @SerializedName("pts_for_bye")
-    private float ptsForBye;
+    private Float pointsForBye;
+
     @SerializedName("swiss_rounds")
-    private int swissRounds;
+    private Integer swissRounds;
+
     @SerializedName("ranked_by")
     private RankedBy rankedBy;
+
     @SerializedName("rr_pts_for_game_win")
-    private float rrPtsForGameWin;
+    private Float roundRobinPointsForGameWin;
+
     @SerializedName("rr_pts_for_game_tie")
-    private float rrPtsForGameTie;
+    private Float roundRobinPointsForGameTie;
+
     @SerializedName("rr_pts_for_match_win")
-    private float rrPtsForMatchWin;
+    private Float roundRobinPointsForMatchWin;
+
     @SerializedName("rr_pts_for_match_tie")
-    private float rrPtsForMatchTie;
+    private Float roundRobinPointsForMatchTie;
+
     @SerializedName("accept_attachments")
-    private boolean acceptAttachments;
+    private Boolean acceptAttachments;
+
     @SerializedName("hide_forum")
-    private boolean hideForum;
+    private Boolean hideForum;
+
     @SerializedName("show_rounds")
-    private boolean showRounds;
+    private Boolean showRounds;
+
     @SerializedName("private")
-    private boolean _private;
+    private Boolean _private;
+
+    @SerializedName("notify_users_when_matches_open")
+    private Boolean notifyUsersWhenMatchesOpen;
+
     @SerializedName("notify_users_when_the_tournament_ends")
-    private boolean notifyUsersWhenTheTournamentEnds;
+    private Boolean notifyUsersWhenTheTournamentEnds;
+
     @SerializedName("sequential_pairings")
-    private boolean sequentialPairings;
+    private Boolean sequentialPairings;
+
     @SerializedName("signup_cap")
-    private int signupCap;
+    private Integer signupCap;
+
     @SerializedName("start_at")
-    private Calendar startAt;
+    private ZonedDateTime startAt;
+
     @SerializedName("check_in_duration")
-    private int checkInDuration;
+    private Integer checkInDuration;
+
     @SerializedName("grand_finals_modifier")
     private GrandFinalsModifier grandFinalsModifier;
 
-    private TournamentQuery(String name, TournamentType tournamentType, String url, String subdomain, String description, boolean openSignup, boolean holdThirdPlaceMatch, float ptsForMatchWin, float ptsForMatchTie, float ptsForGameWin, float ptsForGameTie, float ptsForBye, int swissRounds, RankedBy rankedBy, float rrPtsForGameWin, float rrPtsForGameTie, float rrPtsForMatchWin, float rrPtsForMatchTie, boolean acceptAttachments, boolean hideForum, boolean showRounds, boolean _private, boolean notifyUsersWhenTheTournamentEnds, boolean sequentialPairings, int signupCap, Calendar startAt, int checkInDuration, GrandFinalsModifier grandFinalsModifier) {
+    private TournamentQuery(String name, TournamentType tournamentType, String url, String subdomain, String description, Boolean openSignup, Boolean holdThirdPlaceMatch, Float pointsForMatchWin, Float pointsForMatchTie, Float pointsForGameWin, Float pointsForGameTie, Float pointsForBye, Integer swissRounds, RankedBy rankedBy, Float roundRobinPointsForGameWin, Float roundRobinPointsForGameTie, Float roundRobinPointsForMatchWin, Float roundRobinPointsForMatchTie, Boolean acceptAttachments, Boolean hideForum, Boolean showRounds, Boolean _private, Boolean notifyUsersWhenMatchesOpen, Boolean notifyUsersWhenTheTournamentEnds, Boolean sequentialPairings, Integer signupCap, ZonedDateTime startAt, Integer checkInDuration, GrandFinalsModifier grandFinalsModifier) {
         this.name = name;
         this.tournamentType = tournamentType;
         this.url = url;
@@ -70,21 +107,22 @@ public class TournamentQuery {
         this.description = description;
         this.openSignup = openSignup;
         this.holdThirdPlaceMatch = holdThirdPlaceMatch;
-        this.ptsForMatchWin = ptsForMatchWin;
-        this.ptsForMatchTie = ptsForMatchTie;
-        this.ptsForGameWin = ptsForGameWin;
-        this.ptsForGameTie = ptsForGameTie;
-        this.ptsForBye = ptsForBye;
+        this.pointsForMatchWin = pointsForMatchWin;
+        this.pointsForMatchTie = pointsForMatchTie;
+        this.pointsForGameWin = pointsForGameWin;
+        this.pointsForGameTie = pointsForGameTie;
+        this.pointsForBye = pointsForBye;
         this.swissRounds = swissRounds;
         this.rankedBy = rankedBy;
-        this.rrPtsForGameWin = rrPtsForGameWin;
-        this.rrPtsForGameTie = rrPtsForGameTie;
-        this.rrPtsForMatchWin = rrPtsForMatchWin;
-        this.rrPtsForMatchTie = rrPtsForMatchTie;
+        this.roundRobinPointsForGameWin = roundRobinPointsForGameWin;
+        this.roundRobinPointsForGameTie = roundRobinPointsForGameTie;
+        this.roundRobinPointsForMatchWin = roundRobinPointsForMatchWin;
+        this.roundRobinPointsForMatchTie = roundRobinPointsForMatchTie;
         this.acceptAttachments = acceptAttachments;
         this.hideForum = hideForum;
         this.showRounds = showRounds;
         this._private = _private;
+        this.notifyUsersWhenMatchesOpen = notifyUsersWhenMatchesOpen;
         this.notifyUsersWhenTheTournamentEnds = notifyUsersWhenTheTournamentEnds;
         this.sequentialPairings = sequentialPairings;
         this.signupCap = signupCap;
@@ -93,152 +131,254 @@ public class TournamentQuery {
         this.grandFinalsModifier = grandFinalsModifier;
     }
 
-    public String getName() {
+    /**
+     * Your event's name/title (Max: 60 characters)
+     */
+    public String name() {
         return name;
     }
 
-    public TournamentType getTournamentType() {
+    /**
+     * Single elimination (default), double elimination, round robin, swiss
+     */
+    public TournamentType tournamentType() {
         return tournamentType;
     }
 
-    public String getUrl() {
+    /**
+     * challonge.com/url (letters, numbers, and underscores only)
+     */
+    public String url() {
         return url;
     }
 
-    public String getSubdomain() {
+    /**
+     * 	subdomain.challonge.com/url (Requires write access to the specified subdomain)
+     */
+    public String subdomain() {
         return subdomain;
     }
 
-    public String getDescription() {
+    /**
+     * Description/instructions to be displayed above the bracket
+     */
+    public String description() {
         return description;
     }
 
-    public boolean isOpenSignup() {
+    /**
+     * Have Challonge host a sign-up page (otherwise, you manually add all participants)
+     */
+    public Boolean openSignup() {
         return openSignup;
     }
 
-    public boolean holdThirdPlaceMatch() {
+    /**
+     * Single Elimination only. Include a match between semifinal losers? (default: false)
+     */
+    public Boolean holdThirdPlaceMatch() {
         return holdThirdPlaceMatch;
     }
 
-    public float getPointsForMatchWin() {
-        return ptsForMatchWin;
+    /**
+     * Decimal (to the nearest tenth) - Swiss only - default: 1.0
+     */
+    public Float pointsForMatchWin() {
+        return pointsForMatchWin;
     }
 
-    public float getPointsForMatchTie() {
-        return ptsForMatchTie;
+    /**
+     * Decimal (to the nearest tenth) - Swiss only - default: 0.5
+     */
+    public Float pointsForMatchTie() {
+        return pointsForMatchTie;
     }
 
-    public float getPointsForGameWin() {
-        return ptsForGameWin;
+    /**
+     * Decimal (to the nearest tenth) - Swiss only - default: 0.0
+     */
+    public Float pointsForGameWin() {
+        return pointsForGameWin;
     }
 
-    public float getPointsForGameTie() {
-        return ptsForGameTie;
+    /**
+     * Decimal (to the nearest tenth) - Swiss only - default: 0.0
+     */
+    public Float pointsForGameTie() {
+        return pointsForGameTie;
     }
 
-    public float getPointsForBye() {
-        return ptsForBye;
+    /**
+     * Decimal (to the nearest tenth) - Swiss only - default: 1.0
+     */
+    public Float pointsForBye() {
+        return pointsForBye;
     }
 
-    public int getSwissRounds() {
+    /**
+     * Swiss only -
+     * We recommend limiting the number of rounds to less than two-thirds
+     * the number of players. Otherwise, an impossible pairing situation
+     * can be reached and your tournament may end before the desired number
+     * of rounds are played.
+     */
+    public Integer swissRounds() {
         return swissRounds;
     }
 
+    /**
+     * One of the following: 'match wins', 'game wins', 'points scored', 'points difference', 'custom'
+     */
     public RankedBy rankedBy() {
         return rankedBy;
     }
 
-    public float getRoundRobinPointsForGameWin() {
-        return rrPtsForGameWin;
+    /**
+     * Rounded to the nearest tenth - Round Robin "custom only" - default: 1.0
+     */
+    public Float roundRobinPointsForGameWin() {
+        return roundRobinPointsForGameWin;
     }
 
-    public float getRoundRobinPointsForGameTie() {
-        return rrPtsForGameTie;
+    /**
+     * Rounded to the nearest tenth - Round Robin "custom" only - default: 0.5
+     */
+    public Float roundRobinPointsForGameTie() {
+        return roundRobinPointsForGameTie;
     }
 
-    public float getRoundRobinPointsForMatchWin() {
-        return rrPtsForMatchWin;
+    /**
+     * Rounded to the nearest tenth - Round Robin "custom" only - default: 0.0
+     */
+    public Float roundRobinPointsForMatchWin() {
+        return roundRobinPointsForMatchWin;
     }
 
-    public float getRoundRobinPointsForMatchTie() {
-        return rrPtsForMatchTie;
+    /**
+     * 	Rounded to the nearest tenth - Round Robin "custom" only - default: 0.0
+     */
+    public Float roundRobinPointsForMatchTie() {
+        return roundRobinPointsForMatchTie;
     }
 
-    public boolean isAcceptAttachments() {
+    /**
+     * Allow match attachment uploads (default: false)
+     */
+    public Boolean acceptAttachments() {
         return acceptAttachments;
     }
 
-    public boolean isHideForum() {
+    /**
+     * Hide the forum tab on your Challonge page (default: false)
+     */
+    public Boolean hideForum() {
         return hideForum;
     }
 
-    public boolean isShowRounds() {
+    /**
+     * Single and Double Elimination only - Label each round above the bracket (default: false)
+     */
+    public Boolean showRounds() {
         return showRounds;
     }
 
-    public boolean isPrivate() {
+    /**
+     * Hide this tournament from the public browsable index and your profile (default: false)
+     */
+    public Boolean isPrivate() {
         return _private;
     }
 
-    public boolean isNotifyUsersWhenTheTournamentEnds() {
+    /**
+     * Email registered Challonge participants when matches open up for them (default: false)
+     */
+    public Boolean notifyUsersWhenMatchesOpen() {
+        return notifyUsersWhenMatchesOpen;
+    }
+
+    /**
+     * Email registered Challonge participants the results when this tournament ends (default: false)
+     */
+    public Boolean notifyUsersWhenTheTournamentEnds() {
         return notifyUsersWhenTheTournamentEnds;
     }
 
-    public boolean isSequentialPairings() {
+    /**
+     * Instead of traditional seeding rules, make pairings by going straight down the list of participants.
+     * First round matches are filled in top to bottom, then qualifying matches (if applicable). (default: false)
+     */
+    public Boolean sequentialPairings() {
         return sequentialPairings;
     }
 
-    public int getSignupCap() {
+    /**
+     * Maximum number of participants in the bracket.
+     * A waiting list (attribute on Participant) will capture participants once the cap is reached.
+     */
+    public Integer signupCap() {
         return signupCap;
     }
 
-    public Calendar getStartAt() {
+    /**
+     * The planned or anticipated start time for the tournament
+     * (Used with check_in_duration to determine participant check-in window).
+     * Timezone defaults to Eastern.
+     */
+    public ZonedDateTime startAt() {
         return startAt;
     }
 
-    public int getCheckInDuration() {
+    /**
+     * Length of the participant check-in window in minutes.
+     */
+    public Integer checkInDuration() {
         return checkInDuration;
     }
 
-    public GrandFinalsModifier getGrandFinalsModifier() {
+    /**
+     * This option only affects double elimination.
+     * <p>
+     * null/blank (default) - give the winners bracket finalist two chances to beat the losers bracket finalist<br>
+     * 'single match' - create only one grand finals match<br>
+     * 'skip' - don't create a finals match between winners and losers bracket finalists
+     * </p>
+     */
+    public GrandFinalsModifier grandFinalsModifier() {
         return grandFinalsModifier;
     }
 
     public static class Builder {
         private String name;
-        private boolean noName;
         private TournamentType tournamentType;
         private String url;
-        private boolean noUrl;
         private String subdomain;
         private String description;
-        private boolean openSignup;
-        private boolean holdThirdPlaceMatch;
-        private float ptsForMatchWin;
-        private float ptsForMatchTie;
-        private float ptsForGameWin;
-        private float ptsForGameTie;
-        private float ptsForBye;
-        private int swissRounds;
+        private Boolean openSignup;
+        private Boolean holdThirdPlaceMatch;
+        private Float pointsForMatchWin;
+        private Float pointsForMatchTie;
+        private Float pointsForGameWin;
+        private Float pointsForGameTie;
+        private Float pointsForBye;
+        private Integer swissRounds;
         private RankedBy rankedBy;
-        private float rrPtsForGameWin;
-        private float rrPtsForGameTie;
-        private float rrPtsForMatchWin;
-        private float rrPtsForMatchTie;
-        private boolean acceptAttachments;
-        private boolean hideForum;
-        private boolean showRounds;
-        private boolean aPrivate;
-        private boolean notifyUsersWhenTheTournamentEnds;
-        private boolean sequentialPairings;
-        private int signupCap;
-        private Calendar startAt;
-        private int checkInDuration;
+        private Float roundRobinPointsForGameWin;
+        private Float roundRobinPointsForGameTie;
+        private Float roundRobinPointsForMatchWin;
+        private Float roundRobinPointsForMatchTie;
+        private Boolean acceptAttachments;
+        private Boolean hideForum;
+        private Boolean showRounds;
+        private Boolean aPrivate;
+        private Boolean notifyUsersWhenMatchesOpen;
+        private Boolean notifyUsersWhenTheTournamentEnds;
+        private Boolean sequentialPairings;
+        private Integer signupCap;
+        private ZonedDateTime startAt;
+        private Integer checkInDuration;
         private GrandFinalsModifier grandFinalsModifier;
-
-        public Builder() {
-        }
+        private Boolean noName = false;
+        private Boolean noUrl = false;
 
         public Builder setName(String name) {
             this.name = name;
@@ -275,112 +415,117 @@ public class TournamentQuery {
             return this;
         }
 
-        public Builder setOpenSignup(boolean openSignup) {
+        public Builder setOpenSignup(Boolean openSignup) {
             this.openSignup = openSignup;
             return this;
         }
 
-        public Builder holdThirdPlaceMatch(boolean holdThirdPlaceMatch) {
+        public Builder holdThirdPlaceMatch(Boolean holdThirdPlaceMatch) {
             this.holdThirdPlaceMatch = holdThirdPlaceMatch;
             return this;
         }
 
-        public Builder setPointsForMatchWin(float ptsForMatchWin) {
-            this.ptsForMatchWin = ptsForMatchWin;
+        public Builder setPointsForMatchWin(Float pointsForMatchWin) {
+            this.pointsForMatchWin = pointsForMatchWin;
             return this;
         }
 
-        public Builder setPointsForMatchTie(float ptsForMatchTie) {
-            this.ptsForMatchTie = ptsForMatchTie;
+        public Builder setPointsForMatchTie(Float pointsForMatchTie) {
+            this.pointsForMatchTie = pointsForMatchTie;
             return this;
         }
 
-        public Builder setPointsForGameWin(float ptsForGameWin) {
-            this.ptsForGameWin = ptsForGameWin;
+        public Builder setPointsForGameWin(Float pointsForGameWin) {
+            this.pointsForGameWin = pointsForGameWin;
             return this;
         }
 
-        public Builder setPointsForGameTie(float ptsForGameTie) {
-            this.ptsForGameTie = ptsForGameTie;
+        public Builder setPointsForGameTie(Float pointsForGameTie) {
+            this.pointsForGameTie = pointsForGameTie;
             return this;
         }
 
-        public Builder setPointsForBye(float ptsForBye) {
-            this.ptsForBye = ptsForBye;
+        public Builder setPointsForBye(Float pointsForBye) {
+            this.pointsForBye = pointsForBye;
             return this;
         }
 
-        public Builder setSwissRounds(int swissRounds) {
+        public Builder setSwissRounds(Integer swissRounds) {
             this.swissRounds = swissRounds;
             return this;
         }
 
-        public Builder rankedBy(RankedBy rankedBy) {
+        public Builder setRankedBy(RankedBy rankedBy) {
             this.rankedBy = rankedBy;
             return this;
         }
 
-        public Builder setRoundRobinPointsForGameWin(float rrPtsForGameWin) {
-            this.rrPtsForGameWin = rrPtsForGameWin;
+        public Builder setRoundRobinPointsForGameWin(Float roundRobinPointsForGameWin) {
+            this.roundRobinPointsForGameWin = roundRobinPointsForGameWin;
             return this;
         }
 
-        public Builder setRoundRobinPointsForGameTie(float rrPtsForGameTie) {
-            this.rrPtsForGameTie = rrPtsForGameTie;
+        public Builder setRoundRobinPointsForGameTie(Float roundRobinPointsForGameTie) {
+            this.roundRobinPointsForGameTie = roundRobinPointsForGameTie;
             return this;
         }
 
-        public Builder setRoundRobinPointsForMatchWin(float rrPtsForMatchWin) {
-            this.rrPtsForMatchWin = rrPtsForMatchWin;
+        public Builder setRoundRobinPointsForMatchWin(Float roundRobinPointsForMatchWin) {
+            this.roundRobinPointsForMatchWin = roundRobinPointsForMatchWin;
             return this;
         }
 
-        public Builder setRoundRobinPointsForMatchTie(float rrPtsForMatchTie) {
-            this.rrPtsForMatchTie = rrPtsForMatchTie;
+        public Builder setRoundRobinPointsForMatchTie(Float roundRobinPointsForMatchTie) {
+            this.roundRobinPointsForMatchTie = roundRobinPointsForMatchTie;
             return this;
         }
 
-        public Builder setAcceptAttachments(boolean acceptAttachments) {
+        public Builder setAcceptAttachments(Boolean acceptAttachments) {
             this.acceptAttachments = acceptAttachments;
             return this;
         }
 
-        public Builder setHideForum(boolean hideForum) {
+        public Builder setHideForum(Boolean hideForum) {
             this.hideForum = hideForum;
             return this;
         }
 
-        public Builder setShowRounds(boolean showRounds) {
+        public Builder setShowRounds(Boolean showRounds) {
             this.showRounds = showRounds;
             return this;
         }
 
-        public Builder setPrivate(boolean _private) {
+        public Builder setPrivate(Boolean _private) {
             this.aPrivate = _private;
             return this;
         }
 
-        public Builder setNotifyUsersWhenTheTournamentEnds(boolean notifyUsersWhenTheTournamentEnds) {
+        public Builder setNotifyUsersWhenTheTournamentEnds(Boolean notifyUsersWhenTheTournamentEnds) {
             this.notifyUsersWhenTheTournamentEnds = notifyUsersWhenTheTournamentEnds;
             return this;
         }
 
-        public Builder setSequentialPairings(boolean sequentialPairings) {
+        public Builder setNotifyUsersWhenMatchesOpen(Boolean notifyUsersWhenMatchesOpen) {
+            this.notifyUsersWhenMatchesOpen = notifyUsersWhenMatchesOpen;
+            return this;
+        }
+
+        public Builder setSequentialPairings(Boolean sequentialPairings) {
             this.sequentialPairings = sequentialPairings;
             return this;
         }
 
-        public Builder setSignupCap(int signupCap) {
+        public Builder setSignupCap(Integer signupCap) {
             this.signupCap = signupCap;
             return this;
         }
 
-        public Builder setStartAt(Calendar startAt) {
+        public Builder setStartAt(ZonedDateTime startAt) {
             this.startAt = startAt;
             return this;
         }
 
-        public Builder setCheckInDuration(int checkInDuration) {
+        public Builder setCheckInDuration(Integer checkInDuration) {
             this.checkInDuration = checkInDuration;
             return this;
         }
@@ -396,7 +541,7 @@ public class TournamentQuery {
             if (!this.noUrl)
                 Validate.notBlank(url, "URL can't be blank");
             Validate.isTrue(signupCap > 3, "Participant / Signup Cap must be greater than 3");
-            return new TournamentQuery(name, tournamentType, url, subdomain, description, openSignup, holdThirdPlaceMatch, ptsForMatchWin, ptsForMatchTie, ptsForGameWin, ptsForGameTie, ptsForBye, swissRounds, rankedBy, rrPtsForGameWin, rrPtsForGameTie, rrPtsForMatchWin, rrPtsForMatchTie, acceptAttachments, hideForum, showRounds, aPrivate, notifyUsersWhenTheTournamentEnds, sequentialPairings, signupCap, startAt, checkInDuration, grandFinalsModifier);
+            return new TournamentQuery(name, tournamentType, url, subdomain, description, openSignup, holdThirdPlaceMatch, pointsForMatchWin, pointsForMatchTie, pointsForGameWin, pointsForGameTie, pointsForBye, swissRounds, rankedBy, roundRobinPointsForGameWin, roundRobinPointsForGameTie, roundRobinPointsForMatchWin, roundRobinPointsForMatchTie, acceptAttachments, hideForum, showRounds, aPrivate, notifyUsersWhenMatchesOpen, notifyUsersWhenTheTournamentEnds, sequentialPairings, signupCap, startAt, checkInDuration, grandFinalsModifier);
         }
     }
 }

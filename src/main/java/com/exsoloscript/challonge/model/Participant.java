@@ -4,7 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;
 
+/**
+ * The POJO that will be mapped to the participant requests by Gson
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
 public class Participant {
+
     private String name;
     @SerializedName("challonge_username")
     private String challongeUsername;

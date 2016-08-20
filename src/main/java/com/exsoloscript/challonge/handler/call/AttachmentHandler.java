@@ -2,8 +2,8 @@ package com.exsoloscript.challonge.handler.call;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
-import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.query.AttachmentQuery;
+import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -37,9 +37,9 @@ public class AttachmentHandler {
 
         MediaType multipart = MediaType.parse("multipart/form-data");
 
-        RequestBody asset = attachment.getFile() != null ? RequestBody.create(multipart, attachment.getFile()) : null;
-        RequestBody description = attachment.getDescription() != null ? RequestBody.create(multipart, attachment.getDescription()) : null;
-        RequestBody url = attachment.getUrl() != null ? RequestBody.create(multipart, attachment.getUrl()) : null;
+        RequestBody asset = attachment.asset() != null ? RequestBody.create(multipart, attachment.asset()) : null;
+        RequestBody description = attachment.description() != null ? RequestBody.create(multipart, attachment.description()) : null;
+        RequestBody url = attachment.url() != null ? RequestBody.create(multipart, attachment.url()) : null;
 
         return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournamentName, matchId, asset, url, description));
     }

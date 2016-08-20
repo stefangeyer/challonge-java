@@ -1,11 +1,11 @@
 package com.exsoloscript.challonge;
 
-import com.exsoloscript.challonge.guice.ChallongeTestModule;
 import com.exsoloscript.challonge.guice.GuiceJUnitRunner;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
-import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
+import com.exsoloscript.challonge.guice.ChallongeTestModule;
+import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.google.inject.Inject;
 import org.junit.After;
 import org.junit.FixMethodOrder;

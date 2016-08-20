@@ -3,6 +3,12 @@ package com.exsoloscript.challonge.model.enumeration;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * This enumeration represents the available tournament types
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
 public enum TournamentType {
     SINGLE_ELIMINATION("single elimination"),
     DOUBLE_ELIMINATION("double elimination"),

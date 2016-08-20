@@ -1,8 +1,7 @@
 package com.exsoloscript.challonge.handler.retrofit;
 
-import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.query.AttachmentQuery;
-import okhttp3.MultipartBody;
+import com.exsoloscript.challonge.model.Attachment;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.*;

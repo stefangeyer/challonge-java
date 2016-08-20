@@ -2,11 +2,12 @@ package com.exsoloscript.challonge.guice;
 
 import com.exsoloscript.challonge.ChallongeCredentials;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
+import com.exsoloscript.challonge.Challonge;
 import com.google.inject.AbstractModule;
 import retrofit2.Retrofit;
 
 /**
- * Guice module for {@link com.exsoloscript.challonge.Challonge} initialization.
+ * Guice module for {@link Challonge} initialization.
  *
  * @author EXSolo
  * @version 20160819.1

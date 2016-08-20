@@ -3,8 +3,8 @@ package com.exsoloscript.challonge.handler.call;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
+import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.inject.Inject;
@@ -25,7 +25,7 @@ public class TournamentHandler {
         this.factory = factory;
     }
 
-    public ChallongeApiCall<List<Tournament>> getTournaments(TournamentState state, TournamentType type, String createdAfter, String createdBefore, String subdomain) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Tournament>> getTournaments(TournamentQueryState state, TournamentType type, String createdAfter, String createdBefore, String subdomain) throws IOException, ChallongeException {
         return this.factory.createApiCall(this.tournamentHandler.getTournaments(state, type, createdAfter, createdBefore, subdomain));
     }
 

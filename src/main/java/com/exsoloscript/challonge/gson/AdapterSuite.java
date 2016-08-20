@@ -1,11 +1,11 @@
 package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
+import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -1,9 +1,9 @@
 package com.exsoloscript.challonge;
 
-import com.exsoloscript.challonge.handler.call.AttachmentHandler;
 import com.exsoloscript.challonge.handler.call.MatchHandler;
-import com.exsoloscript.challonge.handler.call.ParticipantHandler;
 import com.exsoloscript.challonge.handler.call.TournamentHandler;
+import com.exsoloscript.challonge.handler.call.AttachmentHandler;
+import com.exsoloscript.challonge.handler.call.ParticipantHandler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

@@ -1,15 +1,22 @@
 package com.exsoloscript.challonge.model;
 
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
-import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * The POJO that will be mapped to the tournament requests by Gson
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
 public class Tournament {
+
     private String name;
     @SerializedName("tournament_type")
     private TournamentType tournamentType;
@@ -98,7 +105,8 @@ public class Tournament {
     private Boolean requireScoreAgreement;
     @SerializedName("started_at")
     private ZonedDateTime startedAt;
-    private String startedCheckingInAt;
+    @SerializedName("started_checking_in_at")
+    private ZonedDateTime startedCheckingInAt;
     private TournamentState state;
     private Boolean teams;
     @SerializedName("tie_breaks")
@@ -222,7 +230,7 @@ public class Tournament {
         return showRounds;
     }
 
-    public Boolean _private() {
+    public Boolean isPrivate() {
         return _private;
     }
 
@@ -326,7 +334,7 @@ public class Tournament {
         return startedAt;
     }
 
-    public String startedCheckingInAt() {
+    public ZonedDateTime startedCheckingInAt() {
         return startedCheckingInAt;
     }
 

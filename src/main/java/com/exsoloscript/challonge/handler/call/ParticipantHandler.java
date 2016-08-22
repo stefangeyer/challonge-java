@@ -23,39 +23,39 @@ public class ParticipantHandler {
         this.factory = factory;
     }
 
-    public ChallongeApiCall<List<Participant>> getParticipants(String tournamentName) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.getParticipants(tournamentName));
+    public ChallongeApiCall<List<Participant>> getParticipants(String tournament) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.getParticipants(tournament));
     }
 
-    public ChallongeApiCall<Participant> getParticipant(String tournamentName, int participantId, boolean includeMatches) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.getParticipant(tournamentName, participantId, includeMatches ? 1 : 0));
+    public ChallongeApiCall<Participant> getParticipant(String tournament, int participantId, boolean includeMatches) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.getParticipant(tournament, participantId, includeMatches ? 1 : 0));
     }
 
-    public ChallongeApiCall<Participant> addParticipant(String tournamentName, ParticipantQuery participant) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.addParticipant(tournamentName, participant));
+    public ChallongeApiCall<Participant> addParticipant(String tournament, ParticipantQuery participant) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.addParticipant(tournament, participant));
     }
 
-    public ChallongeApiCall<Participant> bulkAddParticipants(String tournamentName, List<ParticipantQuery> participants) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.bulkAddParticipants(tournamentName, participants));
+    public ChallongeApiCall<Participant> bulkAddParticipants(String tournament, List<ParticipantQuery> participants) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.bulkAddParticipants(tournament, participants));
     }
 
-    public ChallongeApiCall<Participant> updateParticipant(String tournamentName, int participantId, ParticipantQuery participant) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.updateParticipant(tournamentName, participantId, participant));
+    public ChallongeApiCall<Participant> updateParticipant(String tournament, int participantId, ParticipantQuery participant) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.updateParticipant(tournament, participantId, participant));
     }
 
-    public ChallongeApiCall<Participant> checkInParticipant(String tournamentName, int participantId) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.checkInParticipant(tournamentName, participantId));
+    public ChallongeApiCall<Participant> checkInParticipant(String tournament, int participantId) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.checkInParticipant(tournament, participantId));
     }
 
-    public ChallongeApiCall<Participant> undoParticipantCheckIn(String tournamentName, int participantId) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.undoParticipantCheckIn(tournamentName, participantId));
+    public ChallongeApiCall<Participant> undoParticipantCheckIn(String tournament, int participantId) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.undoParticipantCheckIn(tournament, participantId));
     }
 
-    public ChallongeApiCall<Participant> deleteParticipant(String tournamentName, int participantId) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.deleteParticipant(tournamentName, participantId));
+    public ChallongeApiCall<Participant> deleteParticipant(String tournament, int participantId) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.deleteParticipant(tournament, participantId));
     }
 
-    public ChallongeApiCall<List<Participant>> randomizeParticipants(String tournamentName) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.participantHandler.randomizeParticipants(tournamentName));
+    public ChallongeApiCall<List<Participant>> randomizeParticipants(String tournament) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.participantHandler.randomizeParticipants(tournament));
     }
 }

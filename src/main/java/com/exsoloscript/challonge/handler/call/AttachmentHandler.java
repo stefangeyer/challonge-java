@@ -25,30 +25,30 @@ public class AttachmentHandler {
         this.factory = factory;
     }
     
-    public ChallongeApiCall<List<Attachment>> getAttachments(String tournamentName, int matchId) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.attachmentHandler.getAttachments(tournamentName, matchId));
+    public ChallongeApiCall<List<Attachment>> getAttachments(String tournament, int matchId) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.attachmentHandler.getAttachments(tournament, matchId));
     }
     
-    public ChallongeApiCall<Attachment> getAttachment(String tournamentName, int matchId, int attachmentId) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.attachmentHandler.getAttachment(tournamentName, matchId, attachmentId));
+    public ChallongeApiCall<Attachment> getAttachment(String tournament, int matchId, int attachmentId) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.attachmentHandler.getAttachment(tournament, matchId, attachmentId));
     }
 
-    public ChallongeApiCall<Attachment> createAttachment(String tournamentName, int matchId, AttachmentQuery attachment) throws IOException, ChallongeException {
+    public ChallongeApiCall<Attachment> createAttachment(String tournament, int matchId, AttachmentQuery attachment) throws IOException, ChallongeException {
 
-        MediaType multipart = MediaType.parse("multipart/form-data");
+//        MediaType multipart = MediaType.parse("multipart/form-data");
+//
+//        RequestBody asset = attachment.asset() != null ? RequestBody.create(multipart, attachment.asset()) : null;
+//        RequestBody description = attachment.description() != null ? RequestBody.create(multipart, attachment.description()) : null;
+//        RequestBody url = attachment.url() != null ? RequestBody.create(multipart, attachment.url()) : null;
 
-        RequestBody asset = attachment.asset() != null ? RequestBody.create(multipart, attachment.asset()) : null;
-        RequestBody description = attachment.description() != null ? RequestBody.create(multipart, attachment.description()) : null;
-        RequestBody url = attachment.url() != null ? RequestBody.create(multipart, attachment.url()) : null;
-
-        return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournamentName, matchId, asset, url, description));
+        return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournament, matchId, attachment));
     }
 
-    public ChallongeApiCall<Attachment> updateAttachment(String tournamentName, int matchId, int attachmentId, AttachmentQuery attachment) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.attachmentHandler.updateAttachment(tournamentName, matchId, attachmentId, attachment));
+    public ChallongeApiCall<Attachment> updateAttachment(String tournament, int matchId, int attachmentId, AttachmentQuery attachment) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.attachmentHandler.updateAttachment(tournament, matchId, attachmentId, attachment));
     }
 
-    public ChallongeApiCall<Attachment> deleteAttachment(String tournamentName, int matchId, int attachmentId) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.attachmentHandler.deleteAttachment(tournamentName, matchId, attachmentId));
+    public ChallongeApiCall<Attachment> deleteAttachment(String tournament, int matchId, int attachmentId) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.attachmentHandler.deleteAttachment(tournament, matchId, attachmentId));
     }
 }

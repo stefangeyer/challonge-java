@@ -24,15 +24,15 @@ public class MatchHandler {
         this.factory = factory;
     }
 
-    public ChallongeApiCall<List<Match>> getMatches(String tournamentName, int participantId, MatchState state) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.matchHandler.getMatches(tournamentName, participantId, state));
+    public ChallongeApiCall<List<Match>> getMatches(String tournament, int participantId, MatchState state) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.matchHandler.getMatches(tournament, participantId, state));
     }
 
-    public ChallongeApiCall<Match> getMatch(String tournamentName, int matchId, boolean includeAttachments) throws IOException, ChallongeException {
-        return this.factory.createApiCall(matchHandler.getMatch(tournamentName, matchId, includeAttachments ? 1 : 0));
+    public ChallongeApiCall<Match> getMatch(String tournament, int matchId, boolean includeAttachments) throws IOException, ChallongeException {
+        return this.factory.createApiCall(matchHandler.getMatch(tournament, matchId, includeAttachments ? 1 : 0));
     }
 
-    public ChallongeApiCall<Match> updateMatch(String tournamentName, int matchId, MatchQuery match) throws IOException, ChallongeException {
-        return this.factory.createApiCall(this.matchHandler.updateMatch(tournamentName, matchId, match));
+    public ChallongeApiCall<Match> updateMatch(String tournament, int matchId, MatchQuery match) throws IOException, ChallongeException {
+        return this.factory.createApiCall(this.matchHandler.updateMatch(tournament, matchId, match));
     }
 }

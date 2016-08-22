@@ -1,11 +1,11 @@
 package com.exsoloscript.challonge;
 
+import com.exsoloscript.challonge.guice.ChallongeTestModule;
 import com.exsoloscript.challonge.guice.GuiceJUnitRunner;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
-import com.exsoloscript.challonge.model.query.TournamentQuery;
-import com.exsoloscript.challonge.guice.ChallongeTestModule;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
+import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.inject.Inject;
 import org.junit.After;
 import org.junit.FixMethodOrder;
@@ -31,7 +31,7 @@ public class SyncTournamentTest {
     }
 
     @Test
-    public void aCreateTournamentTest() throws IOException, ChallongeException {
+    public void aCreateTournamentTest() throws Throwable {
         TournamentQuery query = new TournamentQuery.Builder()
                 .setName("JavaApiTest")
                 .setUrl("javatesttournament")
@@ -49,13 +49,13 @@ public class SyncTournamentTest {
     }
 
     @Test
-    public void bGetTournamentTest() throws IOException, ChallongeException {
+    public void bGetTournamentTest() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().getTournament("javatesttournament", false, false).sync();
         assertEquals(tournament.name(), "JavaApiTest");
     }
 
     @Test
-    public void cUpdateTournamentTest() throws IOException, ChallongeException {
+    public void cUpdateTournamentTest() throws Throwable {
         TournamentQuery query = new TournamentQuery.Builder()
                 .noName()
                 .noUrl()
@@ -77,7 +77,7 @@ public class SyncTournamentTest {
     }
 
     @Test
-    public void dDeleteTournamentTest() throws IOException, ChallongeException {
+    public void dDeleteTournamentTest() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
         assertEquals(tournament.name(), "JavaApiTest");
     }

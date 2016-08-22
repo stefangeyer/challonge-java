@@ -1,7 +1,5 @@
 package com.exsoloscript.challonge.model.query;
 
-import org.apache.commons.lang3.Validate;
-
 import java.io.File;
 
 /**

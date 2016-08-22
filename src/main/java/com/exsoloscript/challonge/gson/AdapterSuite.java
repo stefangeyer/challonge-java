@@ -1,11 +1,11 @@
 package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Tournament;
+import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
-import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -108,8 +108,8 @@ public class AdapterSuite {
      * Call default constructor of given class and return the instance.
      *
      * @param clazz Class
-     * @throws IllegalStateException No default constructor found
      * @return GsonAdapter
+     * @throws IllegalStateException No default constructor found
      */
     private GsonAdapter createDefaultInstance(Class clazz) {
         Constructor[] ctors = clazz.getDeclaredConstructors();

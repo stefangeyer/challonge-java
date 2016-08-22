@@ -11,6 +11,12 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * This class
+ *
+ * @author EXSolo
+ * @version 20160822.1
+ */
 @Singleton
 public class RetrofitServiceProvider implements Provider<Retrofit> {
 

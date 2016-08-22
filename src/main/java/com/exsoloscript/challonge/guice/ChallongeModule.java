@@ -1,8 +1,8 @@
 package com.exsoloscript.challonge.guice;
 
+import com.exsoloscript.challonge.Challonge;
 import com.exsoloscript.challonge.ChallongeCredentials;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
-import com.exsoloscript.challonge.Challonge;
 import com.google.inject.AbstractModule;
 import retrofit2.Retrofit;
 

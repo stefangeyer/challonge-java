@@ -14,8 +14,6 @@ import org.junit.runners.MethodSorters;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class, AttachmentTestModule.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

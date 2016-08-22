@@ -29,10 +29,10 @@ public interface RetrofitParticipantHandler {
     /**
      * Retrieve a single participant record for a tournament.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param participantId The participant's unique ID
+     * @param tournament     Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                       If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                       (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param participantId  The participant's unique ID
      * @param includeMatches 0 or 1; Includes an array of associated match records
      * @return Call
      */
@@ -44,9 +44,9 @@ public interface RetrofitParticipantHandler {
     /**
      * Add a participant to a tournament (up until it is started).
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament  Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                    If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                    (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participant The participant data
      * @return Call
      */
@@ -59,9 +59,9 @@ public interface RetrofitParticipantHandler {
      * If an invalid participant is detected, bulk participant creation will halt
      * and any previously added participants (from this API request) will be rolled back.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament   Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                     If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                     (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participants The participant data
      * @return Call
      */
@@ -72,11 +72,11 @@ public interface RetrofitParticipantHandler {
     /**
      * Update the attributes of a tournament participant.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                      If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                      (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participantId The participant's unique ID
-     * @param participant The participant data
+     * @param participant   The participant data
      * @return Call
      */
     @PUT("tournaments/{tournament}/participants/{participant_id}.json")
@@ -87,7 +87,7 @@ public interface RetrofitParticipantHandler {
     /**
      * Checks a participant in, setting checked_in_at to the current time.
      *
-     * @param tournament 	Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
      *                      If assigned to a subdomain, URL format must be :subdomain-:tournament_url
      *                      (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participantId The participant's unique ID
@@ -100,7 +100,7 @@ public interface RetrofitParticipantHandler {
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
      *
-     * @param tournament 	Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
      *                      If assigned to a subdomain, URL format must be :subdomain-:tournament_url
      *                      (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participantId The participant's unique ID
@@ -114,9 +114,9 @@ public interface RetrofitParticipantHandler {
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
      * If tournament is underway, mark a participant inactive, automatically forfeiting his/her remaining matches.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                      If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                      (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participantId The participant's unique ID
      * @return Call
      */
@@ -127,9 +127,9 @@ public interface RetrofitParticipantHandler {
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.
      *
-     * @param tournament 	Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                      If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                      (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @return Call
      */
     @POST("tournaments/{tournament}/participants/randomize.json")

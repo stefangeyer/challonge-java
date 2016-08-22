@@ -19,9 +19,9 @@ public interface RetrofitMatchHandler {
     /**
      * Retrieve a tournament's match list.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param participantId Only retrieve matches that include the specified participant.
-     * @param state all (default), pending, open, complete
+     * @param state         all (default), pending, open, complete
      * @return Call
      */
     @GET("tournaments/{tournament}/matches.json")
@@ -32,8 +32,8 @@ public interface RetrofitMatchHandler {
     /**
      * Retrieve a single match record for a tournament.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param matchId The match's unique ID
+     * @param tournament         Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId            The match's unique ID
      * @param includeAttachments 0 or 1; include an array of associated attachment records
      * @return Call
      */
@@ -46,8 +46,8 @@ public interface RetrofitMatchHandler {
      * Update/submit the score(s) for a match.
      *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param matchId The match's unique ID
-     * @param match The match data
+     * @param matchId    The match's unique ID
+     * @param match      The match data
      * @return Call
      */
     @PUT("tournaments/{tournament}/matches/{match_id}.json")

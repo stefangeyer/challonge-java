@@ -31,7 +31,7 @@ public class ErrorUtil {
      * This method takes a Retrofit response and throws an exception parsed from the response body
      *
      * @param response The response that will be parsed
-     * @throws IOException Problems with connection
+     * @throws IOException        Problems with connection
      * @throws ChallongeException The parsed exception
      */
     public void parseException(Response<?> response) throws IOException, ChallongeException {

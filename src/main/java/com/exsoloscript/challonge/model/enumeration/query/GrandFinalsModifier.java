@@ -2,7 +2,7 @@ package com.exsoloscript.challonge.model.enumeration.query;
 
 /**
  * Type of the grand finals in a double elimination tournament.
- *
+ * <p>
  * This option only affects double elimination.
  * <p>
  * null/blank (default) - give the winners bracket finalist two chances to beat the losers bracket finalist<br>

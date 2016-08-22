@@ -88,7 +88,7 @@ public class MatchQuery {
 
         /**
          * Build the builder
-         *
+         * <p>
          * If you're updating winner_id, scores_csv must also be provided.
          * You may, however, update score_csv without providing winner_id
          * for live score updates.

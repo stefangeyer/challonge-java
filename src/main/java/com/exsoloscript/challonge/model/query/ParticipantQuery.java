@@ -44,7 +44,7 @@ public class ParticipantQuery {
 
     /**
      * SINGLE ADD / UPDATE ONLY
-     *
+     * <p>
      * Providing this will first search for a matching Challonge account.
      * If one is found, this will have the same effect as the "challonge_username" attribute.
      * If one is not found, the "new-user-email" attribute will be set,
@@ -56,7 +56,7 @@ public class ParticipantQuery {
 
     /**
      * SINGLE ADD / UPDATE ONLY
-     *
+     * <p>
      * Provide this if the participant has a Challonge account.
      * He or she will be invited to the tournament.
      */
@@ -85,7 +85,7 @@ public class ParticipantQuery {
 
     /**
      * BULK ADD ONLY
-     *
+     * <p>
      * Username can be provided if the participant has a Challonge account.
      * Providing email will first search for a matching Challonge account.
      * If one is found, the user will be invited. If not, the "new-user-email"

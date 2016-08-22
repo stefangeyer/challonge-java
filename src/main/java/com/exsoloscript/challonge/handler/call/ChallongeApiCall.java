@@ -1,53 +1,30 @@
 package com.exsoloscript.challonge.handler.call;
 
-import com.exsoloscript.challonge.model.exception.ChallongeException;
-import com.exsoloscript.challonge.util.ErrorUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+/**
+ * Implementations of this class should return an object of the given type
+ * received by the API
+ *
+ * @param <T> Type of the response
+ * @author EXSolo
+ * @version 20160822.1
+ */
+public interface ChallongeApiCall<T> {
 
-import java.io.IOException;
+    /**
+     * A sync API call.
+     * Blocking request which returns the object right away.
+     *
+     * @return The received object
+     * @throws Throwable Any exception that occurred during the call
+     */
+    T sync() throws Throwable;
 
-public class ChallongeApiCall<T> {
-
-    private Call<T> retrofitCall;
-    private ErrorUtil errorUtil;
-
-    public ChallongeApiCall(Call<T> retrofitCall, ErrorUtil errorUtil) {
-        this.retrofitCall = retrofitCall;
-        this.errorUtil = errorUtil;
-    }
-
-    public T sync() throws IOException, ChallongeException {
-        Response<T> response = this.retrofitCall.execute();
-
-        if (response.isSuccessful()) {
-            return response.body();
-        } else {
-            this.errorUtil.parseException(response);
-            return response.body();
-        }
-    }
-
-    public void async(AsyncCallback<T> callback) {
-        this.retrofitCall.enqueue(new Callback<T>() {
-            @Override
-            public void onResponse(Call<T> call, Response<T> response) {
-                if (response.isSuccessful()) {
-                    callback.handleSuccess(response.body());
-                } else {
-                    try {
-                        ChallongeApiCall.this.errorUtil.parseException(response);
-                    } catch (IOException | ChallongeException e) {
-                        callback.handleFailure(e);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<T> call, Throwable t) {
-                callback.handleFailure(t);
-            }
-        });
-    }
+    /**
+     * An async API call.
+     * Once the response is received the callback method will be called.
+     *
+     * @param callback The callback
+     * @throws Throwable Any exception that occurred during the call
+     */
+    void async(AsyncCallback<T> callback) throws Throwable;
 }

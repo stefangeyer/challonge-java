@@ -2,37 +2,50 @@ package com.exsoloscript.challonge.handler.call;
 
 import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
-import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
+import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Accessible API handler for attachments.
+ *
+ * @author EXSolo
+ * @version 20160822.1
+ */
 @Singleton
 public class AttachmentHandler {
 
     private RetrofitAttachmentHandler attachmentHandler;
-    private ChallongeApiCallFactory factory;
+    private RetrofitChallongeApiCallFactory factory;
 
     @Inject
-    AttachmentHandler(RetrofitServiceProvider provider, ChallongeApiCallFactory factory) {
+    AttachmentHandler(RetrofitServiceProvider provider, RetrofitChallongeApiCallFactory factory) {
         this.attachmentHandler = provider.createService(RetrofitAttachmentHandler.class);
         this.factory = factory;
     }
-    
+
+    /**
+     * @see RetrofitAttachmentHandler#getAttachments(String, int)
+     */
     public ChallongeApiCall<List<Attachment>> getAttachments(String tournament, int matchId) throws IOException, ChallongeException {
         return this.factory.createApiCall(this.attachmentHandler.getAttachments(tournament, matchId));
     }
-    
+
+    /**
+     * @see RetrofitAttachmentHandler#getAttachment(String, int, int)
+     */
     public ChallongeApiCall<Attachment> getAttachment(String tournament, int matchId, int attachmentId) throws IOException, ChallongeException {
         return this.factory.createApiCall(this.attachmentHandler.getAttachment(tournament, matchId, attachmentId));
     }
 
+    /**
+     * @see RetrofitAttachmentHandler#createAttachment(String, int, AttachmentQuery)
+     */
     public ChallongeApiCall<Attachment> createAttachment(String tournament, int matchId, AttachmentQuery attachment) throws IOException, ChallongeException {
 
 //        MediaType multipart = MediaType.parse("multipart/form-data");
@@ -44,10 +57,16 @@ public class AttachmentHandler {
         return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournament, matchId, attachment));
     }
 
+    /**
+     * @see RetrofitAttachmentHandler#updateAttachment(String, int, int, AttachmentQuery)
+     */
     public ChallongeApiCall<Attachment> updateAttachment(String tournament, int matchId, int attachmentId, AttachmentQuery attachment) throws IOException, ChallongeException {
         return this.factory.createApiCall(this.attachmentHandler.updateAttachment(tournament, matchId, attachmentId, attachment));
     }
 
+    /**
+     * @see RetrofitAttachmentHandler#deleteAttachment(String, int, int)
+     */
     public ChallongeApiCall<Attachment> deleteAttachment(String tournament, int matchId, int attachmentId) throws IOException, ChallongeException {
         return this.factory.createApiCall(this.attachmentHandler.deleteAttachment(tournament, matchId, attachmentId));
     }

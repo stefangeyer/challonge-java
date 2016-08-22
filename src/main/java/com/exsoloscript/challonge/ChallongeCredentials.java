@@ -2,6 +2,12 @@ package com.exsoloscript.challonge;
 
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * Challonge credentials containing username and api-key.
+ *
+ * @author EXSolo
+ * @version 20160822.1
+ */
 public class ChallongeCredentials {
 
     private String username;
@@ -12,12 +18,17 @@ public class ChallongeCredentials {
         this.apiKey = apiKey;
     }
 
+    /**
+     * Creates a HTTP basic auth String from the given credentials
+     *
+     * @return HTTP basic auth String
+     */
     public String toHttpAuthString() {
         String credentials = this.username + ":" + this.apiKey;
         return "Basic " + Base64.encodeBase64String(credentials.getBytes());
     }
 
-    public String getUsername() {
+    public String username() {
         return username;
     }
 
@@ -25,7 +36,7 @@ public class ChallongeCredentials {
         this.username = username;
     }
 
-    public String getApiKey() {
+    public String apiKey() {
         return apiKey;
     }
 

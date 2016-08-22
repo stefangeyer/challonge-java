@@ -1,8 +1,8 @@
 package com.exsoloscript.challonge.model;
 
-import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 

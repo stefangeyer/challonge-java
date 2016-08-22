@@ -1,7 +1,7 @@
 package com.exsoloscript.challonge.model.query;
 
-import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
+import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.Validate;
@@ -153,7 +153,7 @@ public class TournamentQuery {
     }
 
     /**
-     * 	subdomain.challonge.com/url (Requires write access to the specified subdomain)
+     * subdomain.challonge.com/url (Requires write access to the specified subdomain)
      */
     public String subdomain() {
         return subdomain;
@@ -255,7 +255,7 @@ public class TournamentQuery {
     }
 
     /**
-     * 	Rounded to the nearest tenth - Round Robin "custom" only - default: 0.0
+     * Rounded to the nearest tenth - Round Robin "custom" only - default: 0.0
      */
     public Float roundRobinPointsForMatchTie() {
         return roundRobinPointsForMatchTie;

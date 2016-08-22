@@ -18,7 +18,7 @@ import java.util.List;
 public interface RetrofitTournamentHandler {
 
     /**
-     * Get all tournaments of a user matching the query parameters
+     * Retrieve a set of tournaments created with your account.
      *
      * @param state only get tournaments with this state
      * @param type only get tournaments with this type
@@ -36,10 +36,12 @@ public interface RetrofitTournamentHandler {
     );
 
     /**
-     * Get a specific tournament
+     * Retrieve a single tournament record created with your account.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param includeParticipants include a list of participants in the response
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
      * @param includeMatches include a list of matches in the response
      * @return Call
      */
@@ -49,7 +51,7 @@ public interface RetrofitTournamentHandler {
                                    @Query("include_matches") int includeMatches);
 
     /**
-     * Create a tournament with the given tournament data
+     * Create a new tournament.
      *
      * @param tournamentData An object with all the necessary information to create the tournament
      * @return Call
@@ -58,9 +60,11 @@ public interface RetrofitTournamentHandler {
     Call<Tournament> createTournament(@Body TournamentQuery tournamentData);
 
     /**
-     * Update a tournament with the given tournament data
+     * Update a tournament's attributes.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param tournamentData An object with all the necessary information to update the tournament
      * @return Call
      */
@@ -69,20 +73,32 @@ public interface RetrofitTournamentHandler {
                                       @Body TournamentQuery tournamentData);
 
     /**
-     * Delete the given tournament
+     * Deletes a tournament along with all its associated records. There is no undo, so use with care!
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @return Call
      */
     @DELETE("tournaments/{tournament}.json")
     Call<Tournament> deleteTournament(@Path("tournament") String tournament);
 
     /**
-     * Process check ins for the given tournament
+     * This should be invoked after a tournament's check-in window closes before the tournament is started.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param includeParticipants include a list of participants in the response
-     * @param includeMatches include a list of matches in the response
+     * <ol>
+     *     <li>Marks participants who have not checked in as inactive.</li>
+     *     <li>Moves inactive participants to bottom seeds (ordered by original seed).</li>
+     *     <li>Transitions the tournament state from 'checking_in' to 'checked_in'</li>
+     * </ol>
+     *
+     * NOTE: Checked in participants on the waiting list will be promoted if slots become available.
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
+     * @param includeMatches 0 or 1; include a list of matches in the response
      * @return Call
      */
     @POST("tournaments/{tournament}/process_check_ins.json")
@@ -91,11 +107,20 @@ public interface RetrofitTournamentHandler {
                                      @Query("include_matches") int includeMatches);
 
     /**
-     * Abort check ins for the given tournament
+     * When your tournament is in a 'checking_in' or 'checked_in' state,
+     * there's no way to edit the tournament's start time (start_at) or check-in duration (check_in_duration).
+     * You must first abort check-in, then you may edit those attributes.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param includeParticipants include a list of participants in the response
-     * @param includeMatches include a list of matches in the response
+     * <ol>
+     *     <li>Makes all participants active and clears their checked_in_at times.</li>
+     *     <li>Transitions the tournament state from 'checking_in' or 'checked_in' to 'pending'</li>
+     * </ol>
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
+     * @param includeMatches 0 or 1; include a list of matches in the response
      * @return Call
      */
     @POST("tournaments/{tournament}/abort_check_in.json")
@@ -104,11 +129,14 @@ public interface RetrofitTournamentHandler {
                                   @Query("include_matches") int includeMatches);
 
     /**
-     * Start the given tournament
+     * Start a tournament, opening up first round matches for score reporting.
+     * The tournament must have at least 2 participants.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param includeParticipants include a list of participants in the response
-     * @param includeMatches include a list of matches in the response
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
+     * @param includeMatches 0 or 1; include a list of matches in the response
      * @return Call
      */
     @POST("tournaments/{tournament}/start.json")
@@ -117,11 +145,13 @@ public interface RetrofitTournamentHandler {
                                      @Query("include_matches") int includeMatches);
 
     /**
-     * Finalize the given tournament
+     * Finalize a tournament that has had all match scores submitted, rendering its results permanent.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param includeParticipants include a list of participants in the response
-     * @param includeMatches include a list of matches in the response
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
+     * @param includeMatches 0 or 1; include a list of matches in the response
      * @return Call
      */
     @POST("tournaments/{tournament}/finalize.json")
@@ -130,11 +160,14 @@ public interface RetrofitTournamentHandler {
                                         @Query("include_matches") int includeMatches);
 
     /**
-     * Reset the given tournament
+     * Reset a tournament, clearing all of its scores and attachments.
+     * You can then add/remove/edit participants before starting the tournament again.
      *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param includeParticipants include a list of participants in the response
-     * @param includeMatches include a list of matches in the response
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
+     * @param includeMatches 0 or 1; include a list of matches in the response
      * @return Call
      */
     @POST("tournaments/{tournament}/reset.json")

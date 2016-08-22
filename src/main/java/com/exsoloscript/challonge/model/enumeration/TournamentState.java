@@ -1,6 +1,8 @@
 package com.exsoloscript.challonge.model.enumeration;
 
 public enum TournamentState {
+    CHECKING_IN("checking_in"),
+    CHECKED_IN("checked_in"),
     PENDING("pending"),
     UNDERWAY("underway"),
     GROUP_STAGES_UNDERWAY("group_stages_underway"),

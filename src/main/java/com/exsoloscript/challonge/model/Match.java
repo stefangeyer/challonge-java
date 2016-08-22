@@ -29,15 +29,15 @@ public class Match {
     @SerializedName("player1_id")
     private Integer player1Id;
     @SerializedName("player1_is_prereq_match_loser")
-    private Boolean player1IsPrereqMatchLoser;
+    private Boolean player1IsPrerequisiteMatchLoser;
     @SerializedName("player1_prereq_match_id")
-    private Integer player1PrereqMatchId;
+    private Integer player1PrerequisiteMatchId;
     @SerializedName("player2_id")
     private Integer player2Id;
     @SerializedName("player2_is_prereq_match_loser")
-    private Boolean player2IsPrereqMatchLoser;
+    private Boolean player2IsPrerequisiteMatchLoser;
     @SerializedName("player2_prereq_match_id")
-    private Integer player2PrereqMatchId;
+    private Integer player2PrerequisiteMatchId;
     private Integer round;
     @SerializedName("scheduled_time")
     private ZonedDateTime scheduledTime;
@@ -89,24 +89,24 @@ public class Match {
         return player1Id;
     }
 
-    public Boolean player1IsPrereqMatchLoser() {
-        return player1IsPrereqMatchLoser;
+    public Boolean player1IsPrerequisiteMatchLoser() {
+        return player1IsPrerequisiteMatchLoser;
     }
 
-    public Integer player1PrereqMatchId() {
-        return player1PrereqMatchId;
+    public Integer player1PrerequisiteMatchId() {
+        return player1PrerequisiteMatchId;
     }
 
     public Integer player2Id() {
         return player2Id;
     }
 
-    public Boolean player2IsPrereqMatchLoser() {
-        return player2IsPrereqMatchLoser;
+    public Boolean player2IsPrerequisiteMatchLoser() {
+        return player2IsPrerequisiteMatchLoser;
     }
 
-    public Integer player2PrereqMatchId() {
-        return player2PrereqMatchId;
+    public Integer player2PrerequisiteMatchId() {
+        return player2PrerequisiteMatchId;
     }
 
     public Integer round() {

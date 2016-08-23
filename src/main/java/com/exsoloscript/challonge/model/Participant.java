@@ -2,7 +2,7 @@ package com.exsoloscript.challonge.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * The POJO that will be mapped to the participant requests by Gson
@@ -19,9 +19,9 @@ public class Participant {
     private String misc;
     private Boolean active;
     @SerializedName("checked_in_at")
-    private ZonedDateTime checkedInAt;
+    private OffsetDateTime checkedInAt;
     @SerializedName("created_at")
-    private ZonedDateTime createdAt;
+    private OffsetDateTime createdAt;
     @SerializedName("final_rank")
     private Integer finalRank;
     @SerializedName("group_id")
@@ -37,7 +37,7 @@ public class Participant {
     @SerializedName("tournament_id")
     private Integer tournamentId;
     @SerializedName("updated_at")
-    private ZonedDateTime updatedAt;
+    private OffsetDateTime updatedAt;
     @SerializedName("challonge_email_address_verified")
     private String challongeEmailAddressVerified;
     private Boolean removable;
@@ -80,11 +80,11 @@ public class Participant {
         return active;
     }
 
-    public ZonedDateTime checkedInAt() {
+    public OffsetDateTime checkedInAt() {
         return checkedInAt;
     }
 
-    public ZonedDateTime createdAt() {
+    public OffsetDateTime createdAt() {
         return createdAt;
     }
 
@@ -120,7 +120,7 @@ public class Participant {
         return tournamentId;
     }
 
-    public ZonedDateTime updatedAt() {
+    public OffsetDateTime updatedAt() {
         return updatedAt;
     }
 

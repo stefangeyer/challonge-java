@@ -1,5 +1,7 @@
 package com.exsoloscript.challonge.model.query;
 
+import org.apache.commons.lang3.Validate;
+
 import java.io.File;
 
 /**
@@ -64,6 +66,8 @@ public class AttachmentQuery {
         }
 
         public AttachmentQuery build() {
+            if (asset == null && url == null && description == null)
+                throw new IllegalArgumentException("At least 1 of the 3 parameters (asset, url or description) must be provided.");
             if (asset != null)
                 throw new UnsupportedOperationException("This library is currently not supporting file uploads");
             return new AttachmentQuery(asset, url, description);

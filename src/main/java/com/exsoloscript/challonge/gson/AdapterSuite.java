@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public class AdapterSuite {
         classes.put(TournamentType.class, TournamentTypeAdapter.class);
         classes.put(TournamentQueryState.class, TournamentQueryStateAdapter.class);
         // other
-        classes.put(ZonedDateTime.class, ZonedDateTimeAdapter.class);
+        classes.put(OffsetDateTime.class, OffsetDateTimeAdapter.class);
 
         return classes;
     }

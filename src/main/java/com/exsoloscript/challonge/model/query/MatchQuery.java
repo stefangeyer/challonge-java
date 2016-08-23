@@ -12,7 +12,7 @@ import org.apache.commons.lang3.Validate;
 public class MatchQuery {
 
     @SerializedName("winner_id")
-    private Integer winnerId;
+    private String winnerId;
 
     @SerializedName("player1_votes")
     private Integer votesForPlayer1;
@@ -23,7 +23,7 @@ public class MatchQuery {
     @SerializedName("scores_csv")
     private String scoresCsv;
 
-    private MatchQuery(int winnerId, int votesForPlayer1, int votesForPlayer2, String scoresCsv) {
+    private MatchQuery(String winnerId, int votesForPlayer1, int votesForPlayer2, String scoresCsv) {
         this.winnerId = winnerId;
         this.votesForPlayer1 = votesForPlayer1;
         this.votesForPlayer2 = votesForPlayer2;
@@ -35,7 +35,7 @@ public class MatchQuery {
      * NOTE: If you change the outcome of a completed match, all matches in the bracket
      * that branch from the updated match will be reset.
      */
-    public Integer winnerId() {
+    public String winnerId() {
         return winnerId;
     }
 
@@ -61,12 +61,12 @@ public class MatchQuery {
     }
 
     public static class Builder {
-        private Integer winnerId;
+        private String winnerId;
         private Integer votesForPlayer1;
         private Integer votesForPlayer2;
         private String scoresCsv;
 
-        public Builder setWinnerId(int winnerId) {
+        public Builder setWinnerId(String winnerId) {
             this.winnerId = winnerId;
             return this;
         }

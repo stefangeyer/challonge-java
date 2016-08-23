@@ -13,7 +13,7 @@ import com.google.inject.Injector;
 public class Challonge {
 
     /**
-     * Create a new {@link ChallongeApi} object with the given credentials.
+     * Create a new {@link ChallongeApi} v1 object with the given credentials.
      * Every time this method is called a new object will be created.
      *
      * @param username Challonge username

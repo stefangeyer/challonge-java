@@ -6,7 +6,8 @@ import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.Validate;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
+import java.util.List;
 
 /**
  * Query for creating or updating a tournament. This class can be accessed using it's builder.
@@ -91,7 +92,7 @@ public class TournamentQuery {
     private Integer signupCap;
 
     @SerializedName("start_at")
-    private ZonedDateTime startAt;
+    private OffsetDateTime startAt;
 
     @SerializedName("check_in_duration")
     private Integer checkInDuration;
@@ -99,7 +100,10 @@ public class TournamentQuery {
     @SerializedName("grand_finals_modifier")
     private GrandFinalsModifier grandFinalsModifier;
 
-    private TournamentQuery(String name, TournamentType tournamentType, String url, String subdomain, String description, Boolean openSignup, Boolean holdThirdPlaceMatch, Float pointsForMatchWin, Float pointsForMatchTie, Float pointsForGameWin, Float pointsForGameTie, Float pointsForBye, Integer swissRounds, RankedBy rankedBy, Float roundRobinPointsForGameWin, Float roundRobinPointsForGameTie, Float roundRobinPointsForMatchWin, Float roundRobinPointsForMatchTie, Boolean acceptAttachments, Boolean hideForum, Boolean showRounds, Boolean _private, Boolean notifyUsersWhenMatchesOpen, Boolean notifyUsersWhenTheTournamentEnds, Boolean sequentialPairings, Integer signupCap, ZonedDateTime startAt, Integer checkInDuration, GrandFinalsModifier grandFinalsModifier) {
+    @SerializedName("tie_breaks")
+    private List<String> tieBreaks;
+
+    private TournamentQuery(String name, TournamentType tournamentType, String url, String subdomain, String description, Boolean openSignup, Boolean holdThirdPlaceMatch, Float pointsForMatchWin, Float pointsForMatchTie, Float pointsForGameWin, Float pointsForGameTie, Float pointsForBye, Integer swissRounds, RankedBy rankedBy, Float roundRobinPointsForGameWin, Float roundRobinPointsForGameTie, Float roundRobinPointsForMatchWin, Float roundRobinPointsForMatchTie, Boolean acceptAttachments, Boolean hideForum, Boolean showRounds, Boolean _private, Boolean notifyUsersWhenMatchesOpen, Boolean notifyUsersWhenTheTournamentEnds, Boolean sequentialPairings, Integer signupCap, OffsetDateTime startAt, Integer checkInDuration, GrandFinalsModifier grandFinalsModifier) {
         this.name = name;
         this.tournamentType = tournamentType;
         this.url = url;
@@ -228,13 +232,15 @@ public class TournamentQuery {
 
     /**
      * One of the following: 'match wins', 'game wins', 'points scored', 'points difference', 'custom'
+     *
+     * For more information see http://feedback.challonge.com/knowledgebase/articles/448540-rank-tie-break-statistics
      */
     public RankedBy rankedBy() {
         return rankedBy;
     }
 
     /**
-     * Rounded to the nearest tenth - Round Robin "custom only" - default: 1.0
+     * Rounded to the nearest tenth - Round Robin "custom" only - default: 1.0
      */
     public Float roundRobinPointsForGameWin() {
         return roundRobinPointsForGameWin;
@@ -324,12 +330,13 @@ public class TournamentQuery {
      * (Used with check_in_duration to determine participant check-in window).
      * Timezone defaults to Eastern.
      */
-    public ZonedDateTime startAt() {
+    public OffsetDateTime startAt() {
         return startAt;
     }
 
     /**
      * Length of the participant check-in window in minutes.
+     * Check-in must be an interval of 5 (0, 5, 10...)
      */
     public Integer checkInDuration() {
         return checkInDuration;
@@ -374,7 +381,7 @@ public class TournamentQuery {
         private Boolean notifyUsersWhenTheTournamentEnds;
         private Boolean sequentialPairings;
         private Integer signupCap;
-        private ZonedDateTime startAt;
+        private OffsetDateTime startAt;
         private Integer checkInDuration;
         private GrandFinalsModifier grandFinalsModifier;
         private Boolean noName = false;
@@ -420,7 +427,7 @@ public class TournamentQuery {
             return this;
         }
 
-        public Builder holdThirdPlaceMatch(Boolean holdThirdPlaceMatch) {
+        public Builder setHoldThirdPlaceMatch(Boolean holdThirdPlaceMatch) {
             this.holdThirdPlaceMatch = holdThirdPlaceMatch;
             return this;
         }
@@ -520,7 +527,7 @@ public class TournamentQuery {
             return this;
         }
 
-        public Builder setStartAt(ZonedDateTime startAt) {
+        public Builder setStartAt(OffsetDateTime startAt) {
             this.startAt = startAt;
             return this;
         }
@@ -536,10 +543,14 @@ public class TournamentQuery {
         }
 
         public TournamentQuery build() {
-            if (!this.noName)
+            if (!this.noName) {
                 Validate.notBlank(name, "Name can't be blank");
-            if (!this.noUrl)
+                Validate.isTrue(name.length() <= 60, "Name can't be longer than 60 characters");
+            }
+            if (!this.noUrl) {
                 Validate.notBlank(url, "URL can't be blank");
+                Validate.matchesPattern(url, "^[a-zA-Z0-9_]*$", "URL can contain letters, numbers, and underscores only");
+            }
             Validate.isTrue(signupCap > 3, "Participant / Signup Cap must be greater than 3");
             return new TournamentQuery(name, tournamentType, url, subdomain, description, openSignup, holdThirdPlaceMatch, pointsForMatchWin, pointsForMatchTie, pointsForGameWin, pointsForGameTie, pointsForBye, swissRounds, rankedBy, roundRobinPointsForGameWin, roundRobinPointsForGameTie, roundRobinPointsForMatchWin, roundRobinPointsForMatchTie, acceptAttachments, hideForum, showRounds, aPrivate, notifyUsersWhenMatchesOpen, notifyUsersWhenTheTournamentEnds, sequentialPairings, signupCap, startAt, checkInDuration, grandFinalsModifier);
         }

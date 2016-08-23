@@ -2,7 +2,7 @@ package com.exsoloscript.challonge.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * The POJO that will be mapped to the attachment requests by Gson
@@ -20,9 +20,9 @@ public class Attachment {
     @SerializedName("original_file_name")
     private String originalFileName;
     @SerializedName("created_at")
-    private ZonedDateTime createdAt;
+    private OffsetDateTime createdAt;
     @SerializedName("updated_at")
-    private ZonedDateTime updatedAt;
+    private OffsetDateTime updatedAt;
     @SerializedName("asset_file_name")
     private String assetFileName;
     @SerializedName("asset_content_type")
@@ -48,11 +48,11 @@ public class Attachment {
         return originalFileName;
     }
 
-    public ZonedDateTime createdAt() {
+    public OffsetDateTime createdAt() {
         return createdAt;
     }
 
-    public ZonedDateTime updatedAt() {
+    public OffsetDateTime updatedAt() {
         return updatedAt;
     }
 

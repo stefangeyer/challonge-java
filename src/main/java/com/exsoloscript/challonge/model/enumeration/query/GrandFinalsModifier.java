@@ -1,5 +1,8 @@
 package com.exsoloscript.challonge.model.enumeration.query;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 /**
  * Type of the grand finals in a double elimination tournament.
  * <p>
@@ -25,7 +28,8 @@ public enum GrandFinalsModifier {
     }
 
     public static GrandFinalsModifier fromString(String name) {
-        return valueOf(name.toUpperCase());
+        Optional<GrandFinalsModifier> optType = Arrays.stream(values()).filter(type -> name.toLowerCase().equals(type.toString())).findFirst();
+        return optType.isPresent() ? optType.get() : null;
     }
 
     @Override

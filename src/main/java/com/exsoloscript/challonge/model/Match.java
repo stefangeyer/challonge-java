@@ -3,7 +3,7 @@ package com.exsoloscript.challonge.model;
 import com.exsoloscript.challonge.model.enumeration.MatchState;
 import com.google.gson.annotations.SerializedName;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * The POJO that will be mapped to the match requests by Gson
@@ -16,7 +16,7 @@ public class Match {
     @SerializedName("attachment_count")
     private Integer attachmentCount;
     @SerializedName("createdAt")
-    private ZonedDateTime createdAt;
+    private OffsetDateTime createdAt;
     @SerializedName("group_id")
     private Integer groupId;
     @SerializedName("has_attachment")
@@ -40,16 +40,16 @@ public class Match {
     private Integer player2PrerequisiteMatchId;
     private Integer round;
     @SerializedName("scheduled_time")
-    private ZonedDateTime scheduledTime;
+    private OffsetDateTime scheduledTime;
     @SerializedName("started_at")
-    private ZonedDateTime startedAt;
+    private OffsetDateTime startedAt;
     private MatchState state;
     @SerializedName("tournament_id")
     private Integer tournamentId;
     @SerializedName("underway_at")
-    private ZonedDateTime underwayAt;
+    private OffsetDateTime underwayAt;
     @SerializedName("updatedAt")
-    private ZonedDateTime updatedAt;
+    private OffsetDateTime updatedAt;
     @SerializedName("prerequisite_match_ids_csv")
     private String prerequisiteMatchIdsCsv;
 
@@ -57,7 +57,7 @@ public class Match {
         return attachmentCount;
     }
 
-    public ZonedDateTime createdAt() {
+    public OffsetDateTime createdAt() {
         return createdAt;
     }
 
@@ -113,11 +113,11 @@ public class Match {
         return round;
     }
 
-    public ZonedDateTime scheduledTime() {
+    public OffsetDateTime scheduledTime() {
         return scheduledTime;
     }
 
-    public ZonedDateTime startedAt() {
+    public OffsetDateTime startedAt() {
         return startedAt;
     }
 
@@ -129,11 +129,11 @@ public class Match {
         return tournamentId;
     }
 
-    public ZonedDateTime underwayAt() {
+    public OffsetDateTime underwayAt() {
         return underwayAt;
     }
 
-    public ZonedDateTime updatedAt() {
+    public OffsetDateTime updatedAt() {
         return updatedAt;
     }
 

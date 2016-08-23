@@ -9,6 +9,8 @@ import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,6 +44,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#getTournament(String, int, int)
      */
     public ChallongeApiCall<Tournament> getTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.getTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
 
@@ -56,6 +59,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#updateTournament(String, TournamentQuery)
      */
     public ChallongeApiCall<Tournament> updateTournament(String name, TournamentQuery tournament) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.updateTournament(name, tournament));
     }
 
@@ -63,6 +67,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#deleteTournament(String)
      */
     public ChallongeApiCall<Tournament> deleteTournament(String name) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.deleteTournament(name));
     }
 
@@ -70,6 +75,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#processCheckIns(String, int, int)
      */
     public ChallongeApiCall<Tournament> processCheckIns(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.processCheckIns(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
 
@@ -77,6 +83,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#abortCheckIn(String, int, int)
      */
     public ChallongeApiCall<Tournament> abortCheckIn(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.abortCheckIn(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
 
@@ -84,6 +91,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#startTournament(String, int, int)
      */
     public ChallongeApiCall<Tournament> startTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.startTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
 
@@ -91,6 +99,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#finalizeTournament(String, int, int)
      */
     public ChallongeApiCall<Tournament> finalizeTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.finalizeTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
 
@@ -98,6 +107,7 @@ public class TournamentHandler {
      * @see RetrofitTournamentHandler#resetTournament(String, int, int)
      */
     public ChallongeApiCall<Tournament> resetTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+        Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.resetTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
 }

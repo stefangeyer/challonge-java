@@ -6,7 +6,7 @@ import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -64,7 +64,7 @@ public class Tournament {
     @SerializedName("signup_cap")
     private Integer signupCap;
     @SerializedName("start_at")
-    private ZonedDateTime startAt;
+    private OffsetDateTime startAt;
     @SerializedName("check_in_duration")
     private Integer checkInDuration;
     @SerializedName("allow_participant_match_reporting")
@@ -73,9 +73,9 @@ public class Tournament {
     private Boolean anonymousVoting;
     private String category;
     @SerializedName("completed_at")
-    private ZonedDateTime completedAt;
+    private OffsetDateTime completedAt;
     @SerializedName("created_at")
-    private ZonedDateTime createdAt;
+    private OffsetDateTime createdAt;
     @SerializedName("created_by_api")
     private Boolean createdByApi;
     @SerializedName("credit_capped")
@@ -96,7 +96,7 @@ public class Tournament {
     @SerializedName("prediction_method")
     private Integer predictionMethod;
     @SerializedName("predictions_opened_at")
-    private ZonedDateTime predictionsOpenedAt;
+    private OffsetDateTime predictionsOpenedAt;
     @SerializedName("progress_meter")
     private Integer progressMeter;
     @SerializedName("quick_advance")
@@ -104,15 +104,15 @@ public class Tournament {
     @SerializedName("require_score_agreement")
     private Boolean requireScoreAgreement;
     @SerializedName("started_at")
-    private ZonedDateTime startedAt;
+    private OffsetDateTime startedAt;
     @SerializedName("started_checking_in_at")
-    private ZonedDateTime startedCheckingInAt;
+    private OffsetDateTime startedCheckingInAt;
     private TournamentState state;
     private Boolean teams;
     @SerializedName("tie_breaks")
     private List<String> tieBreaks;
     @SerializedName("updated_at")
-    private ZonedDateTime updatedAt;
+    private OffsetDateTime updatedAt;
     @SerializedName("description_source")
     private String descriptionSource;
     @SerializedName("full_challonge_url")
@@ -136,7 +136,7 @@ public class Tournament {
     @SerializedName("group_stages_were_started")
     private Boolean groupStagesWereStarted;
     @SerializedName("locked_at")
-    private ZonedDateTime lockedAt;
+    private OffsetDateTime lockedAt;
     @SerializedName("event_id")
     private Integer eventId;
     @SerializedName("public_predictions_before_start_time")
@@ -246,7 +246,7 @@ public class Tournament {
         return signupCap;
     }
 
-    public ZonedDateTime startAt() {
+    public OffsetDateTime startAt() {
         return startAt;
     }
 
@@ -266,11 +266,11 @@ public class Tournament {
         return category;
     }
 
-    public ZonedDateTime completedAt() {
+    public OffsetDateTime completedAt() {
         return completedAt;
     }
 
-    public ZonedDateTime createdAt() {
+    public OffsetDateTime createdAt() {
         return createdAt;
     }
 
@@ -314,7 +314,7 @@ public class Tournament {
         return predictionMethod;
     }
 
-    public ZonedDateTime predictionsOpenedAt() {
+    public OffsetDateTime predictionsOpenedAt() {
         return predictionsOpenedAt;
     }
 
@@ -330,11 +330,11 @@ public class Tournament {
         return requireScoreAgreement;
     }
 
-    public ZonedDateTime startedAt() {
+    public OffsetDateTime startedAt() {
         return startedAt;
     }
 
-    public ZonedDateTime startedCheckingInAt() {
+    public OffsetDateTime startedCheckingInAt() {
         return startedCheckingInAt;
     }
 
@@ -350,7 +350,7 @@ public class Tournament {
         return tieBreaks;
     }
 
-    public ZonedDateTime updatedAt() {
+    public OffsetDateTime updatedAt() {
         return updatedAt;
     }
 
@@ -398,7 +398,7 @@ public class Tournament {
         return groupStagesWereStarted;
     }
 
-    public ZonedDateTime lockedAt() {
+    public OffsetDateTime lockedAt() {
         return lockedAt;
     }
 

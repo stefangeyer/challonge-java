@@ -1,6 +1,7 @@
 package com.exsoloscript.challonge.model.query;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Query for creating or updating a participant. This class can be accessed using it's builder.
@@ -134,6 +135,7 @@ public class ParticipantQuery {
         }
 
         public ParticipantQuery build() {
+            Validate.isTrue(misc.length() <= 255, "Misc string can only contain 255 characters");
             return new ParticipantQuery(name, email, challongeUsername, seed, misc, inviteNameOrEmail);
         }
     }

@@ -47,6 +47,9 @@ public interface RetrofitAttachmentHandler {
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
      * "accept_attachments" attribute must be true for this action to succeed.
      *
+     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
      *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
      *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
@@ -71,6 +74,9 @@ public interface RetrofitAttachmentHandler {
      * Update the attributes of a match attachment.
      * <p>
      * Sending the asset does neither work with base64 nor with a multipart-form-data request
+     * </p>
+     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param tournament   Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
      *                     If assigned to a subdomain, URL format must be :subdomain-:tournament_url

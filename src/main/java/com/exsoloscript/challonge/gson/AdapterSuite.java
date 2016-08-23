@@ -1,5 +1,6 @@
 package com.exsoloscript.challonge.gson;
 
+import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
@@ -71,6 +72,7 @@ public class AdapterSuite {
 
         // pojo
         classes.put(Tournament.class, TournamentAdapter.class);
+        classes.put(Participant.class, ParticipantAdapter.class);
         // enum
         classes.put(GrandFinalsModifier.class, GrandFinalsModifierAdapter.class);
         classes.put(RankedBy.class, RankedByAdapter.class);
@@ -126,6 +128,7 @@ public class AdapterSuite {
         try {
             adapter = (GsonAdapter) ctor.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
             throw new IllegalStateException("Detected Gson adapter with no public default constructor: " + clazz.getName());
         }
 

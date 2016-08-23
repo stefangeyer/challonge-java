@@ -15,11 +15,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})
@@ -109,7 +107,6 @@ public class SyncTournamentTest {
                 .noName()
                 .noUrl()
                 .setTournamentType(TournamentType.SWISS)
-                .setSwissRounds(5)
                 .setSignupCap(6)
                 .setAcceptAttachments(true)
                 .setDescription("TestDescription")
@@ -124,17 +121,11 @@ public class SyncTournamentTest {
         assertTrue(tournament.acceptAttachments());
         assertEquals(tournament.description(), "TestDescription");
         assertTrue(tournament.holdThirdPlaceMatch());
-        assertEquals(tournament.swissRounds(), Integer.valueOf(5));
     }
 
     @Test
     public void dDeleteTournamentTest() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
         assertEquals(tournament.name(), "JavaApiTest");
-    }
-
-    @After
-    public void tearDown() {
-
     }
 }

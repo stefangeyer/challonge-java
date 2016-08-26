@@ -1,5 +1,7 @@
 package com.exsoloscript.challonge.gson;
 
+import com.exsoloscript.challonge.model.Attachment;
+import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
 import com.google.gson.*;
@@ -15,7 +17,7 @@ import java.lang.reflect.Type;
  */
 public class ParticipantAdapter implements GsonAdapter, JsonDeserializer<Participant> {
 
-    private Gson gson = AdapterSuite.createGson(Participant.class, Participant.class);
+    private Gson gson = AdapterSuite.createGson(Tournament.class, Participant.class, Match.class, Attachment.class);
 
     public ParticipantAdapter() {
     }

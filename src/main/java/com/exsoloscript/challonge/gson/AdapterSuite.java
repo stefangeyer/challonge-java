@@ -1,5 +1,7 @@
 package com.exsoloscript.challonge.gson;
 
+import com.exsoloscript.challonge.model.Attachment;
+import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.RankedBy;
@@ -73,6 +75,8 @@ public class AdapterSuite {
         // pojo
         classes.put(Tournament.class, TournamentAdapter.class);
         classes.put(Participant.class, ParticipantAdapter.class);
+        classes.put(Match.class, MatchAdapter.class);
+        classes.put(Attachment.class, AttachmentAdapter.class);
         // enum
         classes.put(GrandFinalsModifier.class, GrandFinalsModifierAdapter.class);
         classes.put(RankedBy.class, RankedByAdapter.class);

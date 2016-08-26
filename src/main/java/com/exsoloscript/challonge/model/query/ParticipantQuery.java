@@ -34,6 +34,10 @@ public class ParticipantQuery {
         this.inviteNameOrEmail = inviteNameOrEmail;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     /**
      * The name displayed in the bracket/schedule -
      * not required if email or challonge_username is provided.
@@ -135,7 +139,8 @@ public class ParticipantQuery {
         }
 
         public ParticipantQuery build() {
-            Validate.isTrue(misc.length() <= 255, "Misc string can only contain 255 characters");
+            if (misc != null)
+                Validate.isTrue(misc.length() <= 255, "Misc string can only contain 255 characters");
             return new ParticipantQuery(name, email, challongeUsername, seed, misc, inviteNameOrEmail);
         }
     }

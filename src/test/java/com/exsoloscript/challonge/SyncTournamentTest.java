@@ -35,7 +35,7 @@ public class SyncTournamentTest {
     public void aCreateTournamentTest() throws Throwable {
         OffsetDateTime dt = OffsetDateTime.of(2022, 8, 22, 10, 0, 0, 0, ZoneOffset.of("-04:00"));
 
-        TournamentQuery query = new TournamentQuery.Builder()
+        TournamentQuery query = TournamentQuery.builder()
                 .setName("JavaApiTest")
                 .setUrl("javatesttournament")
                 .setTournamentType(TournamentType.DOUBLE_ELIMINATION)
@@ -103,7 +103,7 @@ public class SyncTournamentTest {
 
     @Test
     public void cUpdateTournamentTest() throws Throwable {
-        TournamentQuery query = new TournamentQuery.Builder()
+        TournamentQuery query = TournamentQuery.builder()
                 .noName()
                 .noUrl()
                 .setTournamentType(TournamentType.SWISS)

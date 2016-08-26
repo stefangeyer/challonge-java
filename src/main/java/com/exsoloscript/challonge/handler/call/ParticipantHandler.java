@@ -59,7 +59,7 @@ public class ParticipantHandler {
     /**
      * @see RetrofitParticipantHandler#bulkAddParticipants(String, List)
      */
-    public ChallongeApiCall<Participant> bulkAddParticipants(String tournament, List<ParticipantQuery> participants) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Participant>> bulkAddParticipants(String tournament, List<ParticipantQuery> participants) throws IOException, ChallongeException {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         return this.factory.createApiCall(this.participantHandler.bulkAddParticipants(tournament, participants));
     }

@@ -135,6 +135,10 @@ public class TournamentQuery {
         this.grandFinalsModifier = grandFinalsModifier;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     /**
      * Your event's name/title (Max: 60 characters)
      */

@@ -22,6 +22,10 @@ public class AttachmentQuery {
         this.description = description;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     /**
      * A file upload (250KB max, no more than 4 attachments per match).
      * If provided, the url parameter will be ignored.

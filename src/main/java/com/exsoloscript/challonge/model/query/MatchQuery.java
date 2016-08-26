@@ -30,6 +30,10 @@ public class MatchQuery {
         this.scoresCsv = scoresCsv;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     /**
      * The participant ID of the winner or "tie" if applicable (Round Robin and Swiss).
      * NOTE: If you change the outcome of a completed match, all matches in the bracket

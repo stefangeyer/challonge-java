@@ -17,7 +17,7 @@ import java.io.IOException;
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class, AttachmentTestModule.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AttachmentTest {
+public class SyncAttachmentTest {
 
     @Inject
     private ChallongeApi challongeApi;

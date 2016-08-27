@@ -48,7 +48,7 @@ public class ParticipantQuery {
     }
 
     /**
-     * SINGLE ADD / UPDATE ONLY
+     * SINGLE ADD / UPDATE ONLY -- Seems to broken -> API is ignoring this argument
      * <p>
      * Providing this will first search for a matching Challonge account.
      * If one is found, this will have the same effect as the "challonge_username" attribute.
@@ -60,7 +60,7 @@ public class ParticipantQuery {
     }
 
     /**
-     * SINGLE ADD / UPDATE ONLY
+     * SINGLE ADD / UPDATE ONLY  -- Seems to broken -> API is ignoring this argument
      * <p>
      * Provide this if the participant has a Challonge account.
      * He or she will be invited to the tournament.

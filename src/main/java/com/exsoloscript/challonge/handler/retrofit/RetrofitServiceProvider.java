@@ -8,6 +8,7 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -26,8 +27,8 @@ public class RetrofitServiceProvider implements Provider<Retrofit> {
     private RetrofitServiceProvider(ChallongeCredentials credentials) {
         String baseUrl = "https://api.challonge.com/v1/";
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(chain -> {
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        httpClientBuilder.addInterceptor(chain -> {
             Request original = chain.request();
 
             Request.Builder requestBuilder = original.newBuilder()
@@ -41,11 +42,16 @@ public class RetrofitServiceProvider implements Provider<Retrofit> {
             return chain.proceed(request);
         });
 
+        // for better debugging
+        HttpLoggingInterceptor body = new HttpLoggingInterceptor();
+        body.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        httpClientBuilder.addInterceptor(body);
+
         // add custom adapters
         Gson gson = AdapterSuite.createGson();
 
         this.retrofit = new Retrofit.Builder()
-                .client(httpClient.build())
+                .client(httpClientBuilder.build())
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();

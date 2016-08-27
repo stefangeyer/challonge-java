@@ -11,9 +11,9 @@ import java.io.IOException;
 /**
  * Call implementation for Retrofit.
  *
+ * @param <T> Type of the received object
  * @author EXSolo
  * @version 20160822.1
- * @param <T> Type of the received object
  */
 public class RetrofitChallongeApiCall<T> implements ChallongeApiCall<T> {
 
@@ -24,7 +24,7 @@ public class RetrofitChallongeApiCall<T> implements ChallongeApiCall<T> {
      * Create new object with a call and a way to handle errors.
      *
      * @param retrofitCall Call
-     * @param errorUtil ErrorUtil
+     * @param errorUtil    ErrorUtil
      */
     public RetrofitChallongeApiCall(Call<T> retrofitCall, ErrorUtil errorUtil) {
         this.retrofitCall = retrofitCall;

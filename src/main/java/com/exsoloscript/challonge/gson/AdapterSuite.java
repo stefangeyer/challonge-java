@@ -9,13 +9,17 @@ import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
+import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +31,6 @@ import java.util.Map;
 public class AdapterSuite {
 
     private GsonBuilder gsonBuilder;
-    private Map<Class, GsonAdapter> adapters;
     private Class[] excluded;
 
     /**
@@ -39,9 +42,9 @@ public class AdapterSuite {
         this.excluded = excluded;
         this.gsonBuilder = new GsonBuilder();
 
-        this.adapters = createTypeAdapters();
+        Map<Type, GsonAdapter> adapters = createTypeAdapters();
 
-        for (Map.Entry<Class, GsonAdapter> adapter : adapters.entrySet())
+        for (Map.Entry<Type, GsonAdapter> adapter : adapters.entrySet())
             gsonBuilder.registerTypeAdapter(adapter.getKey(), adapter.getValue());
     }
 
@@ -69,14 +72,17 @@ public class AdapterSuite {
      *
      * @return mappings
      */
-    private Map<Class, Class> typeMappings() {
-        Map<Class, Class> classes = new HashMap<>();
+    private Map<Type, Class> typeMappings() {
+        Map<Type, Class> classes = new HashMap<>();
 
         // pojo
         classes.put(Tournament.class, TournamentAdapter.class);
         classes.put(Participant.class, ParticipantAdapter.class);
         classes.put(Match.class, MatchAdapter.class);
         classes.put(Attachment.class, AttachmentAdapter.class);
+        //query
+        classes.put(new TypeToken<List<ParticipantQuery>>() {
+        }.getType(), ParticipantQueryListAdapter.class);
         // enum
         classes.put(GrandFinalsModifier.class, GrandFinalsModifierAdapter.class);
         classes.put(RankedBy.class, RankedByAdapter.class);
@@ -94,16 +100,16 @@ public class AdapterSuite {
      *
      * @return initialized type adapters
      */
-    private Map<Class, GsonAdapter> createTypeAdapters() {
+    private Map<Type, GsonAdapter> createTypeAdapters() {
         // use class values so constructor isnt called before excluding --> no stack overflow
-        Map<Class, Class> classes = typeMappings();
-        Map<Class, GsonAdapter> adapters = new HashMap<>();
+        Map<Type, Class> classes = typeMappings();
+        Map<Type, GsonAdapter> adapters = new HashMap<>();
 
         for (Class anExcluded : excluded) {
             classes.remove(anExcluded);
         }
 
-        for (Map.Entry<Class, Class> entry : classes.entrySet()) {
+        for (Map.Entry<Type, Class> entry : classes.entrySet()) {
             adapters.put(entry.getKey(), createDefaultInstance(entry.getValue()));
         }
 

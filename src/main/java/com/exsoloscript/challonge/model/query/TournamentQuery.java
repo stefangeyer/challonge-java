@@ -236,7 +236,7 @@ public class TournamentQuery {
 
     /**
      * One of the following: 'match wins', 'game wins', 'points scored', 'points difference', 'custom'
-     *
+     * <p>
      * For more information see http://feedback.challonge.com/knowledgebase/articles/448540-rank-tie-break-statistics
      */
     public RankedBy rankedBy() {

@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import java.util.Map;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SyncTournamentTest.class, SyncParticipantTest.class, AttachmentTest.class})
+@Suite.SuiteClasses({SyncTournamentTest.class, SyncParticipantTest.class, SyncAttachmentTest.class})
 public class ChallongeTestSuite implements Provider<ChallongeApi> {
 
     @Override

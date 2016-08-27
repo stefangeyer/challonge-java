@@ -17,7 +17,7 @@ public class Challonge {
      * Every time this method is called a new object will be created.
      *
      * @param username Challonge username
-     * @param apiKey Challonge api key
+     * @param apiKey   Challonge api key
      * @return ChallongeApi
      */
     public static ChallongeApi getFor(String username, String apiKey) {

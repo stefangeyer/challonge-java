@@ -67,7 +67,7 @@ public interface RetrofitParticipantHandler {
      */
     @POST("tournaments/{tournament}/participants/bulk_add.json")
     Call<List<Participant>> bulkAddParticipants(@Path("tournament") String tournament,
-                                          @Body List<ParticipantQuery> participants);
+                                                @Body List<ParticipantQuery> participants);
 
     /**
      * Update the attributes of a tournament participant.

@@ -6,4 +6,5 @@ package com.exsoloscript.challonge.gson;
  * @author EXSolo
  * @version 20160822.1
  */
-public interface GsonAdapter {}
+public interface GsonAdapter {
+}

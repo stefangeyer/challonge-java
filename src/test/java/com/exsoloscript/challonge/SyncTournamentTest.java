@@ -8,7 +8,6 @@ import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.inject.Inject;
-import org.junit.After;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,8 @@ import org.junit.runners.MethodSorters;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})

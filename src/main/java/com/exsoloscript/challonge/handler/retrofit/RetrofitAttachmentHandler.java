@@ -46,7 +46,7 @@ public interface RetrofitAttachmentHandler {
     /**
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
      * "accept_attachments" attribute must be true for this action to succeed.
-     *
+     * <p>
      * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *

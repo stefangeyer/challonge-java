@@ -1,7 +1,6 @@
 package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.ChallongeCredentials;
-import com.exsoloscript.challonge.gson.AdapterSuite;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -24,7 +23,7 @@ public class RetrofitServiceProvider implements Provider<Retrofit> {
     private Retrofit retrofit;
 
     @Inject
-    private RetrofitServiceProvider(ChallongeCredentials credentials) {
+    private RetrofitServiceProvider(ChallongeCredentials credentials, Gson gson) {
         String baseUrl = "https://api.challonge.com/v1/";
 
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
@@ -43,12 +42,9 @@ public class RetrofitServiceProvider implements Provider<Retrofit> {
         });
 
         // for better debugging
-        HttpLoggingInterceptor body = new HttpLoggingInterceptor();
-        body.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        httpClientBuilder.addInterceptor(body);
-
-        // add custom adapters
-        Gson gson = AdapterSuite.createGson();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(System.out::println);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        httpClientBuilder.addInterceptor(loggingInterceptor);
 
         this.retrofit = new Retrofit.Builder()
                 .client(httpClientBuilder.build())

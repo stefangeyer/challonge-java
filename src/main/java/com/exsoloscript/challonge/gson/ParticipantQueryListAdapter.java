@@ -2,10 +2,12 @@ package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.google.gson.*;
+import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
+@Singleton
 public class ParticipantQueryListAdapter implements GsonAdapter, JsonSerializer<List<ParticipantQuery>> {
 
     @Override

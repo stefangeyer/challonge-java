@@ -23,7 +23,7 @@ public class MatchQuery {
     @SerializedName("scores_csv")
     private String scoresCsv;
 
-    private MatchQuery(String winnerId, int votesForPlayer1, int votesForPlayer2, String scoresCsv) {
+    public MatchQuery(String winnerId, Integer votesForPlayer1, Integer votesForPlayer2, String scoresCsv) {
         this.winnerId = winnerId;
         this.votesForPlayer1 = votesForPlayer1;
         this.votesForPlayer2 = votesForPlayer2;

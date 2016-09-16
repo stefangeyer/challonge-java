@@ -4,6 +4,7 @@ import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
+import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.OffsetDateTime;
@@ -110,7 +111,7 @@ public class Tournament {
     private TournamentState state;
     private Boolean teams;
     @SerializedName("tie_breaks")
-    private List<String> tieBreaks;
+    private String[] tieBreaks;
     @SerializedName("updated_at")
     private OffsetDateTime updatedAt;
     @SerializedName("description_source")
@@ -347,7 +348,7 @@ public class Tournament {
     }
 
     public List<String> tieBreaks() {
-        return tieBreaks;
+        return Lists.newArrayList(tieBreaks);
     }
 
     public OffsetDateTime updatedAt() {

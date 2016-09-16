@@ -52,6 +52,8 @@ public class Match {
     private OffsetDateTime updatedAt;
     @SerializedName("prerequisite_match_ids_csv")
     private String prerequisiteMatchIdsCsv;
+    @SerializedName("scores_csv")
+    private String scoresCsv;
 
     public Integer attachmentCount() {
         return attachmentCount;
@@ -139,5 +141,9 @@ public class Match {
 
     public String prerequisiteMatchIdsCsv() {
         return prerequisiteMatchIdsCsv;
+    }
+
+    public String scoresCsv() {
+        return scoresCsv;
     }
 }

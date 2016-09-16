@@ -1,12 +1,13 @@
 package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Attachment;
-import com.exsoloscript.challonge.model.Match;
-import com.exsoloscript.challonge.model.Participant;
-import com.exsoloscript.challonge.model.Tournament;
 import com.google.gson.*;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
+import java.time.OffsetDateTime;
 
 /**
  * Type adapter for the {@link Attachment} class.
@@ -15,13 +16,20 @@ import java.lang.reflect.Type;
  * @author EXSolo
  * @version 20160825.1
  */
+@Singleton
 public class AttachmentAdapter implements GsonAdapter, JsonDeserializer<Attachment> {
 
-    private Gson gson = AdapterSuite.createGson(Tournament.class, Participant.class, Match.class, Attachment.class);
+    private Gson gson;
+
+    public AttachmentAdapter() {
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
+                .create();
+    }
 
     @Override
     public Attachment deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        JsonElement tournamentElement = jsonElement.getAsJsonObject().get("attachment");
-        return this.gson.fromJson(tournamentElement, Attachment.class);
+        JsonElement attachmentElement = jsonElement.getAsJsonObject().get("attachment");
+        return this.gson.fromJson(attachmentElement, Attachment.class);
     }
 }

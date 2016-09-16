@@ -1,5 +1,7 @@
 package com.exsoloscript.challonge.model.enumeration.query;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -17,23 +19,10 @@ import java.util.Optional;
  * @version 20160820.1
  */
 public enum GrandFinalsModifier {
-    BLANK(null),
-    SINGLE_MATCH("single match"),
-    SKIP("skip");
-
-    private String lowerCase;
-
-    GrandFinalsModifier(String lowerCase) {
-        this.lowerCase = lowerCase;
-    }
-
-    public static GrandFinalsModifier fromString(String name) {
-        Optional<GrandFinalsModifier> optType = Arrays.stream(values()).filter(type -> name.toLowerCase().equals(type.toString())).findFirst();
-        return optType.isPresent() ? optType.get() : null;
-    }
-
-    @Override
-    public String toString() {
-        return this.lowerCase;
-    }
+    @SerializedName("")
+    BLANK,
+    @SerializedName("single match")
+    SINGLE_MATCH,
+    @SerializedName("skip")
+    SKIP
 }

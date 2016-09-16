@@ -1,5 +1,7 @@
 package com.exsoloscript.challonge.model.enumeration;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * This enumeration represents the different states of a match.
  *
@@ -7,19 +9,12 @@ package com.exsoloscript.challonge.model.enumeration;
  * @version 20160820.1
  */
 public enum MatchState {
-    ALL("all"),
-    PENDING("pending"),
-    OPEN("open"),
-    COMPLETE("complete");
-
-    private String lowerCase;
-
-    MatchState(String lowerCase) {
-        this.lowerCase = lowerCase;
-    }
-
-    @Override
-    public String toString() {
-        return this.lowerCase;
-    }
+    @SerializedName("all")
+    ALL,
+    @SerializedName("pending")
+    PENDING,
+    @SerializedName("open")
+    OPEN,
+    @SerializedName("complete")
+    COMPLETE
 }

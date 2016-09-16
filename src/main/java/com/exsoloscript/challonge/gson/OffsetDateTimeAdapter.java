@@ -1,6 +1,7 @@
 package com.exsoloscript.challonge.gson;
 
 import com.google.gson.*;
+import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
@@ -12,6 +13,7 @@ import java.time.format.DateTimeFormatter;
  * @author EXSolo
  * @version 20160819.1
  */
+@Singleton
 public class OffsetDateTimeAdapter implements GsonAdapter, JsonSerializer<OffsetDateTime>, JsonDeserializer<OffsetDateTime> {
 
     @Override

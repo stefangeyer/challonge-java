@@ -1,12 +1,14 @@
 package com.exsoloscript.challonge.gson;
 
-import com.exsoloscript.challonge.model.Attachment;
-import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.Participant;
-import com.exsoloscript.challonge.model.Tournament;
 import com.google.gson.*;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 import java.lang.reflect.Type;
+import java.time.OffsetDateTime;
 
 /**
  * Type adapter for the {@link com.exsoloscript.challonge.model.Participant} class.
@@ -15,17 +17,21 @@ import java.lang.reflect.Type;
  * @author EXSolo
  * @version 20160819.1
  */
+@Singleton
 public class ParticipantAdapter implements GsonAdapter, JsonDeserializer<Participant> {
 
-    private Gson gson = AdapterSuite.createGson(Tournament.class, Participant.class, Match.class, Attachment.class);
+    private Gson gson;
 
     public ParticipantAdapter() {
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
+                .create();
     }
 
     @Override
     public Participant deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        JsonElement tournamentElement = jsonElement.getAsJsonObject().get("participant");
-        return this.gson.fromJson(tournamentElement, Participant.class);
+        JsonElement participantElement = jsonElement.getAsJsonObject().get("participant");
+        return this.gson.fromJson(participantElement, Participant.class);
     }
 
 }

@@ -39,7 +39,7 @@ public interface RetrofitMatchHandler {
      */
     @GET("tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> getMatch(@Path("tournament") String tournament,
-                         @Query("match_id") int matchId,
+                         @Path("match_id") int matchId,
                          @Query("include_attachments") int includeAttachments);
 
     /**
@@ -52,6 +52,6 @@ public interface RetrofitMatchHandler {
      */
     @PUT("tournaments/{tournament}/matches/{match_id}.json")
     Call<Match> updateMatch(@Path("tournament") String tournament,
-                            @Query("match_id") int matchId,
+                            @Path("match_id") int matchId,
                             @Body MatchQuery match);
 }

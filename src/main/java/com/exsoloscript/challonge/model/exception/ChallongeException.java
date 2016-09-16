@@ -20,7 +20,7 @@ public class ChallongeException extends Exception {
 
     @Override
     public String getMessage() {
-        return "The following errors were reported after the latest Api call: " + this.errors;
+        return this.errors.toString();
     }
 
     public List<String> getErrors() {

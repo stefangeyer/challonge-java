@@ -22,7 +22,6 @@ import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -44,7 +43,8 @@ public class SyncTournamentTest {
         try {
             // Delete the tournament, if it already exists
             this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
-        } catch (ChallongeException ignored) {}
+        } catch (ChallongeException ignored) {
+        }
 
         OffsetDateTime dt = OffsetDateTime.of(2022, 8, 22, 10, 0, 0, 0, ZoneOffset.of("-04:00"));
 
@@ -154,7 +154,7 @@ public class SyncTournamentTest {
         assertEquals(startedTournament.state(), TournamentState.UNDERWAY);
     }
 
-    //    @Test
+    @Test
     public void eFinalizeTournament() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().getTournament("javatesttournament", true, true).sync();
 
@@ -166,13 +166,12 @@ public class SyncTournamentTest {
                 .setScoresCsv("1-3,3-0,3-2")
                 .build();
 
-        // TODO It seems that challonge does not process the given values. Neither the winner id, nor the scores are saved
         Match toUpdate = tournament.matches().get(0);
         Match match = this.challongeApi.matches().updateMatch(tournament.id().toString(), toUpdate.id(), query).sync();
 
         assertEquals(user1.id(), match.player1Id());
         assertEquals(user2.id(), match.player2Id());
-        assertEquals("0-1,1-0,1-0", match.scoresCsv()); // FIXME csv is not being sent
+        assertEquals("1-3,3-0,3-2", match.scoresCsv());
 
         Tournament finalizedTournament = this.challongeApi.tournaments().finalizeTournament("javatesttournament", true, true).sync();
 

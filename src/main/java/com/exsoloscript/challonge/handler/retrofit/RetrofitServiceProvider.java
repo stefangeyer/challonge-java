@@ -12,7 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * This class
+ * This class is configured to instantiate the Retrofit handlers
  *
  * @author EXSolo
  * @version 20160822.1

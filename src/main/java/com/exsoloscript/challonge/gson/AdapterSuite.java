@@ -1,21 +1,18 @@
 package com.exsoloscript.challonge.gson;
 
-import com.exsoloscript.challonge.guice.AdapterModule;
 import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
+import com.exsoloscript.challonge.model.query.MatchQuery;
 import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +37,7 @@ public class AdapterSuite implements Provider<Gson> {
         adapters.put(Match.class, new MatchAdapter());
         adapters.put(Attachment.class, new AttachmentAdapter());
         //query
+        adapters.put(MatchQuery.class, new MatchQueryAdapter());
         adapters.put(new TypeToken<List<ParticipantQuery>>() {
         }.getType(), new ParticipantQueryListAdapter());
 

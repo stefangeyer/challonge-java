@@ -20,13 +20,13 @@ public interface RetrofitMatchHandler {
      * Retrieve a tournament's match list.
      *
      * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param participantId Only retrieve matches that include the specified participant.
-     * @param state         all (default), pending, open, complete
+     * @param participantId Only retrieve matches that include the specified participant. This parameter is optional. Provide null if you want to skip it.
+     * @param state         all (default), pending, open, complete. This parameter is optional. Provide null if you want to skip it.
      * @return Call
      */
     @GET("tournaments/{tournament}/matches.json")
     Call<List<Match>> getMatches(@Path("tournament") String tournament,
-                                 @Query("participant_id") int participantId,
+                                 @Query("participant_id") Integer participantId,
                                  @Query("state") MatchState state);
 
     /**

@@ -22,6 +22,7 @@ import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -158,8 +159,14 @@ public class SyncTournamentTest {
     public void eFinalizeTournament() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().getTournament("javatesttournament", true, true).sync();
 
-        Participant user1 = tournament.participants().stream().filter(participant -> participant.name().equals("User1")).findFirst().get();
-        Participant user2 = tournament.participants().stream().filter(participant -> participant.name().equals("User2")).findFirst().get();
+        Optional<Participant> optUser1 = tournament.participants().stream().filter(participant -> participant.name().equals("User1")).findFirst();
+        Optional<Participant> optUser2 = tournament.participants().stream().filter(participant -> participant.name().equals("User2")).findFirst();
+
+        assertTrue(optUser1.isPresent());
+        assertTrue(optUser2.isPresent());
+
+        Participant user1 = optUser1.get();
+        Participant user2 = optUser2.get();
 
         MatchQuery query = MatchQuery.builder()
                 .setWinnerId(user1.id().toString())
@@ -180,13 +187,15 @@ public class SyncTournamentTest {
 
     @Test
     public void fResetTournament() throws Throwable {
-
+        Tournament tournament = this.challongeApi.tournaments().resetTournament("javatesttournament", true, true).sync();
+        assertEquals(tournament.state(), TournamentState.PENDING);
     }
 
     @Test(expected = ChallongeException.class)
     public void zDeleteTournamentTest() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
         assertEquals(tournament.name(), "JavaApiTest");
+        // check if the tournament is still there
         this.challongeApi.tournaments().getTournament("javatesttournament", false, false).sync();
     }
 }

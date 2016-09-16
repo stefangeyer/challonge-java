@@ -33,11 +33,15 @@ public class MatchHandler {
     }
 
     /**
-     * @see RetrofitMatchHandler#getMatches(String, int, MatchState)
+     * @see RetrofitMatchHandler#getMatches(String, Integer, MatchState)
      */
-    public ChallongeApiCall<List<Match>> getMatches(String tournament, int participantId, MatchState state) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Match>> getMatches(String tournament, Integer participantId, MatchState state) throws IOException, ChallongeException {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         return this.factory.createApiCall(this.matchHandler.getMatches(tournament, participantId, state));
+    }
+
+    public ChallongeApiCall<List<Match>> getMatches(String tournament) throws IOException, ChallongeException {
+        return getMatches(tournament, null, null);
     }
 
     /**

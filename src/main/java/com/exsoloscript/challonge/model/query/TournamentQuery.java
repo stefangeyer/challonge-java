@@ -555,7 +555,7 @@ public class TournamentQuery {
                 Validate.notBlank(url, "URL can't be blank");
                 Validate.matchesPattern(url, "^[a-zA-Z0-9_]*$", "URL can contain letters, numbers, and underscores only");
             }
-            Validate.isTrue(signupCap > 3, "Participant / Signup Cap must be greater than 3");
+//            Validate.isTrue(signupCap > 3, "Participant / Signup Cap must be greater than 3");
             return new TournamentQuery(name, tournamentType, url, subdomain, description, openSignup, holdThirdPlaceMatch, pointsForMatchWin, pointsForMatchTie, pointsForGameWin, pointsForGameTie, pointsForBye, swissRounds, rankedBy, roundRobinPointsForGameWin, roundRobinPointsForGameTie, roundRobinPointsForMatchWin, roundRobinPointsForMatchTie, acceptAttachments, hideForum, showRounds, aPrivate, notifyUsersWhenMatchesOpen, notifyUsersWhenTheTournamentEnds, sequentialPairings, signupCap, startAt, checkInDuration, grandFinalsModifier);
         }
     }

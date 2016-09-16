@@ -15,16 +15,16 @@ public interface ChallongeApiCall<T> {
      * Blocking request which returns the object right away.
      *
      * @return The received object
-     * @throws Throwable Any exception that occurred during the call
+     * @throws Exception Any exception that occurred during the call
      */
-    T sync() throws Throwable;
+    T sync() throws Exception;
 
     /**
      * An async API call.
      * Once the response is received the callback method will be called.
      *
      * @param callback The callback
-     * @throws Throwable Any exception that occurred during the call
+     * @throws Exception Any exception that occurred during the call
      */
-    void async(AsyncCallback<T> callback) throws Throwable;
+    void async(AsyncCallback<T> callback) throws Exception;
 }

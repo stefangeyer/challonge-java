@@ -100,6 +100,34 @@ public class ParticipantQuery {
         return inviteNameOrEmail;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ParticipantQuery that = (ParticipantQuery) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (challongeUsername != null ? !challongeUsername.equals(that.challongeUsername) : that.challongeUsername != null)
+            return false;
+        if (seed != null ? !seed.equals(that.seed) : that.seed != null) return false;
+        if (misc != null ? !misc.equals(that.misc) : that.misc != null) return false;
+        return inviteNameOrEmail != null ? inviteNameOrEmail.equals(that.inviteNameOrEmail) : that.inviteNameOrEmail == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (challongeUsername != null ? challongeUsername.hashCode() : 0);
+        result = 31 * result + (seed != null ? seed.hashCode() : 0);
+        result = 31 * result + (misc != null ? misc.hashCode() : 0);
+        result = 31 * result + (inviteNameOrEmail != null ? inviteNameOrEmail.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
         private String name;
         private String email;

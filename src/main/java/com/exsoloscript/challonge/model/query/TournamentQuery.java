@@ -358,6 +358,95 @@ public class TournamentQuery {
         return grandFinalsModifier;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TournamentQuery query = (TournamentQuery) o;
+
+        if (name != null ? !name.equals(query.name) : query.name != null) return false;
+        if (tournamentType != query.tournamentType) return false;
+        if (url != null ? !url.equals(query.url) : query.url != null) return false;
+        if (subdomain != null ? !subdomain.equals(query.subdomain) : query.subdomain != null) return false;
+        if (description != null ? !description.equals(query.description) : query.description != null) return false;
+        if (openSignup != null ? !openSignup.equals(query.openSignup) : query.openSignup != null) return false;
+        if (holdThirdPlaceMatch != null ? !holdThirdPlaceMatch.equals(query.holdThirdPlaceMatch) : query.holdThirdPlaceMatch != null)
+            return false;
+        if (pointsForMatchWin != null ? !pointsForMatchWin.equals(query.pointsForMatchWin) : query.pointsForMatchWin != null)
+            return false;
+        if (pointsForMatchTie != null ? !pointsForMatchTie.equals(query.pointsForMatchTie) : query.pointsForMatchTie != null)
+            return false;
+        if (pointsForGameWin != null ? !pointsForGameWin.equals(query.pointsForGameWin) : query.pointsForGameWin != null)
+            return false;
+        if (pointsForGameTie != null ? !pointsForGameTie.equals(query.pointsForGameTie) : query.pointsForGameTie != null)
+            return false;
+        if (pointsForBye != null ? !pointsForBye.equals(query.pointsForBye) : query.pointsForBye != null) return false;
+        if (swissRounds != null ? !swissRounds.equals(query.swissRounds) : query.swissRounds != null) return false;
+        if (rankedBy != query.rankedBy) return false;
+        if (roundRobinPointsForGameWin != null ? !roundRobinPointsForGameWin.equals(query.roundRobinPointsForGameWin) : query.roundRobinPointsForGameWin != null)
+            return false;
+        if (roundRobinPointsForGameTie != null ? !roundRobinPointsForGameTie.equals(query.roundRobinPointsForGameTie) : query.roundRobinPointsForGameTie != null)
+            return false;
+        if (roundRobinPointsForMatchWin != null ? !roundRobinPointsForMatchWin.equals(query.roundRobinPointsForMatchWin) : query.roundRobinPointsForMatchWin != null)
+            return false;
+        if (roundRobinPointsForMatchTie != null ? !roundRobinPointsForMatchTie.equals(query.roundRobinPointsForMatchTie) : query.roundRobinPointsForMatchTie != null)
+            return false;
+        if (acceptAttachments != null ? !acceptAttachments.equals(query.acceptAttachments) : query.acceptAttachments != null)
+            return false;
+        if (hideForum != null ? !hideForum.equals(query.hideForum) : query.hideForum != null) return false;
+        if (showRounds != null ? !showRounds.equals(query.showRounds) : query.showRounds != null) return false;
+        if (_private != null ? !_private.equals(query._private) : query._private != null) return false;
+        if (notifyUsersWhenMatchesOpen != null ? !notifyUsersWhenMatchesOpen.equals(query.notifyUsersWhenMatchesOpen) : query.notifyUsersWhenMatchesOpen != null)
+            return false;
+        if (notifyUsersWhenTheTournamentEnds != null ? !notifyUsersWhenTheTournamentEnds.equals(query.notifyUsersWhenTheTournamentEnds) : query.notifyUsersWhenTheTournamentEnds != null)
+            return false;
+        if (sequentialPairings != null ? !sequentialPairings.equals(query.sequentialPairings) : query.sequentialPairings != null)
+            return false;
+        if (signupCap != null ? !signupCap.equals(query.signupCap) : query.signupCap != null) return false;
+        if (startAt != null ? !startAt.equals(query.startAt) : query.startAt != null) return false;
+        if (checkInDuration != null ? !checkInDuration.equals(query.checkInDuration) : query.checkInDuration != null)
+            return false;
+        if (grandFinalsModifier != query.grandFinalsModifier) return false;
+        return tieBreaks != null ? tieBreaks.equals(query.tieBreaks) : query.tieBreaks == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (tournamentType != null ? tournamentType.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (subdomain != null ? subdomain.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (openSignup != null ? openSignup.hashCode() : 0);
+        result = 31 * result + (holdThirdPlaceMatch != null ? holdThirdPlaceMatch.hashCode() : 0);
+        result = 31 * result + (pointsForMatchWin != null ? pointsForMatchWin.hashCode() : 0);
+        result = 31 * result + (pointsForMatchTie != null ? pointsForMatchTie.hashCode() : 0);
+        result = 31 * result + (pointsForGameWin != null ? pointsForGameWin.hashCode() : 0);
+        result = 31 * result + (pointsForGameTie != null ? pointsForGameTie.hashCode() : 0);
+        result = 31 * result + (pointsForBye != null ? pointsForBye.hashCode() : 0);
+        result = 31 * result + (swissRounds != null ? swissRounds.hashCode() : 0);
+        result = 31 * result + (rankedBy != null ? rankedBy.hashCode() : 0);
+        result = 31 * result + (roundRobinPointsForGameWin != null ? roundRobinPointsForGameWin.hashCode() : 0);
+        result = 31 * result + (roundRobinPointsForGameTie != null ? roundRobinPointsForGameTie.hashCode() : 0);
+        result = 31 * result + (roundRobinPointsForMatchWin != null ? roundRobinPointsForMatchWin.hashCode() : 0);
+        result = 31 * result + (roundRobinPointsForMatchTie != null ? roundRobinPointsForMatchTie.hashCode() : 0);
+        result = 31 * result + (acceptAttachments != null ? acceptAttachments.hashCode() : 0);
+        result = 31 * result + (hideForum != null ? hideForum.hashCode() : 0);
+        result = 31 * result + (showRounds != null ? showRounds.hashCode() : 0);
+        result = 31 * result + (_private != null ? _private.hashCode() : 0);
+        result = 31 * result + (notifyUsersWhenMatchesOpen != null ? notifyUsersWhenMatchesOpen.hashCode() : 0);
+        result = 31 * result + (notifyUsersWhenTheTournamentEnds != null ? notifyUsersWhenTheTournamentEnds.hashCode() : 0);
+        result = 31 * result + (sequentialPairings != null ? sequentialPairings.hashCode() : 0);
+        result = 31 * result + (signupCap != null ? signupCap.hashCode() : 0);
+        result = 31 * result + (startAt != null ? startAt.hashCode() : 0);
+        result = 31 * result + (checkInDuration != null ? checkInDuration.hashCode() : 0);
+        result = 31 * result + (grandFinalsModifier != null ? grandFinalsModifier.hashCode() : 0);
+        result = 31 * result + (tieBreaks != null ? tieBreaks.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
         private String name;
         private TournamentType tournamentType;

@@ -26,6 +26,8 @@ public class Match {
     private String location;
     @SerializedName("loser_id")
     private Integer loserId;
+    @SerializedName("winner_id")
+    private Integer winnerId;
     @SerializedName("player1_id")
     private Integer player1Id;
     @SerializedName("player1_is_prereq_match_loser")
@@ -145,5 +147,80 @@ public class Match {
 
     public String scoresCsv() {
         return scoresCsv;
+    }
+
+    public Integer winnerId() {
+        return winnerId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Match match = (Match) o;
+
+        if (attachmentCount != null ? !attachmentCount.equals(match.attachmentCount) : match.attachmentCount != null)
+            return false;
+        if (createdAt != null ? !createdAt.equals(match.createdAt) : match.createdAt != null) return false;
+        if (groupId != null ? !groupId.equals(match.groupId) : match.groupId != null) return false;
+        if (hasAttachment != null ? !hasAttachment.equals(match.hasAttachment) : match.hasAttachment != null)
+            return false;
+        if (id != null ? !id.equals(match.id) : match.id != null) return false;
+        if (identifier != null ? !identifier.equals(match.identifier) : match.identifier != null) return false;
+        if (location != null ? !location.equals(match.location) : match.location != null) return false;
+        if (loserId != null ? !loserId.equals(match.loserId) : match.loserId != null) return false;
+        if (winnerId != null ? !winnerId.equals(match.winnerId) : match.winnerId != null) return false;
+        if (player1Id != null ? !player1Id.equals(match.player1Id) : match.player1Id != null) return false;
+        if (player1IsPrerequisiteMatchLoser != null ? !player1IsPrerequisiteMatchLoser.equals(match.player1IsPrerequisiteMatchLoser) : match.player1IsPrerequisiteMatchLoser != null)
+            return false;
+        if (player1PrerequisiteMatchId != null ? !player1PrerequisiteMatchId.equals(match.player1PrerequisiteMatchId) : match.player1PrerequisiteMatchId != null)
+            return false;
+        if (player2Id != null ? !player2Id.equals(match.player2Id) : match.player2Id != null) return false;
+        if (player2IsPrerequisiteMatchLoser != null ? !player2IsPrerequisiteMatchLoser.equals(match.player2IsPrerequisiteMatchLoser) : match.player2IsPrerequisiteMatchLoser != null)
+            return false;
+        if (player2PrerequisiteMatchId != null ? !player2PrerequisiteMatchId.equals(match.player2PrerequisiteMatchId) : match.player2PrerequisiteMatchId != null)
+            return false;
+        if (round != null ? !round.equals(match.round) : match.round != null) return false;
+        if (scheduledTime != null ? !scheduledTime.equals(match.scheduledTime) : match.scheduledTime != null)
+            return false;
+        if (startedAt != null ? !startedAt.equals(match.startedAt) : match.startedAt != null) return false;
+        if (state != match.state) return false;
+        if (tournamentId != null ? !tournamentId.equals(match.tournamentId) : match.tournamentId != null) return false;
+        if (underwayAt != null ? !underwayAt.equals(match.underwayAt) : match.underwayAt != null) return false;
+        if (updatedAt != null ? !updatedAt.equals(match.updatedAt) : match.updatedAt != null) return false;
+        if (prerequisiteMatchIdsCsv != null ? !prerequisiteMatchIdsCsv.equals(match.prerequisiteMatchIdsCsv) : match.prerequisiteMatchIdsCsv != null)
+            return false;
+        return scoresCsv != null ? scoresCsv.equals(match.scoresCsv) : match.scoresCsv == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = attachmentCount != null ? attachmentCount.hashCode() : 0;
+        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
+        result = 31 * result + (hasAttachment != null ? hasAttachment.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (loserId != null ? loserId.hashCode() : 0);
+        result = 31 * result + (winnerId != null ? winnerId.hashCode() : 0);
+        result = 31 * result + (player1Id != null ? player1Id.hashCode() : 0);
+        result = 31 * result + (player1IsPrerequisiteMatchLoser != null ? player1IsPrerequisiteMatchLoser.hashCode() : 0);
+        result = 31 * result + (player1PrerequisiteMatchId != null ? player1PrerequisiteMatchId.hashCode() : 0);
+        result = 31 * result + (player2Id != null ? player2Id.hashCode() : 0);
+        result = 31 * result + (player2IsPrerequisiteMatchLoser != null ? player2IsPrerequisiteMatchLoser.hashCode() : 0);
+        result = 31 * result + (player2PrerequisiteMatchId != null ? player2PrerequisiteMatchId.hashCode() : 0);
+        result = 31 * result + (round != null ? round.hashCode() : 0);
+        result = 31 * result + (scheduledTime != null ? scheduledTime.hashCode() : 0);
+        result = 31 * result + (startedAt != null ? startedAt.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (tournamentId != null ? tournamentId.hashCode() : 0);
+        result = 31 * result + (underwayAt != null ? underwayAt.hashCode() : 0);
+        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (prerequisiteMatchIdsCsv != null ? prerequisiteMatchIdsCsv.hashCode() : 0);
+        result = 31 * result + (scoresCsv != null ? scoresCsv.hashCode() : 0);
+        return result;
     }
 }

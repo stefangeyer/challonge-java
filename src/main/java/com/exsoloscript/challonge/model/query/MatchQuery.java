@@ -64,6 +64,31 @@ public class MatchQuery {
         return scoresCsv;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MatchQuery query = (MatchQuery) o;
+
+        if (winnerId != null ? !winnerId.equals(query.winnerId) : query.winnerId != null) return false;
+        if (votesForPlayer1 != null ? !votesForPlayer1.equals(query.votesForPlayer1) : query.votesForPlayer1 != null)
+            return false;
+        if (votesForPlayer2 != null ? !votesForPlayer2.equals(query.votesForPlayer2) : query.votesForPlayer2 != null)
+            return false;
+        return scoresCsv != null ? scoresCsv.equals(query.scoresCsv) : query.scoresCsv == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = winnerId != null ? winnerId.hashCode() : 0;
+        result = 31 * result + (votesForPlayer1 != null ? votesForPlayer1.hashCode() : 0);
+        result = 31 * result + (votesForPlayer2 != null ? votesForPlayer2.hashCode() : 0);
+        result = 31 * result + (scoresCsv != null ? scoresCsv.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
         private String winnerId;
         private Integer votesForPlayer1;

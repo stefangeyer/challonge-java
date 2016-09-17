@@ -47,6 +47,27 @@ public class AttachmentQuery {
         return description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttachmentQuery that = (AttachmentQuery) o;
+
+        if (asset != null ? !asset.equals(that.asset) : that.asset != null) return false;
+        if (url != null ? !url.equals(that.url) : that.url != null) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = asset != null ? asset.hashCode() : 0;
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
         private File asset;
         private String url;

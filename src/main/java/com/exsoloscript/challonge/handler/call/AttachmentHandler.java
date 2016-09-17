@@ -57,11 +57,12 @@ public class AttachmentHandler {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         Validate.notNull(matchId, "Match id is required");
 
-//        MediaType multipart = MediaType.parse("multipart/form-data");
-//
-//        RequestBody asset = attachment.asset() != null ? RequestBody.create(multipart, attachment.asset()) : null;
-//        RequestBody description = attachment.description() != null ? RequestBody.create(multipart, attachment.description()) : null;
-//        RequestBody url = attachment.url() != null ? RequestBody.create(multipart, attachment.url()) : null;
+        // The API provider neither accepts a base64 encoded file nor a multipart request
+        // MediaType multipart = MediaType.parse("multipart/form-data");
+        //
+        // RequestBody asset = attachment.asset() != null ? RequestBody.create(multipart, attachment.asset()) : null;
+        // RequestBody description = attachment.description() != null ? RequestBody.create(multipart, attachment.description()) : null;
+        // RequestBody url = attachment.url() != null ? RequestBody.create(multipart, attachment.url()) : null;
 
         return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournament, matchId, attachment));
     }

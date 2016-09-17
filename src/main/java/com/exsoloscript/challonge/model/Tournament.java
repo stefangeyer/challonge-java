@@ -468,7 +468,6 @@ public class Tournament {
         if (sequentialPairings != null ? !sequentialPairings.equals(that.sequentialPairings) : that.sequentialPairings != null)
             return false;
         if (signupCap != null ? !signupCap.equals(that.signupCap) : that.signupCap != null) return false;
-        if (startAt != null ? !startAt.equals(that.startAt) : that.startAt != null) return false;
         if (checkInDuration != null ? !checkInDuration.equals(that.checkInDuration) : that.checkInDuration != null)
             return false;
         if (allowParticipantMatchReporting != null ? !allowParticipantMatchReporting.equals(that.allowParticipantMatchReporting) : that.allowParticipantMatchReporting != null)
@@ -476,8 +475,6 @@ public class Tournament {
         if (anonymousVoting != null ? !anonymousVoting.equals(that.anonymousVoting) : that.anonymousVoting != null)
             return false;
         if (category != null ? !category.equals(that.category) : that.category != null) return false;
-        if (completedAt != null ? !completedAt.equals(that.completedAt) : that.completedAt != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (createdByApi != null ? !createdByApi.equals(that.createdByApi) : that.createdByApi != null) return false;
         if (creditCapped != null ? !creditCapped.equals(that.creditCapped) : that.creditCapped != null) return false;
         if (gameId != null ? !gameId.equals(that.gameId) : that.gameId != null) return false;
@@ -493,21 +490,15 @@ public class Tournament {
             return false;
         if (predictionMethod != null ? !predictionMethod.equals(that.predictionMethod) : that.predictionMethod != null)
             return false;
-        if (predictionsOpenedAt != null ? !predictionsOpenedAt.equals(that.predictionsOpenedAt) : that.predictionsOpenedAt != null)
-            return false;
         if (progressMeter != null ? !progressMeter.equals(that.progressMeter) : that.progressMeter != null)
             return false;
         if (quickAdvance != null ? !quickAdvance.equals(that.quickAdvance) : that.quickAdvance != null) return false;
         if (requireScoreAgreement != null ? !requireScoreAgreement.equals(that.requireScoreAgreement) : that.requireScoreAgreement != null)
             return false;
-        if (startedAt != null ? !startedAt.equals(that.startedAt) : that.startedAt != null) return false;
-        if (startedCheckingInAt != null ? !startedCheckingInAt.equals(that.startedCheckingInAt) : that.startedCheckingInAt != null)
-            return false;
         if (state != that.state) return false;
         if (teams != null ? !teams.equals(that.teams) : that.teams != null) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         if (!Arrays.equals(tieBreaks, that.tieBreaks)) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
         if (descriptionSource != null ? !descriptionSource.equals(that.descriptionSource) : that.descriptionSource != null)
             return false;
         if (fullChallongeUrl != null ? !fullChallongeUrl.equals(that.fullChallongeUrl) : that.fullChallongeUrl != null)
@@ -527,7 +518,6 @@ public class Tournament {
             return false;
         if (groupStagesWereStarted != null ? !groupStagesWereStarted.equals(that.groupStagesWereStarted) : that.groupStagesWereStarted != null)
             return false;
-        if (lockedAt != null ? !lockedAt.equals(that.lockedAt) : that.lockedAt != null) return false;
         if (eventId != null ? !eventId.equals(that.eventId) : that.eventId != null) return false;
         if (publicPredictionsBeforeStartTime != null ? !publicPredictionsBeforeStartTime.equals(that.publicPredictionsBeforeStartTime) : that.publicPredictionsBeforeStartTime != null)
             return false;
@@ -564,13 +554,10 @@ public class Tournament {
         result = 31 * result + (notifyUsersWhenTheTournamentEnds != null ? notifyUsersWhenTheTournamentEnds.hashCode() : 0);
         result = 31 * result + (sequentialPairings != null ? sequentialPairings.hashCode() : 0);
         result = 31 * result + (signupCap != null ? signupCap.hashCode() : 0);
-        result = 31 * result + (startAt != null ? startAt.hashCode() : 0);
         result = 31 * result + (checkInDuration != null ? checkInDuration.hashCode() : 0);
         result = 31 * result + (allowParticipantMatchReporting != null ? allowParticipantMatchReporting.hashCode() : 0);
         result = 31 * result + (anonymousVoting != null ? anonymousVoting.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (completedAt != null ? completedAt.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (createdByApi != null ? createdByApi.hashCode() : 0);
         result = 31 * result + (creditCapped != null ? creditCapped.hashCode() : 0);
         result = 31 * result + (gameId != null ? gameId.hashCode() : 0);
@@ -581,16 +568,12 @@ public class Tournament {
         result = 31 * result + (notifyUsersWhenMatchesOpen != null ? notifyUsersWhenMatchesOpen.hashCode() : 0);
         result = 31 * result + (participantsCount != null ? participantsCount.hashCode() : 0);
         result = 31 * result + (predictionMethod != null ? predictionMethod.hashCode() : 0);
-        result = 31 * result + (predictionsOpenedAt != null ? predictionsOpenedAt.hashCode() : 0);
         result = 31 * result + (progressMeter != null ? progressMeter.hashCode() : 0);
         result = 31 * result + (quickAdvance != null ? quickAdvance.hashCode() : 0);
         result = 31 * result + (requireScoreAgreement != null ? requireScoreAgreement.hashCode() : 0);
-        result = 31 * result + (startedAt != null ? startedAt.hashCode() : 0);
-        result = 31 * result + (startedCheckingInAt != null ? startedCheckingInAt.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (teams != null ? teams.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(tieBreaks);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (descriptionSource != null ? descriptionSource.hashCode() : 0);
         result = 31 * result + (fullChallongeUrl != null ? fullChallongeUrl.hashCode() : 0);
         result = 31 * result + (liveImageUrl != null ? liveImageUrl.hashCode() : 0);
@@ -602,7 +585,6 @@ public class Tournament {
         result = 31 * result + (participantsSwappable != null ? participantsSwappable.hashCode() : 0);
         result = 31 * result + (teamConvertable != null ? teamConvertable.hashCode() : 0);
         result = 31 * result + (groupStagesWereStarted != null ? groupStagesWereStarted.hashCode() : 0);
-        result = 31 * result + (lockedAt != null ? lockedAt.hashCode() : 0);
         result = 31 * result + (eventId != null ? eventId.hashCode() : 0);
         result = 31 * result + (publicPredictionsBeforeStartTime != null ? publicPredictionsBeforeStartTime.hashCode() : 0);
         result = 31 * result + (grandFinalsModifier != null ? grandFinalsModifier.hashCode() : 0);

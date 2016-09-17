@@ -17,6 +17,8 @@ public class Attachment {
     private Integer matchId;
     @SerializedName("user_id")
     private Integer userId;
+    private String description;
+    private String url;
     @SerializedName("original_file_name")
     private String originalFileName;
     @SerializedName("created_at")
@@ -72,6 +74,14 @@ public class Attachment {
         return assetUrl;
     }
 
+    public String description() {
+        return description;
+    }
+
+    public String url() {
+        return url;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,10 +92,10 @@ public class Attachment {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (matchId != null ? !matchId.equals(that.matchId) : that.matchId != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (url != null ? !url.equals(that.url) : that.url != null) return false;
         if (originalFileName != null ? !originalFileName.equals(that.originalFileName) : that.originalFileName != null)
             return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
         if (assetFileName != null ? !assetFileName.equals(that.assetFileName) : that.assetFileName != null)
             return false;
         if (assetContentType != null ? !assetContentType.equals(that.assetContentType) : that.assetContentType != null)
@@ -101,9 +111,9 @@ public class Attachment {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (matchId != null ? matchId.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (originalFileName != null ? originalFileName.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (assetFileName != null ? assetFileName.hashCode() : 0);
         result = 31 * result + (assetContentType != null ? assetContentType.hashCode() : 0);
         result = 31 * result + (assetFileSize != null ? assetFileSize.hashCode() : 0);

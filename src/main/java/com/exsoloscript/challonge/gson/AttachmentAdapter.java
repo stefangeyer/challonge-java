@@ -29,7 +29,7 @@ public class AttachmentAdapter implements GsonAdapter, JsonDeserializer<Attachme
 
     @Override
     public Attachment deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        JsonElement attachmentElement = jsonElement.getAsJsonObject().get("attachment");
+        JsonElement attachmentElement = jsonElement.getAsJsonObject().get("match_attachment");
         return this.gson.fromJson(attachmentElement, Attachment.class);
     }
 }

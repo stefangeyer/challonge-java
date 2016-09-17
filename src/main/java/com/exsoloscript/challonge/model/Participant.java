@@ -185,8 +185,6 @@ public class Participant {
         if (seed != null ? !seed.equals(that.seed) : that.seed != null) return false;
         if (misc != null ? !misc.equals(that.misc) : that.misc != null) return false;
         if (active != null ? !active.equals(that.active) : that.active != null) return false;
-        if (checkedInAt != null ? !checkedInAt.equals(that.checkedInAt) : that.checkedInAt != null) return false;
-        if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (finalRank != null ? !finalRank.equals(that.finalRank) : that.finalRank != null) return false;
         if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
         if (icon != null ? !icon.equals(that.icon) : that.icon != null) return false;
@@ -196,7 +194,6 @@ public class Participant {
         if (onWaitingList != null ? !onWaitingList.equals(that.onWaitingList) : that.onWaitingList != null)
             return false;
         if (tournamentId != null ? !tournamentId.equals(that.tournamentId) : that.tournamentId != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
         if (challongeEmailAddressVerified != null ? !challongeEmailAddressVerified.equals(that.challongeEmailAddressVerified) : that.challongeEmailAddressVerified != null)
             return false;
         if (removable != null ? !removable.equals(that.removable) : that.removable != null) return false;
@@ -225,8 +222,6 @@ public class Participant {
         result = 31 * result + (seed != null ? seed.hashCode() : 0);
         result = 31 * result + (misc != null ? misc.hashCode() : 0);
         result = 31 * result + (active != null ? active.hashCode() : 0);
-        result = 31 * result + (checkedInAt != null ? checkedInAt.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (finalRank != null ? finalRank.hashCode() : 0);
         result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
         result = 31 * result + (icon != null ? icon.hashCode() : 0);
@@ -235,7 +230,6 @@ public class Participant {
         result = 31 * result + (inviteEmail != null ? inviteEmail.hashCode() : 0);
         result = 31 * result + (onWaitingList != null ? onWaitingList.hashCode() : 0);
         result = 31 * result + (tournamentId != null ? tournamentId.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
         result = 31 * result + (challongeEmailAddressVerified != null ? challongeEmailAddressVerified.hashCode() : 0);
         result = 31 * result + (removable != null ? removable.hashCode() : 0);
         result = 31 * result + (participatableOrInvitationAttached != null ? participatableOrInvitationAttached.hashCode() : 0);

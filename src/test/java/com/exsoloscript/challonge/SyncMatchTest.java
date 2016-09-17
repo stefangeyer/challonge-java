@@ -101,7 +101,7 @@ public class SyncMatchTest {
 
         Match match2 = this.challongeApi.matches().getMatch("javatesttournament", match1.id(), false).sync();
 
-        assertTrue(match1.equals(match2));
+        assertEquals(match1, match2);
     }
 
     @Test

@@ -404,7 +404,6 @@ public class TournamentQuery {
         if (sequentialPairings != null ? !sequentialPairings.equals(query.sequentialPairings) : query.sequentialPairings != null)
             return false;
         if (signupCap != null ? !signupCap.equals(query.signupCap) : query.signupCap != null) return false;
-        if (startAt != null ? !startAt.equals(query.startAt) : query.startAt != null) return false;
         if (checkInDuration != null ? !checkInDuration.equals(query.checkInDuration) : query.checkInDuration != null)
             return false;
         if (grandFinalsModifier != query.grandFinalsModifier) return false;
@@ -440,7 +439,6 @@ public class TournamentQuery {
         result = 31 * result + (notifyUsersWhenTheTournamentEnds != null ? notifyUsersWhenTheTournamentEnds.hashCode() : 0);
         result = 31 * result + (sequentialPairings != null ? sequentialPairings.hashCode() : 0);
         result = 31 * result + (signupCap != null ? signupCap.hashCode() : 0);
-        result = 31 * result + (startAt != null ? startAt.hashCode() : 0);
         result = 31 * result + (checkInDuration != null ? checkInDuration.hashCode() : 0);
         result = 31 * result + (grandFinalsModifier != null ? grandFinalsModifier.hashCode() : 0);
         result = 31 * result + (tieBreaks != null ? tieBreaks.hashCode() : 0);

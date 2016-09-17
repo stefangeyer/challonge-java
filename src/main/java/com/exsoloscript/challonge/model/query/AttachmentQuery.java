@@ -74,8 +74,9 @@ public class AttachmentQuery {
         private String description;
 
         public Builder setAsset(File asset) {
-            this.asset = asset;
-            return this;
+            throw new UnsupportedOperationException("The Challonge API is unable to process assets at the moment. This bug is caused by the API provider.");
+//            this.asset = asset;
+//            return this;
         }
 
         public Builder setUrl(String url) {

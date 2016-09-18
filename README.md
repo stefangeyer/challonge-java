@@ -30,7 +30,7 @@ api.matches().updateMatch(...)
 api.attachments().createAttachment(...)
 ```
 
-**These handlers provide calls which need to be executed in order to work with the result.**
+**These handlers provide calls which need to be executed in order to work with the result.**  
 Check out the chapter `calls` for more information.
 
 ###calls

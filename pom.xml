@@ -34,6 +34,7 @@
         <commons.codec.version>1.10</commons.codec.version>
         <commons.lang3.version>3.4</commons.lang3.version>
         <guice.version>4.1.0</guice.version>
+        <lombo.version>1.16.10</lombo.version>
     </properties>
 
     <dependencies>
@@ -75,7 +76,12 @@
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-multibindings</artifactId>
-            <version>4.1.0</version>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombo.version}</version>
         </dependency>
     </dependencies>
 

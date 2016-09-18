@@ -46,14 +46,14 @@ public class SyncAttachmentTest {
     public void setUp() throws Exception {
         this.challongeApi.tournaments().createTournament(
                 TournamentQuery.builder()
-                        .setName("Test")
-                        .setUrl("javatesttournament")
-                        .setAcceptAttachments(true)
+                        .name("Test")
+                        .url("javatesttournament")
+                        .acceptAttachments(true)
                         .build()
         ).sync();
 
-        ParticipantQuery user1 = ParticipantQuery.builder().setName("User1").setSeed(1).build();
-        ParticipantQuery user2 = ParticipantQuery.builder().setName("User2").setSeed(2).build();
+        ParticipantQuery user1 = ParticipantQuery.builder().name("User1").seed(1).build();
+        ParticipantQuery user2 = ParticipantQuery.builder().name("User2").seed(2).build();
 
         this.challongeApi.participants()
                 .bulkAddParticipants("javatesttournament", Lists.newArrayList(user1, user2)).sync();
@@ -66,8 +66,8 @@ public class SyncAttachmentTest {
     @Test
     public void createAttachmentTest() throws Exception {
         AttachmentQuery query = AttachmentQuery.builder()
-                .setDescription("TestDescription")
-                .setUrl("http://www.example.com")
+                .description("TestDescription")
+                .url("http://www.example.com")
                 .build();
 
         Attachment attachment = this.challongeApi.attachments()
@@ -81,13 +81,13 @@ public class SyncAttachmentTest {
         Attachment attachment1 = this.challongeApi.attachments().createAttachment(
                 "javatesttournament",
                 match.id(),
-                AttachmentQuery.builder().setDescription("Attachment1").build()
+                AttachmentQuery.builder().description("Attachment1").build()
         ).sync();
 
         Attachment attachment2 = this.challongeApi.attachments().createAttachment(
                 "javatesttournament",
                 match.id(),
-                AttachmentQuery.builder().setDescription("Attachment2").build()
+                AttachmentQuery.builder().description("Attachment2").build()
         ).sync();
 
         List<Attachment> attachments = this.challongeApi.attachments().getAttachments("javatesttournament", match.id()).sync();
@@ -102,7 +102,7 @@ public class SyncAttachmentTest {
         Attachment createdAttachment = this.challongeApi.attachments().createAttachment(
                 "javatesttournament",
                 match.id(),
-                AttachmentQuery.builder().setDescription("Attachment1").build()
+                AttachmentQuery.builder().description("Attachment1").build()
         ).sync();
 
         Attachment readAttachment = this.challongeApi.attachments()
@@ -116,14 +116,14 @@ public class SyncAttachmentTest {
         Attachment createdAttachment = this.challongeApi.attachments().createAttachment(
                 "javatesttournament",
                 match.id(),
-                AttachmentQuery.builder().setDescription("Attachment1").build()
+                AttachmentQuery.builder().description("Attachment1").build()
         ).sync();
 
         Attachment updatedAttachment = this.challongeApi.attachments().updateAttachment(
                 "javatesttournament",
                 match.id(),
                 createdAttachment.id(),
-                AttachmentQuery.builder().setDescription("update").build()
+                AttachmentQuery.builder().description("update").build()
         ).sync();
 
         assertEquals("update", updatedAttachment.description());
@@ -134,13 +134,13 @@ public class SyncAttachmentTest {
         Attachment attachment1 = this.challongeApi.attachments().createAttachment(
                 "javatesttournament",
                 match.id(),
-                AttachmentQuery.builder().setDescription("Attachment1").build()
+                AttachmentQuery.builder().description("Attachment1").build()
         ).sync();
 
         Attachment attachment2 = this.challongeApi.attachments().createAttachment(
                 "javatesttournament",
                 match.id(),
-                AttachmentQuery.builder().setDescription("Attachment2").build()
+                AttachmentQuery.builder().description("Attachment2").build()
         ).sync();
 
         List<Attachment> attachmentsBeforeDelete = this.challongeApi.attachments().getAttachments("javatesttournament", match.id()).sync();

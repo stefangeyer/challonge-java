@@ -1,5 +1,6 @@
 package com.exsoloscript.challonge;
 
+import lombok.Data;
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -8,6 +9,7 @@ import org.apache.commons.codec.binary.Base64;
  * @author EXSolo
  * @version 20160822.1
  */
+@Data
 public class ChallongeCredentials {
 
     private String username;
@@ -26,21 +28,5 @@ public class ChallongeCredentials {
     public String toHttpAuthString() {
         String credentials = this.username + ":" + this.apiKey;
         return "Basic " + Base64.encodeBase64String(credentials.getBytes());
-    }
-
-    public String username() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String apiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
     }
 }

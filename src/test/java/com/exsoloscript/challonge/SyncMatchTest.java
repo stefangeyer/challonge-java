@@ -30,7 +30,6 @@ public class SyncMatchTest {
 
     private ChallongeApi challongeApi;
     private List<Participant> participants;
-    private Tournament tournament;
 
     @Inject
     public void setChallongeApi(ChallongeApi challongeApi) {
@@ -40,19 +39,19 @@ public class SyncMatchTest {
     @Before
     public void setUp() throws Exception {
         this.challongeApi.tournaments().createTournament(
-                TournamentQuery.builder().setName("Test").setUrl("javatesttournament").build())
+                TournamentQuery.builder().name("Test").url("javatesttournament").build())
                 .sync();
 
         this.participants = this.challongeApi.participants().bulkAddParticipants("javatesttournament",
                 Lists.newArrayList(
-                        ParticipantQuery.builder().setName("User1").setSeed(1).build(),
-                        ParticipantQuery.builder().setName("User2").setSeed(2).build(),
-                        ParticipantQuery.builder().setName("User3").setSeed(3).build(),
-                        ParticipantQuery.builder().setName("User4").setSeed(4).build()
+                        ParticipantQuery.builder().name("User1").seed(1).build(),
+                        ParticipantQuery.builder().name("User2").seed(2).build(),
+                        ParticipantQuery.builder().name("User3").seed(3).build(),
+                        ParticipantQuery.builder().name("User4").seed(4).build()
                 )
         ).sync();
 
-        this.tournament = this.challongeApi.tournaments().startTournament("javatesttournament", false, false).sync();
+        this.challongeApi.tournaments().startTournament("javatesttournament", false, false).sync();
     }
 
     @Test
@@ -113,7 +112,7 @@ public class SyncMatchTest {
                 user1.id(),
                 null).sync().get(0);
 
-        MatchQuery query = MatchQuery.builder().setWinnerId(user1.id().toString()).setScoresCsv("1-0,1-0").build();
+        MatchQuery query = MatchQuery.builder().winnerId(user1.id().toString()).scoresCsv("1-0,1-0").build();
 
         Match updated = this.challongeApi.matches().updateMatch("javatesttournament", initial.id(), query).sync();
 

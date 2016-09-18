@@ -43,11 +43,11 @@ public class SyncParticipantTest {
             this.tournament = this.challongeApi.tournaments().getTournament("participantjavatournament", true, false).sync();
         } catch (ChallongeException e) {
             TournamentQuery query = TournamentQuery.builder()
-                    .setName("Participants")
-                    .setUrl("participantjavatournament")
-                    .setSignupCap(10)
-                    .setCheckInDuration(10)
-                    .setStartAt(start)
+                    .name("Participants")
+                    .url("participantjavatournament")
+                    .signupCap(10)
+                    .checkInDuration(10)
+                    .startAt(start)
                     .build();
             this.tournament = this.challongeApi.tournaments().createTournament(query).sync();
         }
@@ -56,9 +56,9 @@ public class SyncParticipantTest {
     @Test
     public void aAddParticipants() throws Throwable {
         ParticipantQuery query = ParticipantQuery.builder()
-                .setName("EXSolo")
-                .setSeed(1)
-                .setMisc("MiscTest")
+                .name("EXSolo")
+                .seed(1)
+                .misc("MiscTest")
                 .build();
         Participant participant = this.challongeApi.participants().addParticipant(this.tournament.url(), query).sync();
 
@@ -70,15 +70,15 @@ public class SyncParticipantTest {
     @Test
     public void bBulkAddParticipants() throws Throwable {
         ParticipantQuery query1 = ParticipantQuery.builder()
-                .setName("Bulk1")
-                .setSeed(1)
+                .name("Bulk1")
+                .seed(1)
                 .build();
 
         ParticipantQuery query2 = ParticipantQuery.builder()
-                .setName("EXSolo")
-                .setInviteNameOrEmail("EXSolo")
-                .setSeed(2)
-                .setMisc("BulkAdd")
+                .name("EXSolo")
+                .inviteNameOrEmail("EXSolo")
+                .seed(2)
+                .misc("BulkAdd")
                 .build();
 
         List<ParticipantQuery> queries = Lists.newArrayList(query1, query2);
@@ -99,8 +99,8 @@ public class SyncParticipantTest {
     @Test
     public void cUpdateParticipant() throws Throwable {
         ParticipantQuery createQuery = ParticipantQuery.builder()
-                .setName("EXSolo")
-                .setMisc("123")
+                .name("EXSolo")
+                .misc("123")
                 .build();
 
         Participant createdParticipant = this.challongeApi.participants().addParticipant(this.tournament.url(), createQuery).sync();
@@ -109,8 +109,8 @@ public class SyncParticipantTest {
         assertEquals("EXSolo", createdParticipant.name());
 
         ParticipantQuery updateQuery = ParticipantQuery.builder()
-                .setName("EXSolo1")
-                .setMisc("321")
+                .name("EXSolo1")
+                .misc("321")
                 .build();
 
         Participant updatedParticipant = this.challongeApi.participants().updateParticipant(this.tournament.url(), createdParticipant.id(), updateQuery).sync();
@@ -122,7 +122,7 @@ public class SyncParticipantTest {
     @Test(expected = ChallongeException.class)
     public void dDeleteParticipant() throws Throwable {
         ParticipantQuery createQuery = ParticipantQuery.builder()
-                .setName("EXSolo")
+                .name("EXSolo")
                 .build();
 
         Participant createdParticipant = this.challongeApi.participants().addParticipant(this.tournament.url(), createQuery).sync();
@@ -134,9 +134,14 @@ public class SyncParticipantTest {
     }
 
     @Test
-    public void eCheckInParticipant() throws Throwable {
+    public void eRandomizeParticipants() throws Exception {
+
+    }
+
+    @Test
+    public void fCheckInParticipant() throws Throwable {
 //        ParticipantQuery createQuery = ParticipantQuery.builder()
-//                .setName("EXSolo")
+//                .name("EXSolo")
 //                .build();
 //
 //        Participant createdParticipant = this.challongeApi.participants().addParticipant(this.tournament.url(), createQuery).sync();

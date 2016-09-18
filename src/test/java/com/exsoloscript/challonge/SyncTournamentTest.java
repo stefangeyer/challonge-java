@@ -50,33 +50,33 @@ public class SyncTournamentTest {
         OffsetDateTime dt = OffsetDateTime.of(2022, 8, 22, 10, 0, 0, 0, ZoneOffset.of("-04:00"));
 
         TournamentQuery query = TournamentQuery.builder()
-                .setName("JavaApiTest")
-                .setUrl("javatesttournament")
-                .setTournamentType(TournamentType.DOUBLE_ELIMINATION)
-                .setDescription("This is a description")
-                .setHoldThirdPlaceMatch(true)
-                .setOpenSignup(true)
-                .setPointsForMatchWin(2F)
-                .setPointsForMatchTie(0F)
-                .setPointsForGameWin(1F)
-                .setPointsForGameTie(0F)
-                .setPointsForBye(0.5F)
-                .setSignupCap(4)
-                .setRankedBy(RankedBy.MATCH_WINS)
-                .setRoundRobinPointsForGameWin(1.0F)
-                .setRoundRobinPointsForGameTie(1.5F)
-                .setRoundRobinPointsForMatchWin(5F)
-                .setRoundRobinPointsForMatchTie(2F)
-                .setAcceptAttachments(true)
-                .setHideForum(true)
-                .setShowRounds(true)
-                .setPrivate(true)
-                .setNotifyUsersWhenMatchesOpen(true)
-                .setNotifyUsersWhenTheTournamentEnds(true)
-                .setSequentialPairings(true)
-                .setStartAt(dt)
-                .setCheckInDuration(5)
-                .setGrandFinalsModifier(GrandFinalsModifier.SINGLE_MATCH)
+                .name("JavaApiTest")
+                .url("javatesttournament")
+                .tournamentType(TournamentType.DOUBLE_ELIMINATION)
+                .description("This is a description")
+                .holdThirdPlaceMatch(true)
+                .openSignup(true)
+                .pointsForMatchWin(2F)
+                .pointsForMatchTie(0F)
+                .pointsForGameWin(1F)
+                .pointsForGameTie(0F)
+                .pointsForBye(0.5F)
+                .signupCap(4)
+                .rankedBy(RankedBy.MATCH_WINS)
+                .roundRobinPointsForGameWin(1.0F)
+                .roundRobinPointsForGameTie(1.5F)
+                .roundRobinPointsForMatchWin(5F)
+                .roundRobinPointsForMatchTie(2F)
+                .acceptAttachments(true)
+                .hideForum(true)
+                .showRounds(true)
+                ._private(true)
+                .notifyUsersWhenMatchesOpen(true)
+                .notifyUsersWhenTheTournamentEnds(true)
+                .sequentialPairings(true)
+                .startAt(dt)
+                .checkInDuration(5)
+                .grandFinalsModifier(GrandFinalsModifier.SINGLE_MATCH)
                 .build();
         Tournament tournament = this.challongeApi.tournaments().createTournament(query).sync();
 
@@ -92,7 +92,7 @@ public class SyncTournamentTest {
         assertTrue(tournament.acceptAttachments());
         assertTrue(tournament.hideForum());
         assertTrue(tournament.showRounds());
-        assertTrue(tournament.isPrivate());
+        assertTrue(tournament._private());
         assertTrue(tournament.notifyUsersWhenMatchesOpen());
         assertTrue(tournament.notifyUsersWhenTheTournamentEnds());
         assertTrue(tournament.sequentialPairings());
@@ -118,13 +118,11 @@ public class SyncTournamentTest {
     @Test
     public void cUpdateTournamentTest() throws Throwable {
         TournamentQuery query = TournamentQuery.builder()
-                .noName()
-                .noUrl()
-                .setTournamentType(TournamentType.SWISS)
-                .setSignupCap(6)
-                .setAcceptAttachments(true)
-                .setDescription("TestDescription")
-                .setHoldThirdPlaceMatch(true)
+                .tournamentType(TournamentType.SWISS)
+                .signupCap(6)
+                .acceptAttachments(true)
+                .description("TestDescription")
+                .holdThirdPlaceMatch(true)
                 .build();
         Tournament tournament = this.challongeApi.tournaments().updateTournament("javatesttournament", query).sync();
 
@@ -140,11 +138,11 @@ public class SyncTournamentTest {
     @Test
     public void dStartTournament() throws Throwable {
         ParticipantQuery participant1 = ParticipantQuery.builder()
-                .setName("User1")
+                .name("User1")
                 .build();
 
         ParticipantQuery participant2 = ParticipantQuery.builder()
-                .setName("User2")
+                .name("User2")
                 .build();
 
         this.challongeApi.participants().bulkAddParticipants("javatesttournament", Lists.newArrayList(participant1, participant2)).sync();
@@ -169,8 +167,8 @@ public class SyncTournamentTest {
         Participant user2 = optUser2.get();
 
         MatchQuery query = MatchQuery.builder()
-                .setWinnerId(user1.id().toString())
-                .setScoresCsv("1-3,3-0,3-2")
+                .winnerId(user1.id().toString())
+                .scoresCsv("1-3,3-0,3-2")
                 .build();
 
         Match toUpdate = tournament.matches().get(0);

@@ -40,8 +40,8 @@ public class AsyncTest {
     public void setUp() throws Exception {
         this.tournament = this.challongeApi.tournaments().createTournament(
                 TournamentQuery.builder()
-                        .setName("Test")
-                        .setUrl("javatesttournament")
+                        .name("Test")
+                        .url("javatesttournament")
                         .build()
         ).sync();
     }
@@ -49,7 +49,7 @@ public class AsyncTest {
     @Test
     public void testAsyncCallback() throws Exception {
         ParticipantQuery query = ParticipantQuery.builder()
-                .setName("User1")
+                .name("User1")
                 .build();
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -76,8 +76,8 @@ public class AsyncTest {
 
         this.challongeApi.tournaments().createTournament(
                 TournamentQuery.builder()
-                        .setName("Test")
-                        .setUrl("javatesttournament")
+                        .name("Test")
+                        .url("javatesttournament")
                         .build()
         ).async(new AsyncCallback<Tournament>() {
             @Override

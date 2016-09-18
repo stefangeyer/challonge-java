@@ -24,13 +24,14 @@ Each handler covers one base functionality of the Challonge! Api.
 For more information view the handler's JavaDoc.
 
 ```java
-api.tournaments().createTournament(...);
-api.participants().getParticipants(...);
-api.matches().updateMatch(...);
-api.attachments().createAttachment(...);
+api.tournaments().getTournament(...)
+api.participants().getParticipants(...)
+api.matches().updateMatch(...)
+api.attachments().createAttachment(...)
 ```
 
-These handlers provide calls which need to be executed.
+**These handlers provide calls which need to be executed in order to work with the result.**
+Check out the chapter `calls` for more information.
 
 ###calls
 

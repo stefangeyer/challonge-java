@@ -4,7 +4,7 @@
 
 Java binding for the [CHALLONGE! REST Api](http://api.challonge.com/v1) using [Guice](https://github.com/google/guice) and [Gson](https://github.com/google/gson) internally and [Retrofit2](http://square.github.io/retrofit/) to bind the HTTP calls.
 
-This library is currently in development and will be released under the MIT license on completion.
+Released under the MIT license.
 
 ##usage
 

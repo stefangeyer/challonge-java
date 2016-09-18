@@ -41,7 +41,7 @@ A call can be executed synchronous and asynchronously.
 ```java
 Tournament t = api.tournaments().getTournament("tournament url or id here").sync();
 
-api.tournaments().getTournament("tournament url or id here").asyc(new AsyncCallback<Tournament>() {
+api.tournaments().getTournament("tournament url or id here").async(new AsyncCallback<Tournament>() {
     @Override
     public void handleSuccess(Participant response) {
         // request was successful

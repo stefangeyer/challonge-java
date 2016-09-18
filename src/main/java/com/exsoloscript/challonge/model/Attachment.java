@@ -2,6 +2,7 @@ package com.exsoloscript.challonge.model;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.OffsetDateTime;
@@ -14,6 +15,7 @@ import java.time.OffsetDateTime;
  */
 @Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(exclude = {"createdAt", "updatedAt"})
 public class Attachment {
 
     private Integer id;

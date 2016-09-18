@@ -77,7 +77,7 @@ public class AsyncTest {
         this.challongeApi.tournaments().createTournament(
                 TournamentQuery.builder()
                         .name("Test")
-                        .url("javatesttournament")
+                        .url(this.tournament.url())
                         .build()
         ).async(new AsyncCallback<Tournament>() {
             @Override

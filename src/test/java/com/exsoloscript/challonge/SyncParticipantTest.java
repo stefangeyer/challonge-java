@@ -18,8 +18,10 @@ import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})
@@ -135,7 +137,23 @@ public class SyncParticipantTest {
 
     @Test
     public void eRandomizeParticipants() throws Exception {
+        ParticipantQuery query1 = ParticipantQuery.builder().name("User1").build();
+        ParticipantQuery query2 = ParticipantQuery.builder().name("User2").build();
+        ParticipantQuery query3 = ParticipantQuery.builder().name("User3").build();
 
+        this.challongeApi.participants().bulkAddParticipants(this.tournament.url(), Lists.newArrayList(query1, query2, query3)).sync();
+
+        List<Participant> randomizedParticipants = this.challongeApi.participants().randomizeParticipants(this.tournament.url()).sync();
+
+        assertTrue(randomizedParticipants.size() == 3);
+
+        Optional<Participant> optUser1 = randomizedParticipants.stream().filter(p -> p.name().equals("User1")).findFirst();
+        Optional<Participant> optUser2 = randomizedParticipants.stream().filter(p -> p.name().equals("User2")).findFirst();
+        Optional<Participant> optUser3 = randomizedParticipants.stream().filter(p -> p.name().equals("User3")).findFirst();
+
+        assertTrue(optUser1.isPresent());
+        assertTrue(optUser2.isPresent());
+        assertTrue(optUser3.isPresent());
     }
 
     @Test

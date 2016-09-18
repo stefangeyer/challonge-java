@@ -6,8 +6,8 @@ import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.Validate;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.List;
 @Data
 @Accessors(fluent = true)
 @Builder
+@EqualsAndHashCode(exclude = {"startAt"})
 public class TournamentQuery {
 
     private String name;

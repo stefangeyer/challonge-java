@@ -2,9 +2,6 @@ package com.exsoloscript.challonge.model.enumeration;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 /**
  * This enumeration represents the available tournament types
  *

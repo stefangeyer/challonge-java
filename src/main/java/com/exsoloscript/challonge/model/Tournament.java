@@ -4,13 +4,12 @@ import com.exsoloscript.challonge.model.enumeration.RankedBy;
 import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
-import com.google.common.collect.Lists;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,6 +20,10 @@ import java.util.List;
  */
 @Data
 @Accessors(fluent = true)
+@EqualsAndHashCode(exclude = {
+        "startAt", "completedAt", "createdAt",
+        "predictionsOpenedAt", "startedAt", "startedCheckingInAt",
+        "updatedAt", "lockedAt"})
 public class Tournament {
     private String name;
     @SerializedName("tournament_type")

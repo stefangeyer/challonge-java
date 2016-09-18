@@ -20,7 +20,6 @@ import org.junit.runners.MethodSorters;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(GuiceJUnitRunner.class)
@@ -30,6 +29,7 @@ public class SyncMatchTest {
 
     private ChallongeApi challongeApi;
     private List<Participant> participants;
+    private Tournament tournament;
 
     @Inject
     public void setChallongeApi(ChallongeApi challongeApi) {
@@ -51,7 +51,7 @@ public class SyncMatchTest {
                 )
         ).sync();
 
-        this.challongeApi.tournaments().startTournament("javatesttournament", false, false).sync();
+        this.tournament = this.challongeApi.tournaments().startTournament("javatesttournament", false, false).sync();
     }
 
     @Test
@@ -77,7 +77,7 @@ public class SyncMatchTest {
         Participant user4 = this.participants.stream().filter(p -> p.name().equals("User4")).findFirst().get();
 
         List<Match> matches = this.challongeApi.matches().getMatches(
-                "javatesttournament",
+                this.tournament.url(),
                 user1.id(),
                 null).sync();
 
@@ -94,11 +94,11 @@ public class SyncMatchTest {
         Participant user1 = this.participants.stream().filter(p -> p.name().equals("User1")).findFirst().get();
 
         Match match1 = this.challongeApi.matches().getMatches(
-                "javatesttournament",
+                this.tournament.url(),
                 user1.id(),
                 null).sync().get(0);
 
-        Match match2 = this.challongeApi.matches().getMatch("javatesttournament", match1.id(), false).sync();
+        Match match2 = this.challongeApi.matches().getMatch(this.tournament.url(), match1.id(), false).sync();
 
         assertEquals(match1, match2);
     }
@@ -108,19 +108,19 @@ public class SyncMatchTest {
         Participant user1 = this.participants.stream().filter(p -> p.name().equals("User1")).findFirst().get();
 
         Match initial = this.challongeApi.matches().getMatches(
-                "javatesttournament",
+                this.tournament.url(),
                 user1.id(),
                 null).sync().get(0);
 
         MatchQuery query = MatchQuery.builder().winnerId(user1.id().toString()).scoresCsv("1-0,1-0").build();
 
-        Match updated = this.challongeApi.matches().updateMatch("javatesttournament", initial.id(), query).sync();
+        Match updated = this.challongeApi.matches().updateMatch(this.tournament.url(), initial.id(), query).sync();
 
         assertEquals(user1.id(), updated.winnerId());
     }
 
     @After
     public void tearDown() throws Exception {
-        this.challongeApi.tournaments().deleteTournament("javatesttournament").sync();
+        this.challongeApi.tournaments().deleteTournament(this.tournament.url()).sync();
     }
 }

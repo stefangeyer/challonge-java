@@ -2,8 +2,6 @@ package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Attachment;
 import com.google.gson.*;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;

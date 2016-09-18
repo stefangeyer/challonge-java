@@ -2,10 +2,7 @@ package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Match;
 import com.google.gson.*;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.Validate;
 
 /**
  * Query for updating a match. This class can be accessed using it's builder.

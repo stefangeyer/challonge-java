@@ -3,7 +3,6 @@ package com.exsoloscript.challonge.gson;
 import com.exsoloscript.challonge.model.Match;
 import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
-import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Singleton;
@@ -27,8 +26,10 @@ public class TournamentAdapter implements GsonAdapter, JsonDeserializer<Tourname
     public TournamentAdapter() {
         gson = new GsonBuilder()
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
-                .registerTypeAdapter(new TypeToken<List<Participant>>() {}.getType(), new ParticipantListAdapter())
-                .registerTypeAdapter(new TypeToken<List<Match>>() {}.getType(), new MatchListAdapter())
+                .registerTypeAdapter(new TypeToken<List<Participant>>() {
+                }.getType(), new ParticipantListAdapter())
+                .registerTypeAdapter(new TypeToken<List<Match>>() {
+                }.getType(), new MatchListAdapter())
                 .create();
     }
 

@@ -2,9 +2,6 @@ package com.exsoloscript.challonge.model.enumeration.query;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
-import java.util.Optional;
-
 /**
  * Type of the grand finals in a double elimination tournament.
  * <p>

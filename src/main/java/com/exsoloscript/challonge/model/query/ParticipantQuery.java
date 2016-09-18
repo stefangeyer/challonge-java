@@ -15,18 +15,12 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @Builder
 public class ParticipantQuery {
-
     private String name;
-
     private String email;
-
     @SerializedName("challonge_username")
     private String challongeUsername;
-
     private Integer seed;
-
     private String misc;
-
     @SerializedName("invite_name_or_email")
     private String inviteNameOrEmail;
 }

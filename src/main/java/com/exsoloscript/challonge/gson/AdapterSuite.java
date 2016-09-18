@@ -6,6 +6,7 @@ import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.query.MatchQuery;
 import com.exsoloscript.challonge.model.query.ParticipantQuery;
+import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -37,6 +38,7 @@ public class AdapterSuite implements Provider<Gson> {
         adapters.put(Match.class, new MatchAdapter());
         adapters.put(Attachment.class, new AttachmentAdapter());
         //query
+        adapters.put(TournamentQuery.class, new TournamentQueryAdapter());
         adapters.put(MatchQuery.class, new MatchQueryAdapter());
         adapters.put(new TypeToken<List<ParticipantQuery>>() {
         }.getType(), new ParticipantQueryListAdapter());

@@ -17,26 +17,25 @@ import java.time.OffsetDateTime;
 @Accessors(fluent = true)
 @EqualsAndHashCode(exclude = {"createdAt", "updatedAt"})
 public class Attachment {
-
-    private Integer id;
+    private final Integer id;
     @SerializedName("match_id")
-    private Integer matchId;
+    private final Integer matchId;
     @SerializedName("user_id")
-    private Integer userId;
-    private String description;
-    private String url;
+    private final Integer userId;
+    private final String description;
+    private final String url;
     @SerializedName("original_file_name")
-    private String originalFileName;
+    private final String originalFileName;
     @SerializedName("created_at")
-    private OffsetDateTime createdAt;
+    private final OffsetDateTime createdAt;
     @SerializedName("updated_at")
-    private OffsetDateTime updatedAt;
+    private final OffsetDateTime updatedAt;
     @SerializedName("asset_file_name")
-    private String assetFileName;
+    private final String assetFileName;
     @SerializedName("asset_content_type")
-    private String assetContentType;
+    private final String assetContentType;
     @SerializedName("asset_file_size")
-    private Integer assetFileSize;
+    private final Integer assetFileSize;
     @SerializedName("asset_url")
-    private String assetUrl;
+    private final String assetUrl;
 }

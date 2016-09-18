@@ -19,46 +19,46 @@ import java.time.OffsetDateTime;
 @EqualsAndHashCode(exclude = {"createdAt", "scheduledTime", "startedAt", "underwayAt", "updatedAt"})
 public class Match {
     @SerializedName("attachment_count")
-    private Integer attachmentCount;
+    private final Integer attachmentCount;
     @SerializedName("createdAt")
-    private OffsetDateTime createdAt;
+    private final OffsetDateTime createdAt;
     @SerializedName("group_id")
-    private Integer groupId;
+    private final Integer groupId;
     @SerializedName("has_attachment")
-    private Boolean hasAttachment;
-    private Integer id;
-    private String identifier;
-    private String location;
+    private final Boolean hasAttachment;
+    private final Integer id;
+    private final String identifier;
+    private final String location;
     @SerializedName("loser_id")
-    private Integer loserId;
+    private final Integer loserId;
     @SerializedName("winner_id")
-    private Integer winnerId;
+    private final Integer winnerId;
     @SerializedName("player1_id")
-    private Integer player1Id;
+    private final Integer player1Id;
     @SerializedName("player1_is_prereq_match_loser")
-    private Boolean player1IsPrerequisiteMatchLoser;
+    private final Boolean player1IsPrerequisiteMatchLoser;
     @SerializedName("player1_prereq_match_id")
-    private Integer player1PrerequisiteMatchId;
+    private final Integer player1PrerequisiteMatchId;
     @SerializedName("player2_id")
-    private Integer player2Id;
+    private final Integer player2Id;
     @SerializedName("player2_is_prereq_match_loser")
-    private Boolean player2IsPrerequisiteMatchLoser;
+    private final Boolean player2IsPrerequisiteMatchLoser;
     @SerializedName("player2_prereq_match_id")
-    private Integer player2PrerequisiteMatchId;
-    private Integer round;
+    private final Integer player2PrerequisiteMatchId;
+    private final Integer round;
     @SerializedName("scheduled_time")
-    private OffsetDateTime scheduledTime;
+    private final OffsetDateTime scheduledTime;
     @SerializedName("started_at")
-    private OffsetDateTime startedAt;
-    private MatchState state;
+    private final OffsetDateTime startedAt;
+    private final MatchState state;
     @SerializedName("tournament_id")
-    private Integer tournamentId;
+    private final Integer tournamentId;
     @SerializedName("underway_at")
-    private OffsetDateTime underwayAt;
+    private final OffsetDateTime underwayAt;
     @SerializedName("updatedAt")
-    private OffsetDateTime updatedAt;
+    private final OffsetDateTime updatedAt;
     @SerializedName("prerequisite_match_ids_csv")
-    private String prerequisiteMatchIdsCsv;
+    private final String prerequisiteMatchIdsCsv;
     @SerializedName("scores_csv")
-    private String scoresCsv;
+    private final String scoresCsv;
 }

@@ -20,8 +20,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})
@@ -39,20 +38,15 @@ public class SyncParticipantTest {
     @Before
     public void setUp() throws Throwable {
 
-        OffsetDateTime start = OffsetDateTime.now().plusMinutes(5);
+        OffsetDateTime start = OffsetDateTime.now().plusMinutes(75);
 
-        try {
-            this.tournament = this.challongeApi.tournaments().getTournament("participantjavatournament", true, false).sync();
-        } catch (ChallongeException e) {
-            TournamentQuery query = TournamentQuery.builder()
-                    .name("Participants")
-                    .url("participantjavatournament")
-                    .signupCap(10)
-                    .checkInDuration(10)
-                    .startAt(start)
-                    .build();
-            this.tournament = this.challongeApi.tournaments().createTournament(query).sync();
-        }
+        TournamentQuery query = TournamentQuery.builder()
+                .name("Participants")
+                .url("javatesttournament")
+                .checkInDuration(120)
+                .startAt(start)
+                .build();
+        this.tournament = this.challongeApi.tournaments().createTournament(query).sync();
     }
 
     @Test
@@ -158,15 +152,52 @@ public class SyncParticipantTest {
 
     @Test
     public void fCheckInParticipant() throws Throwable {
-//        ParticipantQuery createQuery = ParticipantQuery.builder()
-//                .name("EXSolo")
-//                .build();
-//
-//        Participant createdParticipant = this.challongeApi.participants().addParticipant(this.tournament.url(), createQuery).sync();
-//        Participant checkedInParticipant = this.challongeApi.participants().checkInParticipant(this.tournament.url(), createdParticipant.id()).sync();
-//
-//        assertTrue(checkedInParticipant.checkedIn());
-//        assertNotNull(checkedInParticipant.checkedInAt());
+        ParticipantQuery createQuery = ParticipantQuery.builder()
+                .name("EXSolo")
+                .build();
+
+        Participant createdParticipant = this.challongeApi.participants().addParticipant(this.tournament.url(), createQuery).sync();
+        Participant checkedInParticipant = this.challongeApi.participants().checkInParticipant(this.tournament.url(), createdParticipant.id()).sync();
+
+        assertTrue(checkedInParticipant.checkedIn());
+        assertNotNull(checkedInParticipant.checkedInAt());
+    }
+
+    @Test
+    public void gUndoCheckInParticipant() throws Throwable {
+        ParticipantQuery createQuery = ParticipantQuery.builder()
+                .name("EXSolo")
+                .build();
+
+        Participant createdParticipant = this.challongeApi.participants().addParticipant(this.tournament.url(), createQuery).sync();
+        Participant checkedInParticipant = this.challongeApi.participants().checkInParticipant(this.tournament.url(), createdParticipant.id()).sync();
+
+        assertTrue(checkedInParticipant.checkedIn());
+        assertNotNull(checkedInParticipant.checkedInAt());
+
+        Participant checkedOutParticipant = this.challongeApi.participants().undoParticipantCheckIn(this.tournament.url(), checkedInParticipant.id()).sync();
+
+        assertFalse(checkedOutParticipant.checkedIn());
+        assertNull(checkedOutParticipant.checkedInAt());
+    }
+
+    @Test
+    public void hGetParticipants() throws Exception {
+        ParticipantQuery query1 = ParticipantQuery.builder().name("User1").build();
+        ParticipantQuery query2 = ParticipantQuery.builder().name("User2").build();
+        ParticipantQuery query3 = ParticipantQuery.builder().name("User3").build();
+
+        this.challongeApi.participants().bulkAddParticipants(this.tournament.url(), Lists.newArrayList(query1, query2, query3)).sync();
+
+        List<Participant> participants = this.challongeApi.participants().getParticipants(this.tournament.url()).sync();
+
+        Optional<Participant> optUser1 = participants.stream().filter(p -> p.name().equals("User1")).findFirst();
+        Optional<Participant> optUser2 = participants.stream().filter(p -> p.name().equals("User2")).findFirst();
+        Optional<Participant> optUser3 = participants.stream().filter(p -> p.name().equals("User3")).findFirst();
+
+        assertTrue(optUser1.isPresent());
+        assertTrue(optUser2.isPresent());
+        assertTrue(optUser3.isPresent());
     }
 
     @After

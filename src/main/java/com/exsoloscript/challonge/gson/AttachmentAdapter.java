@@ -2,7 +2,6 @@ package com.exsoloscript.challonge.gson;
 
 import com.exsoloscript.challonge.model.Attachment;
 import com.google.gson.*;
-import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
@@ -14,7 +13,6 @@ import java.time.OffsetDateTime;
  * @author EXSolo
  * @version 20160825.1
  */
-@Singleton
 public class AttachmentAdapter implements GsonAdapter, JsonDeserializer<Attachment> {
 
     private Gson gson;

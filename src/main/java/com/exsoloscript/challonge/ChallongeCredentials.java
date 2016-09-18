@@ -1,5 +1,6 @@
 package com.exsoloscript.challonge;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.codec.binary.Base64;
 
@@ -10,15 +11,11 @@ import org.apache.commons.codec.binary.Base64;
  * @version 20160822.1
  */
 @Data
+@AllArgsConstructor
 public class ChallongeCredentials {
 
     private String username;
     private String apiKey;
-
-    public ChallongeCredentials(String username, String apiKey) {
-        this.username = username;
-        this.apiKey = apiKey;
-    }
 
     /**
      * Creates a HTTP basic auth String from the given credentials

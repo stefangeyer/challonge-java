@@ -33,6 +33,10 @@ public class TournamentHandler {
         this.factory = factory;
     }
 
+    public ChallongeApiCall<List<Tournament>> getTournaments() throws IOException, ChallongeException {
+        return this.getTournaments(null, null, null, null, null);
+    }
+
     /**
      * @see RetrofitTournamentHandler#getTournaments(TournamentQueryState, TournamentType, String, String, String)
      */

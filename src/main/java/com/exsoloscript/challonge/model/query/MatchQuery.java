@@ -15,16 +15,12 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @Builder
 public class MatchQuery {
-
     @SerializedName("winner_id")
     private String winnerId;
-
     @SerializedName("player1_votes")
     private Integer votesForPlayer1;
-
     @SerializedName("player2_votes")
     private Integer votesForPlayer2;
-
     @SerializedName("scores_csv")
     private String scoresCsv;
 }

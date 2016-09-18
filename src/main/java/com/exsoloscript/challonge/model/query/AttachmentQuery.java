@@ -16,7 +16,6 @@ import java.io.File;
 @Accessors(fluent = true)
 @Builder
 public class AttachmentQuery {
-
     private File asset;
     private String url;
     private String description;

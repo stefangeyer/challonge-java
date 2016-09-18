@@ -25,132 +25,132 @@ import java.util.List;
         "predictionsOpenedAt", "startedAt", "startedCheckingInAt",
         "updatedAt", "lockedAt"})
 public class Tournament {
-    private String name;
+    private final String name;
     @SerializedName("tournament_type")
-    private TournamentType tournamentType;
-    private String url;
-    private String subdomain;
-    private String description;
+    private final TournamentType tournamentType;
+    private final String url;
+    private final String subdomain;
+    private final String description;
     @SerializedName("open_signup")
-    private Boolean openSignup;
+    private final Boolean openSignup;
     @SerializedName("hold_third_place_match")
-    private Boolean holdThirdPlaceMatch;
+    private final Boolean holdThirdPlaceMatch;
     @SerializedName("pts_for_match_win")
-    private Float pointsForMatchWin;
+    private final Float pointsForMatchWin;
     @SerializedName("pts_for_match_tie")
-    private Float pointsForMatchTie;
+    private final Float pointsForMatchTie;
     @SerializedName("pts_for_game_win")
-    private Float pointsForGameWin;
+    private final Float pointsForGameWin;
     @SerializedName("pts_for_game_tie")
-    private Float pointsForGameTie;
+    private final Float pointsForGameTie;
     @SerializedName("pts_for_bye")
-    private Float pointsForBye;
+    private final Float pointsForBye;
     @SerializedName("swiss_rounds")
-    private Integer swissRounds;
+    private final Integer swissRounds;
     @SerializedName("ranked_by")
-    private RankedBy rankedBy;
+    private final RankedBy rankedBy;
     @SerializedName("rr_pts_for_game_win")
-    private Float roundRobinPointsForGameWin;
+    private final Float roundRobinPointsForGameWin;
     @SerializedName("rr_pts_for_game_tie")
-    private Float roundRobinPointsForGameTie;
+    private final Float roundRobinPointsForGameTie;
     @SerializedName("rr_pts_for_match_win")
-    private Float roundRobinPointsForMatchWin;
+    private final Float roundRobinPointsForMatchWin;
     @SerializedName("rr_pts_for_match_tie")
-    private Float roundRobinPointsForMatchTie;
+    private final Float roundRobinPointsForMatchTie;
     @SerializedName("accept_attachments")
-    private Boolean acceptAttachments;
+    private final Boolean acceptAttachments;
     @SerializedName("hide_forum")
-    private Boolean hideForum;
+    private final Boolean hideForum;
     @SerializedName("show_rounds")
-    private Boolean showRounds;
+    private final Boolean showRounds;
     @SerializedName("private")
-    private Boolean _private;
+    private final Boolean _private;
     @SerializedName("notify_users_when_the_tournament_ends")
-    private Boolean notifyUsersWhenTheTournamentEnds;
+    private final Boolean notifyUsersWhenTheTournamentEnds;
     @SerializedName("sequential_pairings")
-    private Boolean sequentialPairings;
+    private final Boolean sequentialPairings;
     @SerializedName("signup_cap")
-    private Integer signupCap;
+    private final Integer signupCap;
     @SerializedName("start_at")
-    private OffsetDateTime startAt;
+    private final OffsetDateTime startAt;
     @SerializedName("check_in_duration")
-    private Integer checkInDuration;
+    private final Integer checkInDuration;
     @SerializedName("allow_participant_match_reporting")
-    private Boolean allowParticipantMatchReporting;
+    private final Boolean allowParticipantMatchReporting;
     @SerializedName("anonymous_voting")
-    private Boolean anonymousVoting;
-    private String category;
+    private final Boolean anonymousVoting;
+    private final String category;
     @SerializedName("completed_at")
-    private OffsetDateTime completedAt;
+    private final OffsetDateTime completedAt;
     @SerializedName("created_at")
-    private OffsetDateTime createdAt;
+    private final OffsetDateTime createdAt;
     @SerializedName("created_by_api")
-    private Boolean createdByApi;
+    private final Boolean createdByApi;
     @SerializedName("credit_capped")
-    private Boolean creditCapped;
+    private final Boolean creditCapped;
     @SerializedName("game_id")
-    private Integer gameId;
+    private final Integer gameId;
     @SerializedName("group_stages_enabled")
-    private Boolean groupStagesEnabled;
+    private final Boolean groupStagesEnabled;
     @SerializedName("hide_seeds")
-    private Boolean hideSeeds;
-    private Integer id;
+    private final Boolean hideSeeds;
+    private final Integer id;
     @SerializedName("max_predictions_per_user")
-    private Integer maxPredictionsPerUser;
+    private final Integer maxPredictionsPerUser;
     @SerializedName("notify_users_when_matches_open")
-    private Boolean notifyUsersWhenMatchesOpen;
+    private final Boolean notifyUsersWhenMatchesOpen;
     @SerializedName("participants_count")
-    private Integer participantsCount;
+    private final Integer participantsCount;
     @SerializedName("prediction_method")
-    private Integer predictionMethod;
+    private final Integer predictionMethod;
     @SerializedName("predictions_opened_at")
-    private OffsetDateTime predictionsOpenedAt;
+    private final OffsetDateTime predictionsOpenedAt;
     @SerializedName("progress_meter")
-    private Integer progressMeter;
+    private final Integer progressMeter;
     @SerializedName("quick_advance")
-    private Boolean quickAdvance;
+    private final Boolean quickAdvance;
     @SerializedName("require_score_agreement")
-    private Boolean requireScoreAgreement;
+    private final Boolean requireScoreAgreement;
     @SerializedName("started_at")
-    private OffsetDateTime startedAt;
+    private final OffsetDateTime startedAt;
     @SerializedName("started_checking_in_at")
-    private OffsetDateTime startedCheckingInAt;
-    private TournamentState state;
-    private Boolean teams;
+    private final OffsetDateTime startedCheckingInAt;
+    private final TournamentState state;
+    private final Boolean teams;
     @SerializedName("tie_breaks")
-    private String[] tieBreaks;
+    private final String[] tieBreaks;
     @SerializedName("updated_at")
-    private OffsetDateTime updatedAt;
+    private final OffsetDateTime updatedAt;
     @SerializedName("description_source")
-    private String descriptionSource;
+    private final String descriptionSource;
     @SerializedName("full_challonge_url")
-    private String fullChallongeUrl;
+    private final String fullChallongeUrl;
     @SerializedName("live_image_url")
-    private String liveImageUrl;
+    private final String liveImageUrl;
     @SerializedName("sign_up_url")
-    private String signUpUrl;
+    private final String signUpUrl;
     @SerializedName("review_before_finalizing")
-    private Boolean reviewBeforeFinalizing;
+    private final Boolean reviewBeforeFinalizing;
     @SerializedName("accepting_predictions")
-    private Boolean acceptingPredictions;
+    private final Boolean acceptingPredictions;
     @SerializedName("participants_locked")
-    private Boolean participantsLocked;
+    private final Boolean participantsLocked;
     @SerializedName("game_name")
-    private String gameName;
+    private final String gameName;
     @SerializedName("participants_swappable")
-    private Boolean participantsSwappable;
+    private final Boolean participantsSwappable;
     @SerializedName("team_convertable")
-    private Boolean teamConvertable;
+    private final Boolean teamConvertable;
     @SerializedName("group_stages_were_started")
-    private Boolean groupStagesWereStarted;
+    private final Boolean groupStagesWereStarted;
     @SerializedName("locked_at")
-    private OffsetDateTime lockedAt;
+    private final OffsetDateTime lockedAt;
     @SerializedName("event_id")
-    private Integer eventId;
+    private final Integer eventId;
     @SerializedName("public_predictions_before_start_time")
-    private Boolean publicPredictionsBeforeStartTime;
+    private final Boolean publicPredictionsBeforeStartTime;
     @SerializedName("grand_finals_modifier")
-    private GrandFinalsModifier grandFinalsModifier;
-    private List<Participant> participants;
-    private List<Match> matches;
+    private final GrandFinalsModifier grandFinalsModifier;
+    private final List<Participant> participants;
+    private final List<Match> matches;
 }

@@ -5,7 +5,6 @@ import com.exsoloscript.challonge.model.Participant;
 import com.exsoloscript.challonge.model.Tournament;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
@@ -18,7 +17,6 @@ import java.util.List;
  * @author EXSolo
  * @version 20160819.1
  */
-@Singleton
 public class TournamentAdapter implements GsonAdapter, JsonDeserializer<Tournament> {
 
     private Gson gson;

@@ -22,10 +22,10 @@ import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({ChallongeTestModule.class})
@@ -105,7 +105,7 @@ public class SyncTournamentTest {
         assertEquals(0.5F, tournament.pointsForBye());
         assertEquals(Integer.valueOf(4), tournament.signupCap());
         assertEquals(RankedBy.MATCH_WINS, tournament.rankedBy());
-//        assertEquals(Integer.valueOf(5), tournament.checkInDuration());
+        assertEquals(Integer.valueOf(5), tournament.checkInDuration());
         assertEquals(GrandFinalsModifier.SINGLE_MATCH, tournament.grandFinalsModifier());
     }
 
@@ -136,17 +136,49 @@ public class SyncTournamentTest {
     }
 
     @Test
-    public void dStartTournament() throws Throwable {
-        ParticipantQuery participant1 = ParticipantQuery.builder()
-                .name("User1")
+    public void dProcessCheckIns() throws Exception {
+        OffsetDateTime start = OffsetDateTime.now().plusMinutes(10);
+
+        TournamentQuery tournamentQuery = TournamentQuery.builder()
+                .startAt(start)
+                .checkInDuration(10)
                 .build();
 
-        ParticipantQuery participant2 = ParticipantQuery.builder()
-                .name("User2")
-                .build();
+        this.challongeApi.tournaments().updateTournament("javatesttournament", tournamentQuery).sync();
 
-        this.challongeApi.participants().bulkAddParticipants("javatesttournament", Lists.newArrayList(participant1, participant2)).sync();
+        List<Participant> participants = this.challongeApi.participants().bulkAddParticipants("javatesttournament",
+                Lists.newArrayList(
+                        ParticipantQuery.builder().name("User1").seed(1).build(),
+                        ParticipantQuery.builder().name("User2").seed(2).build())
+        ).sync();
 
+        Participant participant1 = participants.stream().filter(p -> p.name().equals("User1")).findFirst().get();
+        Participant participant2 = participants.stream().filter(p -> p.name().equals("User2")).findFirst().get();
+
+        assertTrue(participant1.seed() == 1);
+        assertTrue(participant2.seed() == 2);
+
+        this.challongeApi.participants().checkInParticipant("javatesttournament", participant2.id()).sync();
+        Tournament processed = this.challongeApi.tournaments().processCheckIns("javatesttournament", true, false).sync();
+
+        assertEquals(TournamentState.CHECKED_IN, processed.state());
+    }
+
+    @Test
+    public void eAbortCheckIns() throws Exception {
+        Tournament aborted = this.challongeApi.tournaments().abortCheckIn("javatesttournament", true, false).sync();
+        List<Participant> participants = aborted.participants();
+
+        Participant participant1 = participants.stream().filter(p -> p.name().equals("User1")).findFirst().get();
+        Participant participant2 = participants.stream().filter(p -> p.name().equals("User2")).findFirst().get();
+
+        assertNull(participant1.checkedInAt());
+        assertNull(participant2.checkedInAt());
+        assertEquals(TournamentState.PENDING, aborted.state());
+    }
+
+    @Test
+    public void fStartTournament() throws Throwable {
         Tournament startedTournament = this.challongeApi.tournaments().startTournament("javatesttournament", true, false).sync();
 
         assertTrue(startedTournament.participants().size() == 2);
@@ -154,7 +186,7 @@ public class SyncTournamentTest {
     }
 
     @Test
-    public void eFinalizeTournament() throws Throwable {
+    public void gFinalizeTournament() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().getTournament("javatesttournament", true, true).sync();
 
         Optional<Participant> optUser1 = tournament.participants().stream().filter(participant -> participant.name().equals("User1")).findFirst();
@@ -184,9 +216,18 @@ public class SyncTournamentTest {
     }
 
     @Test
-    public void fResetTournament() throws Throwable {
+    public void hResetTournament() throws Throwable {
         Tournament tournament = this.challongeApi.tournaments().resetTournament("javatesttournament", true, true).sync();
         assertEquals(tournament.state(), TournamentState.PENDING);
+    }
+
+    @Test
+    public void iGetTournaments() throws Exception {
+        List<Tournament> tournaments = this.challongeApi.tournaments().getTournaments().sync();
+
+        Optional<Tournament> javatesttournament = tournaments.stream().filter(t -> t.url().equals("javatesttournament")).findFirst();
+
+        assertTrue(javatesttournament.isPresent());
     }
 
     @Test(expected = ChallongeException.class)

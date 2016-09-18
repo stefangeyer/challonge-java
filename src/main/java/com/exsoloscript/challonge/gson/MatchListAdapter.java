@@ -3,12 +3,10 @@ package com.exsoloscript.challonge.gson;
 import com.exsoloscript.challonge.model.Match;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
-import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-@Singleton
 public class MatchListAdapter implements GsonAdapter, JsonDeserializer<List<Match>> {
 
     private Gson gson;

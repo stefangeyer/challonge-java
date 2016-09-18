@@ -17,51 +17,51 @@ import java.time.OffsetDateTime;
 @Accessors(fluent = true)
 @EqualsAndHashCode(exclude = {"checkedInAt", "createdAt", "updatedAt"})
 public class Participant {
-    private String name;
+    private final String name;
     @SerializedName("challonge_username")
-    private String challongeUsername;
-    private Integer seed;
-    private String misc;
-    private Boolean active;
+    private final String challongeUsername;
+    private final Integer seed;
+    private final String misc;
+    private final Boolean active;
     @SerializedName("checked_in_at")
-    private OffsetDateTime checkedInAt;
+    private final OffsetDateTime checkedInAt;
     @SerializedName("created_at")
-    private OffsetDateTime createdAt;
+    private final OffsetDateTime createdAt;
     @SerializedName("final_rank")
-    private Integer finalRank;
+    private final Integer finalRank;
     @SerializedName("group_id")
-    private Integer groupId;
-    private String icon;
-    private Integer id;
+    private final Integer groupId;
+    private final String icon;
+    private final Integer id;
     @SerializedName("invitation_id")
-    private Integer invitationId;
+    private final Integer invitationId;
     @SerializedName("invite_email")
-    private String inviteEmail;
+    private final String inviteEmail;
     @SerializedName("on_waiting_list")
-    private Boolean onWaitingList;
+    private final Boolean onWaitingList;
     @SerializedName("tournament_id")
-    private Integer tournamentId;
+    private final Integer tournamentId;
     @SerializedName("updated_at")
-    private OffsetDateTime updatedAt;
+    private final OffsetDateTime updatedAt;
     @SerializedName("challonge_email_address_verified")
-    private String challongeEmailAddressVerified;
-    private Boolean removable;
+    private final String challongeEmailAddressVerified;
+    private final Boolean removable;
     @SerializedName("participatable_or_invitation_attached")
-    private Boolean participatableOrInvitationAttached;
+    private final Boolean participatableOrInvitationAttached;
     @SerializedName("confirm_remove")
-    private Boolean confirmRemove;
+    private final Boolean confirmRemove;
     @SerializedName("invitation_pending")
-    private Boolean invitationPending;
+    private final Boolean invitationPending;
     @SerializedName("display_name_with_invitation_email_address")
-    private String displayNameWithInvitationEmailAddress;
+    private final String displayNameWithInvitationEmailAddress;
     @SerializedName("email_hash")
-    private String emailHash;
-    private String username;
+    private final String emailHash;
+    private final String username;
     @SerializedName("attached_participatable_portrait_url")
-    private String attachedParticipatablePortraitUrl;
+    private final String attachedParticipatablePortraitUrl;
     @SerializedName("can_check_in")
-    private Boolean canCheckIn;
+    private final Boolean canCheckIn;
     @SerializedName("checked_in")
-    private Boolean checkedIn;
-    private Boolean reactivatable;
+    private final Boolean checkedIn;
+    private final Boolean reactivatable;
 }

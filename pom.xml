@@ -8,6 +8,10 @@
     <artifactId>challonge-java</artifactId>
     <version>1.0</version>
 
+    <name>challonge-java</name>
+    <description>Java binding for the CHALLONGE! REST Api</description>
+    <url>https://github.com/EXSolo/challonge-java</url>
+
     <licenses>
         <license>
             <name>MIT</name>
@@ -22,6 +26,23 @@
             <email>exsoloscripter@gmail.com</email>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/EXSolo/challonge-java.git</connection>
+        <developerConnection>scm:git:git@github.com/EXSolo/challonge-java.git</developerConnection>
+        <url>http://github.com/EXSolo/challonge-java/tree/master</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <!-- project properties -->
@@ -162,6 +183,47 @@
                         </relocation>
                     </relocations>
                 </configuration>
+            </plugin>
+            <!-- OSSRH configuration-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

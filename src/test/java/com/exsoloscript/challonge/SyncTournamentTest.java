@@ -206,8 +206,8 @@ public class SyncTournamentTest {
         Match toUpdate = tournament.matches().get(0);
         Match match = this.challongeApi.matches().updateMatch(tournament.id().toString(), toUpdate.id(), query).sync();
 
-        assertEquals(user1.id(), match.player1Id());
-        assertEquals(user2.id(), match.player2Id());
+        assertEquals(user1.id(), match.player2Id());
+        assertEquals(user2.id(), match.player1Id());
         assertEquals("1-3,3-0,3-2", match.scoresCsv());
 
         Tournament finalizedTournament = this.challongeApi.tournaments().finalizeTournament("javatesttournament", true, true).sync();

@@ -6,6 +6,16 @@ Java binding for the [CHALLONGE! REST Api](http://api.challonge.com/v1) using [G
 
 Released under the MIT license.
 
+##maven
+
+```xml
+<dependency>
+    <groupId>com.exsoloscript.challonge</groupId>
+    <artifactId>challonge-java</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
 ##usage
 
 In order to use this library for the Challonge! REST API, you need instantiate the `ChallongeApi`

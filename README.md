@@ -1,6 +1,6 @@
 #challonge-java
 
-[![Build Status](https://travis-ci.org/EXSolo/challonge-java.svg?branch=master)](https://travis-ci.org/EXSolo/challonge-java)
+[![Build Status](https://travis-ci.org/EXSolo/challonge-java.svg?branch=master)](https://travis-ci.org/EXSolo/challonge-java) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.exsoloscript.challonge/challonge-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.exsoloscript.challonge/challonge-java)
 
 Java binding for the [CHALLONGE! REST Api](http://api.challonge.com/v1) using [Guice](https://github.com/google/guice) and [Gson](https://github.com/google/gson) internally and [Retrofit2](http://square.github.io/retrofit/) to bind the HTTP calls.
 

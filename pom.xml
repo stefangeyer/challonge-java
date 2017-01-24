@@ -6,7 +6,7 @@
 
     <groupId>com.exsoloscript.challonge</groupId>
     <artifactId>challonge-java</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 
     <name>challonge-java</name>
     <description>Java binding for the CHALLONGE! REST Api</description>

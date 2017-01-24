@@ -214,7 +214,8 @@
                 <configuration>
                     <artifactSet>
                         <excludes>
-                            <exclude>*:junit</exclude>
+                            <exclude>junit:junit</exclude>
+                            <exclude>org.hamcrest:hamcrest-core</exclude>
                         </excludes>
                     </artifactSet>
                     <minimizeJar>true</minimizeJar>
@@ -246,10 +247,6 @@
                         <relocation>
                             <pattern>org.aopalliance</pattern>
                             <shadedPattern>${project.groupId}.library.aopalliance</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>javax</pattern>
-                            <shadedPattern>${project.groupId}.library.javax</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

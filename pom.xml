@@ -10,7 +10,7 @@
 
     <name>challonge-java</name>
     <description>Java binding for the CHALLONGE! REST Api</description>
-    <url>https://github.com/EXSolo/challonge-java</url>
+    <url>https://github.com/stefangeyer/challonge-java</url>
 
     <licenses>
         <license>
@@ -21,16 +21,15 @@
 
     <developers>
         <developer>
-            <id>exsolo</id>
-            <name>EXSolo</name>
-            <email>exsoloscripter@gmail.com</email>
+            <id>stefangeyer</id>
+            <name>Stefan Geyer</name>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/EXSolo/challonge-java.git</connection>
-        <developerConnection>scm:git:git@github.com/EXSolo/challonge-java.git</developerConnection>
-        <url>http://github.com/EXSolo/challonge-java/tree/master</url>
+        <connection>scm:git:git://github.com/stefangeyer/challonge-java.git</connection>
+        <developerConnection>scm:git:git@github.com/stefangeyer/challonge-java.git</developerConnection>
+        <url>http://github.com/stefangeyer/challonge-java/tree/master</url>
     </scm>
 
     <distributionManagement>

@@ -12,7 +12,7 @@ Released under the MIT license.
 <dependency>
     <groupId>com.exsoloscript.challonge</groupId>
     <artifactId>challonge-java</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

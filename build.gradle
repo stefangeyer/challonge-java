@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'maven'
+    id 'signing'
+    id 'nu.studer.credentials' version '1.0.1'
+    id "com.github.johnrengelman.shadow" version "1.2.4"
+}
+
+group = 'com.exsoloscript.challonge'
+archivesBaseName = 'challonge-java'
+version = '1.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: project.property('retrofit2.version')
+    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: project.property('retrofit2.gson.version')
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: project.property('okhttp.logging')
+    compile group: 'commons-codec', name: 'commons-codec', version: project.property('commons.codec.version')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: project.property('commons.lang3.version')
+    compile group: 'com.google.inject', name: 'guice', version: project.property('guice.version')
+    compile group: 'com.google.inject.extensions', name: 'guice-multibindings', version: project.property('guice.version')
+    compile group: 'org.projectlombok', name: 'lombok', version: project.property('lombok.version')
+    // testing
+    testCompile group: 'junit', name: 'junit', version: project.property('junit.version')
+}
+
+allprojects { ext."signing.password" = credentials.signingPassword }
+
+test {
+    environment 'CHALLONGE_USERNAME', project.property('challongeUsername')
+    environment 'CHALLONGE_API_KEY', credentials.challongeApiKey
+    filter {
+        includeTestsMatching 'com.exsoloscript.challonge.ChallongeTestSuite'
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+artifacts {
+    archives shadowJar
+    archives sourcesJar
+    archives javadocJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+shadowJar {
+    classifier = null
+    dependencies {
+        exclude(dependency('junit:junit'))
+        exclude(dependency('org.hamcrest:hamcrest-core'))
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: project.property('ossrhUsername'), password: credentials.ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: project.property('ossrhUsername'), password: credentials.ossrhPassword)
+            }
+
+            pom.project {
+                name 'challonge-java'
+                packaging 'jar'
+
+                description 'Java binding for the CHALLONGE! REST Api'
+
+                scm {
+                    connection 'scm:git:git://github.com/stefangeyer/challonge-java.git'
+                    developerConnection 'scm:git:git@github.com/stefangeyer/challonge-java.git'
+                    url 'http://github.com/stefangeyer/challonge-java/tree/master'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'stefangeyer'
+                        name 'Stefan Geyer'
+                    }
+                }
+            }
+        }
+    }
+}

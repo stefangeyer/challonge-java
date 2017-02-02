@@ -33,8 +33,8 @@ dependencies {
 allprojects { ext."signing.password" = credentials.signingPassword }
 
 test {
-    environment 'CHALLONGE_USERNAME', System.getenv().containsKey('challongeUsername') ? System.getenv('challongeUsername') : property('challongeUsername')
-    environment 'CHALLONGE_API_KEY', System.getenv().containsKey('challongePassword') ? System.getenv('challongePassword') :credentials.challongeApiKey
+    environment 'CHALLONGE_USERNAME', System.getenv().containsKey('CHALLONGE_USERNAME') ? System.getenv('CHALLONGE_USERNAME') : property('challongeUsername')
+    environment 'CHALLONGE_API_KEY', System.getenv().containsKey('CHALLONGE_API_KEY') ? System.getenv('CHALLONGE_API_KEY') :credentials.challongeApiKey
     filter {
         includeTestsMatching 'com.exsoloscript.challonge.ChallongeTestSuite'
     }
@@ -73,8 +73,8 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            def repoUsername = System.getenv().containsKey('ossrhUserame') ? System.getenv('ossrhUsername') : property('ossrhUsername')
-            def repoPassword = System.getenv().containsKey('ossrhPassword') ? System.getenv('ossrhPassword') : credentials.ossrhPassword
+            def repoUsername = hasProperty('ossrhUsername') ? property('ossrhUsername'): ''
+            def repoPassword = credentials.ossrhPassword != null ? credentials.ossrhPassword : ''
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: repoUsername, password: repoPassword)

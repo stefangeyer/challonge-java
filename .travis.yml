@@ -6,3 +6,5 @@ branches:
   - master
 env:
   - ossrhUsername=travis ossrhPassword=travis
+before_install:
+  - chmod +x gradlew

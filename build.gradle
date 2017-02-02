@@ -18,23 +18,23 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: project.property('retrofit2.version')
-    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: project.property('retrofit2.gson.version')
-    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: project.property('okhttp.logging')
-    compile group: 'commons-codec', name: 'commons-codec', version: project.property('commons.codec.version')
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: project.property('commons.lang3.version')
-    compile group: 'com.google.inject', name: 'guice', version: project.property('guice.version')
-    compile group: 'com.google.inject.extensions', name: 'guice-multibindings', version: project.property('guice.version')
-    compile group: 'org.projectlombok', name: 'lombok', version: project.property('lombok.version')
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: property('retrofit2.version')
+    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: property('retrofit2.gson.version')
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: property('okhttp.logging')
+    compile group: 'commons-codec', name: 'commons-codec', version: property('commons.codec.version')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: property('commons.lang3.version')
+    compile group: 'com.google.inject', name: 'guice', version: property('guice.version')
+    compile group: 'com.google.inject.extensions', name: 'guice-multibindings', version: property('guice.version')
+    compile group: 'org.projectlombok', name: 'lombok', version: property('lombok.version')
     // testing
-    testCompile group: 'junit', name: 'junit', version: project.property('junit.version')
+    testCompile group: 'junit', name: 'junit', version: property('junit.version')
 }
 
 allprojects { ext."signing.password" = credentials.signingPassword }
 
 test {
-    environment 'CHALLONGE_USERNAME', project.property('challongeUsername')
-    environment 'CHALLONGE_API_KEY', credentials.challongeApiKey
+    environment 'CHALLONGE_USERNAME', System.getenv().containsKey('challongeUsername') ? System.getenv('challongeUsername') : property('challongeUsername')
+    environment 'CHALLONGE_API_KEY', System.getenv().containsKey('challongePassword') ? System.getenv('challongePassword') :credentials.challongeApiKey
     filter {
         includeTestsMatching 'com.exsoloscript.challonge.ChallongeTestSuite'
     }

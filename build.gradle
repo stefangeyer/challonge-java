@@ -3,7 +3,8 @@ plugins {
     id 'maven'
     id 'signing'
     id 'nu.studer.credentials' version '1.0.1'
-    id "com.github.johnrengelman.shadow" version "1.2.4"
+    id 'com.github.johnrengelman.shadow' version '1.2.4'
+//    id 'io.codearte.nexus-staging'
 }
 
 group = 'com.exsoloscript.challonge'
@@ -33,34 +34,15 @@ dependencies {
 allprojects { ext."signing.password" = credentials.signingPassword }
 
 test {
-    environment 'CHALLONGE_USERNAME', System.getenv().containsKey('CHALLONGE_USERNAME') ? System.getenv('CHALLONGE_USERNAME') : property('challongeUsername')
-    environment 'CHALLONGE_API_KEY', System.getenv().containsKey('CHALLONGE_API_KEY') ? System.getenv('CHALLONGE_API_KEY') :credentials.challongeApiKey
+    environment 'CHALLONGE_USERNAME', System.getenv().containsKey('CHALLONGE_USERNAME') ? System.getenv('CHALLONGE_USERNAME') : challongeUsername
+    environment 'CHALLONGE_API_KEY', System.getenv().containsKey('CHALLONGE_API_KEY') ? System.getenv('CHALLONGE_API_KEY') : challongeApiKey
     filter {
         includeTestsMatching 'com.exsoloscript.challonge.ChallongeTestSuite'
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc
-}
-
-artifacts {
-    archives shadowJar
-    archives sourcesJar
-    archives javadocJar
-}
-
-signing {
-    sign configurations.archives
-}
-
 shadowJar {
+    // this overrides the original artifact
     classifier = null
     dependencies {
         exclude(dependency('junit:junit'))
@@ -68,48 +50,81 @@ shadowJar {
     }
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
 
-            def repoUsername = hasProperty('ossrhUsername') ? property('ossrhUsername'): ''
-            def repoPassword = credentials.ossrhPassword != null ? credentials.ossrhPassword : ''
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: repoUsername, password: repoPassword)
-            }
+artifacts {
+    archives shadowJar, javadocJar, sourcesJar
+}
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: repoUsername, password: repoPassword)
-            }
+if (project.hasProperty('release')) {
 
-            pom.project {
-                name 'challonge-java'
-                packaging 'jar'
+    allprojects {
+        apply plugin: 'signing'
+        apply plugin: 'maven'
 
-                description 'Java binding for the CHALLONGE! REST Api'
+        // Signature of artifacts
+        signing {
+            sign configurations.archives
+        }
 
-                scm {
-                    connection 'scm:git:git://github.com/stefangeyer/challonge-java.git'
-                    developerConnection 'scm:git:git@github.com/stefangeyer/challonge-java.git'
-                    url 'http://github.com/stefangeyer/challonge-java/tree/master'
-                }
+        // OSSRH publication
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    // POM signature
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-                licenses {
-                    license {
-                        name 'MIT'
-                        url 'https://opensource.org/licenses/MIT'
+                    // Target repository
+                    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                        authentication(userName: ossrhUsername, password: ossrhPassword)
                     }
-                }
 
-                developers {
-                    developer {
-                        id 'stefangeyer'
-                        name 'Stefan Geyer'
+                    // Snapshot repository
+                    snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                        authentication(userName: ossrhUsername, password: ossrhPassword)
+                    }
+
+                    pom.project {
+                        name 'challonge-java'
+                        packaging 'jar'
+
+                        description 'Java binding for the CHALLONGE! REST Api'
+
+                        scm {
+                            connection 'scm:git:git://github.com/stefangeyer/challonge-java.git'
+                            developerConnection 'scm:git:git@github.com/stefangeyer/challonge-java.git'
+                            url 'http://github.com/stefangeyer/challonge-java/tree/master'
+                        }
+
+                        licenses {
+                            license {
+                                name 'MIT'
+                                url 'https://opensource.org/licenses/MIT'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'stefangeyer'
+                                name 'Stefan Geyer'
+                            }
+                        }
                     }
                 }
             }
         }
     }
 }
+
+//nexusStaging {
+//    username = ossrhUsername
+//    password = ossrhPassword
+//}

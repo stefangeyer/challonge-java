@@ -1,4 +1,4 @@
-#challonge-java
+# challonge-java
 
 [![Build Status](https://travis-ci.org/stefangeyer/challonge-java.svg?branch=master)](https://travis-ci.org/stefangeyer/challonge-java) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.exsoloscript.challonge/challonge-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.exsoloscript.challonge/challonge-java)
 
@@ -6,7 +6,7 @@ Java binding for the [CHALLONGE! REST Api](http://api.challonge.com/v1) using [G
 
 Released under the MIT license.
 
-##maven
+## maven
 
 ```xml
 <dependency>
@@ -16,7 +16,7 @@ Released under the MIT license.
 </dependency>
 ```
 
-##usage
+## usage
 
 In order to use this library for the Challonge! REST API, you need instantiate the `ChallongeApi`
 class, which asks you for your Challonge! user name and API key (which you can get [here](https://challonge.com/settings/developer)).
@@ -28,7 +28,7 @@ ChallongeApi api = Challonge.getFor(USERNAME, API_KEY);
 In order to perform actions, you need to access the related handlers. 
 There are handlers for tournaments, participants, matches and attachments.
 
-###handlers
+### handlers
 
 Each handler covers one base functionality of the Challonge! Api.
 For more information view the handler's JavaDoc.
@@ -43,7 +43,7 @@ api.attachments().createAttachment(...)
 **These handlers provide calls which need to be executed in order to work with the result.**  
 Check out the chapter `calls` for more information.
 
-###calls
+### calls
 
 Each action returns a call, that needs to be executed before the result can be used.
 A call can be executed synchronous and asynchronously.
@@ -64,7 +64,7 @@ api.tournaments().getTournament("tournament url or id here").async(new AsyncCall
 });
 ```
 
-###queries
+### queries
 
 In order to create or update elements using this library, you need to use queries.
 Queries map all the parameters that can be sent in the request. All queries use the builder pattern

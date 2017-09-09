@@ -50,7 +50,7 @@ public class RetrofitChallongeApiCall<T> implements ChallongeApiCall<T> {
      * @param retrofitCall Call
      * @param errorUtil    ErrorUtil
      */
-    public RetrofitChallongeApiCall(Call<T> retrofitCall, ErrorUtil errorUtil) {
+    RetrofitChallongeApiCall(Call<T> retrofitCall, ErrorUtil errorUtil) {
         this.retrofitCall = retrofitCall;
         this.errorUtil = errorUtil;
     }

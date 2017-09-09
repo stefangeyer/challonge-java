@@ -79,7 +79,7 @@ public class Match {
     private final Integer tournamentId;
     @SerializedName("underway_at")
     private final OffsetDateTime underwayAt;
-    @SerializedName("updatedAt")
+    @SerializedName("updated_at")
     private final OffsetDateTime updatedAt;
     @SerializedName("prerequisite_match_ids_csv")
     private final String prerequisiteMatchIdsCsv;

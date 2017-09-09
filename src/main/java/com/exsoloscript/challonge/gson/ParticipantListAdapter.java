@@ -35,7 +35,7 @@ public class ParticipantListAdapter implements GsonAdapter, JsonDeserializer<Lis
 
     private final Gson gson;
 
-    public ParticipantListAdapter() {
+    ParticipantListAdapter() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(Participant.class, new ParticipantAdapter())
                 .create();

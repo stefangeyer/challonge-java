@@ -34,7 +34,7 @@ public class TournamentQueryAdapter implements GsonAdapter, JsonSerializer<Tourn
 
     private final Gson gson;
 
-    public TournamentQueryAdapter() {
+    TournamentQueryAdapter() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
                 .create();

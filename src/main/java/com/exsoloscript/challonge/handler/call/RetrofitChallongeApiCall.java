@@ -24,10 +24,10 @@
 
 package com.exsoloscript.challonge.handler.call;
 
+import com.exsoloscript.challonge.handler.call.Callback;
 import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.util.ErrorUtil;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -68,25 +68,31 @@ public class RetrofitChallongeApiCall<T> implements ChallongeApiCall<T> {
     }
 
     @Override
-    public void async(AsyncCallback<T> callback) {
-        this.retrofitCall.enqueue(new Callback<T>() {
+    public void async(Callback<T> success, Callback<Throwable> error) {
+        this.retrofitCall.enqueue(new retrofit2.Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
                 if (response.isSuccessful()) {
-                    callback.handleSuccess(response.body());
+                    success.handle(response.body());
                 } else {
                     try {
                         RetrofitChallongeApiCall.this.errorUtil.parseException(response);
                     } catch (IOException | ChallongeException e) {
-                        callback.handleFailure(e);
+                        error.handle(e);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
-                callback.handleFailure(t);
+                error.handle(t);
             }
         });
+    }
+
+    @Override
+    @Deprecated
+    public void async(AsyncCallback<T> callback) {
+        async(callback::handleSuccess, callback::handleFailure);
     }
 }

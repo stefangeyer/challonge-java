@@ -48,7 +48,7 @@ public class RetrofitChallongeApiCallFactory {
      * @param <T>          Type of the call
      * @return RetrofitChallongeApiCall
      */
-    public <T> RetrofitChallongeApiCall<T> createApiCall(Call<T> retrofitCall) {
+    <T> RetrofitChallongeApiCall<T> createApiCall(Call<T> retrofitCall) {
         return new RetrofitChallongeApiCall<>(retrofitCall, this.errorUtil);
     }
 

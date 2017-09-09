@@ -43,7 +43,7 @@ public class AttachmentAdapter implements GsonAdapter, JsonDeserializer<Attachme
 
     private final Gson gson;
 
-    public AttachmentAdapter() {
+    AttachmentAdapter() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
                 .create();

@@ -39,7 +39,7 @@ import java.io.IOException;
 public interface ChallongeApiCall<T> {
 
     /**
-     * A sync API call.
+     * Performs a sync API call.
      * Blocking request which returns the object right away.
      *
      * @return The received object
@@ -49,10 +49,21 @@ public interface ChallongeApiCall<T> {
     T sync() throws IOException, ChallongeException;
 
     /**
-     * An async API call.
-     * Once the response is received the callback method will be called.
+     * Performs an async API call.
+     * One of the callbacks must be called on completion
      *
+     * @param success Called on successful call completion
+     * @param error Called on failure
+     */
+    void async(Callback<T> success, Callback<Throwable> error);
+
+    /**
+     * Performs an async API call.
+     * One of the callbacks must be called on completion
+     *
+     * @deprecated Deprecated in favor of {@link ChallongeApiCall#async(Callback, Callback)}
      * @param callback The callback
      */
+    @Deprecated
     void async(AsyncCallback<T> callback);
 }

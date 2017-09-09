@@ -27,10 +27,12 @@ package com.exsoloscript.challonge.handler.call;
 /**
  * Callback handler for async API calls.
  *
+ * @deprecated Deprecated in favor of {@link Callback}
  * @param <T> Type of the callback
  * @author EXSolo
  * @version 20160822.1
  */
+@Deprecated
 public interface AsyncCallback<T> {
 
     /**

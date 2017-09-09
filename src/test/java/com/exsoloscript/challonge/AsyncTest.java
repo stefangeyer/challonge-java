@@ -95,6 +95,40 @@ public class AsyncTest {
         assertTrue(latch.await(30, TimeUnit.SECONDS));
     }
 
+    @Test
+    public void testCallbackSuccess() throws Exception {
+        ParticipantQuery query = ParticipantQuery.builder()
+                .name("User2")
+                .build();
+
+        CountDownLatch latch = new CountDownLatch(1);
+
+        this.challongeApi.participants().addParticipant(this.tournament.url(), query).async((participant) -> {
+            assertEquals(query.name(), participant.name());
+            latch.countDown();
+        }, (throwable) -> {
+            // ignored
+        });
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS));
+    }
+
+    @Test
+    public void testCallbackFailure() throws Exception {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        this.challongeApi.tournaments().createTournament(
+                TournamentQuery.builder().name("Test").url(this.tournament.url()).build()
+        ).async((tournament) -> {
+            // ignored
+        }, (throwable) -> {
+            assertTrue(throwable instanceof ChallongeException);
+            latch.countDown();
+        });
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS));
+    }
+
     @After
     public void tearDown() throws Exception {
         this.challongeApi.tournaments().deleteTournament(this.tournament.url()).sync();

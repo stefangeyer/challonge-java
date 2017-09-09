@@ -25,7 +25,6 @@
 package com.exsoloscript.challonge.handler.retrofit;
 
 import com.exsoloscript.challonge.model.Attachment;
-import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -84,10 +83,6 @@ public interface RetrofitAttachmentHandler {
      * @param description Text to describe the file or URL attachment, or this can simply be standalone text.
      * @return Call
      */
-//    @POST("tournaments/{tournament}/matches/{match_id}/attachments.json")
-//    Call<Attachment> createAttachment(@Path("tournament") String tournament,
-//                                      @Path("match_id") int matchId,
-//                                      @Body AttachmentQuery attachment);
     @Multipart
     @POST("tournaments/{tournament}/matches/{match_id}/attachments.json")
     Call<Attachment> createAttachment(@Path("tournament") String tournament,
@@ -109,9 +104,9 @@ public interface RetrofitAttachmentHandler {
      *                     (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId      The match's unique ID
      * @param attachmentId The attachment's unique ID
-     * @param asset       A file upload (250KB max, no more than 4 attachments per match). If provided, the url parameter will be ignored.
-     * @param url         A web URL
-     * @param description Text to describe the file or URL attachment.
+     * @param asset        A file upload (250KB max, no more than 4 attachments per match). If provided, the url parameter will be ignored.
+     * @param url          A web URL
+     * @param description  Text to describe the file or URL attachment.
      * @return Call
      */
     @Multipart

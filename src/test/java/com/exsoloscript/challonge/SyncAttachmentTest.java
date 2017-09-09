@@ -9,7 +9,9 @@ import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
+import com.google.common.io.CharStreams;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.junit.After;
@@ -20,6 +22,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -75,6 +80,28 @@ public class SyncAttachmentTest {
     }
 
     @Test
+    public void createFileAttachmentTest() throws Exception {
+        File assetFile = new File(Thread.currentThread().getContextClassLoader().getResource("testfile1.txt").getPath());
+        AttachmentQuery query = AttachmentQuery.builder()
+                .asset(assetFile)
+                .description("TestDescription")
+                .build();
+
+        Attachment attachment = this.challongeApi.attachments()
+                .createAttachment(this.tournament.url(), this.match.id(), query).sync();
+
+        assertEquals(attachment.description(), "TestDescription");
+        assertEquals(attachment.assetFileName(), "testfile1.txt");
+
+        URL assetUrl = new URL(attachment.assetUrl());
+
+        assertEquals(
+                CharStreams.toString(new InputStreamReader(new FileInputStream(assetFile), Charsets.UTF_8)),
+                CharStreams.toString(new InputStreamReader(assetUrl.openStream(), Charsets.UTF_8))
+        );
+    }
+
+    @Test
     public void getAttachmentsTest() throws Exception {
         Attachment attachment1 = this.challongeApi.attachments().createAttachment(
                 this.tournament.url(),
@@ -111,20 +138,27 @@ public class SyncAttachmentTest {
 
     @Test
     public void updateAttachmentTest() throws Exception {
+        File assetFile = new File(Thread.currentThread().getContextClassLoader().getResource("testfile1.txt").getPath());
+
         Attachment createdAttachment = this.challongeApi.attachments().createAttachment(
                 this.tournament.url(),
                 match.id(),
-                AttachmentQuery.builder().description("Attachment1").build()
+                AttachmentQuery.builder().asset(assetFile).description("Attachment1").build()
         ).sync();
+
+        assertEquals("testfile1.txt", createdAttachment.assetFileName());
+
+        File newAssetFile = new File(Thread.currentThread().getContextClassLoader().getResource("testfile2.txt").getPath());
 
         Attachment updatedAttachment = this.challongeApi.attachments().updateAttachment(
                 this.tournament.url(),
                 match.id(),
                 createdAttachment.id(),
-                AttachmentQuery.builder().description("update").build()
+                AttachmentQuery.builder().asset(newAssetFile).description("update").build()
         ).sync();
 
         assertEquals("update", updatedAttachment.description());
+        assertEquals("testfile2.txt", updatedAttachment.assetFileName());
     }
 
     @Test

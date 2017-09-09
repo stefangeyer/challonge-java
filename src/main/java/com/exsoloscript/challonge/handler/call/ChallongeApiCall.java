@@ -43,7 +43,7 @@ public interface ChallongeApiCall<T> {
      * Blocking request which returns the object right away.
      *
      * @return The received object
-     * @throws IOException Exception thrown by error handling
+     * @throws IOException        Exception thrown by error handling
      * @throws ChallongeException Exception thrown by error handling
      */
     T sync() throws IOException, ChallongeException;

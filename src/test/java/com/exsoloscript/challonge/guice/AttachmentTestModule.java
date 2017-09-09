@@ -11,7 +11,7 @@ public class AttachmentTestModule extends AbstractModule {
     @Override
     protected void configure() {
         try {
-            bind(File.class).annotatedWith(Names.named("attachment")).toInstance(new File(Resources.getResource("testfile.txt").toURI()));
+            bind(File.class).annotatedWith(Names.named("attachment")).toInstance(new File(Resources.getResource("testfile1.txt").toURI()));
         } catch (URISyntaxException ignored) {
         }
     }

@@ -30,9 +30,13 @@ import com.exsoloscript.challonge.model.Attachment;
 import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -70,27 +74,45 @@ public class AttachmentHandler {
     }
 
     /**
-     * @see RetrofitAttachmentHandler#createAttachment(String, int, AttachmentQuery)
+     * @see RetrofitAttachmentHandler#createAttachment(String, int, MultipartBody.Part, MultipartBody.Part, MultipartBody.Part)
      */
-    public ChallongeApiCall<Attachment> createAttachment(String tournament, int matchId, AttachmentQuery attachment) {
+    public ChallongeApiCall<Attachment> createAttachment(String tournament, int matchId, AttachmentQuery attachment) throws IOException {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
 
-        // The API provider neither accepts a base64 encoded file nor a multipart request
-        // MediaType multipart = MediaType.parse("multipart/form-data");
-        //
-        // RequestBody asset = attachment.asset() != null ? RequestBody.create(multipart, attachment.asset()) : null;
-        // RequestBody description = attachment.description() != null ? RequestBody.create(multipart, attachment.description()) : null;
-        // RequestBody url = attachment.url() != null ? RequestBody.create(multipart, attachment.url()) : null;
+        MultipartBody.Part asset = attachment.asset() != null ?
+                MultipartBody.Part.createFormData("match_attachment[asset]",
+                        attachment.asset().getName(),
+                        RequestBody.create(MediaType.parse(attachment.getMimeType()), attachment.asset())
+                ) : null;
 
-        return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournament, matchId, attachment));
+        MultipartBody.Part url = attachment.url() != null ?
+                MultipartBody.Part.createFormData("match_attachment[url]", attachment.url()) : null;
+
+        MultipartBody.Part desc = attachment.description() != null ?
+                MultipartBody.Part.createFormData("match_attachment[description]", attachment.description()) : null;
+
+        return this.factory.createApiCall(this.attachmentHandler.createAttachment(tournament, matchId, asset, desc, url));
     }
 
     /**
-     * @see RetrofitAttachmentHandler#updateAttachment(String, int, int, AttachmentQuery)
+     * @see RetrofitAttachmentHandler#updateAttachment(String, int, int, MultipartBody.Part, MultipartBody.Part, MultipartBody.Part)
      */
-    public ChallongeApiCall<Attachment> updateAttachment(String tournament, int matchId, int attachmentId, AttachmentQuery attachment) {
+    public ChallongeApiCall<Attachment> updateAttachment(String tournament, int matchId, int attachmentId, AttachmentQuery attachment) throws IOException {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        return this.factory.createApiCall(this.attachmentHandler.updateAttachment(tournament, matchId, attachmentId, attachment));
+
+        MultipartBody.Part asset = attachment.asset() != null ?
+                MultipartBody.Part.createFormData("match_attachment[asset]",
+                        attachment.asset().getName(),
+                        RequestBody.create(MediaType.parse(attachment.getMimeType()), attachment.asset())
+                ) : null;
+
+        MultipartBody.Part url = attachment.url() != null ?
+                MultipartBody.Part.createFormData("match_attachment[url]", attachment.url()) : null;
+
+        MultipartBody.Part desc = attachment.description() != null ?
+                MultipartBody.Part.createFormData("match_attachment[description]", attachment.description()) : null;
+
+        return this.factory.createApiCall(this.attachmentHandler.updateAttachment(tournament, matchId, attachmentId, asset, url, desc));
     }
 
     /**

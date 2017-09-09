@@ -27,8 +27,11 @@ package com.exsoloscript.challonge.model.query;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.Validate;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Query for creating or updating an attachment. This class can be accessed using it's builder.
@@ -43,4 +46,9 @@ public class AttachmentQuery {
     private File asset;
     private String url;
     private String description;
+
+    public String getMimeType() throws IOException {
+        Validate.notNull(asset, "Cannot get MIME type since asset is null");
+        return Files.probeContentType(asset.toPath());
+    }
 }

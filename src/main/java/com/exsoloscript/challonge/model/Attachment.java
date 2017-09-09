@@ -62,4 +62,9 @@ public class Attachment {
     private final Integer assetFileSize;
     @SerializedName("asset_url")
     private final String assetUrl;
+
+    public String assetUrl() {
+        // The asset url is returned without the protocol prefix
+        return "https:" + assetUrl;
+    }
 }

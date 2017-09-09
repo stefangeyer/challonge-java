@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class TournamentAdapter implements GsonAdapter, JsonDeserializer<Tournament> {
 
-    private Gson gson;
+    private final Gson gson;
 
     public TournamentAdapter() {
         gson = new GsonBuilder()

@@ -31,7 +31,7 @@ import java.lang.reflect.Type;
 
 public class MatchQueryAdapter implements GsonAdapter, JsonSerializer<MatchQuery> {
 
-    private Gson gson;
+    private final Gson gson;
 
     public MatchQueryAdapter() {
         this.gson = new GsonBuilder().create();

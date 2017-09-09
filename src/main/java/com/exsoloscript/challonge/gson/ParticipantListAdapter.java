@@ -33,7 +33,7 @@ import java.util.List;
 
 public class ParticipantListAdapter implements GsonAdapter, JsonDeserializer<List<Participant>> {
 
-    private Gson gson;
+    private final Gson gson;
 
     public ParticipantListAdapter() {
         this.gson = new GsonBuilder()

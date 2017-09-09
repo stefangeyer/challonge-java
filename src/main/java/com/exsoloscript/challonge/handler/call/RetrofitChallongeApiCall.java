@@ -41,8 +41,8 @@ import java.io.IOException;
  */
 public class RetrofitChallongeApiCall<T> implements ChallongeApiCall<T> {
 
-    private Call<T> retrofitCall;
-    private ErrorUtil errorUtil;
+    private final Call<T> retrofitCall;
+    private final ErrorUtil errorUtil;
 
     /**
      * Create new object with a call and a way to handle errors.

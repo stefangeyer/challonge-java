@@ -40,7 +40,7 @@ import retrofit2.Retrofit;
  */
 public class ChallongeModule extends AbstractModule {
 
-    private ChallongeCredentials credentials;
+    private final ChallongeCredentials credentials;
 
     /**
      * Binding the credentials, that will be injected later

@@ -44,7 +44,7 @@ import java.lang.annotation.Annotation;
 @Singleton
 public class ErrorUtil {
 
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     @Inject
     public ErrorUtil(Retrofit retrofit) {

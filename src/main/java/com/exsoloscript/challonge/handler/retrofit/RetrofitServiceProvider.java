@@ -44,7 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Singleton
 public class RetrofitServiceProvider implements Provider<Retrofit> {
 
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     @Inject
     private RetrofitServiceProvider(ChallongeCredentials credentials, Gson gson) {

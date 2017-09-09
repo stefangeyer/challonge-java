@@ -39,7 +39,7 @@ import java.time.OffsetDateTime;
  */
 public class ParticipantAdapter implements GsonAdapter, JsonDeserializer<Participant> {
 
-    private Gson gson;
+    private final Gson gson;
 
     public ParticipantAdapter() {
         this.gson = new GsonBuilder()

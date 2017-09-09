@@ -24,6 +24,10 @@
 
 package com.exsoloscript.challonge.handler.call;
 
+import com.exsoloscript.challonge.model.exception.ChallongeException;
+
+import java.io.IOException;
+
 /**
  * Implementations of this class should return an object of the given type
  * received by the API
@@ -39,16 +43,16 @@ public interface ChallongeApiCall<T> {
      * Blocking request which returns the object right away.
      *
      * @return The received object
-     * @throws Exception Any exception that occurred during the call
+     * @throws IOException Exception thrown by error handling
+     * @throws ChallongeException Exception thrown by error handling
      */
-    T sync() throws Exception;
+    T sync() throws IOException, ChallongeException;
 
     /**
      * An async API call.
      * Once the response is received the callback method will be called.
      *
      * @param callback The callback
-     * @throws Exception Any exception that occurred during the call
      */
-    void async(AsyncCallback<T> callback) throws Exception;
+    void async(AsyncCallback<T> callback);
 }

@@ -41,7 +41,7 @@ import java.time.OffsetDateTime;
  */
 public class AttachmentAdapter implements GsonAdapter, JsonDeserializer<Attachment> {
 
-    private Gson gson;
+    private final Gson gson;
 
     public AttachmentAdapter() {
         this.gson = new GsonBuilder()

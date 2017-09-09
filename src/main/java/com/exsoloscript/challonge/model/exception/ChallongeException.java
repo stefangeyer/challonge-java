@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class ChallongeException extends Exception {
 
-    private List<String> errors;
+    private final List<String> errors;
 
     public ChallongeException(String... errors) {
         this.errors = Lists.newArrayList(errors);
@@ -44,7 +44,7 @@ public class ChallongeException extends Exception {
 
     @Override
     public String getMessage() {
-        return this.errors.toString();
+        return getErrors().toString();
     }
 
     public List<String> getErrors() {

@@ -32,7 +32,7 @@ import java.time.OffsetDateTime;
 
 public class TournamentQueryAdapter implements GsonAdapter, JsonSerializer<TournamentQuery> {
 
-    private Gson gson;
+    private final Gson gson;
 
     public TournamentQueryAdapter() {
         this.gson = new GsonBuilder()

@@ -27,14 +27,12 @@ package com.exsoloscript.challonge.handler.call;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitAttachmentHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.model.Attachment;
-import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.AttachmentQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -46,8 +44,8 @@ import java.util.List;
 @Singleton
 public class AttachmentHandler {
 
-    private RetrofitAttachmentHandler attachmentHandler;
-    private RetrofitChallongeApiCallFactory factory;
+    private final RetrofitAttachmentHandler attachmentHandler;
+    private final RetrofitChallongeApiCallFactory factory;
 
     @Inject
     AttachmentHandler(RetrofitServiceProvider provider, RetrofitChallongeApiCallFactory factory) {
@@ -58,28 +56,24 @@ public class AttachmentHandler {
     /**
      * @see RetrofitAttachmentHandler#getAttachments(String, int)
      */
-    public ChallongeApiCall<List<Attachment>> getAttachments(String tournament, int matchId) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Attachment>> getAttachments(String tournament, int matchId) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(matchId, "Match id is required");
         return this.factory.createApiCall(this.attachmentHandler.getAttachments(tournament, matchId));
     }
 
     /**
      * @see RetrofitAttachmentHandler#getAttachment(String, int, int)
      */
-    public ChallongeApiCall<Attachment> getAttachment(String tournament, int matchId, int attachmentId) throws IOException, ChallongeException {
+    public ChallongeApiCall<Attachment> getAttachment(String tournament, int matchId, int attachmentId) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(matchId, "Match id is required");
-        Validate.notNull(attachmentId, "Attachment id is required");
         return this.factory.createApiCall(this.attachmentHandler.getAttachment(tournament, matchId, attachmentId));
     }
 
     /**
      * @see RetrofitAttachmentHandler#createAttachment(String, int, AttachmentQuery)
      */
-    public ChallongeApiCall<Attachment> createAttachment(String tournament, int matchId, AttachmentQuery attachment) throws IOException, ChallongeException {
+    public ChallongeApiCall<Attachment> createAttachment(String tournament, int matchId, AttachmentQuery attachment) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(matchId, "Match id is required");
 
         // The API provider neither accepts a base64 encoded file nor a multipart request
         // MediaType multipart = MediaType.parse("multipart/form-data");
@@ -94,20 +88,16 @@ public class AttachmentHandler {
     /**
      * @see RetrofitAttachmentHandler#updateAttachment(String, int, int, AttachmentQuery)
      */
-    public ChallongeApiCall<Attachment> updateAttachment(String tournament, int matchId, int attachmentId, AttachmentQuery attachment) throws IOException, ChallongeException {
+    public ChallongeApiCall<Attachment> updateAttachment(String tournament, int matchId, int attachmentId, AttachmentQuery attachment) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(matchId, "Match id is required");
-        Validate.notNull(attachmentId, "Attachment id is required");
         return this.factory.createApiCall(this.attachmentHandler.updateAttachment(tournament, matchId, attachmentId, attachment));
     }
 
     /**
      * @see RetrofitAttachmentHandler#deleteAttachment(String, int, int)
      */
-    public ChallongeApiCall<Attachment> deleteAttachment(String tournament, int matchId, int attachmentId) throws IOException, ChallongeException {
+    public ChallongeApiCall<Attachment> deleteAttachment(String tournament, int matchId, int attachmentId) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(matchId, "Match id is required");
-        Validate.notNull(attachmentId, "Attachment id is required");
         return this.factory.createApiCall(this.attachmentHandler.deleteAttachment(tournament, matchId, attachmentId));
     }
 }

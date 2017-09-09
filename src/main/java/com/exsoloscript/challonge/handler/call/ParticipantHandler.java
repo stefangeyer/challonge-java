@@ -1,4 +1,3 @@
-
 /*
  * The MIT License (MIT)
  *
@@ -28,14 +27,12 @@ package com.exsoloscript.challonge.handler.call;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitParticipantHandler;
 import com.exsoloscript.challonge.handler.retrofit.RetrofitServiceProvider;
 import com.exsoloscript.challonge.model.Participant;
-import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -47,8 +44,8 @@ import java.util.List;
 @Singleton
 public class ParticipantHandler {
 
-    private RetrofitParticipantHandler participantHandler;
-    private RetrofitChallongeApiCallFactory factory;
+    private final RetrofitParticipantHandler participantHandler;
+    private final RetrofitChallongeApiCallFactory factory;
 
     @Inject
     ParticipantHandler(RetrofitServiceProvider provider, RetrofitChallongeApiCallFactory factory) {
@@ -59,7 +56,7 @@ public class ParticipantHandler {
     /**
      * @see RetrofitParticipantHandler#getParticipants(String)
      */
-    public ChallongeApiCall<List<Participant>> getParticipants(String tournament) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Participant>> getParticipants(String tournament) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         return this.factory.createApiCall(this.participantHandler.getParticipants(tournament));
     }
@@ -67,16 +64,15 @@ public class ParticipantHandler {
     /**
      * @see RetrofitParticipantHandler#getParticipant(String, int, int)
      */
-    public ChallongeApiCall<Participant> getParticipant(String tournament, int participantId, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Participant> getParticipant(String tournament, int participantId, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(participantId, "Participant id is required");
         return this.factory.createApiCall(this.participantHandler.getParticipant(tournament, participantId, includeMatches ? 1 : 0));
     }
 
     /**
      * @see RetrofitParticipantHandler#addParticipant(String, ParticipantQuery)
      */
-    public ChallongeApiCall<Participant> addParticipant(String tournament, ParticipantQuery participant) throws IOException, ChallongeException {
+    public ChallongeApiCall<Participant> addParticipant(String tournament, ParticipantQuery participant) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         return this.factory.createApiCall(this.participantHandler.addParticipant(tournament, participant));
     }
@@ -84,7 +80,7 @@ public class ParticipantHandler {
     /**
      * @see RetrofitParticipantHandler#bulkAddParticipants(String, List)
      */
-    public ChallongeApiCall<List<Participant>> bulkAddParticipants(String tournament, List<ParticipantQuery> participants) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Participant>> bulkAddParticipants(String tournament, List<ParticipantQuery> participants) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         return this.factory.createApiCall(this.participantHandler.bulkAddParticipants(tournament, participants));
     }
@@ -92,43 +88,39 @@ public class ParticipantHandler {
     /**
      * @see RetrofitParticipantHandler#updateParticipant(String, int, ParticipantQuery)
      */
-    public ChallongeApiCall<Participant> updateParticipant(String tournament, int participantId, ParticipantQuery participant) throws IOException, ChallongeException {
+    public ChallongeApiCall<Participant> updateParticipant(String tournament, int participantId, ParticipantQuery participant) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(participantId, "Participant id is required");
         return this.factory.createApiCall(this.participantHandler.updateParticipant(tournament, participantId, participant));
     }
 
     /**
      * @see RetrofitParticipantHandler#checkInParticipant(String, int)
      */
-    public ChallongeApiCall<Participant> checkInParticipant(String tournament, int participantId) throws IOException, ChallongeException {
+    public ChallongeApiCall<Participant> checkInParticipant(String tournament, int participantId) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(participantId, "Participant id is required");
         return this.factory.createApiCall(this.participantHandler.checkInParticipant(tournament, participantId));
     }
 
     /**
      * @see RetrofitParticipantHandler#undoParticipantCheckIn(String, int)
      */
-    public ChallongeApiCall<Participant> undoParticipantCheckIn(String tournament, int participantId) throws IOException, ChallongeException {
+    public ChallongeApiCall<Participant> undoParticipantCheckIn(String tournament, int participantId) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(participantId, "Participant id is required");
         return this.factory.createApiCall(this.participantHandler.undoParticipantCheckIn(tournament, participantId));
     }
 
     /**
      * @see RetrofitParticipantHandler#deleteParticipant(String, int)
      */
-    public ChallongeApiCall<Participant> deleteParticipant(String tournament, int participantId) throws IOException, ChallongeException {
+    public ChallongeApiCall<Participant> deleteParticipant(String tournament, int participantId) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
-        Validate.notNull(participantId, "Participant id is required");
         return this.factory.createApiCall(this.participantHandler.deleteParticipant(tournament, participantId));
     }
 
     /**
      * @see RetrofitParticipantHandler#randomizeParticipants(String)
      */
-    public ChallongeApiCall<List<Participant>> randomizeParticipants(String tournament) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Participant>> randomizeParticipants(String tournament) {
         Validate.isTrue(StringUtils.isNotBlank(tournament), "Tournament string is required");
         return this.factory.createApiCall(this.participantHandler.randomizeParticipants(tournament));
     }

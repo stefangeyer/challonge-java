@@ -29,14 +29,12 @@ import com.exsoloscript.challonge.handler.retrofit.RetrofitTournamentHandler;
 import com.exsoloscript.challonge.model.Tournament;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.TournamentQueryState;
-import com.exsoloscript.challonge.model.exception.ChallongeException;
 import com.exsoloscript.challonge.model.query.TournamentQuery;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -48,8 +46,8 @@ import java.util.List;
 @Singleton
 public class TournamentHandler {
 
-    private RetrofitTournamentHandler tournamentHandler;
-    private RetrofitChallongeApiCallFactory factory;
+    private final RetrofitTournamentHandler tournamentHandler;
+    private final RetrofitChallongeApiCallFactory factory;
 
     @Inject
     TournamentHandler(RetrofitServiceProvider provider, RetrofitChallongeApiCallFactory factory) {
@@ -57,21 +55,21 @@ public class TournamentHandler {
         this.factory = factory;
     }
 
-    public ChallongeApiCall<List<Tournament>> getTournaments() throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Tournament>> getTournaments() {
         return this.getTournaments(null, null, null, null, null);
     }
 
     /**
      * @see RetrofitTournamentHandler#getTournaments(TournamentQueryState, TournamentType, String, String, String)
      */
-    public ChallongeApiCall<List<Tournament>> getTournaments(TournamentQueryState state, TournamentType type, String createdAfter, String createdBefore, String subdomain) throws IOException, ChallongeException {
+    public ChallongeApiCall<List<Tournament>> getTournaments(TournamentQueryState state, TournamentType type, String createdAfter, String createdBefore, String subdomain) {
         return this.factory.createApiCall(this.tournamentHandler.getTournaments(state, type, createdAfter, createdBefore, subdomain));
     }
 
     /**
      * @see RetrofitTournamentHandler#getTournament(String, int, int)
      */
-    public ChallongeApiCall<Tournament> getTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> getTournament(String name, boolean includeParticipants, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.getTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
@@ -79,14 +77,14 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#createTournament(TournamentQuery)
      */
-    public ChallongeApiCall<Tournament> createTournament(TournamentQuery tournament) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> createTournament(TournamentQuery tournament) {
         return this.factory.createApiCall(this.tournamentHandler.createTournament(tournament));
     }
 
     /**
      * @see RetrofitTournamentHandler#updateTournament(String, TournamentQuery)
      */
-    public ChallongeApiCall<Tournament> updateTournament(String name, TournamentQuery tournament) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> updateTournament(String name, TournamentQuery tournament) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.updateTournament(name, tournament));
     }
@@ -94,7 +92,7 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#deleteTournament(String)
      */
-    public ChallongeApiCall<Tournament> deleteTournament(String name) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> deleteTournament(String name) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.deleteTournament(name));
     }
@@ -102,7 +100,7 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#processCheckIns(String, int, int)
      */
-    public ChallongeApiCall<Tournament> processCheckIns(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> processCheckIns(String name, boolean includeParticipants, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.processCheckIns(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
@@ -110,7 +108,7 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#abortCheckIn(String, int, int)
      */
-    public ChallongeApiCall<Tournament> abortCheckIn(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> abortCheckIn(String name, boolean includeParticipants, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.abortCheckIn(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
@@ -118,7 +116,7 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#startTournament(String, int, int)
      */
-    public ChallongeApiCall<Tournament> startTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> startTournament(String name, boolean includeParticipants, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.startTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
@@ -126,7 +124,7 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#finalizeTournament(String, int, int)
      */
-    public ChallongeApiCall<Tournament> finalizeTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> finalizeTournament(String name, boolean includeParticipants, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.finalizeTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }
@@ -134,7 +132,7 @@ public class TournamentHandler {
     /**
      * @see RetrofitTournamentHandler#resetTournament(String, int, int)
      */
-    public ChallongeApiCall<Tournament> resetTournament(String name, boolean includeParticipants, boolean includeMatches) throws IOException, ChallongeException {
+    public ChallongeApiCall<Tournament> resetTournament(String name, boolean includeParticipants, boolean includeMatches) {
         Validate.isTrue(StringUtils.isNotBlank(name), "Tournament string is required");
         return this.factory.createApiCall(this.tournamentHandler.resetTournament(name, includeParticipants ? 1 : 0, includeMatches ? 1 : 0));
     }

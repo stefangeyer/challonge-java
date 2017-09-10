@@ -21,7 +21,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 group = 'com.exsoloscript.challonge'
 archivesBaseName = 'challonge-java'
-version = '1.0.2'
+version = '1.0.3-SNAPSHOT'
 
 sourceCompatibility = 1.8
 

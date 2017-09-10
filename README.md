@@ -6,6 +6,12 @@ Java binding for the [CHALLONGE! REST Api](http://api.challonge.com/v1) using [G
 
 Released under the MIT license.
 
+## gradle
+
+```groovy
+compile group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1.0.1'
+```
+
 ## maven
 
 ```xml
@@ -49,18 +55,12 @@ Each action returns a call, that needs to be executed before the result can be u
 A call can be executed synchronous and asynchronously.
 
 ```java
-Tournament t = api.tournaments().getTournament("tournament url or id here").sync();
+Tournament t = api.tournaments().getTournament("tournament url or id here", false, false).sync();
 
-api.tournaments().getTournament("tournament url or id here").async(new AsyncCallback<Tournament>() {
-    @Override
-    public void handleSuccess(Participant response) {
-        // request was successful
-    }
-    
-    @Override
-    public void handleFailure(Throwable throwable) {
-        // something went wrong
-    }
+api.tournaments().getTournament("tournament url or id here", false, false).async((tournament) -> {
+    // request was successful
+}, (throwable) -> {
+    // something went wrong
 });
 ```
 

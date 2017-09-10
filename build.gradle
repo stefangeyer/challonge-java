@@ -1,15 +1,27 @@
-plugins {
-    id 'java'
-    id 'maven'
-    id 'signing'
-    id 'nu.studer.credentials' version '1.0.1'
-    id 'com.github.johnrengelman.shadow' version '1.2.4'
-//    id 'io.codearte.nexus-staging'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.11.0"
+        classpath "nu.studer:gradle-credentials-plugin:1.0.3"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+    }
 }
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'nu.studer.credentials'
+apply plugin: 'io.codearte.nexus-staging'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 group = 'com.exsoloscript.challonge'
 archivesBaseName = 'challonge-java'
-version = '1.0.2-SNAPSHOT'
+version = '1.0.2'
 
 sourceCompatibility = 1.8
 
@@ -64,12 +76,10 @@ artifacts {
     archives shadowJar, javadocJar, sourcesJar
 }
 
+// Release with: gradlew -Prelease uploadArchives closeAndReleaseRepository
 if (project.hasProperty('release')) {
 
     allprojects {
-        apply plugin: 'signing'
-        apply plugin: 'maven'
-
         // Signature of artifacts
         signing {
             sign configurations.archives
@@ -95,7 +105,7 @@ if (project.hasProperty('release')) {
                     pom.project {
                         name 'challonge-java'
                         packaging 'jar'
-
+                        url 'https://github.com/stefangeyer/challonge-java'
                         description 'Java binding for the CHALLONGE! REST Api'
 
                         scm {
@@ -121,10 +131,10 @@ if (project.hasProperty('release')) {
                 }
             }
         }
+
+        nexusStaging {
+            username = ossrhUsername
+            password = ossrhPassword
+        }
     }
 }
-
-//nexusStaging {
-//    username = ossrhUsername
-//    password = ossrhPassword
-//}

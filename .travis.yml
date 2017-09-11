@@ -6,3 +6,7 @@ branches:
   - master
 before_install:
   - chmod +x gradlew
+script:
+  - ./gradlew check
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

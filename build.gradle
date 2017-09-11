@@ -6,15 +6,16 @@ buildscript {
         }
     }
     dependencies {
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.11.0"
-        classpath "nu.studer:gradle-credentials-plugin:1.0.3"
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:${property("staging.version")}"
+        classpath "nu.studer:gradle-credentials-plugin:${property("credentials.version")}"
+        classpath "com.github.jengelman.gradle.plugins:shadow:${property("shadow.version")}"
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'jacoco'
 apply plugin: 'nu.studer.credentials'
 apply plugin: 'io.codearte.nexus-staging'
 apply plugin: 'com.github.johnrengelman.shadow'
@@ -43,8 +44,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: property('junit.version')
 }
 
-allprojects { ext."signing.password" = credentials.signingPassword }
-
 test {
     environment 'CHALLONGE_USERNAME', System.getenv().containsKey('CHALLONGE_USERNAME') ? System.getenv('CHALLONGE_USERNAME') : challongeUsername
     environment 'CHALLONGE_API_KEY', System.getenv().containsKey('CHALLONGE_API_KEY') ? System.getenv('CHALLONGE_API_KEY') : challongeApiKey
@@ -52,6 +51,15 @@ test {
         includeTestsMatching 'com.exsoloscript.challonge.ChallongeTestSuite'
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 shadowJar {
     // this overrides the original artifact
@@ -76,10 +84,11 @@ artifacts {
     archives shadowJar, javadocJar, sourcesJar
 }
 
-// Release with: gradlew -Prelease uploadArchives closeAndReleaseRepository
+// Release with: ./gradlew -Prelease uploadArchives closeAndReleaseRepository
 if (project.hasProperty('release')) {
-
     allprojects {
+        ext."signing.password" = credentials.signingPassword
+
         // Signature of artifacts
         signing {
             sign configurations.archives

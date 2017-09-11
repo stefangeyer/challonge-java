@@ -9,7 +9,7 @@ Released under the MIT license.
 ## gradle
 
 ```groovy
-compile group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1.0.1'
+compile group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1.0.2'
 ```
 
 ## maven

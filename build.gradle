@@ -67,6 +67,7 @@ shadowJar {
     dependencies {
         exclude(dependency('junit:junit'))
         exclude(dependency('org.hamcrest:hamcrest-core'))
+        exclude(dependency('org.projectlombok:lombok'))
     }
 }
 

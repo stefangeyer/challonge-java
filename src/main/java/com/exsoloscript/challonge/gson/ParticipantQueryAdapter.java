@@ -16,24 +16,24 @@
 
 package com.exsoloscript.challonge.gson;
 
-import com.exsoloscript.challonge.model.query.MatchQuery;
+import com.exsoloscript.challonge.model.query.ParticipantQuery;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class MatchQueryAdapter implements GsonAdapter, JsonSerializer<MatchQuery> {
+public class ParticipantQueryAdapter implements GsonAdapter, JsonSerializer<ParticipantQuery> {
 
-    private final Gson gson;
+    private Gson gson;
 
-    MatchQueryAdapter() {
+    ParticipantQueryAdapter() {
         this.gson = new GsonBuilder().create();
     }
 
     @Override
-    public JsonElement serialize(MatchQuery matchQuery, Type type, JsonSerializationContext jsonSerializationContext) {
+    public JsonElement serialize(ParticipantQuery participantQuery, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject parent = new JsonObject();
 
-        parent.add("match", gson.toJsonTree(matchQuery));
+        parent.add("participant", this.gson.toJsonTree(participantQuery));
 
         return parent;
     }

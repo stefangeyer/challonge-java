@@ -37,7 +37,7 @@ public class TournamentAdapter implements GsonAdapter, JsonDeserializer<Tourname
 
     private final Gson gson;
 
-    public TournamentAdapter() {
+    TournamentAdapter() {
         gson = new GsonBuilder()
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
                 .registerTypeAdapter(new TypeToken<List<Participant>>() {

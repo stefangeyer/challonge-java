@@ -33,7 +33,7 @@ public class MatchAdapter implements GsonAdapter, JsonDeserializer<Match> {
 
     private final Gson gson;
 
-    public MatchAdapter() {
+    MatchAdapter() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
                 .create();

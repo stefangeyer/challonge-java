@@ -43,6 +43,7 @@ public class TournamentQuery {
     @SerializedName("tournament_type")
     private TournamentType tournamentType;
     private String url;
+    @SerializedName("subdomain")
     private String subdomain;
     private String description;
     @SerializedName("open_signup")

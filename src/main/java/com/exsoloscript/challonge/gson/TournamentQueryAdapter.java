@@ -34,6 +34,10 @@ public class TournamentQueryAdapter implements GsonAdapter, JsonSerializer<Tourn
 
     @Override
     public JsonElement serialize(TournamentQuery tournamentQuery, Type type, JsonSerializationContext jsonSerializationContext) {
-        return this.gson.toJsonTree(tournamentQuery);
+        JsonObject parent = new JsonObject();
+
+        parent.add("tournament", gson.toJsonTree(tournamentQuery));
+
+        return parent;
     }
 }

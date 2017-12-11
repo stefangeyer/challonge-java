@@ -27,7 +27,7 @@ public class MatchListAdapter implements GsonAdapter, JsonDeserializer<List<Matc
 
     private final Gson gson;
 
-    public MatchListAdapter() {
+    MatchListAdapter() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(Match.class, new MatchAdapter())
                 .create();

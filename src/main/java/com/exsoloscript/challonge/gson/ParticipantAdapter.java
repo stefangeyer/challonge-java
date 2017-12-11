@@ -33,7 +33,7 @@ public class ParticipantAdapter implements GsonAdapter, JsonDeserializer<Partici
 
     private final Gson gson;
 
-    public ParticipantAdapter() {
+    ParticipantAdapter() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter())
                 .create();

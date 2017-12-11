@@ -40,6 +40,27 @@ public class SyncTournamentTest {
     }
 
     @Test
+    public void aaCreateSubdomainTournamentTest() throws Throwable {
+        try {
+            // Delete the tournament, if it already exists
+            this.challongeApi.tournaments().deleteTournament("exsolo", "javasubdomaintournament").sync();
+        } catch (ChallongeException ignored) {
+        }
+
+        TournamentQuery query = TournamentQuery.builder()
+                .subdomain("exsolo")
+                .name("JavaApiTest Subdomain")
+                .url("javasubdomaintournament")
+                .build();
+
+        Tournament tournament = this.challongeApi.tournaments().createTournament(query).sync();
+
+        assertEquals("exsolo", tournament.subdomain());
+
+        this.challongeApi.tournaments().deleteTournament("exsolo", "javasubdomaintournament");
+    }
+
+    @Test
     public void aCreateTournamentTest() throws Throwable {
         try {
             // Delete the tournament, if it already exists

@@ -8,8 +8,11 @@ buildscript {
     dependencies {
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:${property("staging.version")}"
         classpath "nu.studer:gradle-credentials-plugin:${property("credentials.version")}"
-        classpath "com.github.jengelman.gradle.plugins:shadow:${property("shadow.version")}"
     }
+}
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.11'
 }
 
 apply plugin: 'java'
@@ -18,11 +21,12 @@ apply plugin: 'signing'
 apply plugin: 'jacoco'
 apply plugin: 'nu.studer.credentials'
 apply plugin: 'io.codearte.nexus-staging'
-apply plugin: 'com.github.johnrengelman.shadow'
+
+import io.franzbecker.gradle.lombok.task.DelombokTask
 
 group = 'com.exsoloscript.challonge'
 archivesBaseName = 'challonge-java'
-version = '1.0.3-SNAPSHOT'
+version = '1.0.3'
 
 sourceCompatibility = 1.8
 
@@ -39,7 +43,6 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: property('commons.lang3.version')
     compile group: 'com.google.inject', name: 'guice', version: property('guice.version')
     compile group: 'com.google.inject.extensions', name: 'guice-multibindings', version: property('guice.version')
-    compile group: 'org.projectlombok', name: 'lombok', version: property('lombok.version')
     // testing
     testCompile group: 'junit', name: 'junit', version: property('junit.version')
 }
@@ -61,14 +64,24 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
-shadowJar {
-    // this overrides the original artifact
-    classifier = null
-    dependencies {
-        exclude(dependency('junit:junit'))
-        exclude(dependency('org.hamcrest:hamcrest-core'))
-        exclude(dependency('org.projectlombok:lombok'))
+lombok {
+    version = "1.16.18"
+    sha256 = ""
+}
+
+task delombok(type: DelombokTask, dependsOn: compileJava) {
+    ext.outputDir = file("$buildDir/delombok")
+    outputs.dir(outputDir)
+    sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+        args(it, "-d", outputDir)
     }
+}
+
+javadoc {
+    dependsOn delombok
+    source = delombok.outputDir
+    failOnError = false
 }
 
 task javadocJar(type: Jar) {
@@ -82,7 +95,7 @@ task sourcesJar(type: Jar) {
 }
 
 artifacts {
-    archives shadowJar, javadocJar, sourcesJar
+    archives javadocJar, sourcesJar
 }
 
 // Release with: ./gradlew -Prelease uploadArchives closeAndReleaseRepository

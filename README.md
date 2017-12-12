@@ -9,7 +9,7 @@ Released under the Apache 2.0 license.
 ## gradle
 
 ```groovy
-compile group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1.0.2'
+compile group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1.0.3'
 ```
 
 ## maven
@@ -18,7 +18,7 @@ compile group: 'com.exsoloscript.challonge', name: 'challonge-java', version: '1
 <dependency>
     <groupId>com.exsoloscript.challonge</groupId>
     <artifactId>challonge-java</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 

@@ -41,23 +41,28 @@ public class SyncTournamentTest {
 
     @Test
     public void aaCreateSubdomainTournamentTest() throws Throwable {
-        try {
-            // Delete the tournament, if it already exists
-            this.challongeApi.tournaments().deleteTournament("exsolo", "javasubdomaintournament").sync();
-        } catch (ChallongeException ignored) {
+        String subdomainKey = "CHALLONGE_SUBDOMAIN";
+        String subdomain = System.getenv(subdomainKey);
+
+        if (subdomain != null) {
+            try {
+                // Delete the tournament, if it already exists
+                this.challongeApi.tournaments().deleteTournament(subdomain, "javasubdomaintournament").sync();
+            } catch (ChallongeException ignored) {
+            }
+
+            TournamentQuery query = TournamentQuery.builder()
+                    .subdomain(subdomain)
+                    .name("JavaApiTest Subdomain")
+                    .url("javasubdomaintournament")
+                    .build();
+
+            Tournament tournament = this.challongeApi.tournaments().createTournament(query).sync();
+
+            assertEquals(subdomain, tournament.subdomain());
+
+            this.challongeApi.tournaments().deleteTournament(subdomain, "javasubdomaintournament");
         }
-
-        TournamentQuery query = TournamentQuery.builder()
-                .subdomain("exsolo")
-                .name("JavaApiTest Subdomain")
-                .url("javasubdomaintournament")
-                .build();
-
-        Tournament tournament = this.challongeApi.tournaments().createTournament(query).sync();
-
-        assertEquals("exsolo", tournament.subdomain());
-
-        this.challongeApi.tournaments().deleteTournament("exsolo", "javasubdomaintournament");
     }
 
     @Test

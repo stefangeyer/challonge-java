@@ -6,6 +6,12 @@ import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.Challonge
 import at.stefangeyer.challonge.rest.exception.DataAccessException
 
+/**
+ * Retrofit implementation of the participant rest client
+ *
+ * @author Stefan Geyer
+ * @version 2018-06-30
+ */
 class RetrofitParticipantRestClient(private val challonge: Challonge): ParticipantRestClient {
 
     override fun getParticipants(tournament: String): List<Participant> {

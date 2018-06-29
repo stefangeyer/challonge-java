@@ -9,6 +9,12 @@ import at.stefangeyer.challonge.rest.client.retrofit.Challonge
 import at.stefangeyer.challonge.rest.exception.DataAccessException
 import java.time.OffsetDateTime
 
+/**
+ * Retrofit implementation of the tournament rest client
+ *
+ * @author Stefan Geyer
+ * @version 2018-06-30
+ */
 class RetrofitTournamentRestClient(private val challonge: Challonge) : TournamentRestClient {
 
     override fun getTournaments(state: TournamentQueryState, type: TournamentType, createdAfter: OffsetDateTime,

@@ -7,6 +7,12 @@ import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.Challonge
 import at.stefangeyer.challonge.rest.exception.DataAccessException
 
+/**
+ * Retrofit implementation of the match rest client
+ *
+ * @author Stefan Geyer
+ * @version 2018-06-30
+ */
 class RetrofitMatchRestClient(private val challonge: Challonge): MatchRestClient {
 
     override fun getMatches(tournament: String, participantId: Long, state: MatchState): List<Match> {

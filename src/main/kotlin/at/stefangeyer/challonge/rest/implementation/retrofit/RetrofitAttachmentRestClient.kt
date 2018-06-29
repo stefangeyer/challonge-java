@@ -9,6 +9,12 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
+/**
+ * Retrofit implementation of the attachment rest client
+ *
+ * @author Stefan Geyer
+ * @version 2018-06-30
+ */
 class RetrofitAttachmentRestClient(private val challonge: Challonge) : AttachmentRestClient {
 
     override fun getAttachments(tournament: String, matchId: Long): List<Attachment> {

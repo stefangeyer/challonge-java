@@ -270,7 +270,7 @@ interface Challonge {
      * @return Call
      */
     @POST("tournaments/{tournament}/participants/{participant_id}/undo_check_in.json")
-    fun undoParticipantCheckIn(@Path("tournament") tournament: String,
+    fun undoCheckInParticipant(@Path("tournament") tournament: String,
                                @Path("participant_id") participantId: Int): Call<Participant>
 
     /**

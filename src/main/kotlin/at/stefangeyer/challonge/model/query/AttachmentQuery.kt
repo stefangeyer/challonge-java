@@ -17,9 +17,12 @@
 package at.stefangeyer.challonge.model.query
 
 import java.io.File
+import java.io.IOException
+import java.nio.file.Files
 
-class AttachmentQuery(
-        val asset: File,
-        val url: String,
-        val description: String
-)
+class AttachmentQuery(val asset: File?, val url: String?, val description: String?) {
+    @Throws(IOException::class)
+    fun getMimeType(): String? {
+        return Files.probeContentType(asset?.toPath()) ?: null
+    }
+}

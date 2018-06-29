@@ -23,7 +23,7 @@ interface AttachmentRestClient {
      * @return The match attachments
      */
     @Throws(DataAccessException::class)
-    fun getAttachments(tournament: String, matchId: Int): List<Attachment>
+    fun getAttachments(tournament: String, matchId: Long): List<Attachment>
 
     /**
      * Retrieve a single match attachment record.
@@ -37,7 +37,7 @@ interface AttachmentRestClient {
      * @return The requested attachment
      */
     @Throws(DataAccessException::class)
-    fun getAttachment(tournament: String, matchId: Int, attachmentId: Int): Attachment
+    fun getAttachment(tournament: String, matchId: Long, attachmentId: Long): Attachment
 
     /**
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
@@ -55,7 +55,7 @@ interface AttachmentRestClient {
      * @return The created attachment
      */
     @Throws(DataAccessException::class)
-    fun createAttachment(tournament: String, matchId: Int, attachment: AttachmentQuery): Attachment
+    fun createAttachment(tournament: String, matchId: Long, attachment: AttachmentQuery): Attachment
 
     /**
      * Update the attributes of a match attachment.
@@ -75,7 +75,7 @@ interface AttachmentRestClient {
      * @return The updated attachment
      */
     @Throws(DataAccessException::class)
-    fun updateAttachment(tournament: String, matchId: Int, attachmentId: Int, attachment: AttachmentQuery): Attachment
+    fun updateAttachment(tournament: String, matchId: Long, attachmentId: Long, attachment: AttachmentQuery): Attachment
 
     /**
      * Delete a match attachment.
@@ -89,5 +89,5 @@ interface AttachmentRestClient {
      * @return The deleted attachment
      */
     @Throws(DataAccessException::class)
-    fun deleteAttachment(tournament: String, matchId: Int, attachmentId: Int): Attachment
+    fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long): Attachment
 }

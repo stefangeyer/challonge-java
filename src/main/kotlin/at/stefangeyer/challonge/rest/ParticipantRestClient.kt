@@ -36,7 +36,7 @@ interface ParticipantRestClient {
      * @return The requested participant
      */
     @Throws(DataAccessException::class)
-    fun getParticipant(tournament: String, participantId: Boolean, includeMatches: Boolean): Participant
+    fun getParticipant(tournament: String, participantId: Long, includeMatches: Boolean): Participant
 
     /**
      * Add a participant to a tournament (up until it is started).
@@ -78,7 +78,7 @@ interface ParticipantRestClient {
      * @return The updates participant
      */
     @Throws(DataAccessException::class)
-    fun updateParticipant(tournament: String, participantId: Int, participant: ParticipantQuery): Participant
+    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery): Participant
 
     /**
      * Checks a participant in, setting checked_in_at to the current time.
@@ -91,7 +91,7 @@ interface ParticipantRestClient {
      * @return The checked in participant
      */
     @Throws(DataAccessException::class)
-    fun checkInParticipant(tournament: String, participantId: Int): Participant
+    fun checkInParticipant(tournament: String, participantId: Long): Participant
 
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
@@ -104,7 +104,7 @@ interface ParticipantRestClient {
      * @return The checked out participant
      */
     @Throws(DataAccessException::class)
-    fun undoCheckInParticipant(tournament: String, participantId: Int): Participant
+    fun undoCheckInParticipant(tournament: String, participantId: Long): Participant
 
     /**
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
@@ -118,7 +118,7 @@ interface ParticipantRestClient {
      * @return The deleted participant
      */
     @Throws(DataAccessException::class)
-    fun deleteParticipant(tournament: String, participantId: Int): Participant
+    fun deleteParticipant(tournament: String, participantId: Long): Participant
 
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.

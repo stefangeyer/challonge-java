@@ -24,6 +24,7 @@ dependencies {
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre8', version: property('kotlin.version')
     compile group: 'com.squareup.retrofit2', name: 'retrofit', version: property('retrofit.version')
     compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: property('retrofit.version')
+    compile group: 'commons-codec', name: 'commons-codec', version: property('commons.codec.version')
 
     // testing
     testCompile group: 'junit', name: 'junit', version: property('junit.version')

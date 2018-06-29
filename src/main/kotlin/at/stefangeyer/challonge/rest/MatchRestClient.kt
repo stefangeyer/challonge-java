@@ -27,7 +27,7 @@ interface MatchRestClient {
      * @return The tournament's matches
      */
     @Throws(DataAccessException::class)
-    fun getMatches(tournament: String, participantId: Int, state: MatchState): List<Match>
+    fun getMatches(tournament: String, participantId: Long, state: MatchState): List<Match>
 
     /**
      * Retrieve a single match record for a tournament.
@@ -41,7 +41,7 @@ interface MatchRestClient {
      * @return The requested match
      */
     @Throws(DataAccessException::class)
-    fun getMatch(tournament: String, matchId: Int, includeAttachments: Boolean): Match
+    fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): Match
 
     /**
      * Update/submit the score(s) for a match.
@@ -55,5 +55,5 @@ interface MatchRestClient {
      * @return The updated match
      */
     @Throws(DataAccessException::class)
-    fun updateMatch(tournament: String, matchId: Int, match: MatchQuery): Match
+    fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): Match
 }

@@ -161,4 +161,21 @@ interface TournamentRestClient {
      */
     @Throws(DataAccessException::class)
     fun resetTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+
+    /**
+     * Sets the state of the tournament to start accepting predictions.
+     * Your tournament's 'prediction_method' attribute must be set to 1 (exponential scoring) or 2 (linear scoring)
+     * to use this option. Note: Once open for predictions, match records will be persisted, so participant additions
+     * and removals will no longer be permitted.
+     *
+     * @param tournament          Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                            If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                            (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants Include a list of participants in the response
+     * @param includeMatches      Include a list of matches in the response
+     * @throws DataAccessException Exchange with the rest api failed
+     * @return The reset tournament
+     */
+    @Throws(DataAccessException::class)
+    fun openTournamentForPredictions(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
 }

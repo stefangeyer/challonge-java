@@ -1,4 +1,4 @@
-package at.stefangeyer.challonge.api
+package at.stefangeyer.challonge.rest.client.retrofit
 
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match
@@ -13,6 +13,7 @@ import at.stefangeyer.challonge.model.query.TournamentQuery
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.time.OffsetDateTime
 
 interface Challonge {
 
@@ -29,8 +30,8 @@ interface Challonge {
     @GET("tournaments.json")
     fun getTournaments(@Query("state") state: TournamentQueryState,
                        @Query("type") type: TournamentType,
-                       @Query("created_after") createdAfter: String,
-                       @Query("created_before") createdBefore: String,
+                       @Query("created_after") createdAfter: OffsetDateTime,
+                       @Query("created_before") createdBefore: OffsetDateTime,
                        @Query("subdomain") subdomain: String
     ): Call<List<Tournament>>
 
@@ -177,6 +178,23 @@ interface Challonge {
                         @Query("include_participants") includeParticipants: Int,
                         @Query("include_matches") includeMatches: Int): Call<Tournament>
 
+    /**
+     * Sets the state of the tournament to start accepting predictions.
+     * Your tournament's 'prediction_method' attribute must be set to 1 (exponential scoring) or 2 (linear scoring)
+     * to use this option. Note: Once open for predictions, match records will be persisted, so participant additions
+     * and removals will no longer be permitted.
+     *
+     * @param tournament          Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     * If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     * (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param includeParticipants 0 or 1; include a list of participants in the response
+     * @param includeMatches      0 or 1; include a list of matches in the response
+     * @return Call
+     */
+    @POST("tournaments/{tournament}/open_for_predictions.json")
+    fun openTournamentForPredictions(@Path("tournament") tournament: String,
+                                     @Query("include_participants") includeParticipants: Int,
+                                     @Query("include_matches") includeMatches: Int): Call<Tournament>
 
     /**
      * Retrieve a tournament's participant list.
@@ -201,7 +219,7 @@ interface Challonge {
      */
     @GET("tournaments/{tournament}/participants/{participant_id}.json")
     fun getParticipant(@Path("tournament") tournament: String,
-                       @Path("participant_id") participantId: Int,
+                       @Path("participant_id") participantId: Long,
                        @Query("include_matches") includeMatches: Int): Call<Participant>
 
     /**
@@ -244,7 +262,7 @@ interface Challonge {
      */
     @PUT("tournaments/{tournament}/participants/{participant_id}.json")
     fun updateParticipant(@Path("tournament") tournament: String,
-                          @Path("participant_id") participantId: Int,
+                          @Path("participant_id") participantId: Long,
                           @Body participant: ParticipantQuery): Call<Participant>
 
     /**
@@ -258,7 +276,7 @@ interface Challonge {
      */
     @POST("tournaments/{tournament}/participants/{participant_id}/check_in.json")
     fun checkInParticipant(@Path("tournament") tournament: String,
-                           @Path("participant_id") participantId: Int): Call<Participant>
+                           @Path("participant_id") participantId: Long): Call<Participant>
 
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
@@ -271,7 +289,7 @@ interface Challonge {
      */
     @POST("tournaments/{tournament}/participants/{participant_id}/undo_check_in.json")
     fun undoCheckInParticipant(@Path("tournament") tournament: String,
-                               @Path("participant_id") participantId: Int): Call<Participant>
+                               @Path("participant_id") participantId: Long): Call<Participant>
 
     /**
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
@@ -285,7 +303,7 @@ interface Challonge {
      */
     @DELETE("tournaments/{tournament}/participants/{participant_id}.json")
     fun deleteParticipant(@Path("tournament") tournament: String,
-                          @Path("participant_id") participantId: Int): Call<Participant>
+                          @Path("participant_id") participantId: Long): Call<Participant>
 
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.
@@ -309,7 +327,7 @@ interface Challonge {
      */
     @GET("tournaments/{tournament}/matches.json")
     fun getMatches(@Path("tournament") tournament: String,
-                   @Query("participant_id") participantId: Int?,
+                   @Query("participant_id") participantId: Long,
                    @Query("state") state: MatchState): Call<List<Match>>
 
     /**
@@ -322,7 +340,7 @@ interface Challonge {
      */
     @GET("tournaments/{tournament}/matches/{match_id}.json")
     fun getMatch(@Path("tournament") tournament: String,
-                 @Path("match_id") matchId: Int,
+                 @Path("match_id") matchId: Long,
                  @Query("include_attachments") includeAttachments: Int): Call<Match>
 
     /**
@@ -335,9 +353,34 @@ interface Challonge {
      */
     @PUT("tournaments/{tournament}/matches/{match_id}.json")
     fun updateMatch(@Path("tournament") tournament: String,
-                    @Path("match_id") matchId: Int,
+                    @Path("match_id") matchId: Long,
                     @Body match: MatchQuery): Call<Match>
 
+    /**
+     * Reopens a match that was marked completed, automatically resetting matches that follow it
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @return Call
+     */
+    @POST("tournaments/{tournament}/matches/{match_id}/reopen.json")
+    fun reopenMatch(@Path("tournament") tournament: String,
+                    @Path("match_id") matchId: Long): Call<Match>
+
+    /**
+     * Retrieve a match's attachments.
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     * If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     * (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @return Call
+     */
+    @GET("tournaments/{tournament}/matches/{match_id}/attachments.json")
+    fun getAttachments(@Path("tournament") tournament: String,
+                       @Path("match_id") matchId: Long): Call<List<Attachment>>
 
     /**
      * Retrieve a single match attachment record.
@@ -351,21 +394,8 @@ interface Challonge {
      */
     @GET("tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
     fun getAttachment(@Path("tournament") tournament: String,
-                      @Path("match_id") matchId: Int,
-                      @Path("attachment_id") attachmentId: Int): Call<Attachment>
-
-    /**
-     * Retrieve a match's attachments.
-     *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     * If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     * (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param matchId    The match's unique ID
-     * @return Call
-     */
-    @GET("tournaments/{tournament}/matches/{match_id}/attachments.json")
-    fun getAttachments(@Path("tournament") tournament: String,
-                       @Path("match_id") matchId: Int): Call<List<Attachment>>
+                      @Path("match_id") matchId: Long,
+                      @Path("attachment_id") attachmentId: Long): Call<Attachment>
 
     /**
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
@@ -387,10 +417,10 @@ interface Challonge {
     @Multipart
     @POST("tournaments/{tournament}/matches/{match_id}/attachments.json")
     fun createAttachment(@Path("tournament") tournament: String,
-                         @Path("match_id") matchId: Int,
-                         @Part asset: MultipartBody.Part,
-                         @Part url: MultipartBody.Part,
-                         @Part description: MultipartBody.Part): Call<Attachment>
+                         @Path("match_id") matchId: Long,
+                         @Part asset: MultipartBody.Part?,
+                         @Part url: MultipartBody.Part?,
+                         @Part description: MultipartBody.Part?): Call<Attachment>
 
     /**
      * Update the attributes of a match attachment.
@@ -414,11 +444,11 @@ interface Challonge {
     @Multipart
     @PUT("tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
     fun updateAttachment(@Path("tournament") tournament: String,
-                         @Path("match_id") matchId: Int,
-                         @Path("attachment_id") attachmentId: Int,
-                         @Part asset: MultipartBody.Part,
-                         @Part url: MultipartBody.Part,
-                         @Part description: MultipartBody.Part): Call<Attachment>
+                         @Path("match_id") matchId: Long,
+                         @Path("attachment_id") attachmentId: Long,
+                         @Part asset: MultipartBody.Part?,
+                         @Part url: MultipartBody.Part?,
+                         @Part description: MultipartBody.Part?): Call<Attachment>
 
     /**
      * Delete a match attachment.
@@ -432,6 +462,6 @@ interface Challonge {
      */
     @DELETE("tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
     fun deleteAttachment(@Path("tournament") tournament: String,
-                         @Path("match_id") matchId: Int,
-                         @Path("attachment_id") attachmentId: Int): Call<Attachment>
+                         @Path("match_id") matchId: Long,
+                         @Path("attachment_id") attachmentId: Long): Call<Attachment>
 }

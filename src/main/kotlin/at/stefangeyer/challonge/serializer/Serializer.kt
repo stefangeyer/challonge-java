@@ -1,4 +1,4 @@
-package at.stefangeyer.challonge.serialization
+package at.stefangeyer.challonge.serializer
 
 import java.lang.reflect.Type
 

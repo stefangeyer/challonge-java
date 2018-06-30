@@ -10,7 +10,7 @@ import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitAttachmentR
 import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitMatchRestClient
 import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitParticipantRestClient
 import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitTournamentRestClient
-import at.stefangeyer.challonge.serialization.Serializer
+import at.stefangeyer.challonge.serializer.Serializer
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody

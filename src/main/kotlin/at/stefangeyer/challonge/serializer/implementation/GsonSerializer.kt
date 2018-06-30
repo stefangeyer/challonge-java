@@ -1,6 +1,6 @@
-package at.stefangeyer.challonge.serialization.implementation
+package at.stefangeyer.challonge.serializer.implementation
 
-import at.stefangeyer.challonge.serialization.Serializer
+import at.stefangeyer.challonge.serializer.Serializer
 import com.google.gson.Gson
 import java.lang.reflect.Type
 

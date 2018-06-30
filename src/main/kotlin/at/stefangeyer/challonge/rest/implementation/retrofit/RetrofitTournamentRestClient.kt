@@ -5,7 +5,7 @@ import at.stefangeyer.challonge.model.enumeration.TournamentType
 import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.TournamentRestClient
-import at.stefangeyer.challonge.rest.client.retrofit.Challonge
+import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
 import at.stefangeyer.challonge.exception.DataAccessException
 import java.time.OffsetDateTime
 
@@ -15,11 +15,11 @@ import java.time.OffsetDateTime
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class RetrofitTournamentRestClient(private val challonge: Challonge) : TournamentRestClient {
+class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetrofit) : TournamentRestClient {
 
     override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
                                 createdBefore: OffsetDateTime?, subdomain: String?): List<Tournament> {
-        val response = this.challonge.getTournaments(state, type, createdAfter, createdBefore, subdomain).execute()
+        val response = this.challongeRetrofit.getTournaments(state, type, createdAfter, createdBefore, subdomain).execute()
 
         if (!response.isSuccessful) {
             throw DataAccessException("GetTournaments request was not successful (" +
@@ -36,7 +36,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .getTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 
@@ -55,7 +55,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun createTournament(tournamentData: TournamentQuery): Tournament {
-        val response = this.challonge.createTournament(tournamentData).execute()
+        val response = this.challongeRetrofit.createTournament(tournamentData).execute()
 
         if (!response.isSuccessful) {
             throw DataAccessException("CreateTournament request was not successful (" +
@@ -72,7 +72,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun updateTournament(tournament: String, tournamentData: TournamentQuery): Tournament {
-        val response = this.challonge.updateTournament(tournament, tournamentData).execute()
+        val response = this.challongeRetrofit.updateTournament(tournament, tournamentData).execute()
 
         if (!response.isSuccessful) {
             throw DataAccessException("UpdateTournament request was not successful (" +
@@ -89,7 +89,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun deleteTournament(tournament: String): Tournament {
-        val response = this.challonge.deleteTournament(tournament).execute()
+        val response = this.challongeRetrofit.deleteTournament(tournament).execute()
 
         if (!response.isSuccessful) {
             throw DataAccessException("DeleteTournament request was not successful (" +
@@ -106,7 +106,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun processCheckIns(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .processCheckIns(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 
@@ -125,7 +125,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun abortCheckIn(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .abortCheckIn(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 
@@ -144,7 +144,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun startTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .startTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 
@@ -163,7 +163,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun finalizeTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .finalizeTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 
@@ -182,7 +182,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun resetTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .resetTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 
@@ -201,7 +201,7 @@ class RetrofitTournamentRestClient(private val challonge: Challonge) : Tournamen
     }
 
     override fun openTournamentForPredictions(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament {
-        val response = this.challonge
+        val response = this.challongeRetrofit
                 .openTournamentForPredictions(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
 

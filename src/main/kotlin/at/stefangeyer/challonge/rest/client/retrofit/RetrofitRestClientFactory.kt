@@ -25,10 +25,10 @@ class RetrofitRestClientFactory(credentials: Credentials, serializer: Serializer
         private val MEDIA_TYPE: MediaType = MediaType.parse("application/json; charset=UTF-8")!!
     }
 
-    private val challonge: Challonge
+    private val challongeRetrofit: ChallongeRetrofit
 
     init {
-        val baseUrl = "https://api.challonge.com/v1/"
+        val baseUrl = "https://api.challongeRetrofit.com/v1/"
 
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder.addInterceptor { chain ->
@@ -49,16 +49,16 @@ class RetrofitRestClientFactory(credentials: Credentials, serializer: Serializer
                 .addConverterFactory(createConverterFactory(serializer))
                 .build()
 
-        this.challonge = retrofit.create(Challonge::class.java)
+        this.challongeRetrofit = retrofit.create(ChallongeRetrofit::class.java)
     }
 
-    override fun createTournamentRestClient(): TournamentRestClient = RetrofitTournamentRestClient(this.challonge)
+    override fun createTournamentRestClient(): TournamentRestClient = RetrofitTournamentRestClient(this.challongeRetrofit)
 
-    override fun createParticipantRestClient(): ParticipantRestClient = RetrofitParticipantRestClient(this.challonge)
+    override fun createParticipantRestClient(): ParticipantRestClient = RetrofitParticipantRestClient(this.challongeRetrofit)
 
-    override fun createMatchRestClient(): MatchRestClient = RetrofitMatchRestClient(this.challonge)
+    override fun createMatchRestClient(): MatchRestClient = RetrofitMatchRestClient(this.challongeRetrofit)
 
-    override fun createAttachmentRestClient(): AttachmentRestClient = RetrofitAttachmentRestClient(this.challonge)
+    override fun createAttachmentRestClient(): AttachmentRestClient = RetrofitAttachmentRestClient(this.challongeRetrofit)
 
     private fun createConverterFactory(serializer: Serializer): Converter.Factory {
         return object : Converter.Factory() {

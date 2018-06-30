@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.http.*
 import java.time.OffsetDateTime
 
-interface Challonge {
+interface ChallongeRetrofit {
 
     /**
      * Retrieve a set of tournaments created with your account.

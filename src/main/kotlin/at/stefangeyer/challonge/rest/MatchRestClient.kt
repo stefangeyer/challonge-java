@@ -56,4 +56,17 @@ interface MatchRestClient {
      */
     @Throws(DataAccessException::class)
     fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): Match
+
+    /**
+     * Reopens a match that was marked completed, automatically resetting matches that follow it
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @throws DataAccessException Exchange with the rest api failed
+     * @return The reopened match
+     */
+    @Throws(DataAccessException::class)
+    fun reopenMatch(tournament: String, matchId: Long): Match
 }

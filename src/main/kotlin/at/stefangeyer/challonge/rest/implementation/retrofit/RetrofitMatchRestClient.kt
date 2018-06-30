@@ -65,4 +65,21 @@ class RetrofitMatchRestClient(private val challonge: Challonge): MatchRestClient
 
         throw DataAccessException("Received response body was null")
     }
+
+    override fun reopenMatch(tournament: String, matchId: Long): Match {
+        val response = this.challonge.reopenMatch(tournament, matchId).execute()
+
+        if (!response.isSuccessful) {
+            throw DataAccessException("ReopenMatch request was not successful (" +
+                    response.code() + ") and returned: " + response.errorBody().toString())
+        }
+
+        val body = response.body()
+
+        if (body != null) {
+            return body
+        }
+
+        throw DataAccessException("Received response body was null")
+    }
 }

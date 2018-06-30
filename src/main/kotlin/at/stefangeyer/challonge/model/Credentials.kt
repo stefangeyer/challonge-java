@@ -8,14 +8,14 @@ import org.apache.commons.codec.binary.Base64
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class Credentials(private val username: String, private val apiKey: String) {
+class Credentials(private val username: String, private val key: String) {
     /**
      * Creates a HTTP basic auth String from the given credentials
      *
      * @return HTTP basic auth String
      */
     fun toHttpAuthString(): String {
-        val credentials = this.username + ":" + this.apiKey
+        val credentials = this.username + ":" + this.key
         return "Basic " + Base64.encodeBase64String(credentials.toByteArray())
     }
 }

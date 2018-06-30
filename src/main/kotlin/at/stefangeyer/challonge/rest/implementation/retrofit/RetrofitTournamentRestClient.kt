@@ -6,7 +6,7 @@ import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.Challonge
-import at.stefangeyer.challonge.rest.exception.DataAccessException
+import at.stefangeyer.challonge.exception.DataAccessException
 import java.time.OffsetDateTime
 
 /**

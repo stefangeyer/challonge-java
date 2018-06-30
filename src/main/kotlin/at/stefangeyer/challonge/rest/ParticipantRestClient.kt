@@ -2,7 +2,7 @@ package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.query.ParticipantQuery
-import at.stefangeyer.challonge.rest.exception.DataAccessException
+import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
  * Participant Rest Client Definition

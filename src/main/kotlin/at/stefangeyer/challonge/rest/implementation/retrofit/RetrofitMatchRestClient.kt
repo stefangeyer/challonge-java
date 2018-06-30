@@ -5,7 +5,7 @@ import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.Challonge
-import at.stefangeyer.challonge.rest.exception.DataAccessException
+import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
  * Retrofit implementation of the match rest client

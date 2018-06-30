@@ -4,7 +4,7 @@ import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.Challonge
-import at.stefangeyer.challonge.rest.exception.DataAccessException
+import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
  * Retrofit implementation of the participant rest client

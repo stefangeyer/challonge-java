@@ -2,7 +2,7 @@ package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.query.AttachmentQuery
-import at.stefangeyer.challonge.rest.exception.DataAccessException
+import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
  * Attachment Rest Client Definition

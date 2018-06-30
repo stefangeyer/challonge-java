@@ -15,7 +15,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
  */
 class RetrofitMatchRestClient(private val challonge: Challonge): MatchRestClient {
 
-    override fun getMatches(tournament: String, participantId: Long, state: MatchState): List<Match> {
+    override fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<Match> {
         val response = this.challonge.getMatches(tournament, participantId, state).execute()
 
         if (!response.isSuccessful) {

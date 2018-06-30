@@ -20,25 +20,25 @@ import com.google.gson.annotations.SerializedName
 import java.time.OffsetDateTime
 
 class Attachment(
-        val id: Int,
+        val id: Long,
         @SerializedName("match_id")
-        val matchId: Int,
+        val matchId: Long,
         @SerializedName("user_id")
-        val userId: Int,
-        val description: String,
-        val url: String,
+        val userId: Long,
+        val description: String?,
+        val url: String?,
         @SerializedName("original_file_name")
-        val originalFileName: String,
+        val originalFileName: String?,
         @SerializedName("created_at")
-        val createdAt: OffsetDateTime,
+        val createdAt: OffsetDateTime?,
         @SerializedName("updated_at")
-        val updatedAt: OffsetDateTime,
+        val updatedAt: OffsetDateTime?,
         @SerializedName("asset_file_name")
-        val assetFileName: String,
+        val assetFileName: String?,
         @SerializedName("asset_content_type")
-        val assetContentType: String,
+        val assetContentType: String?,
         @SerializedName("asset_file_size")
-        val assetFileSize: Int,
+        val assetFileSize: Int?,
         @SerializedName("asset_url")
-        val assetUrl: String
+        val assetUrl: String?
 )

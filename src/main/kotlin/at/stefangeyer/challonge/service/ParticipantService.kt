@@ -16,7 +16,7 @@ interface ParticipantService {
     /**
      * Retrieve a tournament's participant list.
      *
-     * @param tournament The tournament to get the participants from. Must contain id or url with an optional subdomain
+     * @param tournament The tournament to get the participants from. Must contain tournament id
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The tournaments participants
      */
@@ -26,7 +26,7 @@ interface ParticipantService {
     /**
      * Retrieve a single participant record for a tournament.
      *
-     * @param tournament     The tournament to get the participant from. Must contain id or url with an optional subdomain
+     * @param tournament     The tournament to get the participant from. Must contain tournament id
      * @param participantId  The participant's unique ID
      * @param includeMatches Includes an array of associated match records
      * @throws DataAccessException Exchange with the rest api or validation failed
@@ -38,7 +38,7 @@ interface ParticipantService {
     /**
      * Add a participant to a tournament (up until it is started).
      *
-     * @param tournament  The tournament to add the participant to. Must contain id or url with an optional subdomain
+     * @param tournament  The tournament to add the participant to. Must contain tournament id
      * @param data        The participant data
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The added participant
@@ -51,7 +51,7 @@ interface ParticipantService {
      * If an invalid participant is detected, bulk participant creation will halt
      * and any previously added participants (from this API request) will be rolled back.
      *
-     * @param tournament The tournament to add the participants to. Must contain id or url with an optional subdomain
+     * @param tournament The tournament to add the participants to. Must contain tournament id
      * @param data       The participant data
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The added participants
@@ -62,8 +62,7 @@ interface ParticipantService {
     /**
      * Update the attributes of a tournament participant.
      *
-     * @param participant The participant to update. Must contain the tournament id and
-     *                    the id of the participant
+     * @param participant The participant to update. Must contain the tournament id and the participant's id
      * @param data        The participant data
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The updates participant
@@ -74,8 +73,7 @@ interface ParticipantService {
     /**
      * Checks a participant in, setting checked_in_at to the current time.
      *
-     * @param participant The participant to check in. Must contain the tournament id and
-     *                    the id of the participant
+     * @param participant The participant to check in. Must contain the tournament id and the participant's id
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The checked in participant
      */
@@ -85,8 +83,7 @@ interface ParticipantService {
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
      *
-     * @param participant The participant to check in. Must contain the tournament id and
-     *                    the id of the participant
+     * @param participant The participant to check in. Must contain the tournament id and the participant's id
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The checked out participant
      */
@@ -97,8 +94,7 @@ interface ParticipantService {
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
      * If tournament is underway, mark a participant inactive, automatically forfeiting his/her remaining matches.
      *
-     * @param participant The participant to delete. Must contain the tournament id and
-     *                    the id of the participant
+     * @param participant The participant to delete. Must contain the tournament id and the participant's id
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The deleted participant
      */
@@ -108,7 +104,7 @@ interface ParticipantService {
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.
      *
-     * @param tournament The tournament to randomize
+     * @param tournament The tournament to randomize. Must contain the tournament id
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The randomized participants
      */

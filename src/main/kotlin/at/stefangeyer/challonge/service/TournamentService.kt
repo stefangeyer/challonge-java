@@ -57,8 +57,8 @@ interface TournamentService {
     /**
      * Update a tournament's attributes.
      *
-     * @param tournament     The tournament to update. Must contain id or url with an optional subdomain
-     * @param data An object with all the necessary information to update the tournament
+     * @param tournament     The tournament to update. Must contain tournament id
+     * @param data           An object with all the necessary information to update the tournament
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The updated tournament
      */
@@ -68,7 +68,7 @@ interface TournamentService {
     /**
      * Deletes a tournament along with all its associated records. There is no undo, so use with care!
      *
-     * @param tournament The tournament to delete. Must contain id or url with an optional subdomain
+     * @param tournament The tournament to delete. Must contain tournament id
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The deleted tournament
      */
@@ -84,8 +84,7 @@ interface TournamentService {
      *
      * NOTE: Checked in participants on the waiting list will be promoted if slots become available.
      *
-     * @param tournament          The tournament to process check ins for.
-     *                            Must contain id or url with an optional subdomain
+     * @param tournament          The tournament to process check ins for. Must contain tournament id
      * @param includeParticipants Include a list of participants in the response
      * @param includeMatches      Include a list of matches in the response
      * @throws DataAccessException Exchange with the rest api or validation failed
@@ -102,8 +101,7 @@ interface TournamentService {
      *  1. Makes all participants active and clears their checked_in_at times.
      *  2. Transitions the tournament state from 'checking_in' or 'checked_in' to 'pending'
      *
-     * @param tournament          The tournament to abort check in for.
-     *                            Must contain id or url with an optional subdomain
+     * @param tournament          The tournament to abort check in for. Must contain tournament id
      * @param includeParticipants Include a list of participants in the response
      * @param includeMatches      Include a list of matches in the response
      * @throws DataAccessException Exchange with the rest api or validation failed
@@ -116,7 +114,7 @@ interface TournamentService {
      * Start a tournament, opening up first round matches for score reporting.
      * The tournament must have at least 2 participants.
      *
-     * @param tournament          The tournament to start. Must contain id or url with an optional subdomain
+     * @param tournament          The tournament to start. Must contain tournament id
      * @param includeParticipants Include a list of participants in the response
      * @param includeMatches      Include a list of matches in the response
      * @throws DataAccessException Exchange with the rest api or validation failed
@@ -128,7 +126,7 @@ interface TournamentService {
     /**
      * Finalize a tournament that has had all match scores submitted, rendering its results permanent.
      *
-     * @param tournament          The tournament to finalize. Must contain id or url with an optional subdomain
+     * @param tournament          The tournament to finalize. Must contain tournament id
      * @param includeParticipants Include a list of participants in the response
      * @param includeMatches      Include a list of matches in the response
      * @throws DataAccessException Exchange with the rest api or validation failed
@@ -140,7 +138,7 @@ interface TournamentService {
      * Reset a tournament, clearing all of its scores and attachments.
      * You can then add/remove/edit participants before starting the tournament again.
      *
-     * @param tournament          The tournament to reset. Must contain id or url with an optional subdomain
+     * @param tournament          The tournament to reset. Must contain tournament id
      * @param includeParticipants Include a list of participants in the response
      * @param includeMatches      Include a list of matches in the response
      * @throws DataAccessException Exchange with the rest api or validation failed
@@ -154,8 +152,7 @@ interface TournamentService {
      * to use this option. Note: Once open for predictions, match records will be persisted, so participant additions
      * and removals will no longer be permitted.
      *
-     * @param tournament          The tournament to open predictions for.
-     *                            Must contain id or url with an optional subdomain
+     * @param tournament          The tournament to open predictions for. Must contain tournament id
      * @param includeParticipants Include a list of participants in the response
      * @param includeMatches      Include a list of matches in the response
      * @throws DataAccessException Exchange with the rest api or validation failed

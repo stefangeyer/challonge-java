@@ -22,46 +22,46 @@ import java.time.OffsetDateTime
 
 class Match(
         @SerializedName("attachment_count")
-        val attachmentCount: Int,
+        val attachmentCount: Int?,
         @SerializedName("createdAt")
-        val createdAt: OffsetDateTime,
+        val createdAt: OffsetDateTime?,
         @SerializedName("group_id")
-        val groupId: Int,
+        val groupId: Long?,
         @SerializedName("has_attachment")
-        val hasAttachment: Boolean,
-        val id: Int,
-        val identifier: String,
-        val location: String,
+        val hasAttachment: Boolean?,
+        val id: Long,
+        val identifier: String?,
+        val location: String?,
         @SerializedName("loser_id")
-        val loserId: Int,
+        val loserId: Long?,
         @SerializedName("winner_id")
-        val winnerId: Int,
+        val winnerId: Long?,
         @SerializedName("player1_id")
-        val player1Id: Int,
+        val player1Id: Long?,
         @SerializedName("player1_is_prereq_match_loser")
-        val player1IsPrerequisiteMatchLoser: Boolean,
+        val player1IsPrerequisiteMatchLoser: Boolean?,
         @SerializedName("player1_prereq_match_id")
-        val player1PrerequisiteMatchId: Int,
+        val player1PrerequisiteMatchId: Long?,
         @SerializedName("player2_id")
-        val player2Id: Int,
+        val player2Id: Long?,
         @SerializedName("player2_is_prereq_match_loser")
-        val player2IsPrerequisiteMatchLoser: Boolean,
+        val player2IsPrerequisiteMatchLoser: Boolean?,
         @SerializedName("player2_prereq_match_id")
-        val player2PrerequisiteMatchId: Int,
-        val round: Int,
+        val player2PrerequisiteMatchId: Long?,
+        val round: Int?,
         @SerializedName("scheduled_time")
-        val scheduledTime: OffsetDateTime,
+        val scheduledTime: OffsetDateTime?,
         @SerializedName("started_at")
-        val startedAt: OffsetDateTime,
-        val state: MatchState,
+        val startedAt: OffsetDateTime?,
+        val state: MatchState?,
         @SerializedName("tournament_id")
-        val tournamentId: Int,
+        val tournamentId: Long,
         @SerializedName("underway_at")
-        val underwayAt: OffsetDateTime,
+        val underwayAt: OffsetDateTime?,
         @SerializedName("updated_at")
-        val updatedAt: OffsetDateTime,
+        val updatedAt: OffsetDateTime?,
         @SerializedName("prerequisite_match_ids_csv")
-        val prerequisiteMatchIdsCsv: String,
+        val prerequisiteMatchIdsCsv: String?,
         @SerializedName("scores_csv")
-        val scoresCsv: String
+        val scoresCsv: String?
 )

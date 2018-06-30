@@ -57,21 +57,23 @@ interface AttachmentService {
      * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
+     * @param match The match to delete the attachment from. Must contain the tournament- and match id
      * @param attachment   The attachment to update. Must contain the tournament- and match id
      * @param data         The attachment to update
      * @throws DataAccessException Exchange with the rest api failed
      * @return The updated attachment
      */
     @Throws(DataAccessException::class)
-    fun updateAttachment(attachment: Attachment, data: AttachmentQuery): Attachment
+    fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery): Attachment
 
     /**
      * Delete a match attachment.
      *
+     * @param match The match to delete the attachment from. Must contain the tournament- and match id
      * @param attachment The attachment to delete. Must contain the tournament- and match id
      * @throws DataAccessException Exchange with the rest api failed
      * @return The deleted attachment
      */
     @Throws(DataAccessException::class)
-    fun deleteAttachment(attachment: Attachment): Attachment
+    fun deleteAttachment(match: Match, attachment: Attachment): Attachment
 }

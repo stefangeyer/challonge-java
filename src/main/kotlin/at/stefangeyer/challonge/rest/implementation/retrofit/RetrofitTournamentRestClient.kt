@@ -17,8 +17,8 @@ import java.time.OffsetDateTime
  */
 class RetrofitTournamentRestClient(private val challonge: Challonge) : TournamentRestClient {
 
-    override fun getTournaments(state: TournamentQueryState, type: TournamentType, createdAfter: OffsetDateTime,
-                                createdBefore: OffsetDateTime, subdomain: String): List<Tournament> {
+    override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
+                                createdBefore: OffsetDateTime?, subdomain: String?): List<Tournament> {
         val response = this.challonge.getTournaments(state, type, createdAfter, createdBefore, subdomain).execute()
 
         if (!response.isSuccessful) {

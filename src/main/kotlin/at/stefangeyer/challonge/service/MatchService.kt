@@ -32,7 +32,7 @@ interface MatchService {
     /**
      * Retrieve a single match record for a tournament.
      *
-     * @param tournament         The tournament to get the match from. Must contain id or url with an optional subdomain
+     * @param tournament         The tournament to get the match from. Must contain tournament id
      * @param matchId            The match's unique ID
      * @param includeAttachments Include an array of associated attachment records
      * @throws DataAccessException Exchange with the rest api or validation failed

@@ -19,12 +19,12 @@ package at.stefangeyer.challonge.model.query
 import com.google.gson.annotations.SerializedName
 
 class ParticipantQuery(
-        val name: String,
-        val email: String,
+        val name: String?,
+        val email: String?,
         @SerializedName("challonge_username")
-        val challongeUsername: String,
-        val seed: Int,
-        val misc: String,
+        val challongeUsername: String?,
+        val seed: Int?,
+        val misc: String?,
         @SerializedName("invite_name_or_email")
-        val inviteNameOrEmail: String
+        val inviteNameOrEmail: String?
 )

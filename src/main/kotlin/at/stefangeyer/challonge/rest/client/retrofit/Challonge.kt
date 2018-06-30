@@ -28,11 +28,11 @@ interface Challonge {
      * @return Call
      */
     @GET("tournaments.json")
-    fun getTournaments(@Query("state") state: TournamentQueryState,
-                       @Query("type") type: TournamentType,
-                       @Query("created_after") createdAfter: OffsetDateTime,
-                       @Query("created_before") createdBefore: OffsetDateTime,
-                       @Query("subdomain") subdomain: String
+    fun getTournaments(@Query("state") state: TournamentQueryState?,
+                       @Query("type") type: TournamentType?,
+                       @Query("created_after") createdAfter: OffsetDateTime?,
+                       @Query("created_before") createdBefore: OffsetDateTime?,
+                       @Query("subdomain") subdomain: String?
     ): Call<List<Tournament>>
 
     /**
@@ -327,8 +327,8 @@ interface Challonge {
      */
     @GET("tournaments/{tournament}/matches.json")
     fun getMatches(@Path("tournament") tournament: String,
-                   @Query("participant_id") participantId: Long,
-                   @Query("state") state: MatchState): Call<List<Match>>
+                   @Query("participant_id") participantId: Long?,
+                   @Query("state") state: MatchState?): Call<List<Match>>
 
     /**
      * Retrieve a single match record for a tournament.

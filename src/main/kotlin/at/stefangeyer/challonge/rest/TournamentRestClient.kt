@@ -27,8 +27,8 @@ interface TournamentRestClient {
      * @return The filtered tournaments
      */
     @Throws(DataAccessException::class)
-    fun getTournaments(state: TournamentQueryState, type: TournamentType, createdAfter: OffsetDateTime,
-                       createdBefore: OffsetDateTime, subdomain: String): List<Tournament>
+    fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
+                       createdBefore: OffsetDateTime?, subdomain: String?): List<Tournament>
 
     /**
      * Retrieve a single tournament record created with your account.

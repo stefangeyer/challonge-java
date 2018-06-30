@@ -27,7 +27,7 @@ interface MatchRestClient {
      * @return The tournament's matches
      */
     @Throws(DataAccessException::class)
-    fun getMatches(tournament: String, participantId: Long, state: MatchState): List<Match>
+    fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<Match>
 
     /**
      * Retrieve a single match record for a tournament.

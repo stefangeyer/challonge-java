@@ -21,6 +21,11 @@ import java.io.IOException
 import java.nio.file.Files
 
 class AttachmentQuery(val asset: File?, val url: String?, val description: String?) {
+
+    /**
+     * Get the asset's mime type
+     * @return The asset's mime type or null if asset is null
+     */
     @Throws(IOException::class)
     fun getMimeType(): String? {
         return Files.probeContentType(asset?.toPath()) ?: null

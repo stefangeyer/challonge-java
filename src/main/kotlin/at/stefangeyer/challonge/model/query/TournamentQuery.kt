@@ -63,7 +63,7 @@ class TournamentQuery(
         @SerializedName("show_rounds")
         val showRounds: Boolean?,
         @SerializedName("private")
-        val _private: Boolean?,
+        val private: Boolean?,
         @SerializedName("notify_users_when_matches_open")
         val notifyUsersWhenMatchesOpen: Boolean?,
         @SerializedName("notify_users_when_the_tournament_ends")

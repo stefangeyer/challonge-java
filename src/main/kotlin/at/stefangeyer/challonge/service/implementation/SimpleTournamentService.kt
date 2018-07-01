@@ -23,10 +23,39 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
             this.restClient.getTournament(tournament, includeParticipants, includeMatches)
 
-    override fun createTournament(data: TournamentQuery): Tournament = this.restClient.createTournament(data)
+    override fun createTournament(data: TournamentQuery): Tournament {
+        if (data.name == null && data.tournamentType == null &&
+                data.subdomain == null && data.description == null && data.openSignup == null &&
+                data.holdThirdPlaceMatch == null && data.pointsForMatchWin == null && data.pointsForMatchTie == null &&
+                data.pointsForGameWin == null && data.pointsForGameTie == null && data.pointsForBye == null &&
+                data.swissRounds == null && data.rankedBy == null && data.roundRobinPointsForMatchWin == null &&
+                data.roundRobinPointsForMatchTie == null && data.roundRobinPointsForGameWin == null &&
+                data.roundRobinPointsForGameTie == null && data.acceptAttachments == null && data.hideForum == null &&
+                data.showRounds == null && data.private == null && data.notifyUsersWhenMatchesOpen == null &&
+                data.notifyUsersWhenTheTournamentEnds == null && data.sequentialPairings == null &&
+                data.signupCap == null && data.startAt == null && data.checkInDuration == null &&
+                data.grandFinalsModifier == null && data.tieBreaks == null) {
+            throw IllegalArgumentException("All data parameters are null. Provide at least one")
+        }
+        return this.restClient.createTournament(data)
+    }
 
-    override fun updateTournament(tournament: Tournament, data: TournamentQuery): Tournament =
-            this.restClient.updateTournament(tournament.id.toString(), data)
+    override fun updateTournament(tournament: Tournament, data: TournamentQuery): Tournament {
+        if (data.name == null && data.tournamentType == null &&
+                data.subdomain == null && data.description == null && data.openSignup == null &&
+                data.holdThirdPlaceMatch == null && data.pointsForMatchWin == null && data.pointsForMatchTie == null &&
+                data.pointsForGameWin == null && data.pointsForGameTie == null && data.pointsForBye == null &&
+                data.swissRounds == null && data.rankedBy == null && data.roundRobinPointsForMatchWin == null &&
+                data.roundRobinPointsForMatchTie == null && data.roundRobinPointsForGameWin == null &&
+                data.roundRobinPointsForGameTie == null && data.acceptAttachments == null && data.hideForum == null &&
+                data.showRounds == null && data.private == null && data.notifyUsersWhenMatchesOpen == null &&
+                data.notifyUsersWhenTheTournamentEnds == null && data.sequentialPairings == null &&
+                data.signupCap == null && data.startAt == null && data.checkInDuration == null &&
+                data.grandFinalsModifier == null && data.tieBreaks == null) {
+            throw IllegalArgumentException("All data parameters are null. Provide at least one")
+        }
+        return this.restClient.updateTournament(tournament.id.toString(), data)
+    }
 
     override fun deleteTournament(tournament: Tournament): Tournament =
             this.restClient.deleteTournament(tournament.id.toString())

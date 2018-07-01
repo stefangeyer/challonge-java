@@ -14,7 +14,7 @@ import at.stefangeyer.challonge.service.MatchService
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class SimpleMatchService(private val restClient: MatchRestClient): MatchService {
+class SimpleMatchService(private val restClient: MatchRestClient) : MatchService {
 
     override fun getMatches(tournament: Tournament, participant: Participant?, state: MatchState?): List<Match> =
             this.restClient.getMatches(tournament.id.toString(), participant?.id, state)
@@ -22,8 +22,12 @@ class SimpleMatchService(private val restClient: MatchRestClient): MatchService 
     override fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean): Match =
             this.restClient.getMatch(tournament.id.toString(), matchId, includeAttachments)
 
-    override fun updateMatch(match: Match, data: MatchQuery): Match =
-            this.restClient.updateMatch(match.tournamentId.toString(), match.id, data)
+    override fun updateMatch(match: Match, data: MatchQuery): Match {
+        if (data.scoresCsv == null && data.winnerId == null && data.votesForPlayer1 == null && data.votesForPlayer2 == null) {
+            throw IllegalArgumentException("All data parameters are null. Provide at least one")
+        }
+        return this.restClient.updateMatch(match.tournamentId.toString(), match.id, data)
+    }
 
     override fun reopenMatch(match: Match): Match = this.restClient.reopenMatch(match.tournamentId.toString(), match.id)
 }

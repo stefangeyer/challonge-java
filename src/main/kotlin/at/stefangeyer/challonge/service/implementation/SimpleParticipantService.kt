@@ -12,7 +12,7 @@ import at.stefangeyer.challonge.service.ParticipantService
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class SimpleParticipantService(private val restClient: ParticipantRestClient): ParticipantService {
+class SimpleParticipantService(private val restClient: ParticipantRestClient) : ParticipantService {
 
     override fun getParticipants(tournament: Tournament): List<Participant> =
             this.restClient.getParticipants(tournament.id.toString())
@@ -20,14 +20,31 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient): P
     override fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean): Participant =
             this.restClient.getParticipant(tournament.id.toString(), participantId, includeMatches)
 
-    override fun addParticipant(tournament: Tournament, data: ParticipantQuery): Participant =
-            this.restClient.addParticipant(tournament.id.toString(), data)
+    override fun addParticipant(tournament: Tournament, data: ParticipantQuery): Participant {
+        if (data.name == null && data.email == null && data.challongeUsername == null &&
+                data.seed == null && data.misc == null && data.inviteNameOrEmail == null) {
+            throw IllegalArgumentException("All data parameters are null. Provide at least one")
+        }
+        return this.restClient.addParticipant(tournament.id.toString(), data)
+    }
 
-    override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>): List<Participant> =
-            this.restClient.bulkAddParticipants(tournament.id.toString(), data)
+    override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>): List<Participant> {
+        for (query in data) {
+            if (query.name == null && query.email == null && query.challongeUsername == null &&
+                    query.seed == null && query.misc == null && query.inviteNameOrEmail == null) {
+                throw IllegalArgumentException("All data parameters are null. Provide at least one")
+            }
+        }
+        return this.restClient.bulkAddParticipants(tournament.id.toString(), data)
+    }
 
-    override fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant =
-            this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data)
+    override fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant {
+        if (data.name == null && data.email == null && data.challongeUsername == null &&
+                data.seed == null && data.misc == null && data.inviteNameOrEmail == null) {
+            throw IllegalArgumentException("All data parameters are null. Provide at least one")
+        }
+        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data)
+    }
 
     override fun checkInParticipant(participant: Participant): Participant =
             this.restClient.checkInParticipant(participant.tournamentId.toString(), participant.id)

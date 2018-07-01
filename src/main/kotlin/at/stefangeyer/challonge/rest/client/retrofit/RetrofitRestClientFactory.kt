@@ -19,16 +19,16 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class RetrofitRestClientFactory(credentials: Credentials, serializer: Serializer) : RestClientFactory {
+class RetrofitRestClientFactory : RestClientFactory {
 
     companion object {
+        private const val BASE_URL = "https://api.challongeRetrofit.com/v1/"
         private val MEDIA_TYPE: MediaType = MediaType.parse("application/json; charset=UTF-8")!!
     }
 
-    private val challongeRetrofit: ChallongeRetrofit
+    private var challongeRetrofit: ChallongeRetrofit? = null
 
-    init {
-        val baseUrl = "https://api.challongeRetrofit.com/v1/"
+    override fun initialize(credentials: Credentials, serializer: Serializer) {
 
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder.addInterceptor { chain ->
@@ -45,20 +45,32 @@ class RetrofitRestClientFactory(credentials: Credentials, serializer: Serializer
 
         val retrofit = Retrofit.Builder()
                 .client(httpClientBuilder.build())
-                .baseUrl(baseUrl)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(createConverterFactory(serializer))
                 .build()
 
         this.challongeRetrofit = retrofit.create(ChallongeRetrofit::class.java)
     }
 
-    override fun createTournamentRestClient(): TournamentRestClient = RetrofitTournamentRestClient(this.challongeRetrofit)
+    override fun createTournamentRestClient(): TournamentRestClient {
+        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        return RetrofitTournamentRestClient(local)
+    }
 
-    override fun createParticipantRestClient(): ParticipantRestClient = RetrofitParticipantRestClient(this.challongeRetrofit)
+    override fun createParticipantRestClient(): ParticipantRestClient {
+        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        return RetrofitParticipantRestClient(local)
+    }
 
-    override fun createMatchRestClient(): MatchRestClient = RetrofitMatchRestClient(this.challongeRetrofit)
+    override fun createMatchRestClient(): MatchRestClient {
+        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        return RetrofitMatchRestClient(local)
+    }
 
-    override fun createAttachmentRestClient(): AttachmentRestClient = RetrofitAttachmentRestClient(this.challongeRetrofit)
+    override fun createAttachmentRestClient(): AttachmentRestClient {
+        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        return RetrofitAttachmentRestClient(local)
+    }
 
     private fun createConverterFactory(serializer: Serializer): Converter.Factory {
         return object : Converter.Factory() {

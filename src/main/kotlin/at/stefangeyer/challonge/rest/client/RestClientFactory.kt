@@ -1,9 +1,11 @@
 package at.stefangeyer.challonge.rest.client
 
+import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.rest.TournamentRestClient
+import at.stefangeyer.challonge.serializer.Serializer
 
 /**
  * Factory definitions for the rest clients
@@ -12,6 +14,13 @@ import at.stefangeyer.challonge.rest.TournamentRestClient
  * @version 2018-06-30
  */
 interface RestClientFactory {
+
+    /**
+     * Initializes the factory with the necessary dependencies
+     * @param credentials The username and api key to use
+     * @param serializer The serializer to use
+     */
+    fun initialize(credentials: Credentials, serializer: Serializer)
 
     /**
      * Creates an instance of the TournamentRestClient

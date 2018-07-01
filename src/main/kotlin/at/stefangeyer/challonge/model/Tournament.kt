@@ -24,132 +24,132 @@ import com.google.gson.annotations.SerializedName
 import java.time.OffsetDateTime
 
 class Tournament(
-        val name: String?,
+        val id: Long = 0L,
+        val url: String = "",
+        val name: String? = null,
         @SerializedName("tournament_type")
-        val tournamentType: TournamentType?,
-        val url: String,
-        val subdomain: String?,
-        val description: String?,
+        val tournamentType: TournamentType,
+        val subdomain: String? = null,
+        val description: String? = null,
         @SerializedName("open_signup")
-        val openSignup: Boolean?,
+        val openSignup: Boolean = false,
         @SerializedName("hold_third_place_match")
-        val holdThirdPlaceMatch: Boolean?,
+        val holdThirdPlaceMatch: Boolean = false,
         @SerializedName("pts_for_match_win")
-        val pointsForMatchWin: Float?,
+        val pointsForMatchWin: Float = 0.0F,
         @SerializedName("pts_for_match_tie")
-        val pointsForMatchTie: Float?,
+        val pointsForMatchTie: Float = 0.0F,
         @SerializedName("pts_for_game_win")
-        val pointsForGameWin: Float?,
+        val pointsForGameWin: Float = 0.0F,
         @SerializedName("pts_for_game_tie")
-        val pointsForGameTie: Float?,
+        val pointsForGameTie: Float = 0.0F,
         @SerializedName("pts_for_bye")
-        val pointsForBye: Float?,
+        val pointsForBye: Float = 0.0F,
         @SerializedName("swiss_rounds")
-        val swissRounds: Int?,
+        val swissRounds: Int = 0,
         @SerializedName("ranked_by")
-        val rankedBy: RankedBy?,
+        val rankedBy: RankedBy? = null,
         @SerializedName("rr_pts_for_game_win")
-        val roundRobinPointsForGameWin: Float?,
+        val roundRobinPointsForGameWin: Float = 0.0F,
         @SerializedName("rr_pts_for_game_tie")
-        val roundRobinPointsForGameTie: Float?,
+        val roundRobinPointsForGameTie: Float = 0.0F,
         @SerializedName("rr_pts_for_match_win")
-        val roundRobinPointsForMatchWin: Float?,
+        val roundRobinPointsForMatchWin: Float = 0.0F,
         @SerializedName("rr_pts_for_match_tie")
-        val roundRobinPointsForMatchTie: Float?,
+        val roundRobinPointsForMatchTie: Float = 0.0F,
         @SerializedName("accept_attachments")
-        val acceptAttachments: Boolean?,
+        val acceptAttachments: Boolean = false,
         @SerializedName("hide_forum")
-        val hideForum: Boolean?,
+        val hideForum: Boolean = false,
         @SerializedName("show_rounds")
-        val showRounds: Boolean?,
+        val showRounds: Boolean = false,
         @SerializedName("private")
-        val _private: Boolean?,
+        val private: Boolean = false,
         @SerializedName("notify_users_when_the_tournament_ends")
-        val notifyUsersWhenTheTournamentEnds: Boolean?,
+        val notifyUsersWhenTheTournamentEnds: Boolean = false,
         @SerializedName("sequential_pairings")
-        val sequentialPairings: Boolean?,
+        val sequentialPairings: Boolean = false,
         @SerializedName("signup_cap")
-        val signupCap: Int?,
+        val signupCap: Int = 0,
         @SerializedName("start_at")
-        val startAt: OffsetDateTime?,
+        val startAt: OffsetDateTime? = null,
         @SerializedName("check_in_duration")
-        val checkInDuration: Int?,
+        val checkInDuration: Long = 0,
         @SerializedName("allow_participant_match_reporting")
-        val allowParticipantMatchReporting: Boolean?,
+        val allowParticipantMatchReporting: Boolean = false,
         @SerializedName("anonymous_voting")
-        val anonymousVoting: Boolean?,
-        val category: String?,
+        val anonymousVoting: Boolean = false,
+        val category: String? = null,
         @SerializedName("completed_at")
-        val completedAt: OffsetDateTime?,
+        val completedAt: OffsetDateTime? = null,
         @SerializedName("created_at")
-        val createdAt: OffsetDateTime?,
+        val createdAt: OffsetDateTime? = null,
         @SerializedName("created_by_api")
-        val createdByApi: Boolean?,
+        val createdByApi: Boolean = false,
         @SerializedName("credit_capped")
-        val creditCapped: Boolean?,
+        val creditCapped: Boolean = false,
         @SerializedName("game_id")
-        val gameId: Long?,
+        val gameId: Long? = null,
         @SerializedName("group_stages_enabled")
-        val groupStagesEnabled: Boolean?,
+        val groupStagesEnabled: Boolean = false,
         @SerializedName("hide_seeds")
-        val hideSeeds: Boolean?,
-        val id: Long,
+        val hideSeeds: Boolean = false,
         @SerializedName("max_predictions_per_user")
-        val maxPredictionsPerUser: Int?,
+        val maxPredictionsPerUser: Int = 0,
         @SerializedName("notify_users_when_matches_open")
-        val notifyUsersWhenMatchesOpen: Boolean?,
+        val notifyUsersWhenMatchesOpen: Boolean = false,
         @SerializedName("participants_count")
-        val participantsCount: Int?,
+        val participantsCount: Int = 0,
         @SerializedName("prediction_method")
-        val predictionMethod: Int?,
+        val predictionMethod: Int = 0,
         @SerializedName("predictions_opened_at")
-        val predictionsOpenedAt: OffsetDateTime?,
+        val predictionsOpenedAt: OffsetDateTime? = null,
         @SerializedName("progress_meter")
-        val progressMeter: Int?,
+        val progressMeter: Int = 0,
         @SerializedName("quick_advance")
-        val quickAdvance: Boolean?,
+        val quickAdvance: Boolean = false,
         @SerializedName("require_score_agreement")
-        val requireScoreAgreement: Boolean?,
+        val requireScoreAgreement: Boolean = false,
         @SerializedName("started_at")
-        val startedAt: OffsetDateTime?,
+        val startedAt: OffsetDateTime? = null,
         @SerializedName("started_checking_in_at")
-        val startedCheckingInAt: OffsetDateTime?,
-        val state: TournamentState?,
-        val teams: Boolean?,
+        val startedCheckingInAt: OffsetDateTime? = null,
+        val state: TournamentState = TournamentState.PENDING,
+        val teams: Boolean = false,
         @SerializedName("tie_breaks")
-        val tieBreaks: Array<String>?,
+        val tieBreaks: List<String> = listOf(),
         @SerializedName("updated_at")
-        val updatedAt: OffsetDateTime?,
+        val updatedAt: OffsetDateTime? = null,
         @SerializedName("description_source")
-        val descriptionSource: String?,
+        val descriptionSource: String? = null,
         @SerializedName("full_challonge_url")
-        val fullChallongeUrl: String?,
+        val fullChallongeUrl: String? = null,
         @SerializedName("live_image_url")
-        val liveImageUrl: String?,
+        val liveImageUrl: String? = null,
         @SerializedName("sign_up_url")
-        val signUpUrl: String?,
+        val signUpUrl: String? = null,
         @SerializedName("review_before_finalizing")
-        val reviewBeforeFinalizing: Boolean?,
+        val reviewBeforeFinalizing: Boolean = false,
         @SerializedName("accepting_predictions")
-        val acceptingPredictions: Boolean?,
+        val acceptingPredictions: Boolean = false,
         @SerializedName("participants_locked")
-        val participantsLocked: Boolean?,
+        val participantsLocked: Boolean = false,
         @SerializedName("game_name")
-        val gameName: String?,
+        val gameName: String? = null,
         @SerializedName("participants_swappable")
-        val participantsSwappable: Boolean?,
+        val participantsSwappable: Boolean = false,
         @SerializedName("team_convertable")
-        val teamConvertable: Boolean?,
+        val teamConvertable: Boolean = false,
         @SerializedName("group_stages_were_started")
-        val groupStagesWereStarted: Boolean?,
+        val groupStagesWereStarted: Boolean = false,
         @SerializedName("locked_at")
-        val lockedAt: OffsetDateTime?,
+        val lockedAt: OffsetDateTime? = null,
         @SerializedName("event_id")
-        val eventId: Long?,
+        val eventId: Long = 0L,
         @SerializedName("public_predictions_before_start_time")
-        val publicPredictionsBeforeStartTime: Boolean?,
+        val publicPredictionsBeforeStartTime: Boolean = false,
         @SerializedName("grand_finals_modifier")
-        val grandFinalsModifier: GrandFinalsModifier?,
-        val participants: List<Participant>?,
-        val matches: List<Match>?
+        val grandFinalsModifier: GrandFinalsModifier = GrandFinalsModifier.BLANK,
+        val participants: List<Participant> = listOf(),
+        val matches: List<Match> = listOf()
 )

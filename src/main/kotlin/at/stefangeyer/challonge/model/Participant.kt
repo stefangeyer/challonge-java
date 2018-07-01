@@ -20,51 +20,51 @@ import com.google.gson.annotations.SerializedName
 import java.time.OffsetDateTime
 
 class Participant(
-        val name: String?,
-        @SerializedName("challonge_username")
-        val challongeUsername: String?,
-        val seed: Int?,
-        val misc: String?,
-        val active: Boolean?,
-        @SerializedName("checked_in_at")
-        val checkedInAt: OffsetDateTime?,
-        @SerializedName("created_at")
-        val createdAt: OffsetDateTime?,
-        @SerializedName("final_rank")
-        val finalRank: Int?,
-        @SerializedName("group_id")
-        val groupId: Long?,
-        val icon: String?,
-        val id: Long,
-        @SerializedName("invitation_id")
-        val invitationId: Long?,
-        @SerializedName("invite_email")
-        val inviteEmail: String?,
-        @SerializedName("on_waiting_list")
-        val onWaitingList: Boolean?,
+        val id: Long = 0L,
         @SerializedName("tournament_id")
-        val tournamentId: Long,
+        val tournamentId: Long = 0L,
+        val name: String? = null,
+        @SerializedName("challonge_username")
+        val challongeUsername: String? = null,
+        val seed: Int = 0,
+        val misc: String? = null,
+        val active: Boolean = false,
+        @SerializedName("checked_in_at")
+        val checkedInAt: OffsetDateTime? = null,
+        @SerializedName("created_at")
+        val createdAt: OffsetDateTime? = null,
+        @SerializedName("final_rank")
+        val finalRank: Int = 0,
+        @SerializedName("group_id")
+        val groupId: Long = 0L,
+        val icon: String? = null,
+        @SerializedName("invitation_id")
+        val invitationId: Long = 0L,
+        @SerializedName("invite_email")
+        val inviteEmail: String? = null,
+        @SerializedName("on_waiting_list")
+        val onWaitingList: Boolean = false,
         @SerializedName("updated_at")
-        val updatedAt: OffsetDateTime?,
+        val updatedAt: OffsetDateTime? = null,
         @SerializedName("challonge_email_address_verified")
-        val challongeEmailAddressVerified: String?,
-        val removable: Boolean?,
+        val challongeEmailAddressVerified: String? = null,
+        val removable: Boolean = false,
         @SerializedName("participatable_or_invitation_attached")
-        val participatableOrInvitationAttached: Boolean?,
+        val participatableOrInvitationAttached: Boolean = false,
         @SerializedName("confirm_remove")
-        val confirmRemove: Boolean?,
+        val confirmRemove: Boolean = false,
         @SerializedName("invitation_pending")
-        val invitationPending: Boolean?,
+        val invitationPending: Boolean = false,
         @SerializedName("display_name_with_invitation_email_address")
-        val displayNameWithInvitationEmailAddress: String?,
+        val displayNameWithInvitationEmailAddress: String? = null,
         @SerializedName("email_hash")
-        val emailHash: String?,
-        val username: String?,
+        val emailHash: String? = null,
+        val username: String? = null,
         @SerializedName("attached_participatable_portrait_url")
-        val attachedParticipatablePortraitUrl: String?,
+        val attachedParticipatablePortraitUrl: String? = null,
         @SerializedName("can_check_in")
-        val canCheckIn: Boolean?,
+        val canCheckIn: Boolean = false,
         @SerializedName("checked_in")
-        val checkedIn: Boolean?,
-        val reactivatable: Boolean?
+        val checkedIn: Boolean = false,
+        val reactivatable: Boolean = false
 )

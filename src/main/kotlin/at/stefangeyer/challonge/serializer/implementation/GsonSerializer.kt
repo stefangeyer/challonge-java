@@ -12,6 +12,11 @@ import java.lang.reflect.Type
  */
 class GsonSerializer(val gson: Gson) : Serializer {
 
+    /**
+     * Create serializer with a new Gson object
+     */
+    constructor() : this(Gson())
+
     override fun serialize(any: Any): String = this.gson.toJson(any)
 
     override fun <T> deserialize(string: String, type: Type): T = this.gson.fromJson<T>(string, type)

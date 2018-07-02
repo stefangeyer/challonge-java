@@ -23,61 +23,61 @@ import com.google.gson.annotations.SerializedName
 import java.time.OffsetDateTime
 
 class TournamentQuery(
-        val name: String?,
+        val name: String? = null,
         @SerializedName("tournament_type")
-        val tournamentType: TournamentType?,
-        val url: String,
+        val tournamentType: TournamentType? = null,
+        val url: String? = null,
         @SerializedName("subdomain")
-        val subdomain: String?,
-        val description: String?,
+        val subdomain: String? = null,
+        val description: String? = null,
         @SerializedName("open_signup")
-        val openSignup: Boolean?,
+        val openSignup: Boolean? = null,
         @SerializedName("hold_third_place_match")
-        val holdThirdPlaceMatch: Boolean?,
+        val holdThirdPlaceMatch: Boolean? = null,
         @SerializedName("pts_for_match_win")
-        val pointsForMatchWin: Float?,
+        val pointsForMatchWin: Float? = null,
         @SerializedName("pts_for_match_tie")
-        val pointsForMatchTie: Float?,
+        val pointsForMatchTie: Float? = null,
         @SerializedName("pts_for_game_win")
-        val pointsForGameWin: Float?,
+        val pointsForGameWin: Float? = null,
         @SerializedName("pts_for_game_tie")
-        val pointsForGameTie: Float?,
+        val pointsForGameTie: Float? = null,
         @SerializedName("pts_for_bye")
-        val pointsForBye: Float?,
+        val pointsForBye: Float? = null,
         @SerializedName("swiss_rounds")
-        val swissRounds: Int?,
+        val swissRounds: Int? = null,
         @SerializedName("ranked_by")
-        val rankedBy: RankedBy?,
+        val rankedBy: RankedBy? = null,
         @SerializedName("rr_pts_for_game_win")
-        val roundRobinPointsForGameWin: Float?,
+        val roundRobinPointsForGameWin: Float? = null,
         @SerializedName("rr_pts_for_game_tie")
-        val roundRobinPointsForGameTie: Float?,
+        val roundRobinPointsForGameTie: Float? = null,
         @SerializedName("rr_pts_for_match_win")
-        val roundRobinPointsForMatchWin: Float?,
+        val roundRobinPointsForMatchWin: Float? = null,
         @SerializedName("rr_pts_for_match_tie")
-        val roundRobinPointsForMatchTie: Float?,
+        val roundRobinPointsForMatchTie: Float? = null,
         @SerializedName("accept_attachments")
-        val acceptAttachments: Boolean?,
+        val acceptAttachments: Boolean? = null,
         @SerializedName("hide_forum")
-        val hideForum: Boolean?,
+        val hideForum: Boolean? = null,
         @SerializedName("show_rounds")
-        val showRounds: Boolean?,
+        val showRounds: Boolean? = null,
         @SerializedName("private")
-        val private: Boolean?,
+        val private: Boolean? = null,
         @SerializedName("notify_users_when_matches_open")
-        val notifyUsersWhenMatchesOpen: Boolean?,
+        val notifyUsersWhenMatchesOpen: Boolean? = null,
         @SerializedName("notify_users_when_the_tournament_ends")
-        val notifyUsersWhenTheTournamentEnds: Boolean?,
+        val notifyUsersWhenTheTournamentEnds: Boolean? = null,
         @SerializedName("sequential_pairings")
-        val sequentialPairings: Boolean?,
+        val sequentialPairings: Boolean? = null,
         @SerializedName("signup_cap")
-        val signupCap: Int?,
+        val signupCap: Int? = null,
         @SerializedName("start_at")
-        val startAt: OffsetDateTime?,
+        val startAt: OffsetDateTime? = null,
         @SerializedName("check_in_duration")
-        val checkInDuration: Int?,
+        val checkInDuration: Int? = null,
         @SerializedName("grand_finals_modifier")
-        val grandFinalsModifier: GrandFinalsModifier?,
+        val grandFinalsModifier: GrandFinalsModifier? = null,
         @SerializedName("tie_breaks")
-        val tieBreaks: List<String>?
+        val tieBreaks: List<String>? = null
 )

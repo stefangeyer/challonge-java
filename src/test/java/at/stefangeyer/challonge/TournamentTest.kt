@@ -3,6 +3,7 @@ package at.stefangeyer.challonge
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.ParticipantRestClient
@@ -10,6 +11,7 @@ import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.rest.client.RestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.anyOrNull
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
@@ -31,10 +33,17 @@ class TournamentTest {
     @Before
     fun setUp() {
         val tournamentRestClient = mock<TournamentRestClient> {
-            on { getTournaments(any(), any(), any(), any(), any()) } doReturn tournaments
+            on { getTournaments(anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()) } doReturn tournaments
             on { getTournament(any(), any(), any()) } doReturn tournaments[0]
             on { createTournament(any()) } doReturn tournaments[0]
             on { updateTournament(any(), any()) } doReturn tournaments[0]
+            on { deleteTournament(any()) } doReturn tournaments[0]
+            on { processCheckIns(any(), any(), any()) } doReturn tournaments[0]
+            on { abortCheckIn(any(), any(), any()) } doReturn tournaments[0]
+            on { startTournament(any(), any(), any()) } doReturn tournaments[0]
+            on { finalizeTournament(any(), any(), any()) } doReturn tournaments[0]
+            on { resetTournament(any(), any(), any()) } doReturn tournaments[0]
+            on { openTournamentForPredictions(any(), any(), any()) } doReturn tournaments[0]
         }
 
         val participantRestClient = mock<ParticipantRestClient>()
@@ -54,8 +63,70 @@ class TournamentTest {
     }
 
     @Test
+    fun testGetTournaments() {
+        val local = this.challonge.getTournaments()
+        assertEquals(this.tournaments, local)
+    }
+
+    @Test
     fun testGetTournament() {
-        val local = this.challonge.tournaments.getTournament("tourney", false, false)
-        assertEquals(tournaments[0], local)
+        val local = this.challonge.getTournament("tourney", false, false)
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testCreateTournament() {
+        val local = this.challonge.createTournament(
+                TournamentQuery(name = "TournamentTest", tournamentType = TournamentType.SINGLE_ELIMINATION,
+                        url = "sometournament"))
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testUpdateTournament() {
+        val local = this.challonge.updateTournament(this.tournaments[0], TournamentQuery(name = "UpdatedName"))
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testDeleteTournament() {
+        val local = this.challonge.deleteTournament(this.tournaments[0])
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testProcessCheckIns() {
+        val local = this.challonge.processCheckIns(this.tournaments[0], true, true)
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testAbortCheckIn() {
+        val local = this.challonge.abortCheckIn(this.tournaments[0], true, true)
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testStartTournament() {
+        val local = this.challonge.startTournament(this.tournaments[0], false, false)
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testFinalizeTournament() {
+        val local = this.challonge.finalizeTournament(this.tournaments[0], false, false)
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testResetTournament() {
+        val local = this.challonge.resetTournament(this.tournaments[0], false, false)
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test
+    fun testOpenTournamentForPredictions() {
+        val local = this.challonge.openTournamentForPredictions(this.tournaments[0], false, false)
+        assertEquals(this.tournaments[0], local)
     }
 }

@@ -20,11 +20,11 @@ import com.google.gson.annotations.SerializedName
 
 class MatchQuery(
         @SerializedName("winner_id")
-        val winnerId: Long?,
+        val winnerId: Long? = null,
         @SerializedName("player1_votes")
-        val votesForPlayer1: Int?,
+        val votesForPlayer1: Int? = null,
         @SerializedName("player2_votes")
-        val votesForPlayer2: Int?,
+        val votesForPlayer2: Int? = null,
         @SerializedName("scores_csv")
-        val scoresCsv: String?
+        val scoresCsv: String? = null
 )

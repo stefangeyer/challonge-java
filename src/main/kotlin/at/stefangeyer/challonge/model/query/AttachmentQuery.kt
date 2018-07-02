@@ -20,7 +20,11 @@ import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 
-class AttachmentQuery(val asset: File?, val url: String?, val description: String?) {
+class AttachmentQuery(
+        val asset: File? = null,
+        val url: String? = null,
+        val description: String? = null
+) {
 
     /**
      * Get the asset's mime type

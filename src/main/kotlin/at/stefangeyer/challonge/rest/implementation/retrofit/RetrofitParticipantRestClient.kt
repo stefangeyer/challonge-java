@@ -7,7 +7,7 @@ import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
 import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
- * Retrofit implementation of the participant rest client
+ * Retrofit gson of the participant rest client
  *
  * @author Stefan Geyer
  * @version 2018-06-30

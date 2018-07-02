@@ -33,7 +33,7 @@ interface ParticipantService {
      * @return The requested participant
      */
     @Throws(DataAccessException::class)
-    fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean): Participant
+    fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean = false): Participant
 
     /**
      * Add a participant to a tournament (up until it is started).

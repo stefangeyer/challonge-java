@@ -10,7 +10,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import java.time.OffsetDateTime
 
 /**
- * Retrofit implementation of the tournament rest client
+ * Retrofit gson of the tournament rest client
  *
  * @author Stefan Geyer
  * @version 2018-06-30

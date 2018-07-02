@@ -39,7 +39,7 @@ interface MatchService {
      * @return The requested match
      */
     @Throws(DataAccessException::class)
-    fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean): Match
+    fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean = false): Match
 
     /**
      * Update/submit the score(s) for a match.

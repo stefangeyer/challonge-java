@@ -1,11 +1,11 @@
-package at.stefangeyer.challonge.serializer.implementation
+package at.stefangeyer.challonge.serializer.gson
 
 import at.stefangeyer.challonge.serializer.Serializer
 import com.google.gson.Gson
 import java.lang.reflect.Type
 
 /**
- * Gson serializer implementation
+ * Gson serializer gson
  *
  * @author Stefan Geyer
  * @version 2018-06-30

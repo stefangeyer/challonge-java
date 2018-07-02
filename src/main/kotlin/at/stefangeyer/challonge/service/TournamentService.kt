@@ -42,7 +42,7 @@ interface TournamentService {
      * @return The matching tournament
      */
     @Throws(DataAccessException::class)
-    fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun getTournament(tournament: String, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 
     /**
      * Create a new tournament.
@@ -91,7 +91,7 @@ interface TournamentService {
      * @return The updated tournament
      */
     @Throws(DataAccessException::class)
-    fun processCheckIns(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun processCheckIns(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 
     /**
      * When your tournament is in a 'checking_in' or 'checked_in' state,
@@ -108,7 +108,7 @@ interface TournamentService {
      * @return The updated tournament
      */
     @Throws(DataAccessException::class)
-    fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 
     /**
      * Start a tournament, opening up first round matches for score reporting.
@@ -121,7 +121,7 @@ interface TournamentService {
      * @return The started tournament
      */
     @Throws(DataAccessException::class)
-    fun startTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun startTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 
     /**
      * Finalize a tournament that has had all match scores submitted, rendering its results permanent.
@@ -132,7 +132,7 @@ interface TournamentService {
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The finalized tournament
      */
-    fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 
     /**
      * Reset a tournament, clearing all of its scores and attachments.
@@ -144,7 +144,7 @@ interface TournamentService {
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The reset tournament
      */
-    fun resetTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun resetTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 
     /**
      * Sets the state of the tournament to start accepting predictions.
@@ -158,5 +158,5 @@ interface TournamentService {
      * @throws DataAccessException Exchange with the rest api or validation failed
      * @return The reset tournament
      */
-    fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament
 }

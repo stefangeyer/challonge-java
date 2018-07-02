@@ -70,7 +70,7 @@ class TournamentTest {
 
     @Test
     fun testGetTournament() {
-        val local = this.challonge.getTournament("tourney", false, false)
+        val local = this.challonge.getTournament("tourney")
         assertEquals(this.tournaments[0], local)
     }
 
@@ -82,9 +82,21 @@ class TournamentTest {
         assertEquals(this.tournaments[0], local)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun testCreateTournamentNoData() {
+        val local = this.challonge.createTournament(TournamentQuery())
+        assertEquals(this.tournaments[0], local)
+    }
+
     @Test
     fun testUpdateTournament() {
         val local = this.challonge.updateTournament(this.tournaments[0], TournamentQuery(name = "UpdatedName"))
+        assertEquals(this.tournaments[0], local)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testUpdateTournamentNoData() {
+        val local = this.challonge.updateTournament(this.tournaments[0], TournamentQuery())
         assertEquals(this.tournaments[0], local)
     }
 
@@ -96,37 +108,37 @@ class TournamentTest {
 
     @Test
     fun testProcessCheckIns() {
-        val local = this.challonge.processCheckIns(this.tournaments[0], true, true)
+        val local = this.challonge.processCheckIns(this.tournaments[0])
         assertEquals(this.tournaments[0], local)
     }
 
     @Test
     fun testAbortCheckIn() {
-        val local = this.challonge.abortCheckIn(this.tournaments[0], true, true)
+        val local = this.challonge.abortCheckIn(this.tournaments[0])
         assertEquals(this.tournaments[0], local)
     }
 
     @Test
     fun testStartTournament() {
-        val local = this.challonge.startTournament(this.tournaments[0], false, false)
+        val local = this.challonge.startTournament(this.tournaments[0])
         assertEquals(this.tournaments[0], local)
     }
 
     @Test
     fun testFinalizeTournament() {
-        val local = this.challonge.finalizeTournament(this.tournaments[0], false, false)
+        val local = this.challonge.finalizeTournament(this.tournaments[0])
         assertEquals(this.tournaments[0], local)
     }
 
     @Test
     fun testResetTournament() {
-        val local = this.challonge.resetTournament(this.tournaments[0], false, false)
+        val local = this.challonge.resetTournament(this.tournaments[0])
         assertEquals(this.tournaments[0], local)
     }
 
     @Test
     fun testOpenTournamentForPredictions() {
-        val local = this.challonge.openTournamentForPredictions(this.tournaments[0], false, false)
+        val local = this.challonge.openTournamentForPredictions(this.tournaments[0])
         assertEquals(this.tournaments[0], local)
     }
 }

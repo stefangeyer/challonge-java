@@ -11,7 +11,7 @@ import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.client.RestClientFactory
 import at.stefangeyer.challonge.rest.client.retrofit.RetrofitRestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
-import at.stefangeyer.challonge.serializer.implementation.GsonSerializer
+import at.stefangeyer.challonge.serializer.gson.GsonSerializer
 import at.stefangeyer.challonge.service.AttachmentService
 import at.stefangeyer.challonge.service.MatchService
 import at.stefangeyer.challonge.service.ParticipantService

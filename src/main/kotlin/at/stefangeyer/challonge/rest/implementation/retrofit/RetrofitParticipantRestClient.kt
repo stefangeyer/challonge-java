@@ -1,10 +1,10 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
+import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
-import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
  * Retrofit gson of the participant rest client
@@ -12,7 +12,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetrofit): ParticipantRestClient {
+class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetrofit) : ParticipantRestClient {
 
     override fun getParticipants(tournament: String): List<Participant> {
         val response = this.challongeRetrofit.getParticipants(tournament).execute()

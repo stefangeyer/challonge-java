@@ -1,10 +1,10 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
+import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
-import at.stefangeyer.challonge.exception.DataAccessException
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

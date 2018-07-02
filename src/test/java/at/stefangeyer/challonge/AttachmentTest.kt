@@ -3,8 +3,6 @@ package at.stefangeyer.challonge
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Match
-import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enumeration.TournamentType
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient
@@ -13,7 +11,6 @@ import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.rest.client.RestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.anyOrNull
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals

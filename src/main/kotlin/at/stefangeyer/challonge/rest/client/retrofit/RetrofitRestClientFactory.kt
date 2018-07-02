@@ -53,22 +53,26 @@ class RetrofitRestClientFactory : RestClientFactory {
     }
 
     override fun createTournamentRestClient(): TournamentRestClient {
-        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        val local = this.challongeRetrofit
+                ?: throw IllegalStateException("Attempted to create rest client before initialization")
         return RetrofitTournamentRestClient(local)
     }
 
     override fun createParticipantRestClient(): ParticipantRestClient {
-        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        val local = this.challongeRetrofit
+                ?: throw IllegalStateException("Attempted to create rest client before initialization")
         return RetrofitParticipantRestClient(local)
     }
 
     override fun createMatchRestClient(): MatchRestClient {
-        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        val local = this.challongeRetrofit
+                ?: throw IllegalStateException("Attempted to create rest client before initialization")
         return RetrofitMatchRestClient(local)
     }
 
     override fun createAttachmentRestClient(): AttachmentRestClient {
-        val local = this.challongeRetrofit ?: throw IllegalStateException("Attempted to create rest client before initialization")
+        val local = this.challongeRetrofit
+                ?: throw IllegalStateException("Attempted to create rest client before initialization")
         return RetrofitAttachmentRestClient(local)
     }
 

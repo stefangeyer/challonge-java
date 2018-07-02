@@ -1,10 +1,10 @@
 package at.stefangeyer.challonge.rest
 
+import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enumeration.TournamentType
 import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
-import at.stefangeyer.challonge.exception.DataAccessException
 import java.time.OffsetDateTime
 
 /**

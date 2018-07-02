@@ -1,11 +1,11 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
+import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
-import at.stefangeyer.challonge.exception.DataAccessException
 
 /**
  * Retrofit gson of the match rest client
@@ -13,7 +13,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit): MatchRestClient {
+class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) : MatchRestClient {
 
     override fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<Match> {
         val response = this.challongeRetrofit.getMatches(tournament, participantId, state).execute()

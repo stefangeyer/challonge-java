@@ -1,12 +1,12 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
+import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enumeration.TournamentType
 import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
-import at.stefangeyer.challonge.exception.DataAccessException
 import java.time.OffsetDateTime
 
 /**

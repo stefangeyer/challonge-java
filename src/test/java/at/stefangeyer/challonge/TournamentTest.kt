@@ -2,6 +2,7 @@ package at.stefangeyer.challonge
 
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Tournament
+import at.stefangeyer.challonge.model.enumeration.RankedBy
 import at.stefangeyer.challonge.model.enumeration.TournamentType
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.AttachmentRestClient
@@ -28,7 +29,8 @@ class TournamentTest {
             Tournament(id = 11002, url = "https://www.challonge.com/sometourney",
                     tournamentType = TournamentType.ROUND_ROBIN),
             Tournament(id = 45678, url = "https://www.challonge.com/tournament45",
-                    tournamentType = TournamentType.DOUBLE_ELIMINATION))
+                    tournamentType = TournamentType.DOUBLE_ELIMINATION,
+                    rankedBy = RankedBy.GAME_WINS))
 
     @Before
     fun setUp() {

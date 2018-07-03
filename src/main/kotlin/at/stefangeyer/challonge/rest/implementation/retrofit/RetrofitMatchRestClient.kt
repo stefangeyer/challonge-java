@@ -6,6 +6,8 @@ import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.rest.Callback
 import at.stefangeyer.challonge.rest.MatchRestClient
+import retrofit2.Call
+import retrofit2.Response
 
 /**
  * Retrofit gson of the match rest client
@@ -17,72 +19,76 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
 
     override fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<Match> {
         val response = this.challongeRetrofit.getMatches(tournament, participantId, state).execute()
-
-        if (!response.isSuccessful) {
-            throw DataAccessException("GetMatches request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
+        return parseResponse("GetMatches", response)
     }
 
     override fun getMatches(tournament: String, participantId: Long?, state: MatchState?, onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.challongeRetrofit.getMatches(tournament, participantId, state).enqueue(
+                object : retrofit2.Callback<List<Match>> {
+                    override fun onFailure(call: Call<List<Match>>, t: Throwable) {
+                        onFailure.handle(DataAccessException("GetMatches request was not successful", t))
+                    }
+
+                    override fun onResponse(call: Call<List<Match>>, response: Response<List<Match>>) {
+                        onSuccess.handle(parseResponse("GetMatches", response))
+                    }
+                })
     }
 
     override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): Match {
         val response = this.challongeRetrofit.getMatch(tournament, matchId, if (includeAttachments) 1 else 0).execute()
-
-        if (!response.isSuccessful) {
-            throw DataAccessException("GetMatch request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
+        return parseResponse("GetMatch", response)
     }
 
     override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.challongeRetrofit.getMatch(tournament, matchId, if (includeAttachments) 1 else 0).enqueue(object : retrofit2.Callback<Match> {
+            override fun onFailure(call: Call<Match>, t: Throwable) {
+                onFailure.handle(DataAccessException("GetMatch request was not successful", t))
+            }
+
+            override fun onResponse(call: Call<Match>, response: Response<Match>) {
+                onSuccess.handle(parseResponse("GetMatch", response))
+            }
+        })
     }
 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): Match {
         val response = this.challongeRetrofit.updateMatch(tournament, matchId, match).execute()
-
-        if (!response.isSuccessful) {
-            throw DataAccessException("UpdateMatch request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
+        return parseResponse("UpdateMatch", response)
     }
 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.challongeRetrofit.updateMatch(tournament, matchId, match).enqueue(object : retrofit2.Callback<Match> {
+            override fun onFailure(call: Call<Match>, t: Throwable) {
+                onFailure.handle(DataAccessException("UpdateMatch request was not successful", t))
+            }
+
+            override fun onResponse(call: Call<Match>, response: Response<Match>) {
+                onSuccess.handle(parseResponse("UpdateMatch", response))
+            }
+        })
     }
 
     override fun reopenMatch(tournament: String, matchId: Long): Match {
         val response = this.challongeRetrofit.reopenMatch(tournament, matchId).execute()
+        return parseResponse("ReopenMatch", response)
+    }
 
+    override fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
+        this.challongeRetrofit.reopenMatch(tournament, matchId).enqueue(object : retrofit2.Callback<Match> {
+            override fun onFailure(call: Call<Match>, t: Throwable) {
+                onFailure.handle(DataAccessException("ReopenMatch request was not successful", t))
+            }
+
+            override fun onResponse(call: Call<Match>, response: Response<Match>) {
+                onSuccess.handle(parseResponse("ReopenMatch", response))
+            }
+        })
+    }
+
+    private fun <T> parseResponse(action: String, response: Response<T>): T {
         if (!response.isSuccessful) {
-            throw DataAccessException("ReopenMatch request was not successful (" +
+            throw DataAccessException(action + " request was not successful (" +
                     response.code() + ") and returned: " + response.errorBody().toString())
         }
 
@@ -93,9 +99,5 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
         }
 
         throw DataAccessException("Received response body was null")
-    }
-
-    override fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

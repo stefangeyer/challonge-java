@@ -117,7 +117,7 @@ interface ParticipantRestClient {
      * @param onFailure    Called with exception if call was not successful
      */
     fun bulkAddParticipants(tournament: String, participants: List<ParticipantQuery>,
-                            onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                            onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>)
 
     /**
      * Update the attributes of a tournament participant.
@@ -248,5 +248,5 @@ interface ParticipantRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun randomizeParticipants(tournament: String, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+    fun randomizeParticipants(tournament: String, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>)
 }

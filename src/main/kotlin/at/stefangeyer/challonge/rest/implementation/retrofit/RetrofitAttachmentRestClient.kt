@@ -136,10 +136,12 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
     }
 
     private fun createAssetPart(attachment: AttachmentQuery): MultipartBody.Part? {
-        return if (attachment.asset != null)
+        return if (attachment.asset != null) {
             MultipartBody.Part.createFormData("match_attachment[asset]", attachment.asset.name,
-                    RequestBody.create(MediaType.parse(attachment.getMimeType()), attachment.asset))
-        else
+                    RequestBody.create(
+                            if (attachment.assetMimeType != null) MediaType.parse(attachment.assetMimeType!!)
+                            else null, attachment.asset))
+        } else
             null
     }
 

@@ -30,8 +30,7 @@ class AttachmentQuery(
      * Get the asset's mime type
      * @return The asset's mime type or null if asset is null
      */
-    @Throws(IOException::class)
-    fun getMimeType(): String? {
-        return Files.probeContentType(asset?.toPath()) ?: null
+    val assetMimeType: String? by lazy {
+        Files.probeContentType(asset?.toPath()) ?: null
     }
 }

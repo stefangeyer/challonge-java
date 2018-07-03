@@ -1,4 +1,4 @@
-package at.stefangeyer.challonge.rest.client
+package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.rest.AttachmentRestClient

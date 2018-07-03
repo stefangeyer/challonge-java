@@ -1,4 +1,4 @@
-package at.stefangeyer.challonge.rest.client.retrofit
+package at.stefangeyer.challonge.rest.implementation.retrofit
 
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match

@@ -9,7 +9,7 @@ import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.rest.TournamentRestClient
-import at.stefangeyer.challonge.rest.client.RestClientFactory
+import at.stefangeyer.challonge.rest.RestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyOrNull

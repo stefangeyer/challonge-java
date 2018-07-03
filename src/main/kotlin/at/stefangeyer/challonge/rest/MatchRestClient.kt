@@ -30,6 +30,22 @@ interface MatchRestClient {
     fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<Match>
 
     /**
+     * Retrieve a tournament's match list.
+     *
+     * @param tournament    Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                      If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                      (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param participantId Only retrieve matches that include the specified participant.
+     *                      This parameter is optional. Provide null if you want to skip it.
+     * @param state         all (default), pending, open, complete.
+     *                      This parameter is optional. Provide null if you want to skip it.
+     * @param onSuccess     Called with result if call was successful
+     * @param onFailure     Called with exception if call was not successful
+     */
+    fun getMatches(tournament: String, participantId: Long?, state: MatchState?,
+                   onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>)
+
+    /**
      * Retrieve a single match record for a tournament.
      *
      * @param tournament         Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
@@ -42,6 +58,20 @@ interface MatchRestClient {
      */
     @Throws(DataAccessException::class)
     fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): Match
+
+    /**
+     * Retrieve a single match record for a tournament.
+     *
+     * @param tournament         Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                           If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                           (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId            The match's unique ID
+     * @param includeAttachments Include an array of associated attachment records
+     * @param onSuccess          Called with result if call was successful
+     * @param onFailure          Called with exception if call was not successful
+     */
+    fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean,
+                 onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>)
 
     /**
      * Update/submit the score(s) for a match.
@@ -58,6 +88,20 @@ interface MatchRestClient {
     fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): Match
 
     /**
+     * Update/submit the score(s) for a match.
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @param match      The match data
+     * @param onSuccess  Called with result if call was successful
+     * @param onFailure  Called with exception if call was not successful
+     */
+    fun updateMatch(tournament: String, matchId: Long, match: MatchQuery,
+                    onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>)
+
+    /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it
      *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
@@ -69,4 +113,17 @@ interface MatchRestClient {
      */
     @Throws(DataAccessException::class)
     fun reopenMatch(tournament: String, matchId: Long): Match
+
+    /**
+     * Reopens a match that was marked completed, automatically resetting matches that follow it
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @param onSuccess  Called with result if call was successful
+     * @param onFailure  Called with exception if call was not successful
+     */
+    fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<Match>,
+                    onFailure: Callback<DataAccessException>)
 }

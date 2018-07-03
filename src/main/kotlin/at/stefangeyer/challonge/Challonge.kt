@@ -8,8 +8,8 @@ import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
-import at.stefangeyer.challonge.rest.client.RestClientFactory
-import at.stefangeyer.challonge.rest.client.retrofit.RetrofitRestClientFactory
+import at.stefangeyer.challonge.rest.RestClientFactory
+import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitRestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer
 import at.stefangeyer.challonge.service.AttachmentService

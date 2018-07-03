@@ -4,8 +4,8 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.rest.Callback
 import at.stefangeyer.challonge.rest.MatchRestClient
-import at.stefangeyer.challonge.rest.client.retrofit.ChallongeRetrofit
 
 /**
  * Retrofit gson of the match rest client
@@ -32,6 +32,10 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
         throw DataAccessException("Received response body was null")
     }
 
+    override fun getMatches(tournament: String, participantId: Long?, state: MatchState?, onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): Match {
         val response = this.challongeRetrofit.getMatch(tournament, matchId, if (includeAttachments) 1 else 0).execute()
 
@@ -47,6 +51,10 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
         }
 
         throw DataAccessException("Received response body was null")
+    }
+
+    override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): Match {
@@ -66,6 +74,10 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
         throw DataAccessException("Received response body was null")
     }
 
+    override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun reopenMatch(tournament: String, matchId: Long): Match {
         val response = this.challongeRetrofit.reopenMatch(tournament, matchId).execute()
 
@@ -81,5 +93,9 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
         }
 
         throw DataAccessException("Received response body was null")
+    }
+
+    override fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

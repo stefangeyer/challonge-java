@@ -1,3 +1,6 @@
 package at.stefangeyer.challonge.exception
 
-class DataAccessException(override val message: String) : Exception()
+class DataAccessException : Exception {
+    constructor(message: String, cause: Throwable) : super(message, cause)
+    constructor(message: String) : super(message)
+}

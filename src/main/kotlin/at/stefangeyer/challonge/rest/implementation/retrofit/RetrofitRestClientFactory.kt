@@ -1,15 +1,11 @@
-package at.stefangeyer.challonge.rest.client.retrofit
+package at.stefangeyer.challonge.rest.implementation.retrofit
 
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.rest.TournamentRestClient
-import at.stefangeyer.challonge.rest.client.RestClientFactory
-import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitAttachmentRestClient
-import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitMatchRestClient
-import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitParticipantRestClient
-import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitTournamentRestClient
+import at.stefangeyer.challonge.rest.RestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -29,7 +25,6 @@ class RetrofitRestClientFactory : RestClientFactory {
     private var challongeRetrofit: ChallongeRetrofit? = null
 
     override fun initialize(credentials: Credentials, serializer: Serializer) {
-
         val httpClientBuilder = OkHttpClient.Builder()
         httpClientBuilder.addInterceptor { chain ->
             val original = chain.request()

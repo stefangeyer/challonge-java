@@ -1,4 +1,4 @@
-package at.stefangeyer.challonge.rest
+package at.stefangeyer.challonge.async
 
 /**
  * Generic callback used for async calls

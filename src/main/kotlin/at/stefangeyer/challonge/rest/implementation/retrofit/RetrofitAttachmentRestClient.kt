@@ -4,7 +4,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.rest.AttachmentRestClient
-import at.stefangeyer.challonge.rest.Callback
+import at.stefangeyer.challonge.async.Callback
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

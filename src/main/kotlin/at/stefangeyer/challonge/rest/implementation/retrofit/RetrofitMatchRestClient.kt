@@ -4,7 +4,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
-import at.stefangeyer.challonge.rest.Callback
+import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.rest.MatchRestClient
 import retrofit2.Call
 import retrofit2.Response

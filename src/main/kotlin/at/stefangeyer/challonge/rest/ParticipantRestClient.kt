@@ -1,5 +1,6 @@
 package at.stefangeyer.challonge.rest
 
+import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.query.ParticipantQuery

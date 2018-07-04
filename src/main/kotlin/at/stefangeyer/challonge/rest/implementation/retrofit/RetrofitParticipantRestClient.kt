@@ -3,7 +3,7 @@ package at.stefangeyer.challonge.rest.implementation.retrofit
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.query.ParticipantQuery
-import at.stefangeyer.challonge.rest.Callback
+import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import retrofit2.Call
 import retrofit2.Response

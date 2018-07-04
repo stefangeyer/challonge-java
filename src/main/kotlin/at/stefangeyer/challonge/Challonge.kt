@@ -217,28 +217,28 @@ class Challonge(credentials: Credentials, serializer: Serializer = GsonSerialize
     override fun getAttachment(match: Match, attachmentId: Long): Attachment =
             this.attachments.getAttachment(match, attachmentId)
 
-    override fun getAttachment(match: Match, attachmentId: Long, onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) {
+    override fun getAttachment(match: Match, attachmentId: Long, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         this.attachments.getAttachment(match, attachmentId, onSuccess, onFailure)
     }
 
     override fun createAttachment(match: Match, data: AttachmentQuery): Attachment =
             this.attachments.createAttachment(match, data)
 
-    override fun createAttachment(match: Match, data: AttachmentQuery, onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) {
+    override fun createAttachment(match: Match, data: AttachmentQuery, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         this.attachments.createAttachment(match, data, onSuccess, onFailure)
     }
 
     override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery): Attachment =
             this.attachments.updateAttachment(match, attachment, data)
 
-    override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery, onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) {
+    override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         this.attachments.updateAttachment(match, attachment, data, onSuccess, onFailure)
     }
 
     override fun deleteAttachment(match: Match, attachment: Attachment): Attachment =
             this.attachments.deleteAttachment(match, attachment)
 
-    override fun deleteAttachment(match: Match, attachment: Attachment, onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) {
+    override fun deleteAttachment(match: Match, attachment: Attachment, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         this.attachments.deleteAttachment(match, attachment, onSuccess, onFailure)
     }
 }

@@ -53,7 +53,7 @@ interface AttachmentService {
      * @param onSuccess    Called with result if call was successful
      * @param onFailure    Called with exception if call was not successful
      */
-    fun getAttachment(match: Match, attachmentId: Long, onSuccess: Callback<List<Attachment>>,
+    fun getAttachment(match: Match, attachmentId: Long, onSuccess: Callback<Attachment>,
                       onFailure: Callback<DataAccessException>)
 
     /**
@@ -83,7 +83,7 @@ interface AttachmentService {
      * @param onSuccess   Called with result if call was successful
      * @param onFailure   Called with exception if call was not successful
      */
-    fun createAttachment(match: Match, data: AttachmentQuery, onSuccess: Callback<List<Attachment>>,
+    fun createAttachment(match: Match, data: AttachmentQuery, onSuccess: Callback<Attachment>,
                          onFailure: Callback<DataAccessException>)
 
     /**
@@ -117,7 +117,7 @@ interface AttachmentService {
      * @param onSuccess    Called with result if call was successful
      * @param onFailure    Called with exception if call was not successful
      */
-    fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery, onSuccess: Callback<List<Attachment>>,
+    fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery, onSuccess: Callback<Attachment>,
                          onFailure: Callback<DataAccessException>)
 
     /**
@@ -139,6 +139,6 @@ interface AttachmentService {
      * @param onSuccess    Called with result if call was successful
      * @param onFailure    Called with exception if call was not successful
      */
-    fun deleteAttachment(match: Match, attachment: Attachment, onSuccess: Callback<List<Attachment>>,
+    fun deleteAttachment(match: Match, attachment: Attachment, onSuccess: Callback<Attachment>,
                          onFailure: Callback<DataAccessException>)
 }

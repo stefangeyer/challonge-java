@@ -75,7 +75,7 @@ class TournamentQuery(
         @SerializedName("start_at")
         val startAt: OffsetDateTime? = null,
         @SerializedName("check_in_duration")
-        val checkInDuration: Int? = null,
+        val checkInDuration: Long? = null,
         @SerializedName("grand_finals_modifier")
         val grandFinalsModifier: GrandFinalsModifier? = null,
         @SerializedName("tie_breaks")

@@ -63,5 +63,6 @@ class Match(
         @SerializedName("prerequisite_match_ids_csv")
         val prerequisiteMatchIdsCsv: String? = null,
         @SerializedName("scores_csv")
-        val scoresCsv: String? = null
+        val scoresCsv: String? = null,
+        val attachments: List<Attachment> = listOf()
 )

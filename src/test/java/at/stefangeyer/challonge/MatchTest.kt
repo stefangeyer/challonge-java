@@ -1,85 +1,176 @@
 package at.stefangeyer.challonge
 
-import at.stefangeyer.challonge.model.Credentials
-import at.stefangeyer.challonge.model.Match
-import at.stefangeyer.challonge.model.Tournament
+import at.stefangeyer.challonge.exception.DataAccessException
+import at.stefangeyer.challonge.model.*
+import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.enumeration.TournamentType
 import at.stefangeyer.challonge.model.query.MatchQuery
-import at.stefangeyer.challonge.rest.AttachmentRestClient
-import at.stefangeyer.challonge.rest.MatchRestClient
-import at.stefangeyer.challonge.rest.ParticipantRestClient
-import at.stefangeyer.challonge.rest.TournamentRestClient
-import at.stefangeyer.challonge.rest.RestClientFactory
+import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.anyOrNull
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class MatchTest {
+
+    private var initial = true
     private lateinit var challonge: Challonge
 
-    private val tournament = Tournament(id = 10, url = "https://www.challonge.com/tourney123",
-            tournamentType = TournamentType.SINGLE_ELIMINATION)
-
-    private val matches = listOf(Match(id = 12, tournamentId = 10), Match(id = 2, tournamentId = 10))
+    private val tournaments = listOf(
+            Tournament(id = 10, url = "tourney123", tournamentType = TournamentType.SINGLE_ELIMINATION,
+                    participants = mutableListOf(
+                            Participant(id = 1, tournamentId = 10, name = "Participant 1", matches = mutableListOf()),
+                            Participant(id = 2, tournamentId = 10, name = "Participant 2", matches = mutableListOf()),
+                            Participant(id = 3, tournamentId = 10, name = "Participant 3", matches = mutableListOf()),
+                            Participant(id = 4, tournamentId = 10, name = "Participant 4", matches = mutableListOf()),
+                            Participant(id = 5, tournamentId = 10, name = "Participant 5", matches = mutableListOf())
+                    ),
+                    matches = mutableListOf(
+                            Match(id = 1, tournamentId = 10, player1Id = 1, player2Id = 2, attachments = mutableListOf(
+                                    Attachment(id = 1, description = "Attachment note")
+                            )),
+                            Match(id = 2, tournamentId = 10, player1Id = 1, player2Id = 3, attachments = mutableListOf()),
+                            Match(id = 3, tournamentId = 10, player1Id = 1, player2Id = 4, attachments = mutableListOf()),
+                            Match(id = 4, tournamentId = 10, player1Id = 2, player2Id = 3, attachments = mutableListOf()),
+                            Match(id = 5, tournamentId = 10, player1Id = 2, player2Id = 4, attachments = mutableListOf())
+                    )
+            )
+    )
 
     @Before
     fun setUp() {
-        val tournamentRestClient = mock<TournamentRestClient>()
-        val participantRestClient = mock<ParticipantRestClient>()
+        if (this.initial) {
+            this.initial = false
 
-        val matchRestClient = mock<MatchRestClient> {
-            on { getMatches(any(), anyOrNull(), anyOrNull()) } doReturn matches
-            on { getMatch(any(), any(), any()) } doReturn matches[0]
-            on { updateMatch(any(), any(), any()) } doReturn matches[0]
-            on { reopenMatch(any(), any()) } doReturn matches[0]
+            val tournamentRestClient = mock<TournamentRestClient>()
+            val participantRestClient = mock<ParticipantRestClient>()
+
+            val matchRestClient = mock<MatchRestClient> {
+                on { getMatches(any(), anyOrNull(), anyOrNull()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    var matches = tournament.matches
+
+                    val pid = i.getArgument<Long?>(1)
+                    if (pid != null) {
+                        matches = matches.filter { m ->
+                            m.player1Id == pid || m.player2Id == pid
+                        }
+                    }
+
+                    val state = i.getArgument<MatchState?>(2)
+                    if (state != null) {
+                        matches = matches.filter { m ->
+                            m.state == state
+                        }
+                    }
+
+                    matches
+                }
+
+                on { getMatch(any(), any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val match = tournament.matches.firstOrNull { m ->
+                        m.id == i.getArgument(1)
+                    } ?: throw DataAccessException("match not found")
+
+                    if (!i.getArgument<Boolean>(2)) {
+                        (match.attachments as MutableList<Attachment>).clear()
+                    }
+
+                    match
+                }
+
+                on { updateMatch(any(), any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val match = tournament.matches.firstOrNull { m ->
+                        m.id == i.getArgument(1)
+                    } ?: throw DataAccessException("match not found")
+
+                    val data = i.getArgument<MatchQuery>(2)
+                    val updated = Match(id = match.id, tournamentId = tournament.id,
+                            winnerId = data.winnerId ?: match.winnerId, scoresCsv = data.scoresCsv)
+
+                    updated
+                }
+
+                on { reopenMatch(any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val match = tournament.matches.firstOrNull { m ->
+                        m.id == i.getArgument(1)
+                    } ?: throw DataAccessException("match not found")
+
+                    // emitted content update
+
+                    match
+                }
+            }
+
+            val attachmentRestClient = mock<AttachmentRestClient>()
+
+            val restClientFactory = mock<RestClientFactory> {
+                on { createTournamentRestClient() } doReturn tournamentRestClient
+                on { createParticipantRestClient() } doReturn participantRestClient
+                on { createMatchRestClient() } doReturn matchRestClient
+                on { createAttachmentRestClient() } doReturn attachmentRestClient
+            }
+
+            val serializer = mock<Serializer>()
+
+            this.challonge = Challonge(Credentials("", ""), serializer, restClientFactory)
         }
-
-        val attachmentRestClient = mock<AttachmentRestClient>()
-
-        val restClientFactory = mock<RestClientFactory> {
-            on { createTournamentRestClient() } doReturn tournamentRestClient
-            on { createParticipantRestClient() } doReturn participantRestClient
-            on { createMatchRestClient() } doReturn matchRestClient
-            on { createAttachmentRestClient() } doReturn attachmentRestClient
-        }
-
-        val serializer = mock<Serializer>()
-
-        this.challonge = Challonge(Credentials("", ""), serializer, restClientFactory)
     }
 
     @Test
     fun testGetMatches() {
-        val local = this.challonge.getMatches(this.tournament)
-        assertEquals(this.matches, local)
+        val tournament = this.tournaments.first { t -> t.url == "tourney123" }
+        val local = this.challonge.getMatches(tournament)
+        assertEquals(tournament.matches, local)
     }
 
     @Test
     fun testGetMatch() {
-        val local = this.challonge.getMatch(this.tournament, 12)
-        assertEquals(this.matches[0], local)
+        val tournament = this.tournaments.first { t -> t.url == "tourney123" }
+        val local = this.challonge.getMatch(tournament, 1)
+        assertEquals(tournament.matches[0], local)
     }
 
     @Test
     fun testUpdateMatch() {
-        val local = this.challonge.updateMatch(this.matches[0], MatchQuery(winnerId = 120))
-        assertEquals(this.matches[0], local)
+        val tournament = this.tournaments.first { t -> t.url == "tourney123" }
+        val match = tournament.matches[0]
+        val local = this.challonge.updateMatch(match, MatchQuery(winnerId = 120))
+        assertEquals(120, local.winnerId)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testUpdateMatchNoData() {
-        val local = this.challonge.updateMatch(this.matches[0], MatchQuery())
-        assertEquals(this.matches[0], local)
+        val tournament = this.tournaments.first { t -> t.url == "tourney123" }
+        val match = tournament.matches[0]
+        this.challonge.updateMatch(match, MatchQuery())
     }
 
     @Test
     fun testReopenMatch() {
-        val local = this.challonge.reopenMatch(this.matches[0])
-        assertEquals(this.matches[0], local)
+        val tournament = this.tournaments.first { t -> t.url == "tourney123" }
+        val match = tournament.matches[0]
+        val local = this.challonge.reopenMatch(match)
+        assertEquals(match, local)
     }
 }

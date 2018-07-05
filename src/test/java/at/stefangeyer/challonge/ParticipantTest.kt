@@ -20,6 +20,8 @@ import org.junit.Test
 import java.util.*
 
 class ParticipantTest {
+
+    private var initial = true
     private lateinit var challonge: Challonge
 
     private val tournaments = listOf(
@@ -43,173 +45,177 @@ class ParticipantTest {
 
     @Before
     fun setUp() {
-        val tournamentRestClient = mock<TournamentRestClient>()
+        if (this.initial) {
+            this.initial = false
 
-        val participantRestClient = mock<ParticipantRestClient> {
-            on { getParticipants(any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
+            val tournamentRestClient = mock<TournamentRestClient>()
 
-                tournament.participants
-            }
+            val participantRestClient = mock<ParticipantRestClient> {
+                on { getParticipants(any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
 
-            on { getParticipant(any(), any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
-
-                val participant = tournament.participants.firstOrNull { p ->
-                    p.id == i.getArgument<Long>(1)
-                } ?: throw DataAccessException("participant not found")
-
-                if (i.getArgument<Boolean>(2)) {
-                    val matches = tournament.matches.filter { m ->
-                        m.player1Id == participant.id || m.player2Id == participant.id
-                    }
-                    (participant.matches as MutableList<Match>).addAll(matches)
+                    tournament.participants
                 }
 
-                participant
-            }
+                on { getParticipant(any(), any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
 
-            on { addParticipant(any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
+                    val participant = tournament.participants.firstOrNull { p ->
+                        p.id == i.getArgument<Long>(1)
+                    } ?: throw DataAccessException("participant not found")
 
-                val data = i.getArgument<ParticipantQuery>(1)
-                val id = Random().nextInt(1000).toLong()
-                val participant = Participant(id = id, name = data.name, inviteEmail = data.email,
-                        challongeUsername = data.challongeUsername, seed = data.seed ?: 0, misc = data.misc,
-                        displayNameWithInvitationEmailAddress = data.inviteNameOrEmail, matches = mutableListOf())
+                    if (i.getArgument<Boolean>(2)) {
+                        val matches = tournament.matches.filter { m ->
+                            m.player1Id == participant.id || m.player2Id == participant.id
+                        }
+                        (participant.matches as MutableList<Match>).addAll(matches)
+                    }
 
-                (tournament.participants as MutableList<Participant>).add(participant)
+                    participant
+                }
 
-                participant
-            }
+                on { addParticipant(any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
 
-            on { bulkAddParticipants(any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
-
-                val dataList = i.getArgument<List<ParticipantQuery>>(1)
-                val result = mutableListOf<Participant>()
-
-                for (data in dataList) {
+                    val data = i.getArgument<ParticipantQuery>(1)
                     val id = Random().nextInt(1000).toLong()
                     val participant = Participant(id = id, name = data.name, inviteEmail = data.email,
                             challongeUsername = data.challongeUsername, seed = data.seed ?: 0, misc = data.misc,
                             displayNameWithInvitationEmailAddress = data.inviteNameOrEmail, matches = mutableListOf())
 
                     (tournament.participants as MutableList<Participant>).add(participant)
-                    result.add(participant)
+
+                    participant
                 }
 
-                result
-            }
+                on { bulkAddParticipants(any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
 
-            on { updateParticipant(any(), any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
+                    val dataList = i.getArgument<List<ParticipantQuery>>(1)
+                    val result = mutableListOf<Participant>()
 
-                val current = tournament.participants.firstOrNull { p ->
-                    p.id == i.getArgument<Long>(1)
-                } ?: throw DataAccessException("participant not found")
-                val data = i.getArgument<ParticipantQuery>(2)
+                    for (data in dataList) {
+                        val id = Random().nextInt(1000).toLong()
+                        val participant = Participant(id = id, name = data.name, inviteEmail = data.email,
+                                challongeUsername = data.challongeUsername, seed = data.seed ?: 0, misc = data.misc,
+                                displayNameWithInvitationEmailAddress = data.inviteNameOrEmail, matches = mutableListOf())
 
-                val participant = Participant(name = data.name ?: current.name, inviteEmail = data.email
-                        ?: current.inviteEmail,
-                        challongeUsername = data.challongeUsername ?: current.challongeUsername, seed = data.seed
-                        ?: current.seed,
-                        misc = data.misc ?: current.misc,
-                        displayNameWithInvitationEmailAddress = data.inviteNameOrEmail
-                                ?: current.displayNameWithInvitationEmailAddress,
-                        matches = current.matches)
+                        (tournament.participants as MutableList<Participant>).add(participant)
+                        result.add(participant)
+                    }
 
-                (tournament.participants as MutableList<Participant>).add(participant)
-
-                participant
-            }
-
-            on { checkInParticipant(any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
-
-                val participant = tournament.participants.first { p ->
-                    p.id == i.getArgument<Long>(1)
+                    result
                 }
 
-                // emitted content update
+                on { updateParticipant(any(), any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
 
-                participant
+                    val current = tournament.participants.firstOrNull { p ->
+                        p.id == i.getArgument<Long>(1)
+                    } ?: throw DataAccessException("participant not found")
+                    val data = i.getArgument<ParticipantQuery>(2)
+
+                    val participant = Participant(name = data.name ?: current.name, inviteEmail = data.email
+                            ?: current.inviteEmail,
+                            challongeUsername = data.challongeUsername ?: current.challongeUsername, seed = data.seed
+                            ?: current.seed,
+                            misc = data.misc ?: current.misc,
+                            displayNameWithInvitationEmailAddress = data.inviteNameOrEmail
+                                    ?: current.displayNameWithInvitationEmailAddress,
+                            matches = current.matches)
+
+                    (tournament.participants as MutableList<Participant>).add(participant)
+
+                    participant
+                }
+
+                on { checkInParticipant(any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val participant = tournament.participants.first { p ->
+                        p.id == i.getArgument<Long>(1)
+                    }
+
+                    // emitted content update
+
+                    participant
+                }
+
+                on { undoCheckInParticipant(any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val participant = tournament.participants.firstOrNull { p ->
+                        p.id == i.getArgument<Long>(1)
+                    } ?: throw DataAccessException("participant not found")
+
+                    // emitted content update
+
+                    participant
+                }
+
+                on { deleteParticipant(any(), any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val participant = tournament.participants.firstOrNull { p ->
+                        p.id == i.getArgument<Long>(1)
+                    } ?: throw DataAccessException("participant not found")
+
+                    (tournament.participants as MutableList<Participant>).remove(participant)
+
+                    participant
+                }
+
+                on { randomizeParticipants(any()) } doAnswer { i ->
+                    val tournament = tournaments.firstOrNull { t ->
+                        val s = i.getArgument<String>(0)
+                        s == t.url || s == t.id.toString()
+                    } ?: throw DataAccessException("tournament not found")
+
+                    val participants = tournament.participants as MutableList<Participant>
+                    participants.shuffle()
+
+                    participants
+                }
             }
 
-            on { undoCheckInParticipant(any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
+            val matchRestClient = mock<MatchRestClient>()
+            val attachmentRestClient = mock<AttachmentRestClient>()
 
-                val participant = tournament.participants.firstOrNull { p ->
-                    p.id == i.getArgument<Long>(1)
-                } ?: throw DataAccessException("participant not found")
-
-                // emitted content update
-
-                participant
+            val restClientFactory = mock<RestClientFactory> {
+                on { createTournamentRestClient() } doReturn tournamentRestClient
+                on { createParticipantRestClient() } doReturn participantRestClient
+                on { createMatchRestClient() } doReturn matchRestClient
+                on { createAttachmentRestClient() } doReturn attachmentRestClient
             }
 
-            on { deleteParticipant(any(), any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
+            val serializer = mock<Serializer>()
 
-                val participant = tournament.participants.firstOrNull { p ->
-                    p.id == i.getArgument<Long>(1)
-                } ?: throw DataAccessException("participant not found")
-
-                (tournament.participants as MutableList<Participant>).remove(participant)
-
-                participant
-            }
-
-            on { randomizeParticipants(any()) } doAnswer { i ->
-                val tournament = tournaments.firstOrNull { t ->
-                    val s = i.getArgument<String>(0)
-                    s == t.url || s == t.id.toString()
-                } ?: throw DataAccessException("tournament not found")
-
-                val participants = tournament.participants as MutableList<Participant>
-                participants.shuffle()
-
-                participants
-            }
+            this.challonge = Challonge(Credentials("", ""), serializer, restClientFactory)
         }
-
-        val matchRestClient = mock<MatchRestClient>()
-        val attachmentRestClient = mock<AttachmentRestClient>()
-
-        val restClientFactory = mock<RestClientFactory> {
-            on { createTournamentRestClient() } doReturn tournamentRestClient
-            on { createParticipantRestClient() } doReturn participantRestClient
-            on { createMatchRestClient() } doReturn matchRestClient
-            on { createAttachmentRestClient() } doReturn attachmentRestClient
-        }
-
-        val serializer = mock<Serializer>()
-
-        this.challonge = Challonge(Credentials("", ""), serializer, restClientFactory)
     }
 
     @Test

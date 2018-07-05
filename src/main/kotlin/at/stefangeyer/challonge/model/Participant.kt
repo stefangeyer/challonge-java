@@ -66,5 +66,6 @@ class Participant(
         val canCheckIn: Boolean = false,
         @SerializedName("checked_in")
         val checkedIn: Boolean = false,
-        val reactivatable: Boolean = false
+        val reactivatable: Boolean = false,
+        val matches: List<Match> = listOf()
 )

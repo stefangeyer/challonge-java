@@ -48,7 +48,7 @@ class Tournament(
         @SerializedName("swiss_rounds")
         var swissRounds: Int = 0,
         @SerializedName("ranked_by")
-        var rankedBy: RankedBy = RankedBy.MATCH_WINS,
+        var rankedBy: RankedBy? = null,
         @SerializedName("rr_pts_for_game_win")
         var roundRobinPointsForGameWin: Float = 0.0F,
         @SerializedName("rr_pts_for_game_tie")
@@ -149,7 +149,7 @@ class Tournament(
         @SerializedName("public_predictions_before_start_time")
         var publicPredictionsBeforeStartTime: Boolean? = false,
         @SerializedName("grand_finals_modifier")
-        var grandFinalsModifier: GrandFinalsModifier = GrandFinalsModifier.BLANK,
+        var grandFinalsModifier: GrandFinalsModifier? = null,
         var participants: List<Participant> = listOf(),
         var matches: List<Match> = listOf()
 )

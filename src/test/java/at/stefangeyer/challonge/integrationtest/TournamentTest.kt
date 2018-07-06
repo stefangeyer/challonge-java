@@ -47,26 +47,6 @@ class TournamentTest {
     }
 
     @Test
-    fun aaCreateSubdomainTournamentTest() {
-        val subdomain = System.getProperty("challongeSubdomain")
-
-        if (subdomain != null && !subdomain.isBlank()) {
-            // Delete the tournament, if it already exists
-            this.challonge.deleteTournament(Tournament(url = "javasubdomaintournament", subdomain = subdomain,
-                    tournamentType = TournamentType.SINGLE_ELIMINATION))
-
-            val query = TournamentQuery(subdomain = subdomain, name = "JavaApiTest Subdomain",
-                    url = "javasubdomaintournament")
-
-            val tournament = this.challonge.createTournament(query)
-
-            assertEquals(subdomain, tournament.subdomain)
-
-            this.challonge.deleteTournament(tournament)
-        }
-    }
-
-    @Test
     fun aCreateTournamentTest() {
         try {
             val t = this.challonge.getTournament(TOURNAMENT_URL)
@@ -114,6 +94,26 @@ class TournamentTest {
         assertEquals(RankedBy.MATCH_WINS, tournament.rankedBy)
         assertEquals(5L, tournament.checkInDuration)
         assertEquals(GrandFinalsModifier.SINGLE_MATCH, tournament.grandFinalsModifier)
+    }
+
+    @Test
+    fun aaCreateSubdomainTournamentTest() {
+        val subdomain = System.getProperty("challongeSubdomain")
+
+        if (subdomain != null && !subdomain.isBlank()) {
+            // Delete the tournament, if it already exists
+            this.challonge.deleteTournament(Tournament(url = "javasubdomaintournament", subdomain = subdomain,
+                    tournamentType = TournamentType.SINGLE_ELIMINATION))
+
+            val query = TournamentQuery(subdomain = subdomain, name = "JavaApiTest Subdomain",
+                    url = "javasubdomaintournament")
+
+            val tournament = this.challonge.createTournament(query)
+
+            assertEquals(subdomain, tournament.subdomain)
+
+            this.challonge.deleteTournament(tournament)
+        }
     }
 
     @Test

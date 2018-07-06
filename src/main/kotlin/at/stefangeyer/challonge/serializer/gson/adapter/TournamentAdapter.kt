@@ -56,7 +56,7 @@ class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
         val pointsForGameTie = e.get("pts_for_game_tie").asFloat
         val pointsForBye = e.get("pts_for_bye").asFloat
         val swissRounds = e.get("swiss_rounds").asInt
-        val rankedBy = RankedBy.valueOf(e.get("ranked_by").asString.replace(" ", "_").toUpperCase())
+        val rankedBy = check(e.get("ranked_by"))?.asString?.replace(" ", "_")?.toUpperCase()?.let { RankedBy.valueOf(it) }
         val roundRobinPointsForGameWin = e.get("rr_pts_for_game_win").asFloat
         val roundRobinPointsForGameTie = e.get("rr_pts_for_game_tie").asFloat
         val roundRobinPointsForMatchWin = e.get("rr_pts_for_match_win").asFloat
@@ -107,7 +107,7 @@ class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
         val lockedAt = context.deserialize<OffsetDateTime>(e.get("locked_at"), OffsetDateTime::class.java)
         val eventId = check(e.get("event_id"))?.asLong
         val publicPredictionsBeforeStartTime = check(e.get("public_predictions_before_start_time"))?.asBoolean
-        val grandFinalsModifier = GrandFinalsModifier.valueOf(e.get("grand_finals_modifier").asString.replace(" ", "_").toUpperCase())
+        val grandFinalsModifier = check(e.get("grand_finals_modifier"))?.asString?.replace(" ", "_")?.toUpperCase()?.let { GrandFinalsModifier.valueOf(it) }
 
         return Tournament(
                 id = id, name = name, url = url, tournamentType = tournamentType, subdomain = subdomain, description = description,

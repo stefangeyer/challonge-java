@@ -70,8 +70,7 @@ class ParticipantTest {
         val query1 = ParticipantQuery(name = "Bulk1", seed = 1)
         val query2 = ParticipantQuery(name = "Bulk2", inviteNameOrEmail = "Bulk", seed = 2, misc = "BulkAdd")
 
-        val queries = listOf(query1, query2)
-        val participants = this.challonge.bulkAddParticipants(this.tournament, queries)
+        val participants = this.challonge.bulkAddParticipants(this.tournament, listOf(query1, query2))
 
         val participant1 = participants[0]
         val participant2 = participants[1]

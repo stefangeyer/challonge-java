@@ -34,12 +34,12 @@ class Participant(
         @SerializedName("created_at")
         val createdAt: OffsetDateTime? = null,
         @SerializedName("final_rank")
-        val finalRank: Int = 0,
+        val finalRank: Int? = 0,
         @SerializedName("group_id")
-        val groupId: Long = 0L,
+        val groupId: Long? = 0L,
         val icon: String? = null,
         @SerializedName("invitation_id")
-        val invitationId: Long = 0L,
+        val invitationId: Long? = 0L,
         @SerializedName("invite_email")
         val inviteEmail: String? = null,
         @SerializedName("on_waiting_list")
@@ -67,5 +67,5 @@ class Participant(
         @SerializedName("checked_in")
         val checkedIn: Boolean = false,
         val reactivatable: Boolean = false,
-        val matches: List<Match> = listOf()
+        val matches: List<Match>? = listOf()
 )

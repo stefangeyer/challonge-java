@@ -92,7 +92,7 @@ class TournamentTest {
                             pointsForGameWin = data.pointsForGameWin ?: 0F, pointsForGameTie = data.pointsForGameTie
                             ?: 0F,
                             pointsForBye = data.pointsForBye ?: 0F, swissRounds = data.swissRounds
-                            ?: 0, rankedBy = data.rankedBy,
+                            ?: 0, rankedBy = data.rankedBy ?: RankedBy.MATCH_WINS,
                             roundRobinPointsForGameWin = data.roundRobinPointsForGameWin ?: 0F,
                             roundRobinPointsForGameTie = data.roundRobinPointsForGameTie ?: 0F,
                             roundRobinPointsForMatchWin = data.roundRobinPointsForMatchWin ?: 0F,

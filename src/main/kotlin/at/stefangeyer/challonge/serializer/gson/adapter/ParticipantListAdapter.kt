@@ -17,28 +17,22 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Participant
-import com.google.gson.*
-
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import java.lang.reflect.Type
 
 class ParticipantListAdapter internal constructor() : JsonDeserializer<List<Participant>> {
 
-    private val gson: Gson
-
-    init {
-        this.gson = GsonBuilder()
-                .registerTypeAdapter(Participant::class.java, ParticipantAdapter())
-                .create()
-    }
-
     @Throws(JsonParseException::class)
-    override fun deserialize(jsonElement: JsonElement, type: Type, jsonDeserializationContext: JsonDeserializationContext): List<Participant>? {
+    override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): List<Participant>? {
         if (jsonElement.isJsonArray) {
             val array = jsonElement.asJsonArray
             val participants = mutableListOf<Participant>()
 
             for (arrayElement in array) {
-                participants.add(this.gson.fromJson(arrayElement, Participant::class.java))
+                participants.add(context.deserialize(arrayElement, Participant::class.java))
             }
 
             return participants

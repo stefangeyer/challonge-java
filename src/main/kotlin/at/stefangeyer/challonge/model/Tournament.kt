@@ -48,7 +48,7 @@ class Tournament(
         @SerializedName("swiss_rounds")
         var swissRounds: Int = 0,
         @SerializedName("ranked_by")
-        var rankedBy: RankedBy? = null,
+        var rankedBy: RankedBy = RankedBy.MATCH_WINS,
         @SerializedName("rr_pts_for_game_win")
         var roundRobinPointsForGameWin: Float = 0.0F,
         @SerializedName("rr_pts_for_game_tie")
@@ -70,11 +70,11 @@ class Tournament(
         @SerializedName("sequential_pairings")
         var sequentialPairings: Boolean = false,
         @SerializedName("signup_cap")
-        var signupCap: Int = 0,
+        var signupCap: Int? = 0,
         @SerializedName("start_at")
         var startAt: OffsetDateTime? = null,
         @SerializedName("check_in_duration")
-        var checkInDuration: Long = 0,
+        var checkInDuration: Long? = 0,
         @SerializedName("allow_participant_match_reporting")
         var allowParticipantMatchReporting: Boolean = false,
         @SerializedName("anonymous_voting")
@@ -115,9 +115,9 @@ class Tournament(
         @SerializedName("started_checking_in_at")
         var startedCheckingInAt: OffsetDateTime? = null,
         var state: TournamentState = TournamentState.PENDING,
-        var teams: Boolean = false,
+        var teams: Boolean? = false,
         @SerializedName("tie_breaks")
-        var tieBreaks: List<String> = listOf(),
+        var tieBreaks: List<String>? = listOf(),
         @SerializedName("updated_at")
         var updatedAt: OffsetDateTime? = null,
         @SerializedName("description_source")
@@ -145,9 +145,9 @@ class Tournament(
         @SerializedName("locked_at")
         var lockedAt: OffsetDateTime? = null,
         @SerializedName("event_id")
-        var eventId: Long = 0L,
+        var eventId: Long? = 0L,
         @SerializedName("public_predictions_before_start_time")
-        var publicPredictionsBeforeStartTime: Boolean = false,
+        var publicPredictionsBeforeStartTime: Boolean? = false,
         @SerializedName("grand_finals_modifier")
         var grandFinalsModifier: GrandFinalsModifier = GrandFinalsModifier.BLANK,
         var participants: List<Participant> = listOf(),

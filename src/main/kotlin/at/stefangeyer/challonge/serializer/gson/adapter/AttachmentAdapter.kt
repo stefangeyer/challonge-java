@@ -17,8 +17,10 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Attachment
-import com.google.gson.*
-
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import java.lang.reflect.Type
 import java.time.OffsetDateTime
 
@@ -26,14 +28,22 @@ import java.time.OffsetDateTime
  * Type adapter for the [Attachment] class.
  * The received json object is being unpacked.
  *
- * @author EXSolo
- * @version 20160825.1
+ * @author Stefan Geyer
+ * @version 2018-07-06
  */
 class AttachmentAdapter internal constructor() : JsonDeserializer<Attachment> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Attachment {
-        val attachmentElement = jsonElement.asJsonObject.get("match_attachment")
-        return context.deserialize(attachmentElement, Attachment::class.java)
+        val e = jsonElement.asJsonObject.get("match_attachment").asJsonObject
+        return Attachment(
+                id = e.get("id").asLong, matchId = e.get("match_id").asLong, userId = e.get("user_id").asLong,
+                description = e.get("description").asString,
+                url = e.get("url").asString, originalFileName = e.get("original_file_name").asString,
+                createdAt = context.deserialize(e.get("created_at"), OffsetDateTime::class.java),
+                updatedAt = context.deserialize(e.get("updated_at"), OffsetDateTime::class.java),
+                assetFileName = e.get("asset_file_name").asString, assetContentType = e.get("asset_content_type").asString,
+                assetFileSize = e.get("asset_file_size").asLong, assetUrl = e.get("asset_url").asString
+        )
     }
 }

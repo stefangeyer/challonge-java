@@ -17,22 +17,25 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.query.ParticipantQuery
-import com.google.gson.*
-
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import java.lang.reflect.Type
 
 class ParticipantQueryAdapter internal constructor() : JsonSerializer<ParticipantQuery> {
-
-    private val gson: Gson
-
-    init {
-        this.gson = GsonBuilder().create()
-    }
-
-    override fun serialize(participantQuery: ParticipantQuery, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+    override fun serialize(query: ParticipantQuery, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
         val parent = JsonObject()
 
-        parent.add("participant", this.gson.toJsonTree(participantQuery))
+        val pqEntity = JsonObject()
+        pqEntity.addProperty("name", query.name)
+        pqEntity.addProperty("email", query.email)
+        pqEntity.addProperty("challonge_username", query.challongeUsername)
+        pqEntity.addProperty("seed", query.seed)
+        pqEntity.addProperty("misc", query.misc)
+        pqEntity.addProperty("invite_name_or_email", query.inviteNameOrEmail)
+
+        parent.add("participant", pqEntity)
 
         return parent
     }

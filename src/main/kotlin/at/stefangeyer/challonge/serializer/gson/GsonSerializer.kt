@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import java.time.OffsetDateTime
 
 /**
  * Gson serializer gson
@@ -37,7 +38,9 @@ class GsonSerializer(builder: GsonBuilder) : Serializer {
 
         builder.registerTypeAdapter(TournamentQuery::class.java, TournamentQueryAdapter())
         builder.registerTypeAdapter(MatchQuery::class.java, MatchQueryAdapter())
-        builder.registerTypeAdapter(object : TypeToken<List<ParticipantQuery>>() {}.type, ParticipantQueryListAdapter())
+//        builder.registerTypeAdapter(object : TypeToken<List<ParticipantQuery>>() {}.type, ParticipantQueryListAdapter())
+
+        builder.registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeAdapter())
 
         this.gson = builder.create()
     }

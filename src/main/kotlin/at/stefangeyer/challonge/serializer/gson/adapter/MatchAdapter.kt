@@ -16,9 +16,14 @@
 
 package at.stefangeyer.challonge.serializer.gson.adapter
 
+import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match
-import com.google.gson.*
-
+import at.stefangeyer.challonge.model.enumeration.MatchState
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.time.OffsetDateTime
 
@@ -33,7 +38,23 @@ class MatchAdapter internal constructor() : JsonDeserializer<Match> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Match {
-        val matchElement = jsonElement.asJsonObject.get("match")
-        return context.deserialize(matchElement, Match::class.java)
+        val e = jsonElement.asJsonObject.get("match").asJsonObject
+        return Match(id = e.get("id").asLong, tournamentId = e.get("tournament_id").asLong, attachmentCount = e.get("attachment_count").asInt,
+                createdAt = context.deserialize(e.get("created_at"), OffsetDateTime::class.java), groupId = e.get("group_id").asLong,
+                hasAttachment = e.get("has_attachment").asBoolean, identifier = e.get("identifier").asString, location = e.get("location").asString,
+                updatedAt = context.deserialize(e.get("updated_at"), OffsetDateTime::class.java),
+                state = MatchState.valueOf(e.get("state").asString.replace(" ", "_").toUpperCase()),
+                startedAt = context.deserialize(e.get("started_at"), OffsetDateTime::class.java), scoresCsv = e.get("scores_csv").asString,
+                winnerId = e.get("winner_id").asLong, loserId = e.get("loser_id").asLong, player1Id = e.get("player1_id").asLong,
+                player2Id = e.get("player2_id").asLong,
+                player1IsPrerequisiteMatchLoser = e.get("player1_is_prereq_match_loser").asBoolean,
+                player1PrerequisiteMatchId = e.get("player1_prereq_match_id").asLong,
+                player2IsPrerequisiteMatchLoser = e.get("player2_is_prereq_match_loser").asBoolean,
+                player2PrerequisiteMatchId = e.get("player2_prereq_match_id").asLong,
+                prerequisiteMatchIdsCsv = e.get("prerequisite_match_ids_csv").asString, round = e.get("round").asInt,
+                scheduledTime = context.deserialize(e.get("scheduled_time"), OffsetDateTime::class.java),
+                underwayAt = context.deserialize(e.get("underway_at"), OffsetDateTime::class.java),
+                attachments = context.deserialize(e.get("attachments"), object : TypeToken<List<Attachment>>() {}.type)
+        )
     }
 }

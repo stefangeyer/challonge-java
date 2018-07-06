@@ -112,7 +112,7 @@ class TournamentTest {
         assertEquals(0.5F, tournament.pointsForBye)
         assertEquals(4, tournament.signupCap)
         assertEquals(RankedBy.MATCH_WINS, tournament.rankedBy)
-        assertEquals(5, tournament.checkInDuration)
+        assertEquals(5L, tournament.checkInDuration)
         assertEquals(GrandFinalsModifier.SINGLE_MATCH, tournament.grandFinalsModifier)
     }
 

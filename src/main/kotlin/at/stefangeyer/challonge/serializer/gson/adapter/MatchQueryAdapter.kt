@@ -17,8 +17,10 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.query.MatchQuery
-import com.google.gson.*
-
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import java.lang.reflect.Type
 
 class MatchQueryAdapter internal constructor() : JsonSerializer<MatchQuery> {
@@ -26,7 +28,14 @@ class MatchQueryAdapter internal constructor() : JsonSerializer<MatchQuery> {
     override fun serialize(matchQuery: MatchQuery, type: Type, context: JsonSerializationContext): JsonElement {
         val parent = JsonObject()
 
-        parent.add("match", context.serialize(matchQuery))
+        val mqEntity = JsonObject()
+
+        mqEntity.addProperty("winner_id", matchQuery.winnerId)
+        mqEntity.addProperty("player1_votes", matchQuery.votesForPlayer1)
+        mqEntity.addProperty("player2_votes", matchQuery.votesForPlayer2)
+        mqEntity.addProperty("scores_csv", matchQuery.scoresCsv)
+
+        parent.add("match", mqEntity)
 
         return parent
     }

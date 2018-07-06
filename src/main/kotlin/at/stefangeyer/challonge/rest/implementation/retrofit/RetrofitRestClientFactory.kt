@@ -18,7 +18,7 @@ import java.lang.reflect.Type
 class RetrofitRestClientFactory : RestClientFactory {
 
     companion object {
-        private const val BASE_URL = "https://api.challongeRetrofit.com/v1/"
+        private const val BASE_URL = "https://api.challonge.com/v1/"
         private val MEDIA_TYPE: MediaType = MediaType.parse("application/json; charset=UTF-8")!!
     }
 

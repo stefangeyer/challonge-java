@@ -232,7 +232,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
     private fun <T> parseResponse(action: String, response: Response<T>): T {
         if (!response.isSuccessful) {
             throw DataAccessException(action + " request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
+                    response.code() + ") and returned: " + response.errorBody()?.string())
         }
 
         val body = response.body()

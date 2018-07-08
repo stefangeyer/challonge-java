@@ -11,7 +11,6 @@ import at.stefangeyer.challonge.serializer.Serializer
 import at.stefangeyer.challonge.serializer.gson.adapter.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.time.OffsetDateTime
 
@@ -37,11 +36,8 @@ class GsonSerializer(builder: GsonBuilder) : Serializer {
         builder.registerTypeAdapter(Attachment::class.java, AttachmentAdapter())
 
         builder.registerTypeAdapter(TournamentQuery::class.java, TournamentQueryAdapter())
+        builder.registerTypeAdapter(ParticipantQuery::class.java, ParticipantQueryAdapter())
         builder.registerTypeAdapter(MatchQuery::class.java, MatchQueryAdapter())
-
-        builder.registerTypeAdapter(object : TypeToken<List<ParticipantQuery>>() {}.type, ParticipantQueryListAdapter())
-        builder.registerTypeAdapter(object : TypeToken<List<Participant>>() {}.type, ParticipantListAdapter())
-        builder.registerTypeAdapter(object : TypeToken<List<Match>>() {}.type, MatchListAdapter())
 
         builder.registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeAdapter())
 

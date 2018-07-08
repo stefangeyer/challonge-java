@@ -79,7 +79,7 @@ class ParticipantTest {
         assertEquals(1, participant1.seed)
 
         assertEquals("Bulk2", participant2.name)
-        assertEquals("Bulk2", participant2.challongeUsername)
+        assertEquals("Bulk".toLowerCase(), participant2.username?.toLowerCase())
         assertEquals("BulkAdd", participant2.misc)
         assertEquals(2, participant2.seed)
     }

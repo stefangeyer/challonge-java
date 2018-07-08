@@ -16,15 +16,15 @@
 
 package at.stefangeyer.challonge.serializer.gson.adapter
 
+import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.RankedBy
 import at.stefangeyer.challonge.model.enum.TournamentState
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
-import com.google.gson.JsonParseException
+import at.stefangeyer.challonge.model.wrapper.MatchListWrapper
+import at.stefangeyer.challonge.model.wrapper.ParticipantListWrapper
+import com.google.gson.*
 import java.lang.reflect.Type
 import java.time.OffsetDateTime
 
@@ -108,6 +108,14 @@ class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
         val publicPredictionsBeforeStartTime = check(e.get("public_predictions_before_start_time"))?.asBoolean
         val grandFinalsModifier = check(e.get("grand_finals_modifier"))?.asString?.replace(" ", "_")?.toUpperCase()?.let { GrandFinalsModifier.valueOf(it) }
 
+        val pe = e.get("participants")
+        val participants = if (pe == null || pe is JsonNull) listOf()
+        else context.deserialize<ParticipantListWrapper>(pe, ParticipantListWrapper::class.java).participants
+
+        val pm = e.get("matches")
+        val matches = if (pm == null || pm is JsonNull) listOf()
+        else context.deserialize<MatchListWrapper>(pm, MatchListWrapper::class.java).matches
+
         return Tournament(
                 id = id, name = name, url = url, tournamentType = tournamentType, subdomain = subdomain, description = description,
                 openSignup = openSignup, holdThirdPlaceMatch = holdThirdPlaceMatch, pointsForMatchWin = pointsForMatchWin,
@@ -127,8 +135,8 @@ class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
                 reviewBeforeFinalizing = reviewBeforeFinalizing, acceptingPredictions = acceptingPredictions,
                 participantsLocked = participantsLocked, gameName = gameName, participantsSwappable = participantsSwappable,
                 teamConvertable = teamConvertable, groupStagesWereStarted = groupStagesWereStarted, lockedAt = lockedAt, eventId = eventId,
-                publicPredictionsBeforeStartTime = publicPredictionsBeforeStartTime, grandFinalsModifier = grandFinalsModifier
-        )
+                publicPredictionsBeforeStartTime = publicPredictionsBeforeStartTime, grandFinalsModifier = grandFinalsModifier,
+                participants = participants, matches = matches)
     }
 
     private fun check(element: JsonElement): JsonElement? {

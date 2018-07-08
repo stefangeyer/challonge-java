@@ -7,12 +7,4 @@ package at.stefangeyer.challonge.async
  * @author Stefan Geyer
  * @version 2018-07-02
  */
-interface Callback<T> {
-
-    /**
-     * Called on task completion
-     *
-     * @param param result parameter
-     */
-    fun handle(param: T)
-}
+typealias Callback<T> = (T) -> Unit

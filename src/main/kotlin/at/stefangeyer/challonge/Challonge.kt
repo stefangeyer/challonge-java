@@ -3,9 +3,9 @@ package at.stefangeyer.challonge
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.*
-import at.stefangeyer.challonge.model.enumeration.MatchState
-import at.stefangeyer.challonge.model.enumeration.TournamentType
-import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
+import at.stefangeyer.challonge.model.enum.MatchState
+import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery

@@ -16,10 +16,9 @@
 
 package at.stefangeyer.challonge.model.query
 
-import at.stefangeyer.challonge.model.enumeration.RankedBy
-import at.stefangeyer.challonge.model.enumeration.TournamentType
-import at.stefangeyer.challonge.model.enumeration.query.GrandFinalsModifier
-import com.google.gson.annotations.SerializedName
+import at.stefangeyer.challonge.model.enum.RankedBy
+import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import java.time.OffsetDateTime
 
 class TournamentQuery(

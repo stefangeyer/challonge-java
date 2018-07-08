@@ -2,7 +2,7 @@ package at.stefangeyer.challonge.rest.implementation.retrofit
 
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Match
-import at.stefangeyer.challonge.model.enumeration.MatchState
+import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.rest.MatchRestClient
@@ -26,11 +26,11 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
         this.challongeRetrofit.getMatches(tournament, participantId, state).enqueue(
                 object : retrofit2.Callback<List<Match>> {
                     override fun onFailure(call: Call<List<Match>>, t: Throwable) {
-                        onFailure.handle(DataAccessException("GetMatches request was not successful", t))
+                        onFailure(DataAccessException("GetMatches request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<List<Match>>, response: Response<List<Match>>) {
-                        onSuccess.handle(parseResponse("GetMatches", response))
+                        onSuccess(parseResponse("GetMatches", response))
                     }
                 })
     }
@@ -43,11 +43,11 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
     override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.getMatch(tournament, matchId, if (includeAttachments) 1 else 0).enqueue(object : retrofit2.Callback<Match> {
             override fun onFailure(call: Call<Match>, t: Throwable) {
-                onFailure.handle(DataAccessException("GetMatch request was not successful", t))
+                onFailure(DataAccessException("GetMatch request was not successful", t))
             }
 
             override fun onResponse(call: Call<Match>, response: Response<Match>) {
-                onSuccess.handle(parseResponse("GetMatch", response))
+                onSuccess(parseResponse("GetMatch", response))
             }
         })
     }
@@ -60,11 +60,11 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.updateMatch(tournament, matchId, match).enqueue(object : retrofit2.Callback<Match> {
             override fun onFailure(call: Call<Match>, t: Throwable) {
-                onFailure.handle(DataAccessException("UpdateMatch request was not successful", t))
+                onFailure(DataAccessException("UpdateMatch request was not successful", t))
             }
 
             override fun onResponse(call: Call<Match>, response: Response<Match>) {
-                onSuccess.handle(parseResponse("UpdateMatch", response))
+                onSuccess(parseResponse("UpdateMatch", response))
             }
         })
     }
@@ -77,11 +77,11 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
     override fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.reopenMatch(tournament, matchId).enqueue(object : retrofit2.Callback<Match> {
             override fun onFailure(call: Call<Match>, t: Throwable) {
-                onFailure.handle(DataAccessException("ReopenMatch request was not successful", t))
+                onFailure(DataAccessException("ReopenMatch request was not successful", t))
             }
 
             override fun onResponse(call: Call<Match>, response: Response<Match>) {
-                onSuccess.handle(parseResponse("ReopenMatch", response))
+                onSuccess(parseResponse("ReopenMatch", response))
             }
         })
     }

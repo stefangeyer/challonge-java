@@ -4,12 +4,14 @@ import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enumeration.MatchState
-import at.stefangeyer.challonge.model.enumeration.TournamentType
-import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
+import at.stefangeyer.challonge.model.enum.MatchState
+import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -248,7 +250,7 @@ interface ChallongeRetrofit {
      */
     @POST("tournaments/{tournament}/participants/bulk_add.json")
     fun bulkAddParticipants(@Path("tournament") tournament: String,
-                            @Body participants: List<ParticipantQuery>): Call<List<Participant>>
+                            @Body participants: ParticipantQueryListWrapper): Call<List<ParticipantWrapper>>
 
     /**
      * Update the attributes of a tournament participant.
@@ -402,7 +404,7 @@ interface ChallongeRetrofit {
      * "accept_attachments" attribute must be true for this action to succeed.
      *
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param tournament  Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
@@ -428,7 +430,7 @@ interface ChallongeRetrofit {
      *
      * Sending the asset does neither work with base64 nor with a multipart-form-data request
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param tournament   Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).

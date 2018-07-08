@@ -14,28 +14,30 @@
  * limitations under the License.
  */
 
-package at.stefangeyer.challonge.model.enumeration
+package at.stefangeyer.challonge.model.query.enum
 
 import com.google.gson.annotations.SerializedName
 
 /**
- * This enumeration represents the available tournament types.
+ * Type of the grand finals in a double elimination tournament.
  *
  *
- * More information about the ranking systems can be found [here](http://feedback.challonge.com/knowledgebase/articles/448540-rank-tie-break-statistics)
+ * This option only affects double elimination.
+ *
+ *
+ * null/blank (default) - give the winners bracket finalist two chances to beat the losers bracket finalist<br></br>
+ * 'single match' - create only one grand finals match<br></br>
+ * 'skip' - don't create a finals match between winners and losers bracket finalists
+ *
  *
  * @author EXSolo
  * @version 20160820.1
  */
-enum class RankedBy {
-    @SerializedName("match wins")
-    MATCH_WINS,
-    @SerializedName("game wins")
-    GAME_WINS,
-    @SerializedName("point scored")
-    POINT_SCORED,
-    @SerializedName("points difference")
-    POINTS_DIFFERENCE,
-    @SerializedName("custom")
-    CUSTOM
+enum class GrandFinalsModifier {
+    @SerializedName("")
+    BLANK,
+    @SerializedName("single match")
+    SINGLE_MATCH,
+    @SerializedName("skip")
+    SKIP
 }

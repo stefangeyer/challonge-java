@@ -14,30 +14,25 @@
  * limitations under the License.
  */
 
-package at.stefangeyer.challonge.model.enumeration.query
+package at.stefangeyer.challonge.model.enum
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Type of the grand finals in a double elimination tournament.
- *
- *
- * This option only affects double elimination.
- *
- *
- * null/blank (default) - give the winners bracket finalist two chances to beat the losers bracket finalist<br></br>
- * 'single match' - create only one grand finals match<br></br>
- * 'skip' - don't create a finals match between winners and losers bracket finalists
- *
- *
- * @author EXSolo
- * @version 20160820.1
- */
-enum class GrandFinalsModifier {
-    @SerializedName("")
-    BLANK,
-    @SerializedName("single match")
-    SINGLE_MATCH,
-    @SerializedName("skip")
-    SKIP
+enum class TournamentState {
+    @SerializedName("checking_in")
+    CHECKING_IN,
+    @SerializedName("checked_in")
+    CHECKED_IN,
+    @SerializedName("pending")
+    PENDING,
+    @SerializedName("underway")
+    UNDERWAY,
+    @SerializedName("group_stages_underway")
+    GROUP_STAGES_UNDERWAY,
+    @SerializedName("group_stages_finalized")
+    GROUP_STAGES_FINALIZED,
+    @SerializedName("awaiting_review")
+    AWAITING_REVIEW,
+    @SerializedName("complete")
+    COMPLETE
 }

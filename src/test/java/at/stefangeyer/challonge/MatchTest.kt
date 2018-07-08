@@ -2,8 +2,8 @@ package at.stefangeyer.challonge
 
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.*
-import at.stefangeyer.challonge.model.enumeration.MatchState
-import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.enum.MatchState
+import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer

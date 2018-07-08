@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-package at.stefangeyer.challonge.model.enumeration
+package at.stefangeyer.challonge.model.enum
 
 import com.google.gson.annotations.SerializedName
 
-enum class TournamentState {
-    @SerializedName("checking_in")
-    CHECKING_IN,
-    @SerializedName("checked_in")
-    CHECKED_IN,
-    @SerializedName("pending")
-    PENDING,
-    @SerializedName("underway")
-    UNDERWAY,
-    @SerializedName("group_stages_underway")
-    GROUP_STAGES_UNDERWAY,
-    @SerializedName("group_stages_finalized")
-    GROUP_STAGES_FINALIZED,
-    @SerializedName("awaiting_review")
-    AWAITING_REVIEW,
-    @SerializedName("complete")
-    COMPLETE
+/**
+ * This enum represents the available tournament types.
+ *
+ *
+ * More information about the ranking systems can be found [here](http://feedback.challonge.com/knowledgebase/articles/448540-rank-tie-break-statistics)
+ *
+ * @author EXSolo
+ * @version 20160820.1
+ */
+enum class RankedBy {
+    @SerializedName("match wins")
+    MATCH_WINS,
+    @SerializedName("game wins")
+    GAME_WINS,
+    @SerializedName("point scored")
+    POINT_SCORED,
+    @SerializedName("points difference")
+    POINTS_DIFFERENCE,
+    @SerializedName("custom")
+    CUSTOM
 }

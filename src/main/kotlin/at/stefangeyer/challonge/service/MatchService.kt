@@ -5,7 +5,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enumeration.MatchState
+import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
 
 /**

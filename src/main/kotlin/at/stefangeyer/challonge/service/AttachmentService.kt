@@ -60,7 +60,7 @@ interface AttachmentService {
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
      * "accept_attachments" attribute must be true for this action to succeed.
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param match       The match to create the attachment for. Must contain the tournament- and match id
@@ -75,7 +75,7 @@ interface AttachmentService {
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
      * "accept_attachments" attribute must be true for this action to succeed.
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param match       The match to create the attachment for. Must contain the tournament- and match id
@@ -91,7 +91,7 @@ interface AttachmentService {
      *
      * Sending the asset does neither work with base64 nor with a multipart-form-data request
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param match        The match to delete the attachment from. Must contain the tournament- and match id
@@ -108,7 +108,7 @@ interface AttachmentService {
      *
      * Sending the asset does neither work with base64 nor with a multipart-form-data request
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the query object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param match        The match to delete the attachment from. Must contain the tournament- and match id

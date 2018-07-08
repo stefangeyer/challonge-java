@@ -4,10 +4,10 @@ import at.stefangeyer.challonge.Challonge
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enumeration.RankedBy
-import at.stefangeyer.challonge.model.enumeration.TournamentState
-import at.stefangeyer.challonge.model.enumeration.TournamentType
-import at.stefangeyer.challonge.model.enumeration.query.GrandFinalsModifier
+import at.stefangeyer.challonge.model.enum.RankedBy
+import at.stefangeyer.challonge.model.enum.TournamentState
+import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery

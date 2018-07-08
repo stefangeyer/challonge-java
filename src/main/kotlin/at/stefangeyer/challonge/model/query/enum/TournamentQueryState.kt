@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package at.stefangeyer.challonge.model.enumeration.query
+package at.stefangeyer.challonge.model.query.enum
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * Represents the different states that can be queried.
- * This enumeration does not represent the actual state of the tournament,
+ * This enum does not represent the actual state of the tournament,
  * but groups a list ouf tournaments to subgroups.
  *
  * @author EXSolo

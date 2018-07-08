@@ -16,10 +16,10 @@
 
 package at.stefangeyer.challonge.model
 
-import at.stefangeyer.challonge.model.enumeration.RankedBy
-import at.stefangeyer.challonge.model.enumeration.TournamentState
-import at.stefangeyer.challonge.model.enumeration.TournamentType
-import at.stefangeyer.challonge.model.enumeration.query.GrandFinalsModifier
+import at.stefangeyer.challonge.model.enum.RankedBy
+import at.stefangeyer.challonge.model.enum.TournamentState
+import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import com.google.gson.annotations.SerializedName
 import java.time.OffsetDateTime
 

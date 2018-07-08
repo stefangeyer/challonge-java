@@ -18,7 +18,7 @@ package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match
-import at.stefangeyer.challonge.model.enumeration.MatchState
+import at.stefangeyer.challonge.model.enum.MatchState
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

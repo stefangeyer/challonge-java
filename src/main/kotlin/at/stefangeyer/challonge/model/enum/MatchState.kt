@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package at.stefangeyer.challonge.model.enumeration
+package at.stefangeyer.challonge.model.enum
 
 import com.google.gson.annotations.SerializedName
 
 /**
- * This enumeration represents the available tournament types
+ * This enum represents the different states of a match.
  *
  * @author EXSolo
  * @version 20160820.1
  */
-enum class TournamentType {
-    @SerializedName("single elimination")
-    SINGLE_ELIMINATION,
-    @SerializedName("double elimination")
-    DOUBLE_ELIMINATION,
-    @SerializedName("round robin")
-    ROUND_ROBIN,
-    @SerializedName("swiss")
-    SWISS
+enum class MatchState {
+    @SerializedName("all")
+    ALL,
+    @SerializedName("pending")
+    PENDING,
+    @SerializedName("open")
+    OPEN,
+    @SerializedName("complete")
+    COMPLETE
 }

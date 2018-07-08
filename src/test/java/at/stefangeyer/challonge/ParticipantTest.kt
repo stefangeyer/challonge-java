@@ -5,8 +5,9 @@ import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.ParticipantQuery
+import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
 import com.nhaarman.mockito_kotlin.any
@@ -104,7 +105,7 @@ class ParticipantTest {
                     } ?: throw DataAccessException("tournament not found")
 
                     val dataList = i.getArgument<List<ParticipantQuery>>(1)
-                    val result = mutableListOf<Participant>()
+                    val result = mutableListOf<ParticipantWrapper>()
 
                     for (data in dataList) {
                         val id = Random().nextInt(1000).toLong()
@@ -113,7 +114,7 @@ class ParticipantTest {
                                 displayNameWithInvitationEmailAddress = data.inviteNameOrEmail, matches = mutableListOf())
 
                         (tournament.participants as MutableList<Participant>).add(participant)
-                        result.add(participant)
+                        result.add(ParticipantWrapper(participant))
                     }
 
                     result

@@ -5,6 +5,8 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.query.ParticipantQuery
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.service.ParticipantService
 
@@ -44,14 +46,16 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient) : 
         for (query in data) {
             validateParticipantQuery(query)
         }
-        return this.restClient.bulkAddParticipants(tournament.id.toString(), data)
+        return this.restClient.bulkAddParticipants(tournament.id.toString(), ParticipantQueryListWrapper(data)).map { pq -> pq.participant }
     }
 
     override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
         for (query in data) {
             validateParticipantQuery(query)
         }
-        this.restClient.bulkAddParticipants(tournament.id.toString(), data, onSuccess, onFailure)
+        this.restClient.bulkAddParticipants(
+                tournament.id.toString(), ParticipantQueryListWrapper(data),
+                {list -> onSuccess(list.map { pw -> pw.participant })}, onFailure)
     }
 
     override fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant {

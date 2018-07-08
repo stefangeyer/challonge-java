@@ -28,6 +28,17 @@ class ParticipantQueryListAdapter : JsonSerializer<List<ParticipantQuery>> {
         val participantArray = JsonArray()
 
         for (query in participantQueryList) {
+            /**
+            val pqEntity = JsonObject()
+            pqEntity.addProperty("name", enum.name)
+            pqEntity.addProperty("email", enum.email)
+            pqEntity.addProperty("challonge_username", enum.challongeUsername)
+            pqEntity.addProperty("seed", enum.seed)
+            pqEntity.addProperty("misc", enum.misc)
+            pqEntity.addProperty("invite_name_or_email", enum.inviteNameOrEmail)
+
+            participantArray.add(pqEntity)
+             */
             participantArray.add(jsonSerializationContext.serialize(query))
         }
 

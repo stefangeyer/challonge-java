@@ -4,6 +4,8 @@ import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.query.ParticipantQuery
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 
 /**
  * Participant Rest Client Definition
@@ -103,7 +105,7 @@ interface ParticipantRestClient {
      * @return The added participants
      */
     @Throws(DataAccessException::class)
-    fun bulkAddParticipants(tournament: String, participants: List<ParticipantQuery>): List<Participant>
+    fun bulkAddParticipants(tournament: String, participants: ParticipantQueryListWrapper): List<ParticipantWrapper>
 
     /**
      * Bulk add participants to a tournament (up until it is started).
@@ -117,8 +119,8 @@ interface ParticipantRestClient {
      * @param onSuccess    Called with result if call was successful
      * @param onFailure    Called with exception if call was not successful
      */
-    fun bulkAddParticipants(tournament: String, participants: List<ParticipantQuery>,
-                            onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>)
+    fun bulkAddParticipants(tournament: String, participants: ParticipantQueryListWrapper,
+                            onSuccess: Callback<List<ParticipantWrapper>>, onFailure: Callback<DataAccessException>)
 
     /**
      * Update the attributes of a tournament participant.

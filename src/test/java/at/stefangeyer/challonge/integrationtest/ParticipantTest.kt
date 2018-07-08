@@ -22,7 +22,7 @@ class ParticipantTest {
     private lateinit var tournament: Tournament
 
     companion object {
-        private const val TOURNAMENT_URL = "javaapitestparticipant"
+        private const val TOURNAMENT_URL = "javaapitest"
     }
 
     @Before

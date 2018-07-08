@@ -5,10 +5,10 @@ import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enumeration.RankedBy
-import at.stefangeyer.challonge.model.enumeration.TournamentType
-import at.stefangeyer.challonge.model.enumeration.query.GrandFinalsModifier
-import at.stefangeyer.challonge.model.enumeration.query.TournamentQueryState
+import at.stefangeyer.challonge.model.enum.RankedBy
+import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
@@ -302,7 +302,7 @@ class TournamentTest {
     fun testUpdateTournament() {
         val updated = this.challonge.updateTournament(this.tournaments[0], TournamentQuery(name = "UpdatedName12345"))
 
-        // If one param got passed correctly, all params will be passed correctly (same query object)
+        // If one param got passed correctly, all params will be passed correctly (same enum object)
         assertEquals("UpdatedName12345", updated.name)
         assertEquals(this.tournaments[0], updated)
     }

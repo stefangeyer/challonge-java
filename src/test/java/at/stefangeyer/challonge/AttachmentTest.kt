@@ -2,7 +2,7 @@ package at.stefangeyer.challonge
 
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.*
-import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient

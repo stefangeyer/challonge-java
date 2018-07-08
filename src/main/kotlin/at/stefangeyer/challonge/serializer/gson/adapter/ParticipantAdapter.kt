@@ -18,10 +18,7 @@ package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
-import com.google.gson.JsonParseException
+import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.time.OffsetDateTime
@@ -37,7 +34,8 @@ class ParticipantAdapter internal constructor() : JsonDeserializer<Participant> 
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Participant {
-        val e = jsonElement.asJsonObject.get("participant").asJsonObject
+//        val e = jsonElement.asJsonObject.get("participant").asJsonObject
+        val e = jsonElement as JsonObject
 
         val id = e.get("id").asLong
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)

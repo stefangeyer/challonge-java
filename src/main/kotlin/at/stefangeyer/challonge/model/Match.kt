@@ -16,7 +16,7 @@
 
 package at.stefangeyer.challonge.model
 
-import at.stefangeyer.challonge.model.enumeration.MatchState
+import at.stefangeyer.challonge.model.enum.MatchState
 import com.google.gson.annotations.SerializedName
 import java.time.OffsetDateTime
 

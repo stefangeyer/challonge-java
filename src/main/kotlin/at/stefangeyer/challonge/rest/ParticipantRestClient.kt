@@ -25,7 +25,7 @@ interface ParticipantRestClient {
      * @return The tournaments participants
      */
     @Throws(DataAccessException::class)
-    fun getParticipants(tournament: String): List<Participant>
+    fun getParticipants(tournament: String): List<ParticipantWrapper>
 
     /**
      * Retrieve a tournament's participant list.
@@ -36,7 +36,7 @@ interface ParticipantRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun getParticipants(tournament: String, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>)
+    fun getParticipants(tournament: String, onSuccess: Callback<List<ParticipantWrapper>>, onFailure: Callback<DataAccessException>)
 
     /**
      * Retrieve a single participant record for a tournament.
@@ -50,7 +50,7 @@ interface ParticipantRestClient {
      * @return The requested participant
      */
     @Throws(DataAccessException::class)
-    fun getParticipant(tournament: String, participantId: Long, includeMatches: Boolean): Participant
+    fun getParticipant(tournament: String, participantId: Long, includeMatches: Boolean): ParticipantWrapper
 
     /**
      * Retrieve a single participant record for a tournament.
@@ -64,7 +64,7 @@ interface ParticipantRestClient {
      * @param onFailure      Called with exception if call was not successful
      */
     fun getParticipant(tournament: String, participantId: Long, includeMatches: Boolean,
-                       onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                       onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Add a participant to a tournament (up until it is started).
@@ -77,7 +77,7 @@ interface ParticipantRestClient {
      * @return The added participant
      */
     @Throws(DataAccessException::class)
-    fun addParticipant(tournament: String, participant: ParticipantQuery): Participant
+    fun addParticipant(tournament: String, participant: ParticipantQuery): ParticipantWrapper
 
     /**
      * Add a participant to a tournament (up until it is started).
@@ -90,7 +90,7 @@ interface ParticipantRestClient {
      * @param onFailure   Called with exception if call was not successful
      */
     fun addParticipant(tournament: String, participant: ParticipantQuery,
-                       onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                       onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Bulk add participants to a tournament (up until it is started).
@@ -134,7 +134,7 @@ interface ParticipantRestClient {
      * @return The updates participant
      */
     @Throws(DataAccessException::class)
-    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery): Participant
+    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery): ParticipantWrapper
 
     /**
      * Update the attributes of a tournament participant.
@@ -148,7 +148,7 @@ interface ParticipantRestClient {
      * @param onFailure     Called with exception if call was not successful
      */
     fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery,
-                          onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                          onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Checks a participant in, setting checked_in_at to the current time.
@@ -161,7 +161,7 @@ interface ParticipantRestClient {
      * @return The checked in participant
      */
     @Throws(DataAccessException::class)
-    fun checkInParticipant(tournament: String, participantId: Long): Participant
+    fun checkInParticipant(tournament: String, participantId: Long): ParticipantWrapper
 
     /**
      * Checks a participant in, setting checked_in_at to the current time.
@@ -174,7 +174,7 @@ interface ParticipantRestClient {
      * @param onFailure     Called with exception if call was not successful
      */
     fun checkInParticipant(tournament: String, participantId: Long,
-                           onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                           onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
@@ -187,7 +187,7 @@ interface ParticipantRestClient {
      * @return The checked out participant
      */
     @Throws(DataAccessException::class)
-    fun undoCheckInParticipant(tournament: String, participantId: Long): Participant
+    fun undoCheckInParticipant(tournament: String, participantId: Long): ParticipantWrapper
 
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
@@ -200,7 +200,7 @@ interface ParticipantRestClient {
      * @param onFailure     Called with exception if call was not successful
      */
     fun undoCheckInParticipant(tournament: String, participantId: Long,
-                               onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                               onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
@@ -214,7 +214,7 @@ interface ParticipantRestClient {
      * @return The deleted participant
      */
     @Throws(DataAccessException::class)
-    fun deleteParticipant(tournament: String, participantId: Long): Participant
+    fun deleteParticipant(tournament: String, participantId: Long): ParticipantWrapper
 
     /**
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
@@ -228,7 +228,7 @@ interface ParticipantRestClient {
      * @param onFailure     Called with exception if call was not successful
      */
     fun deleteParticipant(tournament: String, participantId: Long,
-                          onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>)
+                          onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.
@@ -240,7 +240,7 @@ interface ParticipantRestClient {
      * @return The randomized participants
      */
     @Throws(DataAccessException::class)
-    fun randomizeParticipants(tournament: String): List<Participant>
+    fun randomizeParticipants(tournament: String): List<ParticipantWrapper>
 
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.
@@ -251,5 +251,5 @@ interface ParticipantRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun randomizeParticipants(tournament: String, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>)
+    fun randomizeParticipants(tournament: String, onSuccess: Callback<List<ParticipantWrapper>>, onFailure: Callback<DataAccessException>)
 }

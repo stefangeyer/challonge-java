@@ -207,7 +207,7 @@ interface ChallongeRetrofit {
      * @return Call
      */
     @GET("tournaments/{tournament}/participants.json")
-    fun getParticipants(@Path("tournament") tournament: String): Call<List<Participant>>
+    fun getParticipants(@Path("tournament") tournament: String): Call<List<ParticipantWrapper>>
 
     /**
      * Retrieve a single participant record for a tournament.
@@ -222,7 +222,7 @@ interface ChallongeRetrofit {
     @GET("tournaments/{tournament}/participants/{participant_id}.json")
     fun getParticipant(@Path("tournament") tournament: String,
                        @Path("participant_id") participantId: Long,
-                       @Query("include_matches") includeMatches: Int): Call<Participant>
+                       @Query("include_matches") includeMatches: Int): Call<ParticipantWrapper>
 
     /**
      * Add a participant to a tournament (up until it is started).
@@ -235,7 +235,7 @@ interface ChallongeRetrofit {
      */
     @POST("tournaments/{tournament}/participants.json")
     fun addParticipant(@Path("tournament") tournament: String,
-                       @Body participant: ParticipantQuery): Call<Participant>
+                       @Body participant: ParticipantQuery): Call<ParticipantWrapper>
 
     /**
      * Bulk add participants to a tournament (up until it is started).
@@ -265,7 +265,7 @@ interface ChallongeRetrofit {
     @PUT("tournaments/{tournament}/participants/{participant_id}.json")
     fun updateParticipant(@Path("tournament") tournament: String,
                           @Path("participant_id") participantId: Long,
-                          @Body participant: ParticipantQuery): Call<Participant>
+                          @Body participant: ParticipantQuery): Call<ParticipantWrapper>
 
     /**
      * Checks a participant in, setting checked_in_at to the current time.
@@ -278,7 +278,7 @@ interface ChallongeRetrofit {
      */
     @POST("tournaments/{tournament}/participants/{participant_id}/check_in.json")
     fun checkInParticipant(@Path("tournament") tournament: String,
-                           @Path("participant_id") participantId: Long): Call<Participant>
+                           @Path("participant_id") participantId: Long): Call<ParticipantWrapper>
 
     /**
      * Marks a participant as having not checked in, setting checked_in_at to nil.
@@ -291,7 +291,7 @@ interface ChallongeRetrofit {
      */
     @POST("tournaments/{tournament}/participants/{participant_id}/undo_check_in.json")
     fun undoCheckInParticipant(@Path("tournament") tournament: String,
-                               @Path("participant_id") participantId: Long): Call<Participant>
+                               @Path("participant_id") participantId: Long): Call<ParticipantWrapper>
 
     /**
      * If the tournament has not started, delete a participant, automatically filling in the abandoned seed number.
@@ -305,7 +305,7 @@ interface ChallongeRetrofit {
      */
     @DELETE("tournaments/{tournament}/participants/{participant_id}.json")
     fun deleteParticipant(@Path("tournament") tournament: String,
-                          @Path("participant_id") participantId: Long): Call<Participant>
+                          @Path("participant_id") participantId: Long): Call<ParticipantWrapper>
 
     /**
      * Randomize seeds among participants. Only applicable before a tournament has started.
@@ -316,7 +316,7 @@ interface ChallongeRetrofit {
      * @return Call
      */
     @POST("tournaments/{tournament}/participants/randomize.json")
-    fun randomizeParticipants(@Path("tournament") tournament: String): Call<List<Participant>>
+    fun randomizeParticipants(@Path("tournament") tournament: String): Call<List<ParticipantWrapper>>
 
 
     /**

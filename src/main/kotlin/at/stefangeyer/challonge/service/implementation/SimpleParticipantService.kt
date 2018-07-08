@@ -6,7 +6,6 @@ import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
-import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.service.ParticipantService
 
@@ -19,27 +18,27 @@ import at.stefangeyer.challonge.service.ParticipantService
 class SimpleParticipantService(private val restClient: ParticipantRestClient) : ParticipantService {
 
     override fun getParticipants(tournament: Tournament): List<Participant> =
-            this.restClient.getParticipants(tournament.id.toString())
+            this.restClient.getParticipants(tournament.id.toString()).map { pw -> pw.participant }
 
     override fun getParticipants(tournament: Tournament, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
-        this.restClient.getParticipants(tournament.id.toString(), onSuccess, onFailure)
+        this.restClient.getParticipants(tournament.id.toString(), { list -> onSuccess(list.map { pw -> pw.participant }) }, onFailure)
     }
 
     override fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean): Participant =
-            this.restClient.getParticipant(tournament.id.toString(), participantId, includeMatches)
+            this.restClient.getParticipant(tournament.id.toString(), participantId, includeMatches).participant
 
     override fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.restClient.getParticipant(tournament.id.toString(), participantId, includeMatches, onSuccess, onFailure)
+        this.restClient.getParticipant(tournament.id.toString(), participantId, includeMatches, { pw -> pw.participant }, onFailure)
     }
 
     override fun addParticipant(tournament: Tournament, data: ParticipantQuery): Participant {
         validateParticipantQuery(data)
-        return this.restClient.addParticipant(tournament.id.toString(), data)
+        return this.restClient.addParticipant(tournament.id.toString(), data).participant
     }
 
     override fun addParticipant(tournament: Tournament, data: ParticipantQuery, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
         validateParticipantQuery(data)
-        this.restClient.addParticipant(tournament.id.toString(), data, onSuccess, onFailure)
+        this.restClient.addParticipant(tournament.id.toString(), data, { pw -> pw.participant}, onFailure)
     }
 
     override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>): List<Participant> {
@@ -55,45 +54,45 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient) : 
         }
         this.restClient.bulkAddParticipants(
                 tournament.id.toString(), ParticipantQueryListWrapper(data),
-                {list -> onSuccess(list.map { pw -> pw.participant })}, onFailure)
+                { list -> onSuccess(list.map { pw -> pw.participant }) }, onFailure)
     }
 
     override fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant {
         validateParticipantQuery(data)
-        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data)
+        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data).participant
     }
 
     override fun updateParticipant(participant: Participant, data: ParticipantQuery, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
         validateParticipantQuery(data)
-        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data, onSuccess, onFailure)
+        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data, { pw -> pw.participant}, onFailure)
     }
 
     override fun checkInParticipant(participant: Participant): Participant =
-            this.restClient.checkInParticipant(participant.tournamentId.toString(), participant.id)
+            this.restClient.checkInParticipant(participant.tournamentId.toString(), participant.id).participant
 
     override fun checkInParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.restClient.checkInParticipant(participant.tournamentId.toString(), participant.id, onSuccess, onFailure)
+        this.restClient.checkInParticipant(participant.tournamentId.toString(), participant.id, { pw -> pw.participant}, onFailure)
     }
 
     override fun undoCheckInParticipant(participant: Participant): Participant =
-            this.restClient.undoCheckInParticipant(participant.tournamentId.toString(), participant.id)
+            this.restClient.undoCheckInParticipant(participant.tournamentId.toString(), participant.id).participant
 
     override fun undoCheckInParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.restClient.undoCheckInParticipant(participant.tournamentId.toString(), participant.id, onSuccess, onFailure)
+        this.restClient.undoCheckInParticipant(participant.tournamentId.toString(), participant.id, { pw -> pw.participant}, onFailure)
     }
 
     override fun deleteParticipant(participant: Participant): Participant =
-            this.restClient.deleteParticipant(participant.tournamentId.toString(), participant.id)
+            this.restClient.deleteParticipant(participant.tournamentId.toString(), participant.id).participant
 
     override fun deleteParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.restClient.deleteParticipant(participant.tournamentId.toString(), participant.id, onSuccess, onFailure)
+        this.restClient.deleteParticipant(participant.tournamentId.toString(), participant.id, { pw -> pw.participant}, onFailure)
     }
 
     override fun randomizeParticipants(tournament: Tournament): List<Participant> =
-            this.restClient.randomizeParticipants(tournament.id.toString())
+            this.restClient.randomizeParticipants(tournament.id.toString()).map { pw -> pw.participant }
 
     override fun randomizeParticipants(tournament: Tournament, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
-        this.restClient.randomizeParticipants(tournament.id.toString(), onSuccess, onFailure)
+        this.restClient.randomizeParticipants(tournament.id.toString(), { list -> onSuccess(list.map { pw -> pw.participant }) }, onFailure)
     }
 
     private fun validateParticipantQuery(data: ParticipantQuery) {

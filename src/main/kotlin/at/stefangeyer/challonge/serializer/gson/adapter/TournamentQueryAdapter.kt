@@ -17,10 +17,13 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.query.TournamentQuery
-import com.google.gson.*
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import java.lang.reflect.Type
 
-class TournamentQueryAdapter internal constructor() : JsonSerializer<TournamentQuery> {
+class TournamentQueryAdapter : JsonSerializer<TournamentQuery> {
 
     override fun serialize(query: TournamentQuery, type: Type, context: JsonSerializationContext): JsonElement {
         val tqEntity = JsonObject()

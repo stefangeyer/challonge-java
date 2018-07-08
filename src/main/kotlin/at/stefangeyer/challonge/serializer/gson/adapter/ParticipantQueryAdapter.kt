@@ -23,7 +23,7 @@ import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import java.lang.reflect.Type
 
-class ParticipantQueryAdapter internal constructor() : JsonSerializer<ParticipantQuery> {
+class ParticipantQueryAdapter : JsonSerializer<ParticipantQuery> {
     override fun serialize(query: ParticipantQuery, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
         val pqEntity = JsonObject()
 

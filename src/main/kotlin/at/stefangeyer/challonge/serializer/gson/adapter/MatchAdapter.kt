@@ -34,7 +34,7 @@ import java.time.OffsetDateTime
  * @author Stefan Geyer
  * @version 2018-07-08
  */
-class MatchAdapter internal constructor() : JsonDeserializer<Match> {
+class MatchAdapter : JsonDeserializer<Match> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Match {

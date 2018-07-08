@@ -4,8 +4,8 @@ import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.service.TournamentService
 import java.time.OffsetDateTime
@@ -26,7 +26,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                                 createdBefore: OffsetDateTime?, subdomain: String?,
                                 onSuccess: Callback<List<Tournament>>, onFailure: Callback<DataAccessException>) {
         this.restClient.getTournaments(state, type, createdAfter, createdBefore, subdomain,
-                {list -> onSuccess(list.map { tw -> tw.tournament })}, onFailure)
+                { list -> onSuccess(list.map { tw -> tw.tournament }) }, onFailure)
     }
 
     override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament =

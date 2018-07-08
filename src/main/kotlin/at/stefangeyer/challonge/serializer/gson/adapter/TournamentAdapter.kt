@@ -16,14 +16,13 @@
 
 package at.stefangeyer.challonge.serializer.gson.adapter
 
-import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.RankedBy
 import at.stefangeyer.challonge.model.enum.TournamentState
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
-import at.stefangeyer.challonge.model.wrapper.MatchListWrapper
-import at.stefangeyer.challonge.model.wrapper.ParticipantListWrapper
+import at.stefangeyer.challonge.model.wrapper.MatchWrapperListWrapper
+import at.stefangeyer.challonge.model.wrapper.ParticipantWrapperListWrapper
 import com.google.gson.*
 import java.lang.reflect.Type
 import java.time.OffsetDateTime
@@ -35,7 +34,7 @@ import java.time.OffsetDateTime
  * @author Stefan Geyer
  * @version 2018-07-06
  */
-class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
+class TournamentAdapter : JsonDeserializer<Tournament> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Tournament {
@@ -110,11 +109,13 @@ class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
 
         val pe = e.get("participants")
         val participants = if (pe == null || pe is JsonNull) listOf()
-        else context.deserialize<ParticipantListWrapper>(pe, ParticipantListWrapper::class.java).participants
+        else context.deserialize<ParticipantWrapperListWrapper>(pe, ParticipantWrapperListWrapper::class.java)
+                .participants.map { pw -> pw.participant }
 
         val pm = e.get("matches")
         val matches = if (pm == null || pm is JsonNull) listOf()
-        else context.deserialize<MatchListWrapper>(pm, MatchListWrapper::class.java).matches
+        else context.deserialize<MatchWrapperListWrapper>(pm, MatchWrapperListWrapper::class.java)
+                .matches.map { mw -> mw.match }
 
         return Tournament(
                 id = id, name = name, url = url, tournamentType = tournamentType, subdomain = subdomain, description = description,

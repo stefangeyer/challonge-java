@@ -7,6 +7,8 @@ import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.wrapper.MatchWrapperListWrapper
+import at.stefangeyer.challonge.model.wrapper.ParticipantWrapperListWrapper
 import at.stefangeyer.challonge.serializer.Serializer
 import at.stefangeyer.challonge.serializer.gson.adapter.*
 import com.google.gson.Gson
@@ -38,6 +40,9 @@ class GsonSerializer(builder: GsonBuilder) : Serializer {
         builder.registerTypeAdapter(TournamentQuery::class.java, TournamentQueryAdapter())
         builder.registerTypeAdapter(ParticipantQuery::class.java, ParticipantQueryAdapter())
         builder.registerTypeAdapter(MatchQuery::class.java, MatchQueryAdapter())
+
+        builder.registerTypeAdapter(ParticipantWrapperListWrapper::class.java, ParticipantWrapperListWrapperAdapter())
+        builder.registerTypeAdapter(MatchWrapperListWrapper::class.java, MatchWrapperListWrapperAdapter())
 
         builder.registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeAdapter())
 

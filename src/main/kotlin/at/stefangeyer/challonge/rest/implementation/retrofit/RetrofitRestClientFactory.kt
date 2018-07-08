@@ -1,11 +1,7 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
 import at.stefangeyer.challonge.model.Credentials
-import at.stefangeyer.challonge.rest.AttachmentRestClient
-import at.stefangeyer.challonge.rest.MatchRestClient
-import at.stefangeyer.challonge.rest.ParticipantRestClient
-import at.stefangeyer.challonge.rest.TournamentRestClient
-import at.stefangeyer.challonge.rest.RestClientFactory
+import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
 import okhttp3.MediaType
 import okhttp3.OkHttpClient

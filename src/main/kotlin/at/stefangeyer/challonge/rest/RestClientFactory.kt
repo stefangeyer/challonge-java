@@ -1,10 +1,6 @@
 package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.model.Credentials
-import at.stefangeyer.challonge.rest.AttachmentRestClient
-import at.stefangeyer.challonge.rest.MatchRestClient
-import at.stefangeyer.challonge.rest.ParticipantRestClient
-import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.serializer.Serializer
 
 /**

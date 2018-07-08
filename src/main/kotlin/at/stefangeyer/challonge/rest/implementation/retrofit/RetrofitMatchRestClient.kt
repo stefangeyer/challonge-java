@@ -1,10 +1,9 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
+import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
-import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.rest.MatchRestClient
 import retrofit2.Call
@@ -46,14 +45,14 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
                           onSuccess: Callback<MatchWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.getMatch(tournament, matchId, if (includeAttachments) 1 else 0)
                 .enqueue(object : retrofit2.Callback<MatchWrapper> {
-            override fun onFailure(call: Call<MatchWrapper>, t: Throwable) {
-                onFailure(DataAccessException("GetMatch request was not successful", t))
-            }
+                    override fun onFailure(call: Call<MatchWrapper>, t: Throwable) {
+                        onFailure(DataAccessException("GetMatch request was not successful", t))
+                    }
 
-            override fun onResponse(call: Call<MatchWrapper>, response: Response<MatchWrapper>) {
-                onSuccess(parseResponse("GetMatch", response))
-            }
-        })
+                    override fun onResponse(call: Call<MatchWrapper>, response: Response<MatchWrapper>) {
+                        onSuccess(parseResponse("GetMatch", response))
+                    }
+                })
     }
 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): MatchWrapper {

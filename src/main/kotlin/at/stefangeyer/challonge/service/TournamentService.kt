@@ -4,8 +4,8 @@ import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import java.time.OffsetDateTime
 
 /**

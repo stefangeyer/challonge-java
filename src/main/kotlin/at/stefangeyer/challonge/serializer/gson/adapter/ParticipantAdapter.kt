@@ -30,7 +30,7 @@ import java.time.OffsetDateTime
  * @author Stefan Geyer
  * @version 2018-07-06
  */
-class ParticipantAdapter internal constructor() : JsonDeserializer<Participant> {
+class ParticipantAdapter : JsonDeserializer<Participant> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Participant {

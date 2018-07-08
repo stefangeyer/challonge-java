@@ -5,11 +5,11 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.*
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.rest.RestClientFactory
 import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitRestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer

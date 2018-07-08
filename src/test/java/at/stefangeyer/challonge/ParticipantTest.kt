@@ -58,7 +58,7 @@ class ParticipantTest {
                         s == t.url || s == t.id.toString()
                     } ?: throw DataAccessException("tournament not found")
 
-                    tournament.participants
+                    tournament.participants.map { p -> ParticipantWrapper(p) }
                 }
 
                 on { getParticipant(any(), any(), any()) } doAnswer { i ->
@@ -78,7 +78,7 @@ class ParticipantTest {
                         (participant.matches as MutableList<Match>).addAll(matches)
                     }
 
-                    participant
+                    ParticipantWrapper(participant)
                 }
 
                 on { addParticipant(any(), any()) } doAnswer { i ->
@@ -95,7 +95,7 @@ class ParticipantTest {
 
                     (tournament.participants as MutableList<Participant>).add(participant)
 
-                    participant
+                    ParticipantWrapper(participant)
                 }
 
                 on { bulkAddParticipants(any(), any()) } doAnswer { i ->
@@ -142,7 +142,7 @@ class ParticipantTest {
 
                     (tournament.participants as MutableList<Participant>).add(participant)
 
-                    participant
+                    ParticipantWrapper(participant)
                 }
 
                 on { checkInParticipant(any(), any()) } doAnswer { i ->
@@ -157,7 +157,7 @@ class ParticipantTest {
 
                     // emitted content update
 
-                    participant
+                    ParticipantWrapper(participant)
                 }
 
                 on { undoCheckInParticipant(any(), any()) } doAnswer { i ->
@@ -172,7 +172,7 @@ class ParticipantTest {
 
                     // emitted content update
 
-                    participant
+                    ParticipantWrapper(participant)
                 }
 
                 on { deleteParticipant(any(), any()) } doAnswer { i ->
@@ -187,7 +187,7 @@ class ParticipantTest {
 
                     (tournament.participants as MutableList<Participant>).remove(participant)
 
-                    participant
+                    ParticipantWrapper(participant)
                 }
 
                 on { randomizeParticipants(any()) } doAnswer { i ->
@@ -199,7 +199,7 @@ class ParticipantTest {
                     val participants = tournament.participants as MutableList<Participant>
                     participants.shuffle()
 
-                    participants
+                    participants.map { p -> ParticipantWrapper(p) }
                 }
             }
 

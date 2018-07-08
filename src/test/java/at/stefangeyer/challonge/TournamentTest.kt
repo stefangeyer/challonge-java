@@ -10,6 +10,7 @@ import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
 import com.nhaarman.mockito_kotlin.*
@@ -65,7 +66,7 @@ class TournamentTest {
                         if (i.getArgument<String>(4) != null)
                             t.subdomain != null && t.subdomain.equals(i.getArgument(4))
                         else true
-                    }
+                    }.map { t -> TournamentWrapper(t) }
                 }
 
                 on { getTournament(any(), any(), any()) } doAnswer { i ->
@@ -76,7 +77,8 @@ class TournamentTest {
 
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
-                    tournament
+
+                    TournamentWrapper(tournament)
                 }
 
                 on { createTournament(any()) } doAnswer { i ->
@@ -106,7 +108,8 @@ class TournamentTest {
                             grandFinalsModifier = data.grandFinalsModifier ?: GrandFinalsModifier.BLANK,
                             tieBreaks = data.tieBreaks ?: listOf(), createdAt = OffsetDateTime.now())
                     tournaments.add(tournament)
-                    tournament
+
+                    TournamentWrapper(tournament)
                 }
 
                 on { updateTournament(any(), any()) } doAnswer { i ->
@@ -119,7 +122,7 @@ class TournamentTest {
 
                     val tournament = updateTournament(current, data)
                     tournaments[tournaments.indexOf(current)] = tournament
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { deleteTournament(any()) } doAnswer { i ->
@@ -129,7 +132,7 @@ class TournamentTest {
                     } ?: throw DataAccessException("tournament not found")
 
                     tournaments.remove(tournament)
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { processCheckIns(any(), any(), any()) } doAnswer { i ->
@@ -143,7 +146,7 @@ class TournamentTest {
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
 
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { abortCheckIn(any(), any(), any()) } doAnswer { i ->
@@ -157,7 +160,7 @@ class TournamentTest {
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
 
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { startTournament(any(), any(), any()) } doAnswer { i ->
@@ -171,7 +174,7 @@ class TournamentTest {
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
 
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { finalizeTournament(any(), any(), any()) } doAnswer { i ->
@@ -185,7 +188,7 @@ class TournamentTest {
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
 
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { resetTournament(any(), any(), any()) } doAnswer { i ->
@@ -199,7 +202,7 @@ class TournamentTest {
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
 
-                    tournament
+                    TournamentWrapper(tournament)
                 }
 
                 on { openTournamentForPredictions(any(), any(), any()) } doAnswer { i ->
@@ -213,7 +216,7 @@ class TournamentTest {
                     if (!i.getArgument<Boolean>(1)) (tournament.participants as MutableList<Participant>).clear()
                     if (!i.getArgument<Boolean>(2)) (tournament.matches as MutableList<Match>).clear()
 
-                    tournament
+                    TournamentWrapper(tournament)
                 }
             }
 

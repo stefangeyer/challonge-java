@@ -5,6 +5,7 @@ import at.stefangeyer.challonge.model.*
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
 import com.nhaarman.mockito_kotlin.*
@@ -69,7 +70,7 @@ class MatchTest {
                         }
                     }
 
-                    matches
+                    matches.map { m -> MatchWrapper(m) }
                 }
 
                 on { getMatch(any(), any(), any()) } doAnswer { i ->
@@ -86,7 +87,7 @@ class MatchTest {
                         (match.attachments as MutableList<Attachment>).clear()
                     }
 
-                    match
+                    MatchWrapper(match)
                 }
 
                 on { updateMatch(any(), any(), any()) } doAnswer { i ->
@@ -103,7 +104,7 @@ class MatchTest {
                     val updated = Match(id = match.id, tournamentId = tournament.id,
                             winnerId = data.winnerId ?: match.winnerId, scoresCsv = data.scoresCsv)
 
-                    updated
+                    MatchWrapper(updated)
                 }
 
                 on { reopenMatch(any(), any()) } doAnswer { i ->
@@ -118,7 +119,7 @@ class MatchTest {
 
                     // emitted content update
 
-                    match
+                    MatchWrapper(match)
                 }
             }
 

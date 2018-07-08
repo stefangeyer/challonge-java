@@ -7,4 +7,4 @@ package at.stefangeyer.challonge.async
  * @author Stefan Geyer
  * @version 2018-07-02
  */
-typealias Callback<T> = (T) -> Unit
+typealias Callback<T> = (param: T) -> Unit

@@ -4,6 +4,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.*
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.AttachmentQuery
+import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper
 import at.stefangeyer.challonge.rest.AttachmentRestClient
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.rest.ParticipantRestClient
@@ -59,7 +60,7 @@ class AttachmentTest {
                         m.id == i.getArgument(1)
                     } ?: throw DataAccessException("match not found")
 
-                    match.attachments
+                    match.attachments?.map { a -> AttachmentWrapper(a) }
                 }
 
                 on { getAttachment(any(), any(), any()) } doAnswer { i ->
@@ -76,7 +77,7 @@ class AttachmentTest {
                         a.id == i.getArgument(2)
                     } ?: throw DataAccessException("attachment not found")
 
-                    attachment
+                    AttachmentWrapper(attachment)
                 }
 
                 on { createAttachment(any(), any(), any()) } doAnswer { i ->
@@ -95,7 +96,7 @@ class AttachmentTest {
 
                     (match.attachments as MutableList<Attachment>).add(attachment)
 
-                    attachment
+                    AttachmentWrapper(attachment)
                 }
 
                 on { updateAttachment(any(), any(), any(), any()) } doAnswer { i ->
@@ -114,7 +115,7 @@ class AttachmentTest {
 
                     // emitted content update
 
-                    attachment
+                    AttachmentWrapper(attachment)
                 }
 
                 on { deleteAttachment(any(), any(), any()) } doAnswer { i ->
@@ -133,7 +134,7 @@ class AttachmentTest {
 
                     (match.attachments as MutableList<Attachment>).remove(attachment)
 
-                    attachment
+                    AttachmentWrapper(attachment)
                 }
             }
 

@@ -11,6 +11,7 @@ import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import okhttp3.MultipartBody
@@ -331,7 +332,7 @@ interface ChallongeRetrofit {
     @GET("tournaments/{tournament}/matches.json")
     fun getMatches(@Path("tournament") tournament: String,
                    @Query("participant_id") participantId: Long?,
-                   @Query("state") state: MatchState?): Call<List<Match>>
+                   @Query("state") state: MatchState?): Call<List<MatchWrapper>>
 
     /**
      * Retrieve a single match record for a tournament.
@@ -344,7 +345,7 @@ interface ChallongeRetrofit {
     @GET("tournaments/{tournament}/matches/{match_id}.json")
     fun getMatch(@Path("tournament") tournament: String,
                  @Path("match_id") matchId: Long,
-                 @Query("include_attachments") includeAttachments: Int): Call<Match>
+                 @Query("include_attachments") includeAttachments: Int): Call<MatchWrapper>
 
     /**
      * Update/submit the score(s) for a match.
@@ -357,7 +358,7 @@ interface ChallongeRetrofit {
     @PUT("tournaments/{tournament}/matches/{match_id}.json")
     fun updateMatch(@Path("tournament") tournament: String,
                     @Path("match_id") matchId: Long,
-                    @Body match: MatchQuery): Call<Match>
+                    @Body match: MatchQuery): Call<MatchWrapper>
 
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it
@@ -370,7 +371,7 @@ interface ChallongeRetrofit {
      */
     @POST("tournaments/{tournament}/matches/{match_id}/reopen.json")
     fun reopenMatch(@Path("tournament") tournament: String,
-                    @Path("match_id") matchId: Long): Call<Match>
+                    @Path("match_id") matchId: Long): Call<MatchWrapper>
 
     /**
      * Retrieve a match's attachments.

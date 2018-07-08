@@ -2,9 +2,9 @@ package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 
 /**
  * Match Rest Client Definition
@@ -28,7 +28,7 @@ interface MatchRestClient {
      * @return The tournament's matches
      */
     @Throws(DataAccessException::class)
-    fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<Match>
+    fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<MatchWrapper>
 
     /**
      * Retrieve a tournament's match list.
@@ -44,7 +44,7 @@ interface MatchRestClient {
      * @param onFailure     Called with exception if call was not successful
      */
     fun getMatches(tournament: String, participantId: Long?, state: MatchState?,
-                   onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>)
+                   onSuccess: Callback<List<MatchWrapper>>, onFailure: Callback<DataAccessException>)
 
     /**
      * Retrieve a single match record for a tournament.
@@ -58,7 +58,7 @@ interface MatchRestClient {
      * @return The requested match
      */
     @Throws(DataAccessException::class)
-    fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): Match
+    fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): MatchWrapper
 
     /**
      * Retrieve a single match record for a tournament.
@@ -72,7 +72,7 @@ interface MatchRestClient {
      * @param onFailure          Called with exception if call was not successful
      */
     fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean,
-                 onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>)
+                 onSuccess: Callback<MatchWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Update/submit the score(s) for a match.
@@ -86,7 +86,7 @@ interface MatchRestClient {
      * @return The updated match
      */
     @Throws(DataAccessException::class)
-    fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): Match
+    fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): MatchWrapper
 
     /**
      * Update/submit the score(s) for a match.
@@ -100,7 +100,7 @@ interface MatchRestClient {
      * @param onFailure  Called with exception if call was not successful
      */
     fun updateMatch(tournament: String, matchId: Long, match: MatchQuery,
-                    onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>)
+                    onSuccess: Callback<MatchWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it
@@ -113,7 +113,7 @@ interface MatchRestClient {
      * @return The reopened match
      */
     @Throws(DataAccessException::class)
-    fun reopenMatch(tournament: String, matchId: Long): Match
+    fun reopenMatch(tournament: String, matchId: Long): MatchWrapper
 
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it
@@ -125,6 +125,6 @@ interface MatchRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<Match>,
+    fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<MatchWrapper>,
                     onFailure: Callback<DataAccessException>)
 }

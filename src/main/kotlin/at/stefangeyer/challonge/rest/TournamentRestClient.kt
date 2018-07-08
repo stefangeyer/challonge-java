@@ -2,10 +2,10 @@ package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import java.time.OffsetDateTime
 
 /**
@@ -29,7 +29,7 @@ interface TournamentRestClient {
      */
     @Throws(DataAccessException::class)
     fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
-                       createdBefore: OffsetDateTime?, subdomain: String?): List<Tournament>
+                       createdBefore: OffsetDateTime?, subdomain: String?): List<TournamentWrapper>
 
     /**
      * Retrieve a set of tournaments created with your account.
@@ -44,7 +44,7 @@ interface TournamentRestClient {
      */
     fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
                        createdBefore: OffsetDateTime?, subdomain: String?,
-                       onSuccess: Callback<List<Tournament>>, onFailure: Callback<DataAccessException>)
+                       onSuccess: Callback<List<TournamentWrapper>>, onFailure: Callback<DataAccessException>)
 
     /**
      * Retrieve a single tournament record created with your account.
@@ -58,7 +58,7 @@ interface TournamentRestClient {
      * @return The matching tournament
      */
     @Throws(DataAccessException::class)
-    fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * Retrieve a single tournament record created with your account.
@@ -72,7 +72,7 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                      onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                      onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Create a new tournament.
@@ -82,7 +82,7 @@ interface TournamentRestClient {
      * @return The created tournament
      */
     @Throws(DataAccessException::class)
-    fun createTournament(tournamentData: TournamentQuery): Tournament
+    fun createTournament(tournamentData: TournamentQuery): TournamentWrapper
 
     /**
      * Create a new tournament.
@@ -91,7 +91,7 @@ interface TournamentRestClient {
      * @param onSuccess      Called with result if call was successful
      * @param onFailure      Called with exception if call was not successful
      */
-    fun createTournament(tournamentData: TournamentQuery, onSuccess: Callback<Tournament>,
+    fun createTournament(tournamentData: TournamentQuery, onSuccess: Callback<TournamentWrapper>,
                          onFailure: Callback<DataAccessException>)
 
     /**
@@ -105,7 +105,7 @@ interface TournamentRestClient {
      * @return The updated tournament
      */
     @Throws(DataAccessException::class)
-    fun updateTournament(tournament: String, tournamentData: TournamentQuery): Tournament
+    fun updateTournament(tournament: String, tournamentData: TournamentQuery): TournamentWrapper
 
     /**
      * Update a tournament's attributes.
@@ -117,7 +117,7 @@ interface TournamentRestClient {
      * @param onSuccess      Called with result if call was successful
      * @param onFailure      Called with exception if call was not successful
      */
-    fun updateTournament(tournament: String, tournamentData: TournamentQuery, onSuccess: Callback<Tournament>,
+    fun updateTournament(tournament: String, tournamentData: TournamentQuery, onSuccess: Callback<TournamentWrapper>,
                          onFailure: Callback<DataAccessException>)
 
     /**
@@ -130,7 +130,7 @@ interface TournamentRestClient {
      * @return The deleted tournament
      */
     @Throws(DataAccessException::class)
-    fun deleteTournament(tournament: String): Tournament
+    fun deleteTournament(tournament: String): TournamentWrapper
 
     /**
      * Deletes a tournament along with all its associated records. There is no undo, so use with care!
@@ -141,7 +141,7 @@ interface TournamentRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun deleteTournament(tournament: String, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+    fun deleteTournament(tournament: String, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * This should be invoked after a tournament's check-in window closes before the tournament is started.
@@ -161,7 +161,7 @@ interface TournamentRestClient {
      * @return The updated tournament
      */
     @Throws(DataAccessException::class)
-    fun processCheckIns(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun processCheckIns(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * This should be invoked after a tournament's check-in window closes before the tournament is started.
@@ -181,7 +181,7 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun processCheckIns(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                        onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                        onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * When your tournament is in a 'checking_in' or 'checked_in' state,
@@ -200,7 +200,7 @@ interface TournamentRestClient {
      * @return The updated tournament
      */
     @Throws(DataAccessException::class)
-    fun abortCheckIn(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun abortCheckIn(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * When your tournament is in a 'checking_in' or 'checked_in' state,
@@ -219,7 +219,7 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun abortCheckIn(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                     onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                     onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Start a tournament, opening up first round matches for score reporting.
@@ -234,7 +234,7 @@ interface TournamentRestClient {
      * @return The started tournament
      */
     @Throws(DataAccessException::class)
-    fun startTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun startTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * Start a tournament, opening up first round matches for score reporting.
@@ -249,7 +249,7 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun startTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                        onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                        onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Finalize a tournament that has had all match scores submitted, rendering its results permanent.
@@ -263,7 +263,7 @@ interface TournamentRestClient {
      * @return The finalized tournament
      */
     @Throws(DataAccessException::class)
-    fun finalizeTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun finalizeTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * Finalize a tournament that has had all match scores submitted, rendering its results permanent.
@@ -277,7 +277,7 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun finalizeTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                           onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                           onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Reset a tournament, clearing all of its scores and attachments.
@@ -292,7 +292,7 @@ interface TournamentRestClient {
      * @return The reset tournament
      */
     @Throws(DataAccessException::class)
-    fun resetTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun resetTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * Reset a tournament, clearing all of its scores and attachments.
@@ -307,7 +307,7 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun resetTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                        onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                        onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Sets the state of the tournament to start accepting predictions.
@@ -324,7 +324,7 @@ interface TournamentRestClient {
      * @return The reset tournament
      */
     @Throws(DataAccessException::class)
-    fun openTournamentForPredictions(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament
+    fun openTournamentForPredictions(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): TournamentWrapper
 
     /**
      * Sets the state of the tournament to start accepting predictions.
@@ -341,5 +341,5 @@ interface TournamentRestClient {
      * @param onFailure           Called with exception if call was not successful
      */
     fun openTournamentForPredictions(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
-                                     onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>)
+                                     onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>)
 }

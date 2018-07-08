@@ -31,7 +31,7 @@ class GsonSerializer(builder: GsonBuilder) : Serializer {
     constructor() : this(GsonBuilder())
 
     init {
-        /*builder.registerTypeAdapter(Tournament::class.java, TournamentAdapter())
+        builder.registerTypeAdapter(Tournament::class.java, TournamentAdapter())
         builder.registerTypeAdapter(Participant::class.java, ParticipantAdapter())
         builder.registerTypeAdapter(Match::class.java, MatchAdapter())
         builder.registerTypeAdapter(Attachment::class.java, AttachmentAdapter())
@@ -41,7 +41,7 @@ class GsonSerializer(builder: GsonBuilder) : Serializer {
 
         builder.registerTypeAdapter(object : TypeToken<List<ParticipantQuery>>() {}.type, ParticipantQueryListAdapter())
         builder.registerTypeAdapter(object : TypeToken<List<Participant>>() {}.type, ParticipantListAdapter())
-        builder.registerTypeAdapter(object : TypeToken<List<Match>>() {}.type, MatchListAdapter())*/
+        builder.registerTypeAdapter(object : TypeToken<List<Match>>() {}.type, MatchListAdapter())
 
         builder.registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeAdapter())
 

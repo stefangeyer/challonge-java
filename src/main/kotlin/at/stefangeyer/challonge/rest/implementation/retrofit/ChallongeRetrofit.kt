@@ -12,6 +12,7 @@ import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
+import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -35,7 +36,7 @@ interface ChallongeRetrofit {
                        @Query("created_after") createdAfter: OffsetDateTime?,
                        @Query("created_before") createdBefore: OffsetDateTime?,
                        @Query("subdomain") subdomain: String?
-    ): Call<List<Tournament>>
+    ): Call<List<TournamentWrapper>>
 
     /**
      * Retrieve a single tournament record created with your account.
@@ -50,7 +51,7 @@ interface ChallongeRetrofit {
     @GET("tournaments/{tournament}.json")
     fun getTournament(@Path("tournament") tournament: String,
                       @Query("include_participants") includeParticipants: Int,
-                      @Query("include_matches") includeMatches: Int): Call<Tournament>
+                      @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * Create a new tournament.
@@ -59,7 +60,7 @@ interface ChallongeRetrofit {
      * @return Call
      */
     @POST("tournaments.json")
-    fun createTournament(@Body tournamentData: TournamentQuery): Call<Tournament>
+    fun createTournament(@Body tournamentData: TournamentQuery): Call<TournamentWrapper>
 
     /**
      * Update a tournament's attributes.
@@ -72,7 +73,7 @@ interface ChallongeRetrofit {
      */
     @PUT("tournaments/{tournament}.json")
     fun updateTournament(@Path("tournament") tournament: String,
-                         @Body tournamentData: TournamentQuery): Call<Tournament>
+                         @Body tournamentData: TournamentQuery): Call<TournamentWrapper>
 
     /**
      * Deletes a tournament along with all its associated records. There is no undo, so use with care!
@@ -83,7 +84,7 @@ interface ChallongeRetrofit {
      * @return Call
      */
     @DELETE("tournaments/{tournament}.json")
-    fun deleteTournament(@Path("tournament") tournament: String): Call<Tournament>
+    fun deleteTournament(@Path("tournament") tournament: String): Call<TournamentWrapper>
 
     /**
      * This should be invoked after a tournament's check-in window closes before the tournament is started.
@@ -108,7 +109,7 @@ interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/process_check_ins.json")
     fun processCheckIns(@Path("tournament") tournament: String,
                         @Query("include_participants") includeParticipants: Int,
-                        @Query("include_matches") includeMatches: Int): Call<Tournament>
+                        @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * When your tournament is in a 'checking_in' or 'checked_in' state,
@@ -131,7 +132,7 @@ interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/abort_check_in.json")
     fun abortCheckIn(@Path("tournament") tournament: String,
                      @Query("include_participants") includeParticipants: Int,
-                     @Query("include_matches") includeMatches: Int): Call<Tournament>
+                     @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * Start a tournament, opening up first round matches for score reporting.
@@ -147,7 +148,7 @@ interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/start.json")
     fun startTournament(@Path("tournament") tournament: String,
                         @Query("include_participants") includeParticipants: Int,
-                        @Query("include_matches") includeMatches: Int): Call<Tournament>
+                        @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * Finalize a tournament that has had all match scores submitted, rendering its results permanent.
@@ -162,7 +163,7 @@ interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/finalize.json")
     fun finalizeTournament(@Path("tournament") tournament: String,
                            @Query("include_participants") includeParticipants: Int,
-                           @Query("include_matches") includeMatches: Int): Call<Tournament>
+                           @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * Reset a tournament, clearing all of its scores and attachments.
@@ -178,7 +179,7 @@ interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/reset.json")
     fun resetTournament(@Path("tournament") tournament: String,
                         @Query("include_participants") includeParticipants: Int,
-                        @Query("include_matches") includeMatches: Int): Call<Tournament>
+                        @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * Sets the state of the tournament to start accepting predictions.
@@ -196,7 +197,7 @@ interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/open_for_predictions.json")
     fun openTournamentForPredictions(@Path("tournament") tournament: String,
                                      @Query("include_participants") includeParticipants: Int,
-                                     @Query("include_matches") includeMatches: Int): Call<Tournament>
+                                     @Query("include_matches") includeMatches: Int): Call<TournamentWrapper>
 
     /**
      * Retrieve a tournament's participant list.

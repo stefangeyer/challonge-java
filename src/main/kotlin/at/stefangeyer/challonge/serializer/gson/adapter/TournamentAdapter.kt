@@ -39,7 +39,6 @@ class TournamentAdapter internal constructor() : JsonDeserializer<Tournament> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Tournament {
-//        val e = jsonElement.asJsonObject.get("tournament").asJsonObject
         val e = jsonElement.asJsonObject
 
         val id = e.get("id").asLong

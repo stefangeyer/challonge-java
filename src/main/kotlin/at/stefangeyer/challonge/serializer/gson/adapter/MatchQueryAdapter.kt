@@ -26,8 +26,6 @@ import java.lang.reflect.Type
 class MatchQueryAdapter internal constructor() : JsonSerializer<MatchQuery> {
 
     override fun serialize(matchQuery: MatchQuery, type: Type, context: JsonSerializationContext): JsonElement {
-        val parent = JsonObject()
-
         val mqEntity = JsonObject()
 
         mqEntity.addProperty("winner_id", matchQuery.winnerId)
@@ -35,8 +33,6 @@ class MatchQueryAdapter internal constructor() : JsonSerializer<MatchQuery> {
         mqEntity.addProperty("player2_votes", matchQuery.votesForPlayer2)
         mqEntity.addProperty("scores_csv", matchQuery.scoresCsv)
 
-        parent.add("match", mqEntity)
-
-        return parent
+        return mqEntity
     }
 }

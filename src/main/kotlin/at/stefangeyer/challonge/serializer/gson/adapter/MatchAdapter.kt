@@ -38,7 +38,6 @@ class MatchAdapter internal constructor() : JsonDeserializer<Match> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Match {
-//        val e = jsonElement.asJsonObject.get("match").asJsonObject
         val e = jsonElement.asJsonObject
 
         return Match(id = e.get("id").asLong, tournamentId = e.get("tournament_id").asLong, attachmentCount = e.get("attachment_count").asInt,

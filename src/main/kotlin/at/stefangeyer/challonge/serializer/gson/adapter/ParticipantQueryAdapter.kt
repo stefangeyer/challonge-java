@@ -25,9 +25,8 @@ import java.lang.reflect.Type
 
 class ParticipantQueryAdapter internal constructor() : JsonSerializer<ParticipantQuery> {
     override fun serialize(query: ParticipantQuery, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
-        val parent = JsonObject()
-
         val pqEntity = JsonObject()
+
         pqEntity.addProperty("name", query.name)
         pqEntity.addProperty("email", query.email)
         pqEntity.addProperty("challonge_username", query.challongeUsername)
@@ -35,8 +34,6 @@ class ParticipantQueryAdapter internal constructor() : JsonSerializer<Participan
         pqEntity.addProperty("misc", query.misc)
         pqEntity.addProperty("invite_name_or_email", query.inviteNameOrEmail)
 
-        parent.add("participant", pqEntity)
-
-        return parent
+        return pqEntity
     }
 }

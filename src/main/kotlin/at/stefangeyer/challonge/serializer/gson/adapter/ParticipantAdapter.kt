@@ -34,7 +34,6 @@ class ParticipantAdapter internal constructor() : JsonDeserializer<Participant> 
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Participant {
-//        val e = jsonElement.asJsonObject.get("participant").asJsonObject
         val e = jsonElement as JsonObject
 
         val id = e.get("id").asLong

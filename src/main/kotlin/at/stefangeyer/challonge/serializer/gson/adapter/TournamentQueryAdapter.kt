@@ -23,8 +23,6 @@ import java.lang.reflect.Type
 class TournamentQueryAdapter internal constructor() : JsonSerializer<TournamentQuery> {
 
     override fun serialize(query: TournamentQuery, type: Type, context: JsonSerializationContext): JsonElement {
-        val parent = JsonObject()
-
         val tqEntity = JsonObject()
 
         if (query.name != null) tqEntity.addProperty("name", query.name)
@@ -58,8 +56,6 @@ class TournamentQueryAdapter internal constructor() : JsonSerializer<TournamentQ
         if (query.grandFinalsModifier != null) tqEntity.addProperty("grand_finals_modifier", query.grandFinalsModifier.toString().toLowerCase().replace("_", " "))
         tqEntity.add("tie_breaks", context.serialize(query.tieBreaks))
 
-        parent.add("tournament", tqEntity)
-
-        return parent
+        return tqEntity
     }
 }

@@ -35,7 +35,6 @@ class AttachmentAdapter internal constructor() : JsonDeserializer<Attachment> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Attachment {
-//        val e = jsonElement.asJsonObject.get("match_attachment").asJsonObject
         val e = jsonElement.asJsonObject
 
         return Attachment(

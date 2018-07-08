@@ -40,22 +40,43 @@ class MatchAdapter : JsonDeserializer<Match> {
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Match {
         val e = jsonElement.asJsonObject
 
-        return Match(id = e.get("id").asLong, tournamentId = e.get("tournament_id").asLong, attachmentCount = e.get("attachment_count").asInt,
-                createdAt = context.deserialize(e.get("created_at"), OffsetDateTime::class.java), groupId = e.get("group_id").asLong,
-                hasAttachment = e.get("has_attachment").asBoolean, identifier = e.get("identifier").asString, location = e.get("location").asString,
-                updatedAt = context.deserialize(e.get("updated_at"), OffsetDateTime::class.java),
-                state = MatchState.valueOf(e.get("state").asString.replace(" ", "_").toUpperCase()),
-                startedAt = context.deserialize(e.get("started_at"), OffsetDateTime::class.java), scoresCsv = e.get("scores_csv").asString,
-                winnerId = e.get("winner_id").asLong, loserId = e.get("loser_id").asLong, player1Id = e.get("player1_id").asLong,
-                player2Id = e.get("player2_id").asLong,
-                player1IsPrerequisiteMatchLoser = e.get("player1_is_prereq_match_loser").asBoolean,
-                player1PrerequisiteMatchId = e.get("player1_prereq_match_id").asLong,
-                player2IsPrerequisiteMatchLoser = e.get("player2_is_prereq_match_loser").asBoolean,
-                player2PrerequisiteMatchId = e.get("player2_prereq_match_id").asLong,
-                prerequisiteMatchIdsCsv = e.get("prerequisite_match_ids_csv").asString, round = e.get("round").asInt,
-                scheduledTime = context.deserialize(e.get("scheduled_time"), OffsetDateTime::class.java),
-                underwayAt = context.deserialize(e.get("underway_at"), OffsetDateTime::class.java),
-                attachments = context.deserialize(e.get("attachments"), object : TypeToken<List<Attachment>>() {}.type)
-        )
+        val id = e.get("id").asLong
+        val tournamentId = e.get("tournament_id").asLong
+        val attachmentCount = check(e.get("attachment_count"))?.asInt
+        val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
+        val groupId = check(e.get("group_id"))?.asLong
+        val hasAttachment = e.get("has_attachment").asBoolean
+        val identifier = check(e.get("identifier"))?.asString
+        val location = check(e.get("location"))?.asString
+        val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
+        val state = MatchState.valueOf(e.get("state").asString.replace(" ", "_").toUpperCase())
+        val startedAt = context.deserialize<OffsetDateTime>(e.get("started_at"), OffsetDateTime::class.java)
+        val scoresCsv = check(e.get("scores_csv"))?.asString
+        val winnerId = check(e.get("winner_id"))?.asLong
+        val loserId = check(e.get("loser_id"))?.asLong
+        val player1Id = check(e.get("player1_id"))?.asLong
+        val player2Id = check(e.get("player2_id"))?.asLong
+        val player1IsPrerequisiteMatchLoser = e.get("player1_is_prereq_match_loser").asBoolean
+        val player1PrerequisiteMatchId = check(e.get("player1_prereq_match_id"))?.asLong
+        val player2IsPrerequisiteMatchLoser = e.get("player2_is_prereq_match_loser").asBoolean
+        val player2PrerequisiteMatchId = check(e.get("player2_prereq_match_id"))?.asLong
+        val prerequisiteMatchIdsCsv = check(e.get("prerequisite_match_ids_csv"))?.asString
+        val round = e.get("round").asInt
+        val scheduledTime = context.deserialize<OffsetDateTime>(e.get("scheduled_time"), OffsetDateTime::class.java)
+        val underwayAt = context.deserialize<OffsetDateTime>(e.get("underway_at"), OffsetDateTime::class.java)
+        val attachments = context.deserialize<List<Attachment>>(e.get("attachments"), object : TypeToken<List<Attachment>>() {}.type)
+
+        return Match(id = id, tournamentId = tournamentId, attachmentCount = attachmentCount, createdAt = createdAt, groupId = groupId,
+                hasAttachment = hasAttachment, identifier = identifier, location = location, updatedAt = updatedAt, state = state,
+                startedAt = startedAt, scoresCsv = scoresCsv, winnerId = winnerId, loserId = loserId, player1Id = player1Id, player2Id = player2Id,
+                player1IsPrerequisiteMatchLoser = player1IsPrerequisiteMatchLoser, player1PrerequisiteMatchId = player1PrerequisiteMatchId,
+                player2IsPrerequisiteMatchLoser = player2IsPrerequisiteMatchLoser, player2PrerequisiteMatchId = player2PrerequisiteMatchId,
+                prerequisiteMatchIdsCsv = prerequisiteMatchIdsCsv, round = round, scheduledTime = scheduledTime, underwayAt = underwayAt,
+                attachments = attachments)
+    }
+
+    private fun check(element: JsonElement): JsonElement? {
+        return if (element.isJsonNull) null
+        else element
     }
 }

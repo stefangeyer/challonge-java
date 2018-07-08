@@ -37,14 +37,22 @@ class AttachmentAdapter : JsonDeserializer<Attachment> {
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Attachment {
         val e = jsonElement.asJsonObject
 
+        val id = e.get("id").asLong
+        val matchId = e.get("match_id").asLong
+        val userId = e.get("user_id").asLong
+        val description = e.get("description").asString
+        val url = e.get("url").asString
+        val originalFileName = e.get("original_file_name").asString
+        val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
+        val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
+        val assetFileName = e.get("asset_file_name").asString
+        val assetContentType = e.get("asset_content_type").asString
+        val assetFileSize = e.get("asset_file_size").asLong
+        val assetUrl = e.get("asset_url").asString
+
         return Attachment(
-                id = e.get("id").asLong, matchId = e.get("match_id").asLong, userId = e.get("user_id").asLong,
-                description = e.get("description").asString,
-                url = e.get("url").asString, originalFileName = e.get("original_file_name").asString,
-                createdAt = context.deserialize(e.get("created_at"), OffsetDateTime::class.java),
-                updatedAt = context.deserialize(e.get("updated_at"), OffsetDateTime::class.java),
-                assetFileName = e.get("asset_file_name").asString, assetContentType = e.get("asset_content_type").asString,
-                assetFileSize = e.get("asset_file_size").asLong, assetUrl = e.get("asset_url").asString
-        )
+                id = id, matchId = matchId, userId = userId, description = description, url = url, originalFileName = originalFileName,
+                createdAt = createdAt, updatedAt = updatedAt, assetFileName = assetFileName, assetContentType = assetContentType,
+                assetFileSize = assetFileSize, assetUrl = assetUrl)
     }
 }

@@ -7,6 +7,7 @@ import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.ParticipantQuery
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
@@ -104,10 +105,10 @@ class ParticipantTest {
                         s == t.url || s == t.id.toString()
                     } ?: throw DataAccessException("tournament not found")
 
-                    val dataList = i.getArgument<List<ParticipantQuery>>(1)
+                    val dataList = i.getArgument<ParticipantQueryListWrapper>(1)
                     val result = mutableListOf<ParticipantWrapper>()
 
-                    for (data in dataList) {
+                    for (data in dataList.participants) {
                         val id = Random().nextInt(1000).toLong()
                         val participant = Participant(id = id, name = data.name, inviteEmail = data.email,
                                 challongeUsername = data.challongeUsername, seed = data.seed ?: 0, misc = data.misc,

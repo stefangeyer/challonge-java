@@ -1,16 +1,13 @@
 package at.stefangeyer.challonge.rest.implementation.retrofit
 
-import at.stefangeyer.challonge.model.Attachment
-import at.stefangeyer.challonge.model.Match
-import at.stefangeyer.challonge.model.Participant
-import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
@@ -384,7 +381,7 @@ interface ChallongeRetrofit {
      */
     @GET("tournaments/{tournament}/matches/{match_id}/attachments.json")
     fun getAttachments(@Path("tournament") tournament: String,
-                       @Path("match_id") matchId: Long): Call<List<Attachment>>
+                       @Path("match_id") matchId: Long): Call<List<AttachmentWrapper>>
 
     /**
      * Retrieve a single match attachment record.
@@ -399,7 +396,7 @@ interface ChallongeRetrofit {
     @GET("tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
     fun getAttachment(@Path("tournament") tournament: String,
                       @Path("match_id") matchId: Long,
-                      @Path("attachment_id") attachmentId: Long): Call<Attachment>
+                      @Path("attachment_id") attachmentId: Long): Call<AttachmentWrapper>
 
     /**
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
@@ -424,7 +421,7 @@ interface ChallongeRetrofit {
                          @Path("match_id") matchId: Long,
                          @Part asset: MultipartBody.Part?,
                          @Part url: MultipartBody.Part?,
-                         @Part description: MultipartBody.Part?): Call<Attachment>
+                         @Part description: MultipartBody.Part?): Call<AttachmentWrapper>
 
     /**
      * Update the attributes of a match attachment.
@@ -452,7 +449,7 @@ interface ChallongeRetrofit {
                          @Path("attachment_id") attachmentId: Long,
                          @Part asset: MultipartBody.Part?,
                          @Part url: MultipartBody.Part?,
-                         @Part description: MultipartBody.Part?): Call<Attachment>
+                         @Part description: MultipartBody.Part?): Call<AttachmentWrapper>
 
     /**
      * Delete a match attachment.
@@ -467,5 +464,5 @@ interface ChallongeRetrofit {
     @DELETE("tournaments/{tournament}/matches/{match_id}/attachments/{attachment_id}.json")
     fun deleteAttachment(@Path("tournament") tournament: String,
                          @Path("match_id") matchId: Long,
-                         @Path("attachment_id") attachmentId: Long): Call<Attachment>
+                         @Path("attachment_id") attachmentId: Long): Call<AttachmentWrapper>
 }

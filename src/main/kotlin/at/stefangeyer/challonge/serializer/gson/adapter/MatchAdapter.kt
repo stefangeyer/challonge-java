@@ -31,14 +31,16 @@ import java.time.OffsetDateTime
  * Type adapter for the [Match] class.
  * The received json object is being unpacked.
  *
- * @author EXSolo
- * @version 20160825.1
+ * @author Stefan Geyer
+ * @version 2018-07-08
  */
 class MatchAdapter internal constructor() : JsonDeserializer<Match> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Match {
-        val e = jsonElement.asJsonObject.get("match").asJsonObject
+//        val e = jsonElement.asJsonObject.get("match").asJsonObject
+        val e = jsonElement.asJsonObject
+
         return Match(id = e.get("id").asLong, tournamentId = e.get("tournament_id").asLong, attachmentCount = e.get("attachment_count").asInt,
                 createdAt = context.deserialize(e.get("created_at"), OffsetDateTime::class.java), groupId = e.get("group_id").asLong,
                 hasAttachment = e.get("has_attachment").asBoolean, identifier = e.get("identifier").asString, location = e.get("location").asString,

@@ -4,6 +4,7 @@ import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.query.AttachmentQuery
+import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper
 
 /**
  * Attachment Rest Client Definition
@@ -24,7 +25,7 @@ interface AttachmentRestClient {
      * @return The match attachments
      */
     @Throws(DataAccessException::class)
-    fun getAttachments(tournament: String, matchId: Long): List<Attachment>
+    fun getAttachments(tournament: String, matchId: Long): List<AttachmentWrapper>
 
     /**
      * Retrieve a match's attachments.
@@ -36,7 +37,7 @@ interface AttachmentRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun getAttachments(tournament: String, matchId: Long, onSuccess: Callback<List<Attachment>>,
+    fun getAttachments(tournament: String, matchId: Long, onSuccess: Callback<List<AttachmentWrapper>>,
                        onFailure: Callback<DataAccessException>)
 
     /**
@@ -51,7 +52,7 @@ interface AttachmentRestClient {
      * @return The requested attachment
      */
     @Throws(DataAccessException::class)
-    fun getAttachment(tournament: String, matchId: Long, attachmentId: Long): Attachment
+    fun getAttachment(tournament: String, matchId: Long, attachmentId: Long): AttachmentWrapper
 
     /**
      * Retrieve a single match attachment record.
@@ -64,7 +65,7 @@ interface AttachmentRestClient {
      * @param onSuccess    Called with result if call was successful
      * @param onFailure    Called with exception if call was not successful
      */
-    fun getAttachment(tournament: String, matchId: Long, attachmentId: Long, onSuccess: Callback<Attachment>,
+    fun getAttachment(tournament: String, matchId: Long, attachmentId: Long, onSuccess: Callback<AttachmentWrapper>,
                       onFailure: Callback<DataAccessException>)
 
     /**
@@ -83,7 +84,7 @@ interface AttachmentRestClient {
      * @return The created attachment
      */
     @Throws(DataAccessException::class)
-    fun createAttachment(tournament: String, matchId: Long, attachment: AttachmentQuery): Attachment
+    fun createAttachment(tournament: String, matchId: Long, attachment: AttachmentQuery): AttachmentWrapper
 
     /**
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's
@@ -100,7 +101,7 @@ interface AttachmentRestClient {
      * @param onSuccess   Called with result if call was successful
      * @param onFailure   Called with exception if call was not successful
      */
-    fun createAttachment(tournament: String, matchId: Long, attachment: AttachmentQuery, onSuccess: Callback<Attachment>,
+    fun createAttachment(tournament: String, matchId: Long, attachment: AttachmentQuery, onSuccess: Callback<AttachmentWrapper>,
                          onFailure: Callback<DataAccessException>)
 
     /**
@@ -121,7 +122,7 @@ interface AttachmentRestClient {
      * @return The updated attachment
      */
     @Throws(DataAccessException::class)
-    fun updateAttachment(tournament: String, matchId: Long, attachmentId: Long, attachment: AttachmentQuery): Attachment
+    fun updateAttachment(tournament: String, matchId: Long, attachmentId: Long, attachment: AttachmentQuery): AttachmentWrapper
 
     /**
      * Update the attributes of a match attachment.
@@ -141,7 +142,7 @@ interface AttachmentRestClient {
      * @param onFailure    Called with exception if call was not successful
      */
     fun updateAttachment(tournament: String, matchId: Long, attachmentId: Long, attachment: AttachmentQuery,
-                         onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>)
+                         onSuccess: Callback<AttachmentWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
      * Delete a match attachment.
@@ -155,7 +156,7 @@ interface AttachmentRestClient {
      * @return The deleted attachment
      */
     @Throws(DataAccessException::class)
-    fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long): Attachment
+    fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long): AttachmentWrapper
 
     /**
      * Delete a match attachment.
@@ -168,6 +169,6 @@ interface AttachmentRestClient {
      * @param onSuccess    Called with result if call was successful
      * @param onFailure    Called with exception if call was not successful
      */
-    fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long, onSuccess: Callback<Attachment>,
+    fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long, onSuccess: Callback<AttachmentWrapper>,
                          onFailure: Callback<DataAccessException>)
 }

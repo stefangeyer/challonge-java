@@ -50,16 +50,16 @@ class MatchTest {
                 this.challonge.deleteTournament(t)
             } catch (ignored: DataAccessException) {
             }
+
+            val query = TournamentQuery(name = "Matches", url = TOURNAMENT_URL)
+            this.tournament = this.challonge.createTournament(query)
+
+            this.participants = this.challonge.bulkAddParticipants(this.tournament,
+                    listOf(ParticipantQuery(name = "User1", seed = 1), ParticipantQuery(name = "User2", seed = 2),
+                            ParticipantQuery(name = "User3", seed = 3), ParticipantQuery(name = "User4", seed = 4)))
+
+            this.tournament = this.challonge.startTournament(this.tournament, true, true)
         }
-
-        val query = TournamentQuery(name = "Matches", url = TOURNAMENT_URL)
-        this.tournament = this.challonge.createTournament(query)
-
-        this.participants = this.challonge.bulkAddParticipants(this.tournament,
-                listOf(ParticipantQuery(name = "User1", seed = 1), ParticipantQuery(name = "User2", seed = 2),
-                        ParticipantQuery(name = "User3", seed = 3), ParticipantQuery(name = "User4", seed = 4)))
-
-        this.tournament = this.challonge.startTournament(this.tournament, true, true)
     }
 
     @Test

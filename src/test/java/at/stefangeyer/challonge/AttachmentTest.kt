@@ -60,7 +60,7 @@ class AttachmentTest {
                         m.id == i.getArgument(1)
                     } ?: throw DataAccessException("match not found")
 
-                    match.attachments.map { a -> AttachmentWrapper(a) }
+                    match.attachments?.map { a -> AttachmentWrapper(a) }
                 }
 
                 on { getAttachment(any(), any(), any()) } doAnswer { i ->
@@ -73,7 +73,7 @@ class AttachmentTest {
                         m.id == i.getArgument(1)
                     } ?: throw DataAccessException("match not found")
 
-                    val attachment = match.attachments.firstOrNull { a ->
+                    val attachment = match.attachments?.firstOrNull { a ->
                         a.id == i.getArgument(2)
                     } ?: throw DataAccessException("attachment not found")
 
@@ -109,7 +109,7 @@ class AttachmentTest {
                         m.id == i.getArgument(1)
                     } ?: throw DataAccessException("match not found")
 
-                    val attachment = match.attachments.firstOrNull { a ->
+                    val attachment = match.attachments?.firstOrNull { a ->
                         a.id == i.getArgument(2)
                     } ?: throw DataAccessException("attachment not found")
 
@@ -128,7 +128,7 @@ class AttachmentTest {
                         m.id == i.getArgument(1)
                     } ?: throw DataAccessException("match not found")
 
-                    val attachment = match.attachments.firstOrNull { a ->
+                    val attachment = match.attachments?.firstOrNull { a ->
                         a.id == i.getArgument(2)
                     } ?: throw DataAccessException("attachment not found")
 
@@ -171,23 +171,29 @@ class AttachmentTest {
     fun testCreateAttachment() {
         val tournament = this.tournaments.first { t -> t.url == "tourney123" }
         val match = tournament.matches[0]
+        assertNotNull(match.attachments)
+        val attachments = match.attachments!!
         val local = this.challonge.createAttachment(match, AttachmentQuery(description = "Some new attachment"))
-        assertTrue(match.attachments.contains(local))
+        assertTrue(attachments.contains(local))
     }
 
     @Test
     fun testUpdateAttachment() {
         val tournament = this.tournaments.first { t -> t.url == "tourney123" }
         val match = tournament.matches[0]
-        val local = this.challonge.updateAttachment(match, match.attachments[0], AttachmentQuery(url = "https://www.google.com"))
-        assertEquals(match.attachments[0], local)
+        assertNotNull(match.attachments)
+        val attachments = match.attachments!!
+        val local = this.challonge.updateAttachment(match, attachments[0], AttachmentQuery(url = "https://www.google.com"))
+        assertEquals(attachments[0], local)
     }
 
     @Test
     fun testDeleteAttachment() {
         val tournament = this.tournaments.first { t -> t.url == "tourney123" }
         val match = tournament.matches[0]
-        val local = this.challonge.deleteAttachment(match, match.attachments[0])
-        assertFalse(match.attachments.contains(local))
+        assertNotNull(match.attachments)
+        val attachments = match.attachments!!
+        val local = this.challonge.deleteAttachment(match, attachments[0])
+        assertFalse(attachments.contains(local))
     }
 }

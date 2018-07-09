@@ -157,7 +157,7 @@ class MatchTest {
         val tournament = this.tournaments.first { t -> t.url == "tourney123" }
         val match = tournament.matches[0]
         val local = this.challonge.updateMatch(match, MatchQuery(winnerId = 120))
-        assertEquals(120, local.winnerId)
+        assertEquals(120L, local.winnerId)
     }
 
     @Test(expected = IllegalArgumentException::class)

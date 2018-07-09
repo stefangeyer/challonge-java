@@ -44,5 +44,5 @@ class Match(
         val updatedAt: OffsetDateTime? = null,
         val prerequisiteMatchIdsCsv: String? = null,
         val scoresCsv: String? = null,
-        val attachments: List<Attachment> = listOf()
+        val attachments: List<Attachment>? = listOf()
 )

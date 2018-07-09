@@ -19,7 +19,7 @@ package at.stefangeyer.challonge.model
 import at.stefangeyer.challonge.model.enum.MatchState
 import java.time.OffsetDateTime
 
-class Match(
+data class Match(
         val id: Long = 0L,
         val tournamentId: Long,
         val attachmentCount: Int? = 0,

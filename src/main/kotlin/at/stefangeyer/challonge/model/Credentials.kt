@@ -8,7 +8,7 @@ import org.apache.commons.codec.binary.Base64
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-class Credentials(private val username: String, private val key: String) {
+data class Credentials(private val username: String, private val key: String) {
     /**
      * Creates a HTTP basic auth String from the given credentials
      *

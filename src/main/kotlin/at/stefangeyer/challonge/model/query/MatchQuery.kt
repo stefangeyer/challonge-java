@@ -16,15 +16,9 @@
 
 package at.stefangeyer.challonge.model.query
 
-import com.google.gson.annotations.SerializedName
-
 class MatchQuery(
-        @SerializedName("winner_id")
         val winnerId: Long? = null,
-        @SerializedName("player1_votes")
         val votesForPlayer1: Int? = null,
-        @SerializedName("player2_votes")
         val votesForPlayer2: Int? = null,
-        @SerializedName("scores_csv")
         val scoresCsv: String? = null
 )

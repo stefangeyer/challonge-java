@@ -42,10 +42,18 @@ compileTestKotlin {
     }
 }
 
-// Run integration tests using:
+// Run tests using:
 // gradle test -DchallongeUsername=<username> -DchallongeApiKey=<apikey> [-DchallongeSubdomain=<subdomain>]
 test {
     systemProperty("challongeUsername", System.getProperty("challongeUsername"))
     systemProperty("challongeApiKey", System.getProperty("challongeApiKey"))
     systemProperty("challongeSubdomain", System.getProperty("challongeSubdomain"))
+}
+
+task unitTest(type: Test) {
+    includes = ["**/unit/*"]
+}
+
+task integrationTest(type: Test) {
+    includes = ["**/integration/*"]
 }

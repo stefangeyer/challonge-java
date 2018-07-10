@@ -1,5 +1,6 @@
-package at.stefangeyer.challonge
+package at.stefangeyer.challonge.unit
 
+import at.stefangeyer.challonge.Challonge
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.*
 import at.stefangeyer.challonge.model.enum.MatchState

@@ -23,7 +23,8 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient) : 
 
     override fun getParticipants(tournament: Tournament,
                                  onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
-        this.restClient.getParticipants(tournament.id.toString(), { list -> onSuccess(list.map { pw -> pw.participant }) }, onFailure)
+        this.restClient.getParticipants(tournament.id.toString(),
+                { list -> onSuccess(list.map { pw -> pw.participant }) }, onFailure)
     }
 
     override fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean): Participant =
@@ -51,7 +52,8 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient) : 
         for (query in data) {
             validateParticipantQuery(query)
         }
-        return this.restClient.bulkAddParticipants(tournament.id.toString(), ParticipantQueryListWrapper(data)).map { pq -> pq.participant }
+        return this.restClient.bulkAddParticipants(tournament.id.toString(),
+                ParticipantQueryListWrapper(data)).map { pq -> pq.participant }
     }
 
     override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>,

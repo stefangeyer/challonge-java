@@ -1,4 +1,4 @@
-package at.stefangeyer.challonge.integrationtest
+package at.stefangeyer.challonge.integration
 
 import at.stefangeyer.challonge.Challonge
 import at.stefangeyer.challonge.exception.DataAccessException

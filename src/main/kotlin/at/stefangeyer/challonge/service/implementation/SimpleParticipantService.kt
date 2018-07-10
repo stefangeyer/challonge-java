@@ -6,6 +6,7 @@ import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import at.stefangeyer.challonge.service.ParticipantService
 
@@ -36,13 +37,14 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient) : 
 
     override fun addParticipant(tournament: Tournament, data: ParticipantQuery): Participant {
         validateParticipantQuery(data)
-        return this.restClient.addParticipant(tournament.id.toString(), data).participant
+        return this.restClient.addParticipant(tournament.id.toString(), ParticipantQueryWrapper(data)).participant
     }
 
     override fun addParticipant(tournament: Tournament, data: ParticipantQuery,
                                 onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
         validateParticipantQuery(data)
-        this.restClient.addParticipant(tournament.id.toString(), data, { pw -> onSuccess(pw.participant) }, onFailure)
+        this.restClient.addParticipant(tournament.id.toString(), ParticipantQueryWrapper(data),
+                { pw -> onSuccess(pw.participant) }, onFailure)
     }
 
     override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>): List<Participant> {
@@ -64,14 +66,15 @@ class SimpleParticipantService(private val restClient: ParticipantRestClient) : 
 
     override fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant {
         validateParticipantQuery(data)
-        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data).participant
+        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id,
+                ParticipantQueryWrapper(data)).participant
     }
 
     override fun updateParticipant(participant: Participant, data: ParticipantQuery,
                                    onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
         validateParticipantQuery(data)
-        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id, data,
-                { pw -> onSuccess(pw.participant) }, onFailure)
+        return this.restClient.updateParticipant(participant.tournamentId.toString(), participant.id,
+                ParticipantQueryWrapper(data), { pw -> onSuccess(pw.participant) }, onFailure)
     }
 
     override fun checkInParticipant(participant: Participant): Participant =

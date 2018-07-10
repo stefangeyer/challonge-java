@@ -6,6 +6,7 @@ import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.rest.TournamentRestClient
 import at.stefangeyer.challonge.service.TournamentService
 import java.time.OffsetDateTime
@@ -52,7 +53,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                 data.grandFinalsModifier == null && data.tieBreaks == null) {
             throw IllegalArgumentException("All data parameters are null. Provide at least one")
         }
-        return this.restClient.createTournament(data).tournament
+        return this.restClient.createTournament(TournamentQueryWrapper(data)).tournament
     }
 
     override fun createTournament(data: TournamentQuery,
@@ -70,7 +71,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                 data.grandFinalsModifier == null && data.tieBreaks == null) {
             throw IllegalArgumentException("All data parameters are null. Provide at least one")
         }
-        this.restClient.createTournament(data, { tw -> onSuccess(tw.tournament) }, onFailure)
+        this.restClient.createTournament(TournamentQueryWrapper(data), { tw -> onSuccess(tw.tournament) }, onFailure)
     }
 
     override fun updateTournament(tournament: Tournament, data: TournamentQuery): Tournament {
@@ -87,7 +88,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                 data.grandFinalsModifier == null && data.tieBreaks == null) {
             throw IllegalArgumentException("All data parameters are null. Provide at least one")
         }
-        return this.restClient.updateTournament(tournament.id.toString(), data).tournament
+        return this.restClient.updateTournament(tournament.id.toString(), TournamentQueryWrapper(data)).tournament
     }
 
     override fun updateTournament(tournament: Tournament, data: TournamentQuery,
@@ -105,7 +106,8 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                 data.grandFinalsModifier == null && data.tieBreaks == null) {
             throw IllegalArgumentException("All data parameters are null. Provide at least one")
         }
-        this.restClient.updateTournament(tournament.id.toString(), data, { tw -> onSuccess(tw.tournament) }, onFailure)
+        this.restClient.updateTournament(tournament.id.toString(), TournamentQueryWrapper(data),
+                { tw -> onSuccess(tw.tournament) }, onFailure)
     }
 
     override fun deleteTournament(tournament: Tournament): Tournament =

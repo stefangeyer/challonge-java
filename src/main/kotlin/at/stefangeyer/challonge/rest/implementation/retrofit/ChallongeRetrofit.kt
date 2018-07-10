@@ -2,12 +2,13 @@ package at.stefangeyer.challonge.rest.implementation.retrofit
 
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper
+import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
@@ -59,7 +60,7 @@ interface ChallongeRetrofit {
      * @return Call
      */
     @POST("tournaments.json")
-    fun createTournament(@Body tournamentData: TournamentQuery): Call<TournamentWrapper>
+    fun createTournament(@Body tournamentData: TournamentQueryWrapper): Call<TournamentWrapper>
 
     /**
      * Update a tournament's attributes.
@@ -72,7 +73,7 @@ interface ChallongeRetrofit {
      */
     @PUT("tournaments/{tournament}.json")
     fun updateTournament(@Path("tournament") tournament: String,
-                         @Body tournamentData: TournamentQuery): Call<TournamentWrapper>
+                         @Body tournamentData: TournamentQueryWrapper): Call<TournamentWrapper>
 
     /**
      * Deletes a tournament along with all its associated records. There is no undo, so use with care!
@@ -235,7 +236,7 @@ interface ChallongeRetrofit {
      */
     @POST("tournaments/{tournament}/participants.json")
     fun addParticipant(@Path("tournament") tournament: String,
-                       @Body participant: ParticipantQuery): Call<ParticipantWrapper>
+                       @Body participant: ParticipantQueryWrapper): Call<ParticipantWrapper>
 
     /**
      * Bulk add participants to a tournament (up until it is started).
@@ -265,7 +266,7 @@ interface ChallongeRetrofit {
     @PUT("tournaments/{tournament}/participants/{participant_id}.json")
     fun updateParticipant(@Path("tournament") tournament: String,
                           @Path("participant_id") participantId: Long,
-                          @Body participant: ParticipantQuery): Call<ParticipantWrapper>
+                          @Body participant: ParticipantQueryWrapper): Call<ParticipantWrapper>
 
     /**
      * Checks a participant in, setting checked_in_at to the current time.

@@ -7,9 +7,10 @@ import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.RankedBy
 import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
-import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
@@ -82,7 +83,7 @@ class TournamentTest {
                 }
 
                 on { createTournament(any()) } doAnswer { i ->
-                    val data = i.getArgument<TournamentQuery>(0)
+                    val data = i.getArgument<TournamentQueryWrapper>(0).tournament
                     if (data.tournamentType == null || data.url == null) throw DataAccessException("Data is invalid")
 
                     val tournament = Tournament(id = Random().nextInt(1000).toLong(), name = data.name,
@@ -118,7 +119,7 @@ class TournamentTest {
                         s == t.url || s == t.id.toString()
                     } ?: throw DataAccessException("tournament not found")
 
-                    val data = i.getArgument<TournamentQuery>(1)
+                    val data = i.getArgument<TournamentQueryWrapper>(1).tournament
 
                     val tournament = updateTournament(current, data)
                     tournaments[tournaments.indexOf(current)] = tournament

@@ -2,8 +2,8 @@ package at.stefangeyer.challonge.rest
 
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 
 /**
@@ -76,7 +76,7 @@ interface ParticipantRestClient {
      * @return The added participant
      */
     @Throws(DataAccessException::class)
-    fun addParticipant(tournament: String, participant: ParticipantQuery): ParticipantWrapper
+    fun addParticipant(tournament: String, participant: ParticipantQueryWrapper): ParticipantWrapper
 
     /**
      * Add a participant to a tournament (up until it is started).
@@ -88,7 +88,7 @@ interface ParticipantRestClient {
      * @param onSuccess   Called with result if call was successful
      * @param onFailure   Called with exception if call was not successful
      */
-    fun addParticipant(tournament: String, participant: ParticipantQuery,
+    fun addParticipant(tournament: String, participant: ParticipantQueryWrapper,
                        onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**
@@ -133,7 +133,7 @@ interface ParticipantRestClient {
      * @return The updates participant
      */
     @Throws(DataAccessException::class)
-    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery): ParticipantWrapper
+    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQueryWrapper): ParticipantWrapper
 
     /**
      * Update the attributes of a tournament participant.
@@ -146,7 +146,7 @@ interface ParticipantRestClient {
      * @param onSuccess     Called with result if call was successful
      * @param onFailure     Called with exception if call was not successful
      */
-    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery,
+    fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQueryWrapper,
                           onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>)
 
     /**

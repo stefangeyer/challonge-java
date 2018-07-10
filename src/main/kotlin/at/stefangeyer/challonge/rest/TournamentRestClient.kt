@@ -3,8 +3,8 @@ package at.stefangeyer.challonge.rest
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import java.time.OffsetDateTime
 
@@ -82,7 +82,7 @@ interface TournamentRestClient {
      * @return The created tournament
      */
     @Throws(DataAccessException::class)
-    fun createTournament(tournamentData: TournamentQuery): TournamentWrapper
+    fun createTournament(tournamentData: TournamentQueryWrapper): TournamentWrapper
 
     /**
      * Create a new tournament.
@@ -91,7 +91,7 @@ interface TournamentRestClient {
      * @param onSuccess      Called with result if call was successful
      * @param onFailure      Called with exception if call was not successful
      */
-    fun createTournament(tournamentData: TournamentQuery, onSuccess: Callback<TournamentWrapper>,
+    fun createTournament(tournamentData: TournamentQueryWrapper, onSuccess: Callback<TournamentWrapper>,
                          onFailure: Callback<DataAccessException>)
 
     /**
@@ -105,7 +105,7 @@ interface TournamentRestClient {
      * @return The updated tournament
      */
     @Throws(DataAccessException::class)
-    fun updateTournament(tournament: String, tournamentData: TournamentQuery): TournamentWrapper
+    fun updateTournament(tournament: String, tournamentData: TournamentQueryWrapper): TournamentWrapper
 
     /**
      * Update a tournament's attributes.
@@ -117,7 +117,7 @@ interface TournamentRestClient {
      * @param onSuccess      Called with result if call was successful
      * @param onFailure      Called with exception if call was not successful
      */
-    fun updateTournament(tournament: String, tournamentData: TournamentQuery, onSuccess: Callback<TournamentWrapper>,
+    fun updateTournament(tournament: String, tournamentData: TournamentQueryWrapper, onSuccess: Callback<TournamentWrapper>,
                          onFailure: Callback<DataAccessException>)
 
     /**

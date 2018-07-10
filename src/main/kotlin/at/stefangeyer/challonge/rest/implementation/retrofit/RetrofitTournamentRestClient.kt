@@ -3,8 +3,8 @@ package at.stefangeyer.challonge.rest.implementation.retrofit
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import at.stefangeyer.challonge.rest.TournamentRestClient
 import retrofit2.Call
@@ -60,12 +60,12 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                 })
     }
 
-    override fun createTournament(tournamentData: TournamentQuery): TournamentWrapper {
+    override fun createTournament(tournamentData: TournamentQueryWrapper): TournamentWrapper {
         val response = this.challongeRetrofit.createTournament(tournamentData).execute()
         return parseResponse("CreateTournament", response)
     }
 
-    override fun createTournament(tournamentData: TournamentQuery, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
+    override fun createTournament(tournamentData: TournamentQueryWrapper, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.createTournament(tournamentData).enqueue(object : retrofit2.Callback<TournamentWrapper> {
             override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
                 onFailure(DataAccessException("CreateTournament request was not successful", t))
@@ -77,12 +77,12 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         })
     }
 
-    override fun updateTournament(tournament: String, tournamentData: TournamentQuery): TournamentWrapper {
+    override fun updateTournament(tournament: String, tournamentData: TournamentQueryWrapper): TournamentWrapper {
         val response = this.challongeRetrofit.updateTournament(tournament, tournamentData).execute()
         return parseResponse("UpdateTournament", response)
     }
 
-    override fun updateTournament(tournament: String, tournamentData: TournamentQuery,
+    override fun updateTournament(tournament: String, tournamentData: TournamentQueryWrapper,
                                   onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.updateTournament(tournament, tournamentData).enqueue(object : retrofit2.Callback<TournamentWrapper> {
             override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {

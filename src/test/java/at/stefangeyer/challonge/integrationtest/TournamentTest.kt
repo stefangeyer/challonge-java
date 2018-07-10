@@ -7,10 +7,10 @@ import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.RankedBy
 import at.stefangeyer.challonge.model.enum.TournamentState
 import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.FixMethodOrder

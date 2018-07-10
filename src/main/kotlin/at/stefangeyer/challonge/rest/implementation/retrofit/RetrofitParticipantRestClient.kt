@@ -2,8 +2,8 @@ package at.stefangeyer.challonge.rest.implementation.retrofit
 
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
+import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.rest.ParticipantRestClient
 import retrofit2.Call
@@ -55,12 +55,12 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
                 })
     }
 
-    override fun addParticipant(tournament: String, participant: ParticipantQuery): ParticipantWrapper {
+    override fun addParticipant(tournament: String, participant: ParticipantQueryWrapper): ParticipantWrapper {
         val response = this.challongeRetrofit.addParticipant(tournament, participant).execute()
         return parseResponse("AddParticipant", response)
     }
 
-    override fun addParticipant(tournament: String, participant: ParticipantQuery,
+    override fun addParticipant(tournament: String, participant: ParticipantQueryWrapper,
                                 onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.addParticipant(tournament, participant).enqueue(object : retrofit2.Callback<ParticipantWrapper> {
             override fun onFailure(call: Call<ParticipantWrapper>, t: Throwable) {
@@ -91,12 +91,12 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
         })
     }
 
-    override fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery): ParticipantWrapper {
+    override fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQueryWrapper): ParticipantWrapper {
         val response = this.challongeRetrofit.updateParticipant(tournament, participantId, participant).execute()
         return parseResponse("UpdateParticipant", response)
     }
 
-    override fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQuery,
+    override fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQueryWrapper,
                                    onSuccess: Callback<ParticipantWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.updateParticipant(tournament, participantId, participant).enqueue(object : retrofit2.Callback<ParticipantWrapper> {
             override fun onFailure(call: Call<ParticipantWrapper>, t: Throwable) {

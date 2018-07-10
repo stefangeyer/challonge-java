@@ -25,13 +25,13 @@ import java.time.format.DateTimeFormatter
 /**
  * Type adapter for the [OffsetDateTime] class.
  *
- * @author EXSolo
- * @version 20160819.1
+ * @author Stefan Geyer
+ * @version 2018-07-10
  */
 class OffsetDateTimeAdapter : JsonSerializer<OffsetDateTime>, JsonDeserializer<OffsetDateTime> {
 
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, type: Type, jsonDeserializationContext: JsonDeserializationContext): OffsetDateTime {
+    override fun deserialize(json: JsonElement, type: Type, context: JsonDeserializationContext): OffsetDateTime {
         val jsonPrimitive = json.asJsonPrimitive
 
         // if provided as String - '2011-12-03T10:15:30+01:00'
@@ -42,7 +42,7 @@ class OffsetDateTimeAdapter : JsonSerializer<OffsetDateTime>, JsonDeserializer<O
         throw JsonParseException("Unable to parse OffsetDateTime. DateTime was not provided as string.")
     }
 
-    override fun serialize(offsetDateTime: OffsetDateTime, type: Type, jsonSerializationContext: JsonSerializationContext): JsonElement {
+    override fun serialize(offsetDateTime: OffsetDateTime, type: Type, context: JsonSerializationContext): JsonElement {
         val s = offsetDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         return JsonPrimitive(s)
     }

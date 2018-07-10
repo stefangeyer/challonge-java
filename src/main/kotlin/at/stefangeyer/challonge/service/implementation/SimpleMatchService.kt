@@ -7,6 +7,7 @@ import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.rest.MatchRestClient
 import at.stefangeyer.challonge.service.MatchService
 
@@ -38,12 +39,12 @@ class SimpleMatchService(private val restClient: MatchRestClient) : MatchService
 
     override fun updateMatch(match: Match, data: MatchQuery): Match {
         validateMatchQuery(data)
-        return this.restClient.updateMatch(match.tournamentId.toString(), match.id, data).match
+        return this.restClient.updateMatch(match.tournamentId.toString(), match.id, MatchQueryWrapper(data)).match
     }
 
     override fun updateMatch(match: Match, data: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         validateMatchQuery(data)
-        return this.restClient.updateMatch(match.tournamentId.toString(), match.id, data,
+        return this.restClient.updateMatch(match.tournamentId.toString(), match.id, MatchQueryWrapper(data),
                 { mw -> onSuccess(mw.match) }, onFailure)
     }
 

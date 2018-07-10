@@ -6,6 +6,7 @@ import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
 import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
@@ -355,7 +356,7 @@ interface ChallongeRetrofit {
     @PUT("tournaments/{tournament}/matches/{match_id}.json")
     fun updateMatch(@Path("tournament") tournament: String,
                     @Path("match_id") matchId: Long,
-                    @Body match: MatchQuery): Call<MatchWrapper>
+                    @Body match: MatchQueryWrapper): Call<MatchWrapper>
 
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it

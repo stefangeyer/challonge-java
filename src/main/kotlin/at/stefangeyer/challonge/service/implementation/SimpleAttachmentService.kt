@@ -17,54 +17,54 @@ import at.stefangeyer.challonge.service.AttachmentService
 class SimpleAttachmentService(private val restClient: AttachmentRestClient) : AttachmentService {
 
     override fun getAttachments(match: Match): List<Attachment> =
-            this.restClient.getAttachments(match.tournamentId.toString(), match.id).map { aw -> aw.attachment }
+            this.restClient.getAttachments(match.tournamentId.toString(), match.id).map { aw -> aw.match_attachment }
 
     override fun getAttachments(match: Match,
                                 onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) {
         this.restClient.getAttachments(match.tournamentId.toString(), match.id,
-                { list -> onSuccess(list.map { aw -> aw.attachment }) }, onFailure)
+                { list -> onSuccess(list.map { aw -> aw.match_attachment }) }, onFailure)
     }
 
     override fun getAttachment(match: Match, attachmentId: Long): Attachment =
-            this.restClient.getAttachment(match.tournamentId.toString(), match.id, attachmentId).attachment
+            this.restClient.getAttachment(match.tournamentId.toString(), match.id, attachmentId).match_attachment
 
     override fun getAttachment(match: Match, attachmentId: Long,
                                onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         this.restClient.getAttachment(match.tournamentId.toString(), match.id, attachmentId,
-                { aw -> onSuccess(aw.attachment) }, onFailure)
+                { aw -> onSuccess(aw.match_attachment) }, onFailure)
     }
 
     override fun createAttachment(match: Match, data: AttachmentQuery): Attachment {
         validateAttachmentQuery(data)
-        return this.restClient.createAttachment(match.tournamentId.toString(), match.id, data).attachment
+        return this.restClient.createAttachment(match.tournamentId.toString(), match.id, data).match_attachment
     }
 
     override fun createAttachment(match: Match, data: AttachmentQuery,
                                   onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         validateAttachmentQuery(data)
         return this.restClient.createAttachment(match.tournamentId.toString(), match.id, data,
-                { aw -> onSuccess(aw.attachment) }, onFailure)
+                { aw -> onSuccess(aw.match_attachment) }, onFailure)
     }
 
     override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery): Attachment {
         validateAttachmentQuery(data)
-        return this.restClient.updateAttachment(match.tournamentId.toString(), match.id, attachment.id, data).attachment
+        return this.restClient.updateAttachment(match.tournamentId.toString(), match.id, attachment.id, data).match_attachment
     }
 
     override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery,
                                   onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         validateAttachmentQuery(data)
         return this.restClient.updateAttachment(match.tournamentId.toString(), match.id, attachment.id, data,
-                { aw -> onSuccess(aw.attachment) }, onFailure)
+                { aw -> onSuccess(aw.match_attachment) }, onFailure)
     }
 
     override fun deleteAttachment(match: Match, attachment: Attachment): Attachment =
-            this.restClient.deleteAttachment(match.tournamentId.toString(), match.id, attachment.id).attachment
+            this.restClient.deleteAttachment(match.tournamentId.toString(), match.id, attachment.id).match_attachment
 
     override fun deleteAttachment(match: Match, attachment: Attachment,
                                   onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
         this.restClient.deleteAttachment(match.tournamentId.toString(), match.id, attachment.id,
-                { aw -> onSuccess(aw.attachment) }, onFailure)
+                { aw -> onSuccess(aw.match_attachment) }, onFailure)
     }
 
     private fun validateAttachmentQuery(data: AttachmentQuery) {

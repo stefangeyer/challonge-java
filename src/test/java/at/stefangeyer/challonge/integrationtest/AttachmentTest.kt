@@ -69,7 +69,7 @@ class AttachmentTest {
     }
 
     @Test
-    fun createAttachmentTest() {
+    fun aCreateAttachmentTest() {
         val query = AttachmentQuery(description = "TestDescription", url = "http://www.example.com")
 
         val attachment = this.challonge.createAttachment(this.match, query)
@@ -78,8 +78,7 @@ class AttachmentTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun createFileAttachmentTest() {
+    fun bCreateFileAttachmentTest() {
         val assetFile = File(Thread.currentThread().contextClassLoader.getResource("testfile1.txt")!!.path)
         val query = AttachmentQuery(asset = assetFile, description = "TestDescription")
 
@@ -97,8 +96,7 @@ class AttachmentTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun getAttachmentsTest() {
+    fun cGetAttachmentsTest() {
         val attachment1 = this.challonge.createAttachment(
                 match,
                 AttachmentQuery(description = "Attachment1")
@@ -111,14 +109,13 @@ class AttachmentTest {
 
         val attachments = this.challonge.getAttachments(match)
 
-        assertTrue(attachments.size == 2)
+        assertEquals(2, attachments.size)
         assertEquals(attachment1, attachments.first { a -> a.description.equals("Attachment1") })
         assertEquals(attachment2, attachments.first { a -> a.description.equals("Attachment2") })
     }
 
     @Test
-    @Throws(Exception::class)
-    fun getAttachmentTest() {
+    fun dGetAttachmentTest() {
         val createdAttachment = this.challonge.createAttachment(match, AttachmentQuery(description = "Attachment1"))
 
         val readAttachment = this.challonge.getAttachment(match, createdAttachment.id)
@@ -127,45 +124,37 @@ class AttachmentTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun updateAttachmentTest() {
+    fun eUpdateAttachmentTest() {
         val assetFile = File(Thread.currentThread().contextClassLoader.getResource("testfile1.txt")!!.path)
 
-        val createdAttachment = this.challonge.createAttachment(
-                match,
-                AttachmentQuery(asset = assetFile, description = "Attachment1")
-        )
+        val createdAttachment =
+                this.challonge.createAttachment(match, AttachmentQuery(asset = assetFile, description = "Attachment1"))
 
         assertEquals("testfile1.txt", createdAttachment.assetFileName)
 
         val newAssetFile = File(Thread.currentThread().contextClassLoader.getResource("testfile2.txt")!!.path)
 
-        val updatedAttachment = this.challonge.updateAttachment(
-                match,
-                createdAttachment,
-                AttachmentQuery(asset = newAssetFile, description = "update")
-        )
+        val updatedAttachment = this.challonge.updateAttachment(match, createdAttachment,
+                AttachmentQuery(asset = newAssetFile, description = "update"))
 
         assertEquals("update", updatedAttachment.description)
         assertEquals("testfile2.txt", updatedAttachment.assetFileName)
     }
 
     @Test
-    @Throws(Exception::class)
-    fun deleteAttachmentTest() {
+    fun fDeleteAttachmentTest() {
         val attachment1 = this.challonge.createAttachment(match, AttachmentQuery(description = "Attachment1"))
-
-        val attachment2 = this.challonge.createAttachment(match, AttachmentQuery(description = "Attachment2"))
+        this.challonge.createAttachment(match, AttachmentQuery(description = "Attachment2"))
 
         val attachmentsBeforeDelete = this.challonge.getAttachments(match)
 
-        assertTrue(attachmentsBeforeDelete.size == 2)
+        assertEquals(2, attachmentsBeforeDelete.size)
 
         val deleted = this.challonge.deleteAttachment(match, attachment1)
         assertEquals(attachment1.id, deleted.id)
 
         val attachmentsAfterDelete = this.challonge.getAttachments(match)
-        assertTrue(attachmentsAfterDelete.size == 1)
+        assertEquals(1, attachmentsAfterDelete.size)
     }
 
     @Test

@@ -27,12 +27,12 @@ class ParticipantQueryAdapter : JsonSerializer<ParticipantQuery> {
     override fun serialize(query: ParticipantQuery, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
         val pqEntity = JsonObject()
 
-        pqEntity.addProperty("name", query.name)
-        pqEntity.addProperty("email", query.email)
-        pqEntity.addProperty("challonge_username", query.challongeUsername)
-        pqEntity.addProperty("seed", query.seed)
-        pqEntity.addProperty("misc", query.misc)
-        pqEntity.addProperty("invite_name_or_email", query.inviteNameOrEmail)
+        if (query.name != null) pqEntity.addProperty("name", query.name)
+        if (query.email != null)pqEntity.addProperty("email", query.email)
+        if (query.challongeUsername != null)pqEntity.addProperty("challonge_username", query.challongeUsername)
+        if (query.seed != null)pqEntity.addProperty("seed", query.seed)
+        if (query.misc != null)pqEntity.addProperty("misc", query.misc)
+        if (query.inviteNameOrEmail != null)pqEntity.addProperty("invite_name_or_email", query.inviteNameOrEmail)
 
         return pqEntity
     }

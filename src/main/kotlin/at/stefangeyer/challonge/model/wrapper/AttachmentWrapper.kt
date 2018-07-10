@@ -8,4 +8,4 @@ import at.stefangeyer.challonge.model.Attachment
  * @author Stefan Geyer
  * @version 2018-07-08
  */
-class AttachmentWrapper(val attachment: Attachment)
+class AttachmentWrapper(val match_attachment: Attachment)

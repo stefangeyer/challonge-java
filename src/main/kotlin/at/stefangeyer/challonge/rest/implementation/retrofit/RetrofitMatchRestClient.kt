@@ -3,7 +3,7 @@ package at.stefangeyer.challonge.rest.implementation.retrofit
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.enum.MatchState
-import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.rest.MatchRestClient
 import retrofit2.Call
@@ -55,12 +55,12 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
                 })
     }
 
-    override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): MatchWrapper {
+    override fun updateMatch(tournament: String, matchId: Long, match: MatchQueryWrapper): MatchWrapper {
         val response = this.challongeRetrofit.updateMatch(tournament, matchId, match).execute()
         return parseResponse("UpdateMatch", response)
     }
 
-    override fun updateMatch(tournament: String, matchId: Long, match: MatchQuery,
+    override fun updateMatch(tournament: String, matchId: Long, match: MatchQueryWrapper,
                              onSuccess: Callback<MatchWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.updateMatch(tournament, matchId, match).enqueue(object : retrofit2.Callback<MatchWrapper> {
             override fun onFailure(call: Call<MatchWrapper>, t: Throwable) {

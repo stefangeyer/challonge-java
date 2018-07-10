@@ -5,6 +5,7 @@ import at.stefangeyer.challonge.model.*
 import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.rest.*
 import at.stefangeyer.challonge.serializer.Serializer
@@ -100,7 +101,7 @@ class MatchTest {
                         m.id == i.getArgument(1)
                     } ?: throw DataAccessException("match not found")
 
-                    val data = i.getArgument<MatchQuery>(2)
+                    val data = i.getArgument<MatchQueryWrapper>(2).match
                     val updated = Match(id = match.id, tournamentId = tournament.id,
                             winnerId = data.winnerId ?: match.winnerId, scoresCsv = data.scoresCsv)
 

@@ -29,6 +29,6 @@ data class Attachment(
         val updatedAt: OffsetDateTime? = null,
         val assetFileName: String? = null,
         val assetContentType: String? = null,
-        val assetFileSize: Long = 0L,
+        val assetFileSize: Long? = 0L,
         val assetUrl: String? = null
 )

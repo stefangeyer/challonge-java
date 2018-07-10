@@ -25,13 +25,13 @@ import java.lang.reflect.Type
 
 class MatchQueryAdapter : JsonSerializer<MatchQuery> {
 
-    override fun serialize(matchQuery: MatchQuery, type: Type, context: JsonSerializationContext): JsonElement {
+    override fun serialize(query: MatchQuery, type: Type, context: JsonSerializationContext): JsonElement {
         val mqEntity = JsonObject()
 
-        mqEntity.addProperty("winner_id", matchQuery.winnerId)
-        mqEntity.addProperty("player1_votes", matchQuery.votesForPlayer1)
-        mqEntity.addProperty("player2_votes", matchQuery.votesForPlayer2)
-        mqEntity.addProperty("scores_csv", matchQuery.scoresCsv)
+        if (query.winnerId != null) mqEntity.addProperty("winner_id", query.winnerId)
+        if (query.votesForPlayer1 != null) mqEntity.addProperty("player1_votes", query.votesForPlayer1)
+        if (query.votesForPlayer2 != null) mqEntity.addProperty("player2_votes", query.votesForPlayer2)
+        if (query.scoresCsv != null) mqEntity.addProperty("scores_csv", query.scoresCsv)
 
         return mqEntity
     }

@@ -3,7 +3,7 @@ package at.stefangeyer.challonge.rest
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.enum.MatchState
-import at.stefangeyer.challonge.model.query.MatchQuery
+import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 
 /**
@@ -86,7 +86,7 @@ interface MatchRestClient {
      * @return The updated match
      */
     @Throws(DataAccessException::class)
-    fun updateMatch(tournament: String, matchId: Long, match: MatchQuery): MatchWrapper
+    fun updateMatch(tournament: String, matchId: Long, match: MatchQueryWrapper): MatchWrapper
 
     /**
      * Update/submit the score(s) for a match.
@@ -99,7 +99,7 @@ interface MatchRestClient {
      * @param onSuccess  Called with result if call was successful
      * @param onFailure  Called with exception if call was not successful
      */
-    fun updateMatch(tournament: String, matchId: Long, match: MatchQuery,
+    fun updateMatch(tournament: String, matchId: Long, match: MatchQueryWrapper,
                     onSuccess: Callback<MatchWrapper>, onFailure: Callback<DataAccessException>)
 
     /**

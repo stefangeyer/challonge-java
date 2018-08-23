@@ -21,7 +21,7 @@ import at.stefangeyer.challonge.model.enum.TournamentType
 import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
 import java.time.OffsetDateTime
 
-class TournamentQuery(
+data class TournamentQuery(
         val name: String? = null,
         val tournamentType: TournamentType? = null,
         val url: String? = null,

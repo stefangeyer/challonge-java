@@ -92,4 +92,140 @@ class Tournament(
         var grandFinalsModifier: GrandFinalsModifier? = null,
         var participants: List<Participant> = listOf(),
         var matches: List<Match> = listOf()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Tournament
+
+        if (id != other.id) return false
+        if (url != other.url) return false
+        if (name != other.name) return false
+        if (tournamentType != other.tournamentType) return false
+        if (subdomain != other.subdomain) return false
+        if (description != other.description) return false
+        if (openSignup != other.openSignup) return false
+        if (holdThirdPlaceMatch != other.holdThirdPlaceMatch) return false
+        if (pointsForMatchWin != other.pointsForMatchWin) return false
+        if (pointsForMatchTie != other.pointsForMatchTie) return false
+        if (pointsForGameWin != other.pointsForGameWin) return false
+        if (pointsForGameTie != other.pointsForGameTie) return false
+        if (pointsForBye != other.pointsForBye) return false
+        if (swissRounds != other.swissRounds) return false
+        if (rankedBy != other.rankedBy) return false
+        if (roundRobinPointsForGameWin != other.roundRobinPointsForGameWin) return false
+        if (roundRobinPointsForGameTie != other.roundRobinPointsForGameTie) return false
+        if (roundRobinPointsForMatchWin != other.roundRobinPointsForMatchWin) return false
+        if (roundRobinPointsForMatchTie != other.roundRobinPointsForMatchTie) return false
+        if (acceptAttachments != other.acceptAttachments) return false
+        if (hideForum != other.hideForum) return false
+        if (showRounds != other.showRounds) return false
+        if (private != other.private) return false
+        if (notifyUsersWhenTheTournamentEnds != other.notifyUsersWhenTheTournamentEnds) return false
+        if (sequentialPairings != other.sequentialPairings) return false
+        if (signupCap != other.signupCap) return false
+        if (checkInDuration != other.checkInDuration) return false
+        if (allowParticipantMatchReporting != other.allowParticipantMatchReporting) return false
+        if (anonymousVoting != other.anonymousVoting) return false
+        if (category != other.category) return false
+        if (createdByApi != other.createdByApi) return false
+        if (creditCapped != other.creditCapped) return false
+        if (gameId != other.gameId) return false
+        if (groupStagesEnabled != other.groupStagesEnabled) return false
+        if (hideSeeds != other.hideSeeds) return false
+        if (maxPredictionsPerUser != other.maxPredictionsPerUser) return false
+        if (notifyUsersWhenMatchesOpen != other.notifyUsersWhenMatchesOpen) return false
+        if (participantsCount != other.participantsCount) return false
+        if (predictionMethod != other.predictionMethod) return false
+        if (progressMeter != other.progressMeter) return false
+        if (quickAdvance != other.quickAdvance) return false
+        if (requireScoreAgreement != other.requireScoreAgreement) return false
+        if (state != other.state) return false
+        if (teams != other.teams) return false
+        if (tieBreaks != other.tieBreaks) return false
+        if (descriptionSource != other.descriptionSource) return false
+        if (fullChallongeUrl != other.fullChallongeUrl) return false
+        if (liveImageUrl != other.liveImageUrl) return false
+        if (signUpUrl != other.signUpUrl) return false
+        if (reviewBeforeFinalizing != other.reviewBeforeFinalizing) return false
+        if (acceptingPredictions != other.acceptingPredictions) return false
+        if (participantsLocked != other.participantsLocked) return false
+        if (gameName != other.gameName) return false
+        if (participantsSwappable != other.participantsSwappable) return false
+        if (teamConvertable != other.teamConvertable) return false
+        if (groupStagesWereStarted != other.groupStagesWereStarted) return false
+        if (eventId != other.eventId) return false
+        if (publicPredictionsBeforeStartTime != other.publicPredictionsBeforeStartTime) return false
+        if (grandFinalsModifier != other.grandFinalsModifier) return false
+        if (participants != other.participants) return false
+        if (matches != other.matches) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + url.hashCode()
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + tournamentType.hashCode()
+        result = 31 * result + (subdomain?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + openSignup.hashCode()
+        result = 31 * result + holdThirdPlaceMatch.hashCode()
+        result = 31 * result + pointsForMatchWin.hashCode()
+        result = 31 * result + pointsForMatchTie.hashCode()
+        result = 31 * result + pointsForGameWin.hashCode()
+        result = 31 * result + pointsForGameTie.hashCode()
+        result = 31 * result + pointsForBye.hashCode()
+        result = 31 * result + swissRounds
+        result = 31 * result + (rankedBy?.hashCode() ?: 0)
+        result = 31 * result + roundRobinPointsForGameWin.hashCode()
+        result = 31 * result + roundRobinPointsForGameTie.hashCode()
+        result = 31 * result + roundRobinPointsForMatchWin.hashCode()
+        result = 31 * result + roundRobinPointsForMatchTie.hashCode()
+        result = 31 * result + acceptAttachments.hashCode()
+        result = 31 * result + hideForum.hashCode()
+        result = 31 * result + showRounds.hashCode()
+        result = 31 * result + private.hashCode()
+        result = 31 * result + notifyUsersWhenTheTournamentEnds.hashCode()
+        result = 31 * result + sequentialPairings.hashCode()
+        result = 31 * result + (signupCap ?: 0)
+        result = 31 * result + (checkInDuration?.hashCode() ?: 0)
+        result = 31 * result + allowParticipantMatchReporting.hashCode()
+        result = 31 * result + anonymousVoting.hashCode()
+        result = 31 * result + (category?.hashCode() ?: 0)
+        result = 31 * result + createdByApi.hashCode()
+        result = 31 * result + creditCapped.hashCode()
+        result = 31 * result + (gameId?.hashCode() ?: 0)
+        result = 31 * result + groupStagesEnabled.hashCode()
+        result = 31 * result + hideSeeds.hashCode()
+        result = 31 * result + maxPredictionsPerUser
+        result = 31 * result + notifyUsersWhenMatchesOpen.hashCode()
+        result = 31 * result + participantsCount
+        result = 31 * result + predictionMethod
+        result = 31 * result + progressMeter
+        result = 31 * result + quickAdvance.hashCode()
+        result = 31 * result + requireScoreAgreement.hashCode()
+        result = 31 * result + state.hashCode()
+        result = 31 * result + (teams?.hashCode() ?: 0)
+        result = 31 * result + (tieBreaks?.hashCode() ?: 0)
+        result = 31 * result + (descriptionSource?.hashCode() ?: 0)
+        result = 31 * result + (fullChallongeUrl?.hashCode() ?: 0)
+        result = 31 * result + (liveImageUrl?.hashCode() ?: 0)
+        result = 31 * result + (signUpUrl?.hashCode() ?: 0)
+        result = 31 * result + reviewBeforeFinalizing.hashCode()
+        result = 31 * result + acceptingPredictions.hashCode()
+        result = 31 * result + participantsLocked.hashCode()
+        result = 31 * result + (gameName?.hashCode() ?: 0)
+        result = 31 * result + participantsSwappable.hashCode()
+        result = 31 * result + teamConvertable.hashCode()
+        result = 31 * result + groupStagesWereStarted.hashCode()
+        result = 31 * result + (eventId?.hashCode() ?: 0)
+        result = 31 * result + (publicPredictionsBeforeStartTime?.hashCode() ?: 0)
+        result = 31 * result + (grandFinalsModifier?.hashCode() ?: 0)
+        result = 31 * result + participants.hashCode()
+        result = 31 * result + matches.hashCode()
+        return result
+    }
+}

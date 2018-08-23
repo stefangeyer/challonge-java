@@ -18,7 +18,7 @@ package at.stefangeyer.challonge.model
 
 import java.time.OffsetDateTime
 
-data class Attachment(
+class Attachment(
         val id: Long = 0L,
         val matchId: Long = 0L,
         val userId: Long = 0L,
@@ -31,4 +31,38 @@ data class Attachment(
         val assetContentType: String? = null,
         val assetFileSize: Long? = 0L,
         val assetUrl: String? = null
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Attachment
+
+        if (id != other.id) return false
+        if (matchId != other.matchId) return false
+        if (userId != other.userId) return false
+        if (description != other.description) return false
+        if (url != other.url) return false
+        if (originalFileName != other.originalFileName) return false
+        if (assetFileName != other.assetFileName) return false
+        if (assetContentType != other.assetContentType) return false
+        if (assetFileSize != other.assetFileSize) return false
+        if (assetUrl != other.assetUrl) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + matchId.hashCode()
+        result = 31 * result + userId.hashCode()
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (url?.hashCode() ?: 0)
+        result = 31 * result + (originalFileName?.hashCode() ?: 0)
+        result = 31 * result + (assetFileName?.hashCode() ?: 0)
+        result = 31 * result + (assetContentType?.hashCode() ?: 0)
+        result = 31 * result + (assetFileSize?.hashCode() ?: 0)
+        result = 31 * result + (assetUrl?.hashCode() ?: 0)
+        return result
+    }
+}

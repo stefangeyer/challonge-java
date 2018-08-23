@@ -19,7 +19,7 @@ package at.stefangeyer.challonge.model.query
 import java.io.File
 import java.nio.file.Files
 
-class AttachmentQuery(
+data class AttachmentQuery(
         val asset: File? = null,
         val url: String? = null,
         val description: String? = null

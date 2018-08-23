@@ -16,7 +16,7 @@
 
 package at.stefangeyer.challonge.model.query
 
-class MatchQuery(
+data class MatchQuery(
         val winnerId: Long? = null,
         val votesForPlayer1: Int? = null,
         val votesForPlayer2: Int? = null,

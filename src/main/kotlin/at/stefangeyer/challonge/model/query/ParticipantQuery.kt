@@ -16,7 +16,7 @@
 
 package at.stefangeyer.challonge.model.query
 
-class ParticipantQuery(
+data class ParticipantQuery(
         val name: String? = null,
         val email: String? = null,
         val challongeUsername: String? = null,

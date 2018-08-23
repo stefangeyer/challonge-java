@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: property('kotlin.version')
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: property('kotlin.version')
     compile group: 'com.squareup.retrofit2', name: 'retrofit', version: property('retrofit.version')
     compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: property('retrofit.version')
     compile group: 'commons-codec', name: 'commons-codec', version: property('commons.codec.version')
@@ -50,10 +51,10 @@ test {
     systemProperty("challongeSubdomain", System.getProperty("challongeSubdomain"))
 }
 
-task unitTest(type: Test) {
-    includes = ["**/unit/*"]
-}
-
-task integrationTest(type: Test) {
-    includes = ["**/integration/*"]
-}
+//task unitTest(type: Test) {
+//    includes = ["**/unit/*"]
+//}
+//
+//task integrationTest(type: Test) {
+//    includes = ["**/integration/*"]
+//}

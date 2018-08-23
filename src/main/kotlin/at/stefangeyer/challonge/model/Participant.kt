@@ -18,7 +18,7 @@ package at.stefangeyer.challonge.model
 
 import java.time.OffsetDateTime
 
-data class Participant(
+class Participant(
         val id: Long = 0L,
         val tournamentId: Long = 0L,
         val name: String? = null,
@@ -48,4 +48,70 @@ data class Participant(
         val checkedIn: Boolean = false,
         val reactivatable: Boolean = false,
         val matches: List<Match>? = listOf()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Participant
+
+        if (id != other.id) return false
+        if (tournamentId != other.tournamentId) return false
+        if (name != other.name) return false
+        if (challongeUsername != other.challongeUsername) return false
+        if (seed != other.seed) return false
+        if (misc != other.misc) return false
+        if (active != other.active) return false
+        if (finalRank != other.finalRank) return false
+        if (groupId != other.groupId) return false
+        if (icon != other.icon) return false
+        if (invitationId != other.invitationId) return false
+        if (inviteEmail != other.inviteEmail) return false
+        if (onWaitingList != other.onWaitingList) return false
+        if (challongeEmailAddressVerified != other.challongeEmailAddressVerified) return false
+        if (removable != other.removable) return false
+        if (participatableOrInvitationAttached != other.participatableOrInvitationAttached) return false
+        if (confirmRemove != other.confirmRemove) return false
+        if (invitationPending != other.invitationPending) return false
+        if (displayNameWithInvitationEmailAddress != other.displayNameWithInvitationEmailAddress) return false
+        if (emailHash != other.emailHash) return false
+        if (username != other.username) return false
+        if (attachedParticipatablePortraitUrl != other.attachedParticipatablePortraitUrl) return false
+        if (canCheckIn != other.canCheckIn) return false
+        if (checkedIn != other.checkedIn) return false
+        if (reactivatable != other.reactivatable) return false
+        if (matches != other.matches) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + tournamentId.hashCode()
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (challongeUsername?.hashCode() ?: 0)
+        result = 31 * result + seed
+        result = 31 * result + (misc?.hashCode() ?: 0)
+        result = 31 * result + active.hashCode()
+        result = 31 * result + (finalRank ?: 0)
+        result = 31 * result + (groupId?.hashCode() ?: 0)
+        result = 31 * result + (icon?.hashCode() ?: 0)
+        result = 31 * result + (invitationId?.hashCode() ?: 0)
+        result = 31 * result + (inviteEmail?.hashCode() ?: 0)
+        result = 31 * result + onWaitingList.hashCode()
+        result = 31 * result + (challongeEmailAddressVerified?.hashCode() ?: 0)
+        result = 31 * result + removable.hashCode()
+        result = 31 * result + participatableOrInvitationAttached.hashCode()
+        result = 31 * result + confirmRemove.hashCode()
+        result = 31 * result + invitationPending.hashCode()
+        result = 31 * result + (displayNameWithInvitationEmailAddress?.hashCode() ?: 0)
+        result = 31 * result + (emailHash?.hashCode() ?: 0)
+        result = 31 * result + (username?.hashCode() ?: 0)
+        result = 31 * result + (attachedParticipatablePortraitUrl?.hashCode() ?: 0)
+        result = 31 * result + canCheckIn.hashCode()
+        result = 31 * result + checkedIn.hashCode()
+        result = 31 * result + reactivatable.hashCode()
+        result = 31 * result + (matches?.hashCode() ?: 0)
+        return result
+    }
+}

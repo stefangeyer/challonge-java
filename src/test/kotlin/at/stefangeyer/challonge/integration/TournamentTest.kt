@@ -11,6 +11,8 @@ import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
+import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitRestClientFactory
+import at.stefangeyer.challonge.serializer.gson.GsonSerializer
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -42,7 +44,7 @@ class TournamentTest {
                         "Required system properties challongeUsername and challongeApiKey are absent")
             }
 
-            challonge = Challonge(Credentials(username, apiKey))
+            challonge = Challonge(Credentials(username, apiKey), GsonSerializer(), RetrofitRestClientFactory())
         }
     }
 

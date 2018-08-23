@@ -11,9 +11,7 @@ import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.rest.RestClientFactory
-import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitRestClientFactory
 import at.stefangeyer.challonge.serializer.Serializer
-import at.stefangeyer.challonge.serializer.gson.GsonSerializer
 import at.stefangeyer.challonge.service.AttachmentService
 import at.stefangeyer.challonge.service.MatchService
 import at.stefangeyer.challonge.service.ParticipantService
@@ -24,8 +22,8 @@ import at.stefangeyer.challonge.service.implementation.SimpleParticipantService
 import at.stefangeyer.challonge.service.implementation.SimpleTournamentService
 import java.time.OffsetDateTime
 
-class Challonge(credentials: Credentials, serializer: Serializer = GsonSerializer(),
-                private val restClientFactory: RestClientFactory = RetrofitRestClientFactory()
+class Challonge(credentials: Credentials, serializer: Serializer,
+                private val restClientFactory: RestClientFactory
 ) : TournamentService, ParticipantService, MatchService, AttachmentService {
 
     private val tournaments: TournamentService

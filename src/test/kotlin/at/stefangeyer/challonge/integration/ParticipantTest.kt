@@ -6,6 +6,8 @@ import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Tournament
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
+import at.stefangeyer.challonge.rest.implementation.retrofit.RetrofitRestClientFactory
+import at.stefangeyer.challonge.serializer.gson.GsonSerializer
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.FixMethodOrder
@@ -38,7 +40,7 @@ class ParticipantTest {
                         "Required system properties challongeUsername and challongeApiKey are absent")
             }
 
-            challonge = Challonge(Credentials(username, apiKey))
+            challonge = Challonge(Credentials(username, apiKey), GsonSerializer(), RetrofitRestClientFactory())
 
             try {
                 val t = this.challonge.getTournament(TOURNAMENT_URL)

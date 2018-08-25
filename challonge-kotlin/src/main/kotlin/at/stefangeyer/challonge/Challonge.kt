@@ -10,7 +10,7 @@ import at.stefangeyer.challonge.model.query.MatchQuery
 import at.stefangeyer.challonge.model.query.ParticipantQuery
 import at.stefangeyer.challonge.model.query.TournamentQuery
 import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
-import at.stefangeyer.challonge.rest.RestClientFactory
+import at.stefangeyer.challonge.rest.RestClient
 import at.stefangeyer.challonge.serializer.Serializer
 import at.stefangeyer.challonge.service.AttachmentService
 import at.stefangeyer.challonge.service.MatchService
@@ -23,7 +23,7 @@ import at.stefangeyer.challonge.service.implementation.SimpleTournamentService
 import java.time.OffsetDateTime
 
 class Challonge(credentials: Credentials, serializer: Serializer,
-                private val restClientFactory: RestClientFactory
+                private val restClient: RestClient
 ) : TournamentService, ParticipantService, MatchService, AttachmentService {
 
     private val tournaments: TournamentService
@@ -33,12 +33,12 @@ class Challonge(credentials: Credentials, serializer: Serializer,
 
     init {
         // Initialize factory
-        this.restClientFactory.initialize(credentials, serializer)
+        this.restClient.initialize(credentials, serializer)
 
-        this.tournaments = SimpleTournamentService(this.restClientFactory.createTournamentRestClient())
-        this.participants = SimpleParticipantService(this.restClientFactory.createParticipantRestClient())
-        this.matches = SimpleMatchService(this.restClientFactory.createMatchRestClient())
-        this.attachments = SimpleAttachmentService(this.restClientFactory.createAttachmentRestClient())
+        this.tournaments = SimpleTournamentService(this.restClient.createTournamentRestClient())
+        this.participants = SimpleParticipantService(this.restClient.createParticipantRestClient())
+        this.matches = SimpleMatchService(this.restClient.createMatchRestClient())
+        this.attachments = SimpleAttachmentService(this.restClient.createAttachmentRestClient())
     }
 
     override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,

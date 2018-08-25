@@ -9,7 +9,7 @@ import at.stefangeyer.challonge.serializer.Serializer
  * @author Stefan Geyer
  * @version 2018-06-30
  */
-interface RestClientFactory {
+interface RestClient {
 
     /**
      * Initializes the factory with the necessary dependencies

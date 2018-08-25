@@ -11,7 +11,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class RetrofitRestClientFactory : RestClientFactory {
+class RetrofitRestClient : RestClient {
 
     companion object {
         private const val BASE_URL = "https://api.challonge.com/v1/"

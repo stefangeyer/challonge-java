@@ -135,7 +135,7 @@ class AttachmentTest {
                 }
             }
 
-            val restClientFactory = mock<RestClientFactory> {
+            val restClientFactory = mock<RestClient> {
                 on { createTournamentRestClient() } doReturn tournamentRestClient
                 on { createParticipantRestClient() } doReturn participantRestClient
                 on { createMatchRestClient() } doReturn matchRestClient

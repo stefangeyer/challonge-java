@@ -127,7 +127,7 @@ class MatchTest {
 
             val attachmentRestClient = mock<AttachmentRestClient>()
 
-            val restClientFactory = mock<RestClientFactory> {
+            val restClientFactory = mock<RestClient> {
                 on { createTournamentRestClient() } doReturn tournamentRestClient
                 on { createParticipantRestClient() } doReturn participantRestClient
                 on { createMatchRestClient() } doReturn matchRestClient

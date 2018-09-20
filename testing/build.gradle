@@ -1,7 +1,7 @@
 dependencies {
-    compile project(':challonge-kotlin')
-    compile project(':challonge-kotlin-serializers:gson')
-    compile project(':challonge-kotlin-rest:retrofit')
+    compile project(':core')
+    compile project(':serializers:gson')
+    compile project(':rest:retrofit')
 }
 
 // Run tests using:

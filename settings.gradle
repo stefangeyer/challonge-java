@@ -1,5 +1,5 @@
 rootProject.name = 'parent'
-include 'challonge-kotlin', 'challonge-kotlin-serializers', 'challonge-kotlin-rest', 'testing'
-include 'challonge-kotlin-serializers:gson'
-include 'challonge-kotlin-rest:retrofit'
+include 'core', 'testing'
+include 'serializers:gson'
+include 'rest:retrofit'
 enableFeaturePreview('STABLE_PUBLISHING')

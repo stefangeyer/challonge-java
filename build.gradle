@@ -1,6 +1,3 @@
-group 'at.stefangeyer.challonge'
-version '1.0-SNAPSHOT'
-
 buildscript {
     repositories {
         mavenCentral()
@@ -8,5 +5,84 @@ buildscript {
 
     dependencies {
         classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: property('kotlin.version')
+    }
+}
+
+allprojects {
+    version '1.0-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'kotlin'
+    apply plugin: 'maven-publish'
+
+    group 'at.stefangeyer.challonge'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: property('kotlin.version')
+
+        testCompile group: 'junit', name: 'junit', version: property('junit.version')
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allSource
+        classifier = 'sources'
+    }
+
+    task javadocJar(type: Jar) {
+        from javadoc
+        classifier = 'javadoc'
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                afterEvaluate {
+                    artifactId = jar.baseName
+                }
+
+                artifact sourcesJar
+                artifact javadocJar
+
+                from components.java
+
+                pom {
+                    url = 'https://github.com/stefangeyer/challonge-kotlin'
+
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'sgeyer'
+                            name = 'Stefan Geyer'
+                            email = 'stefangeyer@outlook.com'
+                        }
+                    }
+
+                    scm {
+                        connection = 'scm:git:git://github.com/stefangeyer/challonge-kotlin.git'
+                        developerConnection = 'scm:git:ssh://github.com/stefangeyer/challonge-kotlin.git'
+                        url = 'https://github.com/stefangeyer/challonge-kotlin'
+                    }
+                }
+            }
+        }
     }
 }

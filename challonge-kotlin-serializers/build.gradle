@@ -1,2 +1,1 @@
-group 'at.stefangeyer.challonge'
-version '1.0-SNAPSHOT'
+group 'at.stefangeyer.challonge.serializer'

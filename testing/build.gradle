@@ -1,33 +1,17 @@
-group 'at.stefangeyer.challonge'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'kotlin'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile project(':challonge-kotlin')
     compile project(':challonge-kotlin-serializers:gson')
     compile project(':challonge-kotlin-rest:retrofit')
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 // Run tests using:
-// gradle test -DchallongeUsername=<username> -DchallongeApiKey=<apikey> [-DchallongeSubdomain=<subdomain>]
+// gradle check -DintegrationTests -DchallongeUsername=<username> -DchallongeApiKey=<apikey> [-DchallongeSubdomain=<subdomain>]
 test {
     systemProperty("challongeUsername", System.getProperty("challongeUsername"))
     systemProperty("challongeApiKey", System.getProperty("challongeApiKey"))
     systemProperty("challongeSubdomain", System.getProperty("challongeSubdomain"))
+
+    onlyIf {
+        project.hasProperty("integrationTests")
+    }
 }

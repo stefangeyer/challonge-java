@@ -6,6 +6,7 @@ import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper
 import at.stefangeyer.challonge.rest.ParticipantRestClient
+import at.stefangeyer.challonge.rest.retrofit.util.parse
 import retrofit2.Call
 import retrofit2.Response
 
@@ -19,7 +20,7 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
 
     override fun getParticipants(tournament: String): List<ParticipantWrapper> {
         val response = this.challongeRetrofit.getParticipants(tournament).execute()
-        return parseResponse("GetParticipants", response)
+        return response.parse("GetParticipants")
     }
 
     override fun getParticipants(tournament: String, onSuccess: Callback<List<ParticipantWrapper>>, onFailure: Callback<DataAccessException>) {
@@ -29,7 +30,7 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<List<ParticipantWrapper>>, response: Response<List<ParticipantWrapper>>) {
-                onSuccess.accept(parseResponse("GetParticipants", response))
+                onSuccess.accept(response.parse("GetParticipants"))
             }
         })
     }
@@ -38,7 +39,7 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
         val response = this.challongeRetrofit
                 .getParticipant(tournament, participantId, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("GetParticipant", response)
+        return response.parse("GetParticipant")
     }
 
     override fun getParticipant(tournament: String, participantId: Long, includeMatches: Boolean,
@@ -50,14 +51,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
                     }
 
                     override fun onResponse(call: Call<ParticipantWrapper>, response: Response<ParticipantWrapper>) {
-                        onSuccess.accept(parseResponse("GetParticipant", response))
+                        onSuccess.accept(response.parse("GetParticipant"))
                     }
                 })
     }
 
     override fun addParticipant(tournament: String, participant: ParticipantQueryWrapper): ParticipantWrapper {
         val response = this.challongeRetrofit.addParticipant(tournament, participant).execute()
-        return parseResponse("AddParticipant", response)
+        return response.parse("AddParticipant")
     }
 
     override fun addParticipant(tournament: String, participant: ParticipantQueryWrapper,
@@ -68,14 +69,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<ParticipantWrapper>, response: Response<ParticipantWrapper>) {
-                onSuccess.accept(parseResponse("AddParticipant", response))
+                onSuccess.accept(response.parse("AddParticipant"))
             }
         })
     }
 
     override fun bulkAddParticipants(tournament: String, participants: ParticipantQueryListWrapper): List<ParticipantWrapper> {
         val response = this.challongeRetrofit.bulkAddParticipants(tournament, participants).execute()
-        return parseResponse("BulkAddParticipant", response)
+        return response.parse("BulkAddParticipant")
     }
 
     override fun bulkAddParticipants(tournament: String, participants: ParticipantQueryListWrapper,
@@ -86,14 +87,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<List<ParticipantWrapper>>, response: Response<List<ParticipantWrapper>>) {
-                onSuccess.accept(parseResponse("BulkAddParticipant", response))
+                onSuccess.accept(response.parse("BulkAddParticipant"))
             }
         })
     }
 
     override fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQueryWrapper): ParticipantWrapper {
         val response = this.challongeRetrofit.updateParticipant(tournament, participantId, participant).execute()
-        return parseResponse("UpdateParticipant", response)
+        return response.parse("UpdateParticipant")
     }
 
     override fun updateParticipant(tournament: String, participantId: Long, participant: ParticipantQueryWrapper,
@@ -104,14 +105,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<ParticipantWrapper>, response: Response<ParticipantWrapper>) {
-                onSuccess.accept(parseResponse("UpdateParticipant", response))
+                onSuccess.accept(response.parse("UpdateParticipant"))
             }
         })
     }
 
     override fun checkInParticipant(tournament: String, participantId: Long): ParticipantWrapper {
         val response = this.challongeRetrofit.checkInParticipant(tournament, participantId).execute()
-        return parseResponse("CheckInParticipant", response)
+        return response.parse("CheckInParticipant")
     }
 
     override fun checkInParticipant(tournament: String, participantId: Long,
@@ -122,14 +123,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<ParticipantWrapper>, response: Response<ParticipantWrapper>) {
-                onSuccess.accept(parseResponse("CheckInParticipant", response))
+                onSuccess.accept(response.parse("CheckInParticipant"))
             }
         })
     }
 
     override fun undoCheckInParticipant(tournament: String, participantId: Long): ParticipantWrapper {
         val response = this.challongeRetrofit.undoCheckInParticipant(tournament, participantId).execute()
-        return parseResponse("UndoCheckInParticipant", response)
+        return response.parse("UndoCheckInParticipant")
     }
 
     override fun undoCheckInParticipant(tournament: String, participantId: Long,
@@ -140,14 +141,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<ParticipantWrapper>, response: Response<ParticipantWrapper>) {
-                onSuccess.accept(parseResponse("UndoCheckInParticipant", response))
+                onSuccess.accept(response.parse("UndoCheckInParticipant"))
             }
         })
     }
 
     override fun deleteParticipant(tournament: String, participantId: Long): ParticipantWrapper {
         val response = this.challongeRetrofit.deleteParticipant(tournament, participantId).execute()
-        return parseResponse("DeleteParticipant", response)
+        return response.parse("DeleteParticipant")
     }
 
     override fun deleteParticipant(tournament: String, participantId: Long,
@@ -158,14 +159,14 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<ParticipantWrapper>, response: Response<ParticipantWrapper>) {
-                onSuccess.accept(parseResponse("DeleteParticipant", response))
+                onSuccess.accept(response.parse("DeleteParticipant"))
             }
         })
     }
 
     override fun randomizeParticipants(tournament: String): List<ParticipantWrapper> {
         val response = this.challongeRetrofit.randomizeParticipants(tournament).execute()
-        return parseResponse("RandomizeParticipants", response)
+        return response.parse("RandomizeParticipants")
     }
 
     override fun randomizeParticipants(tournament: String, onSuccess: Callback<List<ParticipantWrapper>>,
@@ -176,23 +177,8 @@ class RetrofitParticipantRestClient(private val challongeRetrofit: ChallongeRetr
             }
 
             override fun onResponse(call: Call<List<ParticipantWrapper>>, response: Response<List<ParticipantWrapper>>) {
-                onSuccess.accept(parseResponse("RandomizeParticipants", response))
+                onSuccess.accept(response.parse("RandomizeParticipants"))
             }
         })
-    }
-
-    private fun <T> parseResponse(action: String, response: Response<T>): T {
-        if (!response.isSuccessful) {
-            throw DataAccessException(action + " request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
     }
 }

@@ -5,6 +5,7 @@ import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.query.AttachmentQuery
 import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper
 import at.stefangeyer.challonge.rest.AttachmentRestClient
+import at.stefangeyer.challonge.rest.retrofit.util.parse
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -21,7 +22,7 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
 
     override fun getAttachments(tournament: String, matchId: Long): List<AttachmentWrapper> {
         val response = this.challongeRetrofit.getAttachments(tournament, matchId).execute()
-        return parseResponse("GetAttachments", response)
+        return response.parse("GetAttachments")
     }
 
     override fun getAttachments(tournament: String, matchId: Long,
@@ -33,14 +34,14 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<List<AttachmentWrapper>>, response: Response<List<AttachmentWrapper>>) {
-                        onSuccess.accept(parseResponse("GetAttachments", response))
+                        onSuccess.accept(response.parse("GetAttachments"))
                     }
                 })
     }
 
     override fun getAttachment(tournament: String, matchId: Long, attachmentId: Long): AttachmentWrapper {
         val response = this.challongeRetrofit.getAttachment(tournament, matchId, attachmentId).execute()
-        return parseResponse("GetAttachment", response)
+        return response.parse("GetAttachment")
     }
 
     override fun getAttachment(tournament: String, matchId: Long, attachmentId: Long,
@@ -52,7 +53,7 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess.accept(parseResponse("GetAttachment", response))
+                        onSuccess.accept(response.parse("GetAttachment"))
                     }
                 })
     }
@@ -63,7 +64,7 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         val desc = createDescriptionPart(attachment)
 
         val response = this.challongeRetrofit.createAttachment(tournament, matchId, asset, url, desc).execute()
-        return parseResponse("CreateAttachment", response)
+        return response.parse("CreateAttachment")
     }
 
     override fun createAttachment(tournament: String, matchId: Long, attachment: AttachmentQuery,
@@ -79,7 +80,7 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess.accept(parseResponse("CreateAttachment", response))
+                        onSuccess.accept(response.parse("CreateAttachment"))
                     }
                 })
     }
@@ -90,7 +91,7 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         val desc = createDescriptionPart(attachment)
 
         val response = this.challongeRetrofit.updateAttachment(tournament, matchId, attachmentId, asset, url, desc).execute()
-        return parseResponse("UpdateAttachment", response)
+        return response.parse("UpdateAttachment")
     }
 
     override fun updateAttachment(tournament: String, matchId: Long, attachmentId: Long, attachment: AttachmentQuery,
@@ -106,14 +107,14 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess.accept(parseResponse("CreateAttachment", response))
+                        onSuccess.accept(response.parse("CreateAttachment"))
                     }
                 })
     }
 
     override fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long): AttachmentWrapper {
         val response = this.challongeRetrofit.deleteAttachment(tournament, matchId, attachmentId).execute()
-        return parseResponse("DeleteAttachment", response)
+        return response.parse("DeleteAttachment")
     }
 
     override fun deleteAttachment(tournament: String, matchId: Long, attachmentId: Long,
@@ -125,24 +126,9 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess.accept(parseResponse("DeleteAttachment", response))
+                        onSuccess.accept(response.parse("DeleteAttachment"))
                     }
                 })
-    }
-
-    private fun <T> parseResponse(action: String, response: Response<T>): T {
-        if (!response.isSuccessful) {
-            throw DataAccessException(action + " request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
     }
 
     private fun createAssetPart(attachment: AttachmentQuery): MultipartBody.Part? {

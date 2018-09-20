@@ -6,6 +6,7 @@ import at.stefangeyer.challonge.model.enum.MatchState
 import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.rest.MatchRestClient
+import at.stefangeyer.challonge.rest.retrofit.util.parse
 import retrofit2.Call
 import retrofit2.Response
 
@@ -19,7 +20,7 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
 
     override fun getMatches(tournament: String, participantId: Long?, state: MatchState?): List<MatchWrapper> {
         val response = this.challongeRetrofit.getMatches(tournament, participantId, state).execute()
-        return parseResponse("GetMatches", response)
+        return response.parse("GetMatches")
     }
 
     override fun getMatches(tournament: String, participantId: Long?, state: MatchState?,
@@ -31,14 +32,14 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
                     }
 
                     override fun onResponse(call: Call<List<MatchWrapper>>, response: Response<List<MatchWrapper>>) {
-                        onSuccess.accept(parseResponse("GetMatches", response))
+                        onSuccess.accept(response.parse("GetMatches"))
                     }
                 })
     }
 
     override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean): MatchWrapper {
         val response = this.challongeRetrofit.getMatch(tournament, matchId, if (includeAttachments) 1 else 0).execute()
-        return parseResponse("GetMatch", response)
+        return response.parse("GetMatch")
     }
 
     override fun getMatch(tournament: String, matchId: Long, includeAttachments: Boolean,
@@ -50,14 +51,14 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
                     }
 
                     override fun onResponse(call: Call<MatchWrapper>, response: Response<MatchWrapper>) {
-                        onSuccess.accept(parseResponse("GetMatch", response))
+                        onSuccess.accept(response.parse("GetMatch"))
                     }
                 })
     }
 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQueryWrapper): MatchWrapper {
         val response = this.challongeRetrofit.updateMatch(tournament, matchId, match).execute()
-        return parseResponse("UpdateMatch", response)
+        return response.parse("UpdateMatch")
     }
 
     override fun updateMatch(tournament: String, matchId: Long, match: MatchQueryWrapper,
@@ -68,14 +69,14 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
             }
 
             override fun onResponse(call: Call<MatchWrapper>, response: Response<MatchWrapper>) {
-                onSuccess.accept(parseResponse("UpdateMatch", response))
+                onSuccess.accept(response.parse("UpdateMatch"))
             }
         })
     }
 
     override fun reopenMatch(tournament: String, matchId: Long): MatchWrapper {
         val response = this.challongeRetrofit.reopenMatch(tournament, matchId).execute()
-        return parseResponse("ReopenMatch", response)
+        return response.parse("ReopenMatch")
     }
 
     override fun reopenMatch(tournament: String, matchId: Long, onSuccess: Callback<MatchWrapper>, onFailure: Callback<DataAccessException>) {
@@ -85,23 +86,8 @@ class RetrofitMatchRestClient(private val challongeRetrofit: ChallongeRetrofit) 
             }
 
             override fun onResponse(call: Call<MatchWrapper>, response: Response<MatchWrapper>) {
-                onSuccess.accept(parseResponse("ReopenMatch", response))
+                onSuccess.accept(response.parse("ReopenMatch"))
             }
         })
-    }
-
-    private fun <T> parseResponse(action: String, response: Response<T>): T {
-        if (!response.isSuccessful) {
-            throw DataAccessException(action + " request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody().toString())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
     }
 }

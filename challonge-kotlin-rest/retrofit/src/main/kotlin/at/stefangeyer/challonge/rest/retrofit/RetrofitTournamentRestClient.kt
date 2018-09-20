@@ -7,6 +7,7 @@ import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
 import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import at.stefangeyer.challonge.rest.TournamentRestClient
+import at.stefangeyer.challonge.rest.retrofit.util.parse
 import retrofit2.Call
 import retrofit2.Response
 import java.time.OffsetDateTime
@@ -22,7 +23,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
     override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
                                 createdBefore: OffsetDateTime?, subdomain: String?): List<TournamentWrapper> {
         val response = this.challongeRetrofit.getTournaments(state, type, createdAfter, createdBefore, subdomain).execute()
-        return parseResponse("GetTournaments", response)
+        return response.parse("GetTournaments")
     }
 
     override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?, createdBefore: OffsetDateTime?, subdomain: String?,
@@ -34,7 +35,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<List<TournamentWrapper>>, response: Response<List<TournamentWrapper>>) {
-                        onSuccess.accept(parseResponse("GetTournaments", response))
+                        onSuccess.accept(response.parse("GetTournaments"))
                     }
                 })
     }
@@ -43,7 +44,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .getTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("GetTournament", response)
+        return response.parse("GetTournament")
     }
 
     override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -55,14 +56,14 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("GetTournament", response))
+                        onSuccess.accept(response.parse("GetTournament"))
                     }
                 })
     }
 
     override fun createTournament(tournamentData: TournamentQueryWrapper): TournamentWrapper {
         val response = this.challongeRetrofit.createTournament(tournamentData).execute()
-        return parseResponse("CreateTournament", response)
+        return response.parse("CreateTournament")
     }
 
     override fun createTournament(tournamentData: TournamentQueryWrapper, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
@@ -72,14 +73,14 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
             }
 
             override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                onSuccess.accept(parseResponse("CreateTournament", response))
+                onSuccess.accept(response.parse("CreateTournament"))
             }
         })
     }
 
     override fun updateTournament(tournament: String, tournamentData: TournamentQueryWrapper): TournamentWrapper {
         val response = this.challongeRetrofit.updateTournament(tournament, tournamentData).execute()
-        return parseResponse("UpdateTournament", response)
+        return response.parse("UpdateTournament")
     }
 
     override fun updateTournament(tournament: String, tournamentData: TournamentQueryWrapper,
@@ -90,14 +91,14 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
             }
 
             override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                onSuccess.accept(parseResponse("UpdateTournament", response))
+                onSuccess.accept(response.parse("UpdateTournament"))
             }
         })
     }
 
     override fun deleteTournament(tournament: String): TournamentWrapper {
         val response = this.challongeRetrofit.deleteTournament(tournament).execute()
-        return parseResponse("DeleteTournament", response)
+        return response.parse("DeleteTournament")
     }
 
     override fun deleteTournament(tournament: String, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
@@ -107,7 +108,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
             }
 
             override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                onSuccess.accept(parseResponse("DeleteTournament", response))
+                onSuccess.accept(response.parse("DeleteTournament"))
             }
         })
     }
@@ -116,7 +117,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .processCheckIns(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("ProcessCheckIns", response)
+        return response.parse("ProcessCheckIns")
     }
 
     override fun processCheckIns(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -128,7 +129,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("ProcessCheckIns", response))
+                        onSuccess.accept(response.parse("ProcessCheckIns"))
                     }
                 })
     }
@@ -137,7 +138,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .abortCheckIn(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("AbortCheckIns", response)
+        return response.parse("AbortCheckIns")
     }
 
     override fun abortCheckIn(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -149,7 +150,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("AbortCheckIns", response))
+                        onSuccess.accept(response.parse("AbortCheckIns"))
                     }
                 })
     }
@@ -158,7 +159,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .startTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("StartTournament", response)
+        return response.parse("StartTournament")
     }
 
     override fun startTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -170,7 +171,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("StartTournament", response))
+                        onSuccess.accept(response.parse("StartTournament"))
                     }
                 })
     }
@@ -179,7 +180,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .finalizeTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("FinalizeTournament", response)
+        return response.parse("FinalizeTournament")
     }
 
     override fun finalizeTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -191,7 +192,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("FinalizeTournament", response))
+                        onSuccess.accept(response.parse("FinalizeTournament"))
                     }
                 })
     }
@@ -200,7 +201,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .resetTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("ResetTournament", response)
+        return response.parse("ResetTournament")
     }
 
     override fun resetTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -212,7 +213,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("ResetTournament", response))
+                        onSuccess.accept(response.parse("ResetTournament"))
                     }
                 })
     }
@@ -221,7 +222,7 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         val response = this.challongeRetrofit
                 .openTournamentForPredictions(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .execute()
-        return parseResponse("OpenTournamentForPredictions", response)
+        return response.parse("OpenTournamentForPredictions")
     }
 
     override fun openTournamentForPredictions(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
@@ -233,23 +234,8 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess.accept(parseResponse("OpenTournamentForPredictions", response))
+                        onSuccess.accept(response.parse("OpenTournamentForPredictions"))
                     }
                 })
-    }
-
-    private fun <T> parseResponse(action: String, response: Response<T>): T {
-        if (!response.isSuccessful) {
-            throw DataAccessException(action + " request was not successful (" +
-                    response.code() + ") and returned: " + response.errorBody()?.string())
-        }
-
-        val body = response.body()
-
-        if (body != null) {
-            return body
-        }
-
-        throw DataAccessException("Received response body was null")
     }
 }

@@ -18,6 +18,7 @@ package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
+import at.stefangeyer.challonge.serializer.gson.util.getOrNull
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -38,32 +39,32 @@ class ParticipantAdapter : JsonDeserializer<Participant> {
 
         val id = e.get("id").asLong
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
-        val groupId = check(e.get("group_id"))?.asLong
+        val groupId = e.get("group_id").getOrNull()?.asLong
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
         val tournamentId = e.get("tournament_id").asLong
         val seed = e.get("seed").asInt
-        val name = check(e.get("name"))?.asString
-        val displayNameWithInvitationEmailAddress = check(e.get("display_name_with_invitation_email_address"))?.asString
-        val misc = check(e.get("misc"))?.asString
-        val challongeUsername = check(e.get("challonge_username"))?.asString
-        val inviteEmail = check(e.get("invite_email"))?.asString
+        val name = e.get("name").getOrNull()?.asString
+        val displayNameWithInvitationEmailAddress = e.get("display_name_with_invitation_email_address").getOrNull()?.asString
+        val misc = e.get("misc").getOrNull()?.asString
+        val challongeUsername = e.get("challonge_username").getOrNull()?.asString
+        val inviteEmail = e.get("invite_email").getOrNull()?.asString
         val active = e.get("active").asBoolean
-        val attachedParticipatablePortraitUrl = check(e.get("attached_participatable_portrait_url"))?.asString
+        val attachedParticipatablePortraitUrl = e.get("attached_participatable_portrait_url").getOrNull()?.asString
         val canCheckIn = e.get("can_check_in").asBoolean
-        val challongeEmailAddressVerified = check(e.get("challonge_email_address_verified"))?.asString
+        val challongeEmailAddressVerified = e.get("challonge_email_address_verified").getOrNull()?.asString
         val checkedIn = e.get("checked_in").asBoolean
         val checkedInAt = context.deserialize<OffsetDateTime?>(e.get("checked_in_at"), OffsetDateTime::class.java)
         val confirmRemove = e.get("confirm_remove").asBoolean
-        val emailHash = check(e.get("email_hash"))?.asString
-        val finalRank = check(e.get("final_rank"))?.asInt
-        val icon = check(e.get("icon"))?.asString
-        val invitationId = check(e.get("invitation_id"))?.asLong
+        val emailHash = e.get("email_hash").getOrNull()?.asString
+        val finalRank = e.get("final_rank").getOrNull()?.asInt
+        val icon = e.get("icon").getOrNull()?.asString
+        val invitationId = e.get("invitation_id").getOrNull()?.asLong
         val invitationPending = e.get("invitation_pending").asBoolean
         val onWaitingList = e.get("on_waiting_list").asBoolean
         val participatableOrInvitationAttached = e.get("participatable_or_invitation_attached").asBoolean
         val reactivatable = e.get("reactivatable").asBoolean
         val removable = e.get("removable").asBoolean
-        val username = check(e.get("username"))?.asString
+        val username = e.get("username").getOrNull()?.asString
         val matches = context.deserialize<List<Match>>(e.get("matches"), object : TypeToken<List<Match>>() {}.type)
 
         return Participant(id = id, updatedAt = updatedAt, groupId = groupId, createdAt = createdAt,
@@ -76,10 +77,5 @@ class ParticipantAdapter : JsonDeserializer<Participant> {
                 icon = icon, invitationId = invitationId, invitationPending = invitationPending, onWaitingList = onWaitingList,
                 participatableOrInvitationAttached = participatableOrInvitationAttached, reactivatable = reactivatable,
                 removable = removable, username = username, matches = matches)
-    }
-
-    private fun check(element: JsonElement): JsonElement? {
-        return if (element.isJsonNull) null
-        else element
     }
 }

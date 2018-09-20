@@ -17,6 +17,7 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Attachment
+import at.stefangeyer.challonge.serializer.gson.util.getOrNull
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -40,25 +41,20 @@ class AttachmentAdapter : JsonDeserializer<Attachment> {
         val id = e.get("id").asLong
         val matchId = e.get("match_id").asLong
         val userId = e.get("user_id").asLong
-        val description = check(e.get("description"))?.asString
-        val url = check(e.get("url"))?.asString
-        val originalFileName = check(e.get("original_file_name"))?.asString
+        val description = e.get("description").getOrNull()?.asString
+        val url = e.get("url").getOrNull()?.asString
+        val originalFileName = e.get("original_file_name").getOrNull()?.asString
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
-        val assetFileName = check(e.get("asset_file_name"))?.asString
-        val assetContentType = check(e.get("asset_content_type"))?.asString
-        val assetFileSize = check(e.get("asset_file_size"))?.asLong
-        var assetUrl = check(e.get("asset_url"))?.asString
+        val assetFileName = e.get("asset_file_name").getOrNull()?.asString
+        val assetContentType = e.get("asset_content_type").getOrNull()?.asString
+        val assetFileSize = e.get("asset_file_size").getOrNull()?.asLong
+        var assetUrl = e.get("asset_url").getOrNull()?.asString
         if (assetUrl != null) assetUrl = "https:$assetUrl"
 
         return Attachment(
                 id = id, matchId = matchId, userId = userId, description = description, url = url, originalFileName = originalFileName,
                 createdAt = createdAt, updatedAt = updatedAt, assetFileName = assetFileName, assetContentType = assetContentType,
                 assetFileSize = assetFileSize, assetUrl = assetUrl)
-    }
-
-    private fun check(element: JsonElement): JsonElement? {
-        return if (element.isJsonNull) null
-        else element
     }
 }

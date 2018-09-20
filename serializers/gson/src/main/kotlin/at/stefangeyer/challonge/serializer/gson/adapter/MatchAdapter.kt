@@ -19,6 +19,7 @@ package at.stefangeyer.challonge.serializer.gson.adapter
 import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.enum.MatchState
+import at.stefangeyer.challonge.serializer.gson.util.getOrNull
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -42,25 +43,25 @@ class MatchAdapter : JsonDeserializer<Match> {
 
         val id = e.get("id").asLong
         val tournamentId = e.get("tournament_id").asLong
-        val attachmentCount = check(e.get("attachment_count"))?.asInt
+        val attachmentCount = e.get("attachment_count").getOrNull()?.asInt
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
-        val groupId = check(e.get("group_id"))?.asLong
+        val groupId = e.get("group_id").getOrNull()?.asLong
         val hasAttachment = e.get("has_attachment").asBoolean
-        val identifier = check(e.get("identifier"))?.asString
-        val location = check(e.get("location"))?.asString
+        val identifier = e.get("identifier").getOrNull()?.asString
+        val location = e.get("location").getOrNull()?.asString
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
         val state = MatchState.valueOf(e.get("state").asString.replace(" ", "_").toUpperCase())
         val startedAt = context.deserialize<OffsetDateTime>(e.get("started_at"), OffsetDateTime::class.java)
-        val scoresCsv = check(e.get("scores_csv"))?.asString
-        val winnerId = check(e.get("winner_id"))?.asLong
-        val loserId = check(e.get("loser_id"))?.asLong
-        val player1Id = check(e.get("player1_id"))?.asLong
-        val player2Id = check(e.get("player2_id"))?.asLong
+        val scoresCsv = e.get("scores_csv").getOrNull()?.asString
+        val winnerId = e.get("winner_id").getOrNull()?.asLong
+        val loserId = e.get("loser_id").getOrNull()?.asLong
+        val player1Id = e.get("player1_id").getOrNull()?.asLong
+        val player2Id = e.get("player2_id").getOrNull()?.asLong
         val player1IsPrerequisiteMatchLoser = e.get("player1_is_prereq_match_loser").asBoolean
-        val player1PrerequisiteMatchId = check(e.get("player1_prereq_match_id"))?.asLong
+        val player1PrerequisiteMatchId = e.get("player1_prereq_match_id").getOrNull()?.asLong
         val player2IsPrerequisiteMatchLoser = e.get("player2_is_prereq_match_loser").asBoolean
-        val player2PrerequisiteMatchId = check(e.get("player2_prereq_match_id"))?.asLong
-        val prerequisiteMatchIdsCsv = check(e.get("prerequisite_match_ids_csv"))?.asString
+        val player2PrerequisiteMatchId = e.get("player2_prereq_match_id").getOrNull()?.asLong
+        val prerequisiteMatchIdsCsv = e.get("prerequisite_match_ids_csv").getOrNull()?.asString
         val round = e.get("round").asInt
         val scheduledTime = context.deserialize<OffsetDateTime>(e.get("scheduled_time"), OffsetDateTime::class.java)
         val underwayAt = context.deserialize<OffsetDateTime>(e.get("underway_at"), OffsetDateTime::class.java)
@@ -73,10 +74,5 @@ class MatchAdapter : JsonDeserializer<Match> {
                 player2IsPrerequisiteMatchLoser = player2IsPrerequisiteMatchLoser, player2PrerequisiteMatchId = player2PrerequisiteMatchId,
                 prerequisiteMatchIdsCsv = prerequisiteMatchIdsCsv, round = round, scheduledTime = scheduledTime, underwayAt = underwayAt,
                 attachments = attachments)
-    }
-
-    private fun check(element: JsonElement): JsonElement? {
-        return if (element.isJsonNull) null
-        else element
     }
 }

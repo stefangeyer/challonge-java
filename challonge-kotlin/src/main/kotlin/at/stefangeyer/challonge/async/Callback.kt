@@ -1,5 +1,7 @@
 package at.stefangeyer.challonge.async
 
+import java.util.function.Consumer
+
 /**
  * Generic callback used for async calls
  *
@@ -7,4 +9,4 @@ package at.stefangeyer.challonge.async
  * @author Stefan Geyer
  * @version 2018-07-02
  */
-typealias Callback<T> = (param: T) -> Unit
+typealias Callback<T> = Consumer<T>

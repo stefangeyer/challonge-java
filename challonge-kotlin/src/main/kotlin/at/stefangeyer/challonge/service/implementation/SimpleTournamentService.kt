@@ -27,7 +27,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                                 createdBefore: OffsetDateTime?, subdomain: String?,
                                 onSuccess: Callback<List<Tournament>>, onFailure: Callback<DataAccessException>) {
         this.restClient.getTournaments(state, type, createdAfter, createdBefore, subdomain,
-                { list -> onSuccess(list.map { tw -> tw.tournament }) }, onFailure)
+                Callback { list -> onSuccess.accept(list.map { tw -> tw.tournament }) }, onFailure)
     }
 
     override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -36,7 +36,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean,
                                onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.getTournament(tournament, includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun createTournament(data: TournamentQuery): Tournament {
@@ -71,7 +71,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
                 data.grandFinalsModifier == null && data.tieBreaks == null) {
             throw IllegalArgumentException("All data parameters are null. Provide at least one")
         }
-        this.restClient.createTournament(TournamentQueryWrapper(data), { tw -> onSuccess(tw.tournament) }, onFailure)
+        this.restClient.createTournament(TournamentQueryWrapper(data), Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun updateTournament(tournament: Tournament, data: TournamentQuery): Tournament {
@@ -107,14 +107,14 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
             throw IllegalArgumentException("All data parameters are null. Provide at least one")
         }
         this.restClient.updateTournament(tournament.id.toString(), TournamentQueryWrapper(data),
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun deleteTournament(tournament: Tournament): Tournament =
             this.restClient.deleteTournament(tournament.id.toString()).tournament
 
     override fun deleteTournament(tournament: Tournament, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.restClient.deleteTournament(tournament.id.toString(), { tw -> onSuccess(tw.tournament) }, onFailure)
+        this.restClient.deleteTournament(tournament.id.toString(), Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun processCheckIns(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -123,7 +123,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun processCheckIns(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean,
                                  onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.processCheckIns(tournament.id.toString(), includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -132,7 +132,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean,
                               onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.abortCheckIn(tournament.id.toString(), includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun startTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -141,7 +141,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun startTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean,
                                  onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.startTournament(tournament.id.toString(), includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -150,7 +150,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean,
                                     onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.finalizeTournament(tournament.id.toString(), includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun resetTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -159,7 +159,7 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun resetTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean,
                                  onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.resetTournament(tournament.id.toString(), includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 
     override fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
@@ -168,6 +168,6 @@ class SimpleTournamentService(private val restClient: TournamentRestClient) : To
     override fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean,
                                               onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
         this.restClient.openTournamentForPredictions(tournament.id.toString(), includeParticipants, includeMatches,
-                { tw -> onSuccess(tw.tournament) }, onFailure)
+                Callback { tw -> onSuccess.accept(tw.tournament) }, onFailure)
     }
 }

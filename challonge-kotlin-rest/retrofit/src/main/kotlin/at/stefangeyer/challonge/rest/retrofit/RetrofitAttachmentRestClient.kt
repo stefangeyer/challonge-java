@@ -29,11 +29,11 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.getAttachments(tournament, matchId)
                 .enqueue(object : retrofit2.Callback<List<AttachmentWrapper>> {
                     override fun onFailure(call: Call<List<AttachmentWrapper>>, t: Throwable) {
-                        onFailure(DataAccessException("GetAttachments request was not successful", t))
+                        onFailure.accept(DataAccessException("GetAttachments request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<List<AttachmentWrapper>>, response: Response<List<AttachmentWrapper>>) {
-                        onSuccess(parseResponse("GetAttachments", response))
+                        onSuccess.accept(parseResponse("GetAttachments", response))
                     }
                 })
     }
@@ -48,11 +48,11 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.getAttachment(tournament, matchId, attachmentId)
                 .enqueue(object : retrofit2.Callback<AttachmentWrapper> {
                     override fun onFailure(call: Call<AttachmentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("GetAttachment request was not successful", t))
+                        onFailure.accept(DataAccessException("GetAttachment request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess(parseResponse("GetAttachment", response))
+                        onSuccess.accept(parseResponse("GetAttachment", response))
                     }
                 })
     }
@@ -75,11 +75,11 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.createAttachment(tournament, matchId, asset, url, desc)
                 .enqueue(object : retrofit2.Callback<AttachmentWrapper> {
                     override fun onFailure(call: Call<AttachmentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("CreateAttachment request was not successful", t))
+                        onFailure.accept(DataAccessException("CreateAttachment request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess(parseResponse("CreateAttachment", response))
+                        onSuccess.accept(parseResponse("CreateAttachment", response))
                     }
                 })
     }
@@ -102,11 +102,11 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.createAttachment(tournament, matchId, asset, url, desc)
                 .enqueue(object : retrofit2.Callback<AttachmentWrapper> {
                     override fun onFailure(call: Call<AttachmentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("CreateAttachment request was not successful", t))
+                        onFailure.accept(DataAccessException("CreateAttachment request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess(parseResponse("CreateAttachment", response))
+                        onSuccess.accept(parseResponse("CreateAttachment", response))
                     }
                 })
     }
@@ -121,11 +121,11 @@ class RetrofitAttachmentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.getAttachment(tournament, matchId, attachmentId)
                 .enqueue(object : retrofit2.Callback<AttachmentWrapper> {
                     override fun onFailure(call: Call<AttachmentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("DeleteAttachment request was not successful", t))
+                        onFailure.accept(DataAccessException("DeleteAttachment request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<AttachmentWrapper>, response: Response<AttachmentWrapper>) {
-                        onSuccess(parseResponse("DeleteAttachment", response))
+                        onSuccess.accept(parseResponse("DeleteAttachment", response))
                     }
                 })
     }

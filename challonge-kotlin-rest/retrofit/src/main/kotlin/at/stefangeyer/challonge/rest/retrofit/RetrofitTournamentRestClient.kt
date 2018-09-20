@@ -30,11 +30,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.getTournaments(state, type, createdAfter, createdBefore, subdomain).enqueue(
                 object : retrofit2.Callback<List<TournamentWrapper>> {
                     override fun onFailure(call: Call<List<TournamentWrapper>>, t: Throwable) {
-                        onFailure(DataAccessException("GetTournaments request was not successful", t))
+                        onFailure.accept(DataAccessException("GetTournaments request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<List<TournamentWrapper>>, response: Response<List<TournamentWrapper>>) {
-                        onSuccess(parseResponse("GetTournaments", response))
+                        onSuccess.accept(parseResponse("GetTournaments", response))
                     }
                 })
     }
@@ -51,11 +51,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.getTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("GetTournament request was not successful", t))
+                        onFailure.accept(DataAccessException("GetTournament request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("GetTournament", response))
+                        onSuccess.accept(parseResponse("GetTournament", response))
                     }
                 })
     }
@@ -68,11 +68,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
     override fun createTournament(tournamentData: TournamentQueryWrapper, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.createTournament(tournamentData).enqueue(object : retrofit2.Callback<TournamentWrapper> {
             override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                onFailure(DataAccessException("CreateTournament request was not successful", t))
+                onFailure.accept(DataAccessException("CreateTournament request was not successful", t))
             }
 
             override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                onSuccess(parseResponse("CreateTournament", response))
+                onSuccess.accept(parseResponse("CreateTournament", response))
             }
         })
     }
@@ -86,11 +86,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
                                   onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.updateTournament(tournament, tournamentData).enqueue(object : retrofit2.Callback<TournamentWrapper> {
             override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                onFailure(DataAccessException("UpdateTournament request was not successful", t))
+                onFailure.accept(DataAccessException("UpdateTournament request was not successful", t))
             }
 
             override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                onSuccess(parseResponse("UpdateTournament", response))
+                onSuccess.accept(parseResponse("UpdateTournament", response))
             }
         })
     }
@@ -103,11 +103,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
     override fun deleteTournament(tournament: String, onSuccess: Callback<TournamentWrapper>, onFailure: Callback<DataAccessException>) {
         this.challongeRetrofit.deleteTournament(tournament).enqueue(object : retrofit2.Callback<TournamentWrapper> {
             override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                onFailure(DataAccessException("DeleteTournament request was not successful", t))
+                onFailure.accept(DataAccessException("DeleteTournament request was not successful", t))
             }
 
             override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                onSuccess(parseResponse("DeleteTournament", response))
+                onSuccess.accept(parseResponse("DeleteTournament", response))
             }
         })
     }
@@ -124,11 +124,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.processCheckIns(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("ProcessCheckIns request was not successful", t))
+                        onFailure.accept(DataAccessException("ProcessCheckIns request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("ProcessCheckIns", response))
+                        onSuccess.accept(parseResponse("ProcessCheckIns", response))
                     }
                 })
     }
@@ -145,11 +145,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.abortCheckIn(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("AbortCheckIns request was not successful", t))
+                        onFailure.accept(DataAccessException("AbortCheckIns request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("AbortCheckIns", response))
+                        onSuccess.accept(parseResponse("AbortCheckIns", response))
                     }
                 })
     }
@@ -166,11 +166,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.startTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("StartTournament request was not successful", t))
+                        onFailure.accept(DataAccessException("StartTournament request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("StartTournament", response))
+                        onSuccess.accept(parseResponse("StartTournament", response))
                     }
                 })
     }
@@ -187,11 +187,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.finalizeTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("FinalizeTournament request was not successful", t))
+                        onFailure.accept(DataAccessException("FinalizeTournament request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("FinalizeTournament", response))
+                        onSuccess.accept(parseResponse("FinalizeTournament", response))
                     }
                 })
     }
@@ -208,11 +208,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.finalizeTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("ResetTournament request was not successful", t))
+                        onFailure.accept(DataAccessException("ResetTournament request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("ResetTournament", response))
+                        onSuccess.accept(parseResponse("ResetTournament", response))
                     }
                 })
     }
@@ -229,11 +229,11 @@ class RetrofitTournamentRestClient(private val challongeRetrofit: ChallongeRetro
         this.challongeRetrofit.finalizeTournament(tournament, if (includeParticipants) 1 else 0, if (includeMatches) 1 else 0)
                 .enqueue(object : retrofit2.Callback<TournamentWrapper> {
                     override fun onFailure(call: Call<TournamentWrapper>, t: Throwable) {
-                        onFailure(DataAccessException("OpenTournamentForPredictions request was not successful", t))
+                        onFailure.accept(DataAccessException("OpenTournamentForPredictions request was not successful", t))
                     }
 
                     override fun onResponse(call: Call<TournamentWrapper>, response: Response<TournamentWrapper>) {
-                        onSuccess(parseResponse("OpenTournamentForPredictions", response))
+                        onSuccess.accept(parseResponse("OpenTournamentForPredictions", response))
                     }
                 })
     }

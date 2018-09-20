@@ -25,7 +25,7 @@ class SimpleMatchService(private val restClient: MatchRestClient) : MatchService
     override fun getMatches(tournament: Tournament, participant: Participant?, state: MatchState?,
                             onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>) {
         this.restClient.getMatches(tournament.id.toString(), participant?.id, state,
-                { list -> onSuccess(list.map { mw -> mw.match }) }, onFailure)
+                Callback { list -> onSuccess.accept(list.map { mw -> mw.match }) }, onFailure)
     }
 
     override fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean): Match =
@@ -34,7 +34,7 @@ class SimpleMatchService(private val restClient: MatchRestClient) : MatchService
     override fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean,
                           onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         this.restClient.getMatch(tournament.id.toString(), matchId, includeAttachments,
-                { mw -> onSuccess(mw.match) }, onFailure)
+                Callback { mw -> onSuccess.accept(mw.match) }, onFailure)
     }
 
     override fun updateMatch(match: Match, data: MatchQuery): Match {
@@ -45,14 +45,14 @@ class SimpleMatchService(private val restClient: MatchRestClient) : MatchService
     override fun updateMatch(match: Match, data: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         validateMatchQuery(data)
         return this.restClient.updateMatch(match.tournamentId.toString(), match.id, MatchQueryWrapper(data),
-                { mw -> onSuccess(mw.match) }, onFailure)
+                Callback { mw -> onSuccess.accept(mw.match) }, onFailure)
     }
 
     override fun reopenMatch(match: Match): Match = this.restClient.reopenMatch(match.tournamentId.toString(), match.id).match
 
     override fun reopenMatch(match: Match, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
         this.restClient.reopenMatch(match.tournamentId.toString(), match.id,
-                { mw -> onSuccess(mw.match) }, onFailure)
+                Callback { mw -> onSuccess.accept(mw.match) }, onFailure)
     }
 
     private fun validateMatchQuery(data: MatchQuery) {

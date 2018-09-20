@@ -1,7 +1,17 @@
 dependencies {
     compile group: 'commons-codec', name: 'commons-codec', version: property('commons.codec.version')
 
-    // testing
     testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: property('mockito.kotlin.version')
 }
 
+
+publishing {
+    publications {
+        mavenJava {
+            pom {
+                name = 'Challonge Kotlin'
+                description = 'Kotlin an JVM bindings for the Challonge API'
+            }
+        }
+    }
+}

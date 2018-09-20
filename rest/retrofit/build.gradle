@@ -9,7 +9,7 @@ publishing {
         mavenJava {
             pom {
                 name = 'Challonge Kotlin Retrofit Rest Client'
-                description = 'Retrofit Rest Client implementation for Challonge Kotlin'
+                description = 'Retrofit rest client for Challonge Kotlin'
             }
         }
     }

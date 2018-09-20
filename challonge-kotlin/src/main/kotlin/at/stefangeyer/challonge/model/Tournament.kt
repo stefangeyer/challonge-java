@@ -93,6 +93,8 @@ class Tournament(
         var participants: List<Participant> = listOf(),
         var matches: List<Match> = listOf()
 ) {
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -227,5 +229,9 @@ class Tournament(
         result = 31 * result + participants.hashCode()
         result = 31 * result + matches.hashCode()
         return result
+    }
+
+    override fun toString(): String {
+        return "Tournament(id=$id, url='$url', name=$name, tournamentType=$tournamentType, subdomain=$subdomain, description=$description, openSignup=$openSignup, holdThirdPlaceMatch=$holdThirdPlaceMatch, pointsForMatchWin=$pointsForMatchWin, pointsForMatchTie=$pointsForMatchTie, pointsForGameWin=$pointsForGameWin, pointsForGameTie=$pointsForGameTie, pointsForBye=$pointsForBye, swissRounds=$swissRounds, rankedBy=$rankedBy, roundRobinPointsForGameWin=$roundRobinPointsForGameWin, roundRobinPointsForGameTie=$roundRobinPointsForGameTie, roundRobinPointsForMatchWin=$roundRobinPointsForMatchWin, roundRobinPointsForMatchTie=$roundRobinPointsForMatchTie, acceptAttachments=$acceptAttachments, hideForum=$hideForum, showRounds=$showRounds, private=$private, notifyUsersWhenTheTournamentEnds=$notifyUsersWhenTheTournamentEnds, sequentialPairings=$sequentialPairings, signupCap=$signupCap, startAt=$startAt, checkInDuration=$checkInDuration, allowParticipantMatchReporting=$allowParticipantMatchReporting, anonymousVoting=$anonymousVoting, category=$category, completedAt=$completedAt, createdAt=$createdAt, createdByApi=$createdByApi, creditCapped=$creditCapped, gameId=$gameId, groupStagesEnabled=$groupStagesEnabled, hideSeeds=$hideSeeds, maxPredictionsPerUser=$maxPredictionsPerUser, notifyUsersWhenMatchesOpen=$notifyUsersWhenMatchesOpen, participantsCount=$participantsCount, predictionMethod=$predictionMethod, predictionsOpenedAt=$predictionsOpenedAt, progressMeter=$progressMeter, quickAdvance=$quickAdvance, requireScoreAgreement=$requireScoreAgreement, startedAt=$startedAt, startedCheckingInAt=$startedCheckingInAt, state=$state, teams=$teams, tieBreaks=$tieBreaks, updatedAt=$updatedAt, descriptionSource=$descriptionSource, fullChallongeUrl=$fullChallongeUrl, liveImageUrl=$liveImageUrl, signUpUrl=$signUpUrl, reviewBeforeFinalizing=$reviewBeforeFinalizing, acceptingPredictions=$acceptingPredictions, participantsLocked=$participantsLocked, gameName=$gameName, participantsSwappable=$participantsSwappable, teamConvertable=$teamConvertable, groupStagesWereStarted=$groupStagesWereStarted, lockedAt=$lockedAt, eventId=$eventId, publicPredictionsBeforeStartTime=$publicPredictionsBeforeStartTime, grandFinalsModifier=$grandFinalsModifier, participants=$participants, matches=$matches)"
     }
 }

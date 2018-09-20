@@ -49,6 +49,8 @@ class Participant(
         val reactivatable: Boolean = false,
         val matches: List<Match>? = listOf()
 ) {
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -113,5 +115,9 @@ class Participant(
         result = 31 * result + reactivatable.hashCode()
         result = 31 * result + (matches?.hashCode() ?: 0)
         return result
+    }
+
+    override fun toString(): String {
+        return "Participant(id=$id, tournamentId=$tournamentId, name=$name, challongeUsername=$challongeUsername, seed=$seed, misc=$misc, active=$active, checkedInAt=$checkedInAt, createdAt=$createdAt, finalRank=$finalRank, groupId=$groupId, icon=$icon, invitationId=$invitationId, inviteEmail=$inviteEmail, onWaitingList=$onWaitingList, updatedAt=$updatedAt, challongeEmailAddressVerified=$challongeEmailAddressVerified, removable=$removable, participatableOrInvitationAttached=$participatableOrInvitationAttached, confirmRemove=$confirmRemove, invitationPending=$invitationPending, displayNameWithInvitationEmailAddress=$displayNameWithInvitationEmailAddress, emailHash=$emailHash, username=$username, attachedParticipatablePortraitUrl=$attachedParticipatablePortraitUrl, canCheckIn=$canCheckIn, checkedIn=$checkedIn, reactivatable=$reactivatable, matches=$matches)"
     }
 }

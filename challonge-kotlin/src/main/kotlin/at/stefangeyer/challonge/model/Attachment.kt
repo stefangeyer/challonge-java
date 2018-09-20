@@ -32,6 +32,8 @@ class Attachment(
         val assetFileSize: Long? = 0L,
         val assetUrl: String? = null
 ) {
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -64,5 +66,9 @@ class Attachment(
         result = 31 * result + (assetFileSize?.hashCode() ?: 0)
         result = 31 * result + (assetUrl?.hashCode() ?: 0)
         return result
+    }
+
+    override fun toString(): String {
+        return "Attachment(id=$id, matchId=$matchId, userId=$userId, description=$description, url=$url, originalFileName=$originalFileName, createdAt=$createdAt, updatedAt=$updatedAt, assetFileName=$assetFileName, assetContentType=$assetContentType, assetFileSize=$assetFileSize, assetUrl=$assetUrl)"
     }
 }

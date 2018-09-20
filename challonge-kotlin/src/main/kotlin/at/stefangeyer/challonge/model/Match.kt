@@ -46,6 +46,8 @@ class Match(
         val scoresCsv: String? = null,
         val attachments: List<Attachment>? = listOf()
 ) {
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -98,5 +100,9 @@ class Match(
         result = 31 * result + (scoresCsv?.hashCode() ?: 0)
         result = 31 * result + (attachments?.hashCode() ?: 0)
         return result
+    }
+
+    override fun toString(): String {
+        return "Match(id=$id, tournamentId=$tournamentId, attachmentCount=$attachmentCount, createdAt=$createdAt, groupId=$groupId, hasAttachment=$hasAttachment, identifier=$identifier, location=$location, loserId=$loserId, winnerId=$winnerId, player1Id=$player1Id, player1IsPrerequisiteMatchLoser=$player1IsPrerequisiteMatchLoser, player1PrerequisiteMatchId=$player1PrerequisiteMatchId, player2Id=$player2Id, player2IsPrerequisiteMatchLoser=$player2IsPrerequisiteMatchLoser, player2PrerequisiteMatchId=$player2PrerequisiteMatchId, round=$round, scheduledTime=$scheduledTime, startedAt=$startedAt, state=$state, underwayAt=$underwayAt, updatedAt=$updatedAt, prerequisiteMatchIdsCsv=$prerequisiteMatchIdsCsv, scoresCsv=$scoresCsv, attachments=$attachments)"
     }
 }

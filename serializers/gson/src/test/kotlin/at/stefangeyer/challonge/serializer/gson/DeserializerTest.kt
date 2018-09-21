@@ -331,5 +331,6 @@ class DeserializerTest {
         assertEquals(null, attachment.assetFileName)
         assertEquals(null, attachment.assetContentType)
         assertEquals(null, attachment.assetFileSize)
+        assertEquals(null, attachment.assetUrl)
     }
 }

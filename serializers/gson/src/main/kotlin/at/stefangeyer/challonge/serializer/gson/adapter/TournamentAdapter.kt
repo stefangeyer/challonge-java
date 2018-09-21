@@ -39,14 +39,18 @@ class TournamentAdapter : JsonDeserializer<Tournament> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Tournament {
-        val e = jsonElement.asJsonObject
+        var e = jsonElement.asJsonObject
+
+        if (e.has("tournament")) {
+            e = e.get("tournament").asJsonObject
+        }
 
         val id = e.get("id").asLong
         val url = e.get("url").asString
         val name = e.get("name").asString
         val tournamentType = TournamentType.valueOf(e.get("tournament_type").asString.replace(" ", "_").toUpperCase())
-        val subdomain = e.get("subdomain").getOrNull()?.asString
-        val description = e.get("description").getOrNull()?.asString
+        val subdomain = e.getOrNull("subdomain")?.asString
+        val description = e.getOrNull("description")?.asString
         val openSignup = e.get("open_signup").asBoolean
         val holdThirdPlaceMatch = e.get("hold_third_place_match").asBoolean
         val pointsForMatchWin = e.get("pts_for_match_win").asFloat
@@ -55,7 +59,7 @@ class TournamentAdapter : JsonDeserializer<Tournament> {
         val pointsForGameTie = e.get("pts_for_game_tie").asFloat
         val pointsForBye = e.get("pts_for_bye").asFloat
         val swissRounds = e.get("swiss_rounds").asInt
-        val rankedBy = e.get("ranked_by").getOrNull()?.asString?.replace(" ", "_")?.toUpperCase()?.let { RankedBy.valueOf(it) }
+        val rankedBy = e.getOrNull("ranked_by")?.asString?.replace(" ", "_")?.toUpperCase()?.let { RankedBy.valueOf(it) }
         val roundRobinPointsForGameWin = e.get("rr_pts_for_game_win").asFloat
         val roundRobinPointsForGameTie = e.get("rr_pts_for_game_tie").asFloat
         val roundRobinPointsForMatchWin = e.get("rr_pts_for_match_win").asFloat
@@ -67,17 +71,17 @@ class TournamentAdapter : JsonDeserializer<Tournament> {
         val notifyUsersWhenMatchesOpen = e.get("notify_users_when_matches_open").asBoolean
         val notifyUsersWhenTheTournamentEnds = e.get("notify_users_when_the_tournament_ends").asBoolean
         val sequentialPairings = e.get("sequential_pairings").asBoolean
-        val signupCap = e.get("signup_cap").getOrNull()?.asInt
-        val startAt = context.deserialize<OffsetDateTime>(e.get("start_at").getOrNull(), OffsetDateTime::class.java)
-        val checkInDuration = e.get("check_in_duration").getOrNull()?.asLong
+        val signupCap = e.getOrNull("signup_cap")?.asInt
+        val startAt = context.deserialize<OffsetDateTime>(e.getOrNull("start_at"), OffsetDateTime::class.java)
+        val checkInDuration = e.getOrNull("check_in_duration")?.asLong
         val allowParticipantMatchReporting = e.get("allow_participant_match_reporting").asBoolean
         val anonymousVoting = e.get("anonymous_voting").asBoolean
-        val category = e.get("category").getOrNull()?.asString
+        val category = e.getOrNull("category")?.asString
         val completedAt = context.deserialize<OffsetDateTime>(e.get("completed_at"), OffsetDateTime::class.java)
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
         val createdByApi = e.get("created_by_api").asBoolean
         val creditCapped = e.get("credit_capped").asBoolean
-        val gameId = e.get("game_id").getOrNull()?.asLong
+        val gameId = e.getOrNull("game_id")?.asLong
         val groupStagesEnabled = e.get("group_stages_enabled").asBoolean
         val hideSeeds = e.get("hide_seeds").asBoolean
         val maxPredictionsPerUser = e.get("max_predictions_per_user").asInt
@@ -90,23 +94,23 @@ class TournamentAdapter : JsonDeserializer<Tournament> {
         val startedAt = context.deserialize<OffsetDateTime>(e.get("started_at"), OffsetDateTime::class.java)
         val startedCheckingInAt = context.deserialize<OffsetDateTime>(e.get("started_checking_in_at"), OffsetDateTime::class.java)
         val state = TournamentState.valueOf(e.get("state").asString.replace(" ", "_").toUpperCase())
-        val teams = e.get("teams").getOrNull()?.asBoolean
-        val tieBreaks = e.get("tie_breaks").getOrNull()?.asJsonArray?.toList()?.map { je -> je.asString }
+        val teams = e.getOrNull("teams")?.asBoolean
+        val tieBreaks = e.getOrNull("tie_breaks")?.asJsonArray?.toList()?.map { je -> je.asString }
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
-        val descriptionSource = e.get("description_source").getOrNull()?.asString
-        val fullChallongeUrl = e.get("full_challonge_url").getOrNull()?.asString
-        val liveImageUrl = e.get("live_image_url").getOrNull()?.asString
+        val descriptionSource = e.getOrNull("description_source")?.asString
+        val fullChallongeUrl = e.getOrNull("full_challonge_url")?.asString
+        val liveImageUrl = e.getOrNull("live_image_url")?.asString
         val reviewBeforeFinalizing = e.get("review_before_finalizing").asBoolean
         val acceptingPredictions = e.get("accepting_predictions").asBoolean
         val participantsLocked = e.get("participants_locked").asBoolean
-        val gameName = e.get("game_name").getOrNull()?.asString
+        val gameName = e.getOrNull("game_name")?.asString
         val participantsSwappable = e.get("participants_swappable").asBoolean
         val teamConvertable = e.get("team_convertable").asBoolean
         val groupStagesWereStarted = e.get("group_stages_were_started").asBoolean
         val lockedAt = context.deserialize<OffsetDateTime>(e.get("locked_at"), OffsetDateTime::class.java)
-        val eventId = e.get("event_id").getOrNull()?.asLong
-        val publicPredictionsBeforeStartTime = e.get("public_predictions_before_start_time").getOrNull()?.asBoolean
-        val grandFinalsModifier = e.get("grand_finals_modifier").getOrNull()?.asString?.replace(" ", "_")?.toUpperCase()?.let { GrandFinalsModifier.valueOf(it) }
+        val eventId = e.getOrNull("event_id")?.asLong
+        val publicPredictionsBeforeStartTime = e.getOrNull("public_predictions_before_start_time")?.asBoolean
+        val grandFinalsModifier = e.getOrNull("grand_finals_modifier")?.asString?.replace(" ", "_")?.toUpperCase()?.let { GrandFinalsModifier.valueOf(it) }
 
         val pe = e.get("participants")
         val participants = if (pe == null || pe is JsonNull) listOf()

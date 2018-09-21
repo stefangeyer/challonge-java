@@ -35,36 +35,40 @@ class ParticipantAdapter : JsonDeserializer<Participant> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Participant {
-        val e = jsonElement as JsonObject
+        var e = jsonElement as JsonObject
+
+        if (e.has("participant")) {
+            e = e.get("participant").asJsonObject
+        }
 
         val id = e.get("id").asLong
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
-        val groupId = e.get("group_id").getOrNull()?.asLong
+        val groupId = e.getOrNull("group_id")?.asLong
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
         val tournamentId = e.get("tournament_id").asLong
         val seed = e.get("seed").asInt
-        val name = e.get("name").getOrNull()?.asString
-        val displayNameWithInvitationEmailAddress = e.get("display_name_with_invitation_email_address").getOrNull()?.asString
-        val misc = e.get("misc").getOrNull()?.asString
-        val challongeUsername = e.get("challonge_username").getOrNull()?.asString
-        val inviteEmail = e.get("invite_email").getOrNull()?.asString
+        val name = e.getOrNull("name")?.asString
+        val displayNameWithInvitationEmailAddress = e.getOrNull("display_name_with_invitation_email_address")?.asString
+        val misc = e.getOrNull("misc")?.asString
+        val challongeUsername = e.getOrNull("challonge_username")?.asString
+        val inviteEmail = e.getOrNull("invite_email")?.asString
         val active = e.get("active").asBoolean
-        val attachedParticipatablePortraitUrl = e.get("attached_participatable_portrait_url").getOrNull()?.asString
+        val attachedParticipatablePortraitUrl = e.getOrNull("attached_participatable_portrait_url")?.asString
         val canCheckIn = e.get("can_check_in").asBoolean
-        val challongeEmailAddressVerified = e.get("challonge_email_address_verified").getOrNull()?.asString
+        val challongeEmailAddressVerified = e.getOrNull("challonge_email_address_verified")?.asString
         val checkedIn = e.get("checked_in").asBoolean
         val checkedInAt = context.deserialize<OffsetDateTime?>(e.get("checked_in_at"), OffsetDateTime::class.java)
         val confirmRemove = e.get("confirm_remove").asBoolean
-        val emailHash = e.get("email_hash").getOrNull()?.asString
-        val finalRank = e.get("final_rank").getOrNull()?.asInt
-        val icon = e.get("icon").getOrNull()?.asString
-        val invitationId = e.get("invitation_id").getOrNull()?.asLong
+        val emailHash = e.getOrNull("email_hash")?.asString
+        val finalRank = e.getOrNull("final_rank")?.asInt
+        val icon = e.getOrNull("icon")?.asString
+        val invitationId = e.getOrNull("invitation_id")?.asLong
         val invitationPending = e.get("invitation_pending").asBoolean
         val onWaitingList = e.get("on_waiting_list").asBoolean
         val participatableOrInvitationAttached = e.get("participatable_or_invitation_attached").asBoolean
         val reactivatable = e.get("reactivatable").asBoolean
         val removable = e.get("removable").asBoolean
-        val username = e.get("username").getOrNull()?.asString
+        val username = e.getOrNull("username")?.asString
         val matches = context.deserialize<List<Match>>(e.get("matches"), object : TypeToken<List<Match>>() {}.type)
 
         return Participant(id = id, updatedAt = updatedAt, groupId = groupId, createdAt = createdAt,

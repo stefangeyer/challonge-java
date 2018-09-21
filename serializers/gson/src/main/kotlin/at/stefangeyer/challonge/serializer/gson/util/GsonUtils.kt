@@ -1,8 +1,9 @@
 package at.stefangeyer.challonge.serializer.gson.util
 
 import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 
-fun JsonElement.getOrNull(): JsonElement? {
-    return if (isJsonNull) null
-    else this
+fun JsonObject.getOrNull(key: String): JsonElement? {
+    return if (!this.has(key) || this.get(key).isJsonNull) null
+    else get(key)
 }

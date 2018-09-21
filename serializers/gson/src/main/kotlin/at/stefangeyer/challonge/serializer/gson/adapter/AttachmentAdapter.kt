@@ -36,20 +36,24 @@ class AttachmentAdapter : JsonDeserializer<Attachment> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Attachment {
-        val e = jsonElement.asJsonObject
+        var e = jsonElement.asJsonObject
+
+        if (e.has("match_attachment")) {
+            e = e.get("match_attachment").asJsonObject
+        }
 
         val id = e.get("id").asLong
         val matchId = e.get("match_id").asLong
         val userId = e.get("user_id").asLong
-        val description = e.get("description").getOrNull()?.asString
-        val url = e.get("url").getOrNull()?.asString
-        val originalFileName = e.get("original_file_name").getOrNull()?.asString
+        val description = e.getOrNull("description")?.asString
+        val url = e.getOrNull("url")?.asString
+        val originalFileName = e.getOrNull("original_file_name")?.asString
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
-        val assetFileName = e.get("asset_file_name").getOrNull()?.asString
-        val assetContentType = e.get("asset_content_type").getOrNull()?.asString
-        val assetFileSize = e.get("asset_file_size").getOrNull()?.asLong
-        var assetUrl = e.get("asset_url").getOrNull()?.asString
+        val assetFileName = e.getOrNull("asset_file_name")?.asString
+        val assetContentType = e.getOrNull("asset_content_type")?.asString
+        val assetFileSize = e.getOrNull("asset_file_size")?.asLong
+        var assetUrl = e.getOrNull("asset_url")?.asString
         if (assetUrl != null) assetUrl = "https:$assetUrl"
 
         return Attachment(

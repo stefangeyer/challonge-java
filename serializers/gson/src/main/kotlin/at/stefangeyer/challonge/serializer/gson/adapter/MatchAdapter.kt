@@ -39,29 +39,33 @@ class MatchAdapter : JsonDeserializer<Match> {
 
     @Throws(JsonParseException::class)
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): Match {
-        val e = jsonElement.asJsonObject
+        var e = jsonElement.asJsonObject
+
+        if (e.has("match")) {
+            e = e.get("match").asJsonObject
+        }
 
         val id = e.get("id").asLong
         val tournamentId = e.get("tournament_id").asLong
-        val attachmentCount = e.get("attachment_count").getOrNull()?.asInt
+        val attachmentCount = e.getOrNull("attachment_count")?.asInt
         val createdAt = context.deserialize<OffsetDateTime>(e.get("created_at"), OffsetDateTime::class.java)
-        val groupId = e.get("group_id").getOrNull()?.asLong
+        val groupId = e.getOrNull("group_id")?.asLong
         val hasAttachment = e.get("has_attachment").asBoolean
-        val identifier = e.get("identifier").getOrNull()?.asString
-        val location = e.get("location").getOrNull()?.asString
+        val identifier = e.getOrNull("identifier")?.asString
+        val location = e.getOrNull("location")?.asString
         val updatedAt = context.deserialize<OffsetDateTime>(e.get("updated_at"), OffsetDateTime::class.java)
         val state = MatchState.valueOf(e.get("state").asString.replace(" ", "_").toUpperCase())
         val startedAt = context.deserialize<OffsetDateTime>(e.get("started_at"), OffsetDateTime::class.java)
-        val scoresCsv = e.get("scores_csv").getOrNull()?.asString
-        val winnerId = e.get("winner_id").getOrNull()?.asLong
-        val loserId = e.get("loser_id").getOrNull()?.asLong
-        val player1Id = e.get("player1_id").getOrNull()?.asLong
-        val player2Id = e.get("player2_id").getOrNull()?.asLong
+        val scoresCsv = e.getOrNull("scores_csv")?.asString
+        val winnerId = e.getOrNull("winner_id")?.asLong
+        val loserId = e.getOrNull("loser_id")?.asLong
+        val player1Id = e.getOrNull("player1_id")?.asLong
+        val player2Id = e.getOrNull("player2_id")?.asLong
         val player1IsPrerequisiteMatchLoser = e.get("player1_is_prereq_match_loser").asBoolean
-        val player1PrerequisiteMatchId = e.get("player1_prereq_match_id").getOrNull()?.asLong
+        val player1PrerequisiteMatchId = e.getOrNull("player1_prereq_match_id")?.asLong
         val player2IsPrerequisiteMatchLoser = e.get("player2_is_prereq_match_loser").asBoolean
-        val player2PrerequisiteMatchId = e.get("player2_prereq_match_id").getOrNull()?.asLong
-        val prerequisiteMatchIdsCsv = e.get("prerequisite_match_ids_csv").getOrNull()?.asString
+        val player2PrerequisiteMatchId = e.getOrNull("player2_prereq_match_id")?.asLong
+        val prerequisiteMatchIdsCsv = e.getOrNull("prerequisite_match_ids_csv")?.asString
         val round = e.get("round").asInt
         val scheduledTime = context.deserialize<OffsetDateTime>(e.get("scheduled_time"), OffsetDateTime::class.java)
         val underwayAt = context.deserialize<OffsetDateTime>(e.get("underway_at"), OffsetDateTime::class.java)

@@ -5,7 +5,7 @@ dependencies {
 }
 
 // Run tests using:
-// gradle check -DintegrationTests -DchallongeUsername=<username> -DchallongeApiKey=<apikey> [-DchallongeSubdomain=<subdomain>]
+// gradle check -PintegrationTests -DchallongeUsername=<username> -DchallongeApiKey=<apikey> [-DchallongeSubdomain=<subdomain>]
 test {
     systemProperty("challongeUsername", System.getProperty("challongeUsername"))
     systemProperty("challongeApiKey", System.getProperty("challongeApiKey"))

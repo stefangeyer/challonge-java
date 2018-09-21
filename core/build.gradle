@@ -2,13 +2,12 @@ dependencies {
     testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: property('mockito.kotlin.version')
 }
 
-
 publishing {
     publications {
         mavenJava {
             pom {
                 name = 'Challonge Kotlin'
-                description = 'Kotlin an JVM bindings for the Challonge API'
+                description = 'Kotlin and JVM bindings for the Challonge API'
             }
         }
     }

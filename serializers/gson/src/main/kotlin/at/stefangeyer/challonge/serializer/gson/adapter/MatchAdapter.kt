@@ -63,8 +63,10 @@ class MatchAdapter : JsonDeserializer<Match> {
         val player2Id = e.getOrNull("player2_id")?.asLong
         val player1IsPrerequisiteMatchLoser = e.get("player1_is_prereq_match_loser").asBoolean
         val player1PrerequisiteMatchId = e.getOrNull("player1_prereq_match_id")?.asLong
+        val player1Votes = e.getOrNull("player1_votes")?.asInt
         val player2IsPrerequisiteMatchLoser = e.get("player2_is_prereq_match_loser").asBoolean
         val player2PrerequisiteMatchId = e.getOrNull("player2_prereq_match_id")?.asLong
+        val player2Votes = e.getOrNull("player2_votes")?.asInt
         val prerequisiteMatchIdsCsv = e.getOrNull("prerequisite_match_ids_csv")?.asString
         val round = e.get("round").asInt
         val scheduledTime = context.deserialize<OffsetDateTime>(e.get("scheduled_time"), OffsetDateTime::class.java)
@@ -75,7 +77,8 @@ class MatchAdapter : JsonDeserializer<Match> {
                 hasAttachment = hasAttachment, identifier = identifier, location = location, updatedAt = updatedAt, state = state,
                 startedAt = startedAt, scoresCsv = scoresCsv, winnerId = winnerId, loserId = loserId, player1Id = player1Id, player2Id = player2Id,
                 player1IsPrerequisiteMatchLoser = player1IsPrerequisiteMatchLoser, player1PrerequisiteMatchId = player1PrerequisiteMatchId,
-                player2IsPrerequisiteMatchLoser = player2IsPrerequisiteMatchLoser, player2PrerequisiteMatchId = player2PrerequisiteMatchId,
+                player1Votes = player1Votes, player2IsPrerequisiteMatchLoser = player2IsPrerequisiteMatchLoser,
+                player2PrerequisiteMatchId = player2PrerequisiteMatchId, player2Votes = player2Votes,
                 prerequisiteMatchIdsCsv = prerequisiteMatchIdsCsv, round = round, scheduledTime = scheduledTime, underwayAt = underwayAt,
                 attachments = attachments)
     }

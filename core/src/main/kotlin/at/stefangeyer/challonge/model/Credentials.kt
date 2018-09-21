@@ -1,6 +1,6 @@
 package at.stefangeyer.challonge.model
 
-import org.apache.commons.codec.binary.Base64
+import java.util.*
 
 /**
  * Challonge credentials containing username and api-key.
@@ -16,6 +16,6 @@ data class Credentials(private val username: String, private val key: String) {
      */
     fun toHttpAuthString(): String {
         val credentials = this.username + ":" + this.key
-        return "Basic " + Base64.encodeBase64String(credentials.toByteArray())
+        return "Basic " + Base64.getEncoder().encodeToString(credentials.toByteArray())
     }
 }

@@ -1,6 +1,4 @@
 dependencies {
-    compile group: 'commons-codec', name: 'commons-codec', version: property('commons.codec.version')
-
     testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: property('mockito.kotlin.version')
 }
 

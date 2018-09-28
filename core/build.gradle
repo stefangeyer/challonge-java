@@ -1,7 +1,3 @@
-dependencies {
-    testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: property('mockito.kotlin.version')
-}
-
 publishing {
     publications {
         mavenJava {

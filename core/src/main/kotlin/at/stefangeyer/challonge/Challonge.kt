@@ -22,9 +22,7 @@ import at.stefangeyer.challonge.service.implementation.SimpleParticipantService
 import at.stefangeyer.challonge.service.implementation.SimpleTournamentService
 import java.time.OffsetDateTime
 
-class Challonge(credentials: Credentials, serializer: Serializer,
-                private val restClient: RestClient
-) : TournamentService, ParticipantService, MatchService, AttachmentService {
+class Challonge(credentials: Credentials, serializer: Serializer, private val restClient: RestClient) {
 
     private val tournaments: TournamentService
     private val participants: ParticipantService
@@ -41,202 +39,414 @@ class Challonge(credentials: Credentials, serializer: Serializer,
         this.attachments = SimpleAttachmentService(this.restClient.createAttachmentRestClient())
     }
 
-    override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?,
-                                createdBefore: OffsetDateTime?, subdomain: String?): List<Tournament> =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun getTournaments(state: TournamentQueryState? = null, type: TournamentType? = null, createdAfter: OffsetDateTime? = null,
+                       createdBefore: OffsetDateTime? = null, subdomain: String? = null): List<Tournament> =
             this.tournaments.getTournaments(state, type, createdAfter, createdBefore, subdomain)
 
-    override fun getTournaments(state: TournamentQueryState?, type: TournamentType?, createdAfter: OffsetDateTime?, createdBefore: OffsetDateTime?, subdomain: String?, onSuccess: Callback<List<Tournament>>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.getTournaments(state, type, createdAfter, createdBefore, subdomain, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun getTournaments(state: TournamentQueryState? = null, type: TournamentType? = null, createdAfter: OffsetDateTime? = null,
+                       createdBefore: OffsetDateTime? = null, subdomain: String? = null, onSuccess: Callback<List<Tournament>>,
+                       onFailure: Callback<DataAccessException>) =
+            this.tournaments.getTournaments(state, type, createdAfter, createdBefore, subdomain, onSuccess, onFailure)
 
-    override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun getTournament(tournament: String, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.getTournament(tournament, includeParticipants, includeMatches)
 
-    override fun getTournament(tournament: String, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun getTournament(tournament: String, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                      onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
         this.tournaments.getTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
 
-    override fun createTournament(data: TournamentQuery): Tournament = this.tournaments.createTournament(data)
+    /**
+     * @see TournamentService
+     */
+    @Throws(DataAccessException::class)
+    fun createTournament(data: TournamentQuery): Tournament = this.tournaments.createTournament(data)
 
-    override fun createTournament(data: TournamentQuery, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.createTournament(data, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    fun createTournament(data: TournamentQuery, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.createTournament(data, onSuccess, onFailure)
 
-    override fun updateTournament(tournament: Tournament, data: TournamentQuery): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @Throws(DataAccessException::class)
+    fun updateTournament(tournament: Tournament, data: TournamentQuery): Tournament =
             this.tournaments.updateTournament(tournament, data)
 
-    override fun updateTournament(tournament: Tournament, data: TournamentQuery, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.updateTournament(tournament, data, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    fun updateTournament(tournament: Tournament, data: TournamentQuery, onSuccess: Callback<Tournament>,
+                         onFailure: Callback<DataAccessException>) =
+            this.tournaments.updateTournament(tournament, data, onSuccess, onFailure)
 
-    override fun deleteTournament(tournament: Tournament): Tournament = this.tournaments.deleteTournament(tournament)
+    /**
+     * @see TournamentService
+     */
+    @Throws(DataAccessException::class)
+    fun deleteTournament(tournament: Tournament): Tournament = this.tournaments.deleteTournament(tournament)
 
-    override fun deleteTournament(tournament: Tournament, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.deleteTournament(tournament, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    fun deleteTournament(tournament: Tournament, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.deleteTournament(tournament, onSuccess, onFailure)
 
-    override fun processCheckIns(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun processCheckIns(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.processCheckIns(tournament, includeParticipants, includeMatches)
 
-    override fun processCheckIns(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.processCheckIns(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun processCheckIns(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                        onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.processCheckIns(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
 
-    override fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.abortCheckIn(tournament, includeParticipants, includeMatches)
 
-    override fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.abortCheckIn(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun abortCheckIn(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                     onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.abortCheckIn(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
 
-    override fun startTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun startTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.startTournament(tournament, includeParticipants, includeMatches)
 
-    override fun startTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.startTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun startTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                        onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.startTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
 
-    override fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.finalizeTournament(tournament, includeParticipants, includeMatches)
 
-    override fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.finalizeTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun finalizeTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                           onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.finalizeTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
 
-    override fun resetTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun resetTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.resetTournament(tournament, includeParticipants, includeMatches)
 
-    override fun resetTournament(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.resetTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun resetTournament(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                        onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.resetTournament(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
 
-    override fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean): Tournament =
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false): Tournament =
             this.tournaments.openTournamentForPredictions(tournament, includeParticipants, includeMatches)
 
-    override fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean, includeMatches: Boolean, onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) {
-        this.tournaments.openTournamentForPredictions(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see TournamentService
+     */
+    @JvmOverloads
+    fun openTournamentForPredictions(tournament: Tournament, includeParticipants: Boolean = false, includeMatches: Boolean = false,
+                                     onSuccess: Callback<Tournament>, onFailure: Callback<DataAccessException>) =
+            this.tournaments.openTournamentForPredictions(tournament, includeParticipants, includeMatches, onSuccess, onFailure)
 
-    override fun getParticipants(tournament: Tournament): List<Participant> =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun getParticipants(tournament: Tournament): List<Participant> =
             this.participants.getParticipants(tournament)
 
-    override fun getParticipants(tournament: Tournament, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
-        this.participants.getParticipants(tournament, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun getParticipants(tournament: Tournament, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) =
+            this.participants.getParticipants(tournament, onSuccess, onFailure)
 
-    override fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean): Participant =
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean = false): Participant =
             this.participants.getParticipant(tournament, participantId, includeMatches)
 
-    override fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.participants.getParticipant(tournament, participantId, includeMatches, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    @JvmOverloads
+    fun getParticipant(tournament: Tournament, participantId: Long, includeMatches: Boolean = false,
+                       onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) =
+            this.participants.getParticipant(tournament, participantId, includeMatches, onSuccess, onFailure)
 
-    override fun addParticipant(tournament: Tournament, data: ParticipantQuery): Participant =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun addParticipant(tournament: Tournament, data: ParticipantQuery): Participant =
             this.participants.addParticipant(tournament, data)
 
-    override fun addParticipant(tournament: Tournament, data: ParticipantQuery, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.participants.addParticipant(tournament, data, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun addParticipant(tournament: Tournament, data: ParticipantQuery, onSuccess: Callback<Participant>,
+                       onFailure: Callback<DataAccessException>) =
+            this.participants.addParticipant(tournament, data, onSuccess, onFailure)
 
-    override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>): List<Participant> =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>): List<Participant> =
             this.participants.bulkAddParticipants(tournament, data)
 
-    override fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
-        this.participants.bulkAddParticipants(tournament, data, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun bulkAddParticipants(tournament: Tournament, data: List<ParticipantQuery>, onSuccess: Callback<List<Participant>>,
+                            onFailure: Callback<DataAccessException>) =
+            this.participants.bulkAddParticipants(tournament, data, onSuccess, onFailure)
 
-    override fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun updateParticipant(participant: Participant, data: ParticipantQuery): Participant =
             this.participants.updateParticipant(participant, data)
 
-    override fun updateParticipant(participant: Participant, data: ParticipantQuery, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.participants.updateParticipant(participant, data, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun updateParticipant(participant: Participant, data: ParticipantQuery, onSuccess: Callback<Participant>,
+                          onFailure: Callback<DataAccessException>) =
+            this.participants.updateParticipant(participant, data, onSuccess, onFailure)
 
-    override fun checkInParticipant(participant: Participant): Participant =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun checkInParticipant(participant: Participant): Participant =
             this.participants.checkInParticipant(participant)
 
-    override fun checkInParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.participants.checkInParticipant(participant, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun checkInParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) =
+            this.participants.checkInParticipant(participant, onSuccess, onFailure)
 
-    override fun undoCheckInParticipant(participant: Participant): Participant =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun undoCheckInParticipant(participant: Participant): Participant =
             this.participants.undoCheckInParticipant(participant)
 
-    override fun undoCheckInParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.participants.undoCheckInParticipant(participant, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun undoCheckInParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) =
+            this.participants.undoCheckInParticipant(participant, onSuccess, onFailure)
 
-    override fun deleteParticipant(participant: Participant): Participant =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun deleteParticipant(participant: Participant): Participant =
             this.participants.deleteParticipant(participant)
 
-    override fun deleteParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) {
-        this.participants.deleteParticipant(participant, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun deleteParticipant(participant: Participant, onSuccess: Callback<Participant>, onFailure: Callback<DataAccessException>) =
+            this.participants.deleteParticipant(participant, onSuccess, onFailure)
 
-    override fun randomizeParticipants(tournament: Tournament): List<Participant> =
+    /**
+     * @see ParticipantService
+     */
+    @Throws(DataAccessException::class)
+    fun randomizeParticipants(tournament: Tournament): List<Participant> =
             this.participants.randomizeParticipants(tournament)
 
-    override fun randomizeParticipants(tournament: Tournament, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) {
-        this.participants.randomizeParticipants(tournament, onSuccess, onFailure)
-    }
+    /**
+     * @see ParticipantService
+     */
+    fun randomizeParticipants(tournament: Tournament, onSuccess: Callback<List<Participant>>, onFailure: Callback<DataAccessException>) =
+            this.participants.randomizeParticipants(tournament, onSuccess, onFailure)
 
-    override fun getMatches(tournament: Tournament, participant: Participant?, state: MatchState?): List<Match> =
+    /**
+     * @see MatchService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun getMatches(tournament: Tournament, participant: Participant? = null, state: MatchState? = null): List<Match> =
             this.matches.getMatches(tournament, participant, state)
 
-    override fun getMatches(tournament: Tournament, participant: Participant?, state: MatchState?, onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>) {
-        this.matches.getMatches(tournament, participant, state, onSuccess, onFailure)
-    }
+    /**
+     * @see MatchService
+     */
+    @JvmOverloads
+    fun getMatches(tournament: Tournament, participant: Participant? = null, state: MatchState? = null,
+                   onSuccess: Callback<List<Match>>, onFailure: Callback<DataAccessException>) =
+            this.matches.getMatches(tournament, participant, state, onSuccess, onFailure)
 
-    override fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean): Match =
+    /**
+     * @see MatchService
+     */
+    @JvmOverloads
+    @Throws(DataAccessException::class)
+    fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean = false): Match =
             this.matches.getMatch(tournament, matchId, includeAttachments)
 
-    override fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
-        this.matches.getMatch(tournament, matchId, includeAttachments, onSuccess, onFailure)
-    }
+    /**
+     * @see MatchService
+     */
+    @JvmOverloads
+    fun getMatch(tournament: Tournament, matchId: Long, includeAttachments: Boolean = false,
+                 onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) =
+            this.matches.getMatch(tournament, matchId, includeAttachments, onSuccess, onFailure)
 
-    override fun updateMatch(match: Match, data: MatchQuery): Match = this.matches.updateMatch(match, data)
+    /**
+     * @see MatchService
+     */
+    @Throws(DataAccessException::class)
+    fun updateMatch(match: Match, data: MatchQuery): Match = this.matches.updateMatch(match, data)
 
-    override fun updateMatch(match: Match, data: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
-        this.matches.updateMatch(match, data, onSuccess, onFailure)
-    }
+    /**
+     * @see MatchService
+     */
+    fun updateMatch(match: Match, data: MatchQuery, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) =
+            this.matches.updateMatch(match, data, onSuccess, onFailure)
 
-    override fun reopenMatch(match: Match): Match = this.matches.reopenMatch(match)
+    /**
+     * @see MatchService
+     */
+    @Throws(DataAccessException::class)
+    fun reopenMatch(match: Match): Match = this.matches.reopenMatch(match)
 
-    override fun reopenMatch(match: Match, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) {
-        this.matches.reopenMatch(match, onSuccess, onFailure)
-    }
+    /**
+     * @see MatchService
+     */
+    fun reopenMatch(match: Match, onSuccess: Callback<Match>, onFailure: Callback<DataAccessException>) =
+            this.matches.reopenMatch(match, onSuccess, onFailure)
 
-    override fun getAttachments(match: Match): List<Attachment> = this.attachments.getAttachments(match)
+    /**
+     * @see AttachmentService
+     */
+    @Throws(DataAccessException::class)
+    fun getAttachments(match: Match): List<Attachment> = this.attachments.getAttachments(match)
 
-    override fun getAttachments(match: Match, onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) {
-        this.attachments.getAttachments(match, onSuccess, onFailure)
-    }
+    /**
+     * @see AttachmentService
+     */
+    fun getAttachments(match: Match, onSuccess: Callback<List<Attachment>>, onFailure: Callback<DataAccessException>) =
+            this.attachments.getAttachments(match, onSuccess, onFailure)
 
-    override fun getAttachment(match: Match, attachmentId: Long): Attachment =
+    /**
+     * @see AttachmentService
+     */
+    @Throws(DataAccessException::class)
+    fun getAttachment(match: Match, attachmentId: Long): Attachment =
             this.attachments.getAttachment(match, attachmentId)
 
-    override fun getAttachment(match: Match, attachmentId: Long, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
-        this.attachments.getAttachment(match, attachmentId, onSuccess, onFailure)
-    }
+    /**
+     * @see AttachmentService
+     */
+    fun getAttachment(match: Match, attachmentId: Long, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) =
+            this.attachments.getAttachment(match, attachmentId, onSuccess, onFailure)
 
-    override fun createAttachment(match: Match, data: AttachmentQuery): Attachment =
+    /**
+     * @see AttachmentService
+     */
+    @Throws(DataAccessException::class)
+    fun createAttachment(match: Match, data: AttachmentQuery): Attachment =
             this.attachments.createAttachment(match, data)
 
-    override fun createAttachment(match: Match, data: AttachmentQuery, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
-        this.attachments.createAttachment(match, data, onSuccess, onFailure)
-    }
+    /**
+     * @see AttachmentService
+     */
+    fun createAttachment(match: Match, data: AttachmentQuery, onSuccess: Callback<Attachment>,
+                         onFailure: Callback<DataAccessException>) =
+            this.attachments.createAttachment(match, data, onSuccess, onFailure)
 
-    override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery): Attachment =
+    /**
+     * @see AttachmentService
+     */
+    @Throws(DataAccessException::class)
+    fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery): Attachment =
             this.attachments.updateAttachment(match, attachment, data)
 
-    override fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
-        this.attachments.updateAttachment(match, attachment, data, onSuccess, onFailure)
-    }
+    /**
+     * @see AttachmentService
+     */
+    fun updateAttachment(match: Match, attachment: Attachment, data: AttachmentQuery, onSuccess: Callback<Attachment>,
+                         onFailure: Callback<DataAccessException>) =
+            this.attachments.updateAttachment(match, attachment, data, onSuccess, onFailure)
 
-    override fun deleteAttachment(match: Match, attachment: Attachment): Attachment =
+    /**
+     * @see AttachmentService
+     */
+    @Throws(DataAccessException::class)
+    fun deleteAttachment(match: Match, attachment: Attachment): Attachment =
             this.attachments.deleteAttachment(match, attachment)
 
-    override fun deleteAttachment(match: Match, attachment: Attachment, onSuccess: Callback<Attachment>, onFailure: Callback<DataAccessException>) {
-        this.attachments.deleteAttachment(match, attachment, onSuccess, onFailure)
-    }
+    /**
+     * @see AttachmentService
+     */
+    fun deleteAttachment(match: Match, attachment: Attachment, onSuccess: Callback<Attachment>,
+                         onFailure: Callback<DataAccessException>) =
+            this.attachments.deleteAttachment(match, attachment, onSuccess, onFailure)
 }

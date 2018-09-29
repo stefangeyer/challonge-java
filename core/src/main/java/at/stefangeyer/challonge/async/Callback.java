@@ -1,6 +1,6 @@
-package at.stefangeyer.challonge.async
+package at.stefangeyer.challonge.async;
 
-import java.util.function.Consumer
+import java.util.function.Consumer;
 
 /**
  * Generic callback used for async calls
@@ -9,4 +9,5 @@ import java.util.function.Consumer
  * @author Stefan Geyer
  * @version 2018-07-02
  */
-typealias Callback<T> = Consumer<T>
+public interface Callback<T> extends Consumer<T> {
+}

@@ -1,1 +1,3 @@
-group 'at.stefangeyer.challonge.rest'
+allprojects {
+    group 'at.stefangeyer.challonge.rest'
+}

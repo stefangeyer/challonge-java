@@ -1,1 +1,3 @@
-group 'at.stefangeyer.challonge.serializer'
+allprojects {
+    group 'at.stefangeyer.challonge.serializer'
+}

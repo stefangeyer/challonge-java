@@ -24,6 +24,7 @@ subprojects {
 
     dependencies {
         compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: property('kotlin.version')
+        compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: property('kotlin.version')
 
         testCompile group: 'junit', name: 'junit', version: property('junit.version')
         testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: property('mockito.kotlin.version')

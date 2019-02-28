@@ -1,6 +1,5 @@
 package at.stefangeyer.challonge.integration
 
-import at.stefangeyer.challonge.Challonge
 import at.stefangeyer.challonge.exception.DataAccessException
 import at.stefangeyer.challonge.model.Credentials
 import at.stefangeyer.challonge.model.Tournament

@@ -17,10 +17,10 @@
 package at.stefangeyer.challonge.serializer.gson.adapter
 
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enum.RankedBy
-import at.stefangeyer.challonge.model.enum.TournamentState
-import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.GrandFinalsModifier
+import at.stefangeyer.challonge.model.enumeration.RankedBy
+import at.stefangeyer.challonge.model.enumeration.TournamentState
+import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier
 import at.stefangeyer.challonge.model.wrapper.MatchWrapperListWrapper
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapperListWrapper
 import at.stefangeyer.challonge.serializer.gson.util.getOrNull

@@ -2,8 +2,8 @@ package at.stefangeyer.challonge.rest.retrofit
 
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.query.enumeration.TournamentQueryState
 import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper
 import at.stefangeyer.challonge.rest.TournamentRestClient

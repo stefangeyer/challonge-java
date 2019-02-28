@@ -27,6 +27,7 @@ subprojects {
         compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: property('kotlin.version')
 
         testCompile group: 'junit', name: 'junit', version: property('junit.version')
+        testCompile group: 'org.mockito', name: 'mockito-core', version: property('mockito.version')
         testCompile group: 'com.nhaarman', name: 'mockito-kotlin', version: property('mockito.kotlin.version')
     }
 

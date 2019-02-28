@@ -2,7 +2,7 @@ package at.stefangeyer.challonge.rest.retrofit
 
 import at.stefangeyer.challonge.async.Callback
 import at.stefangeyer.challonge.exception.DataAccessException
-import at.stefangeyer.challonge.model.enum.MatchState
+import at.stefangeyer.challonge.model.enumeration.MatchState
 import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper
 import at.stefangeyer.challonge.rest.MatchRestClient

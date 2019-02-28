@@ -1,8 +1,8 @@
 package at.stefangeyer.challonge.rest.retrofit
 
-import at.stefangeyer.challonge.model.enum.MatchState
-import at.stefangeyer.challonge.model.enum.TournamentType
-import at.stefangeyer.challonge.model.query.enum.TournamentQueryState
+import at.stefangeyer.challonge.model.enumeration.MatchState
+import at.stefangeyer.challonge.model.enumeration.TournamentType
+import at.stefangeyer.challonge.model.query.enumeration.TournamentQueryState
 import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper
@@ -403,7 +403,7 @@ interface ChallongeRetrofit {
      * "accept_attachments" attribute must be true for this action to succeed.
      *
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enumeration object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param tournament  Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
@@ -429,7 +429,7 @@ interface ChallongeRetrofit {
      *
      * Sending the asset does neither work with base64 nor with a multipart-form-data request
      *
-     * At least 1 of the 3 optional parameters (asset, url or description in the enum object) must be provided.
+     * At least 1 of the 3 optional parameters (asset, url or description in the enumeration object) must be provided.
      * Files up to 25MB are allowed for tournaments hosted by Challonge Premier subscribers.
      *
      * @param tournament   Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).

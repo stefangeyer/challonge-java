@@ -4,10 +4,10 @@ import at.stefangeyer.challonge.model.Attachment
 import at.stefangeyer.challonge.model.Match
 import at.stefangeyer.challonge.model.Participant
 import at.stefangeyer.challonge.model.Tournament
-import at.stefangeyer.challonge.model.enum.MatchState
-import at.stefangeyer.challonge.model.enum.RankedBy
-import at.stefangeyer.challonge.model.enum.TournamentState
-import at.stefangeyer.challonge.model.enum.TournamentType
+import at.stefangeyer.challonge.model.enumeration.MatchState
+import at.stefangeyer.challonge.model.enumeration.RankedBy
+import at.stefangeyer.challonge.model.enumeration.TournamentState
+import at.stefangeyer.challonge.model.enumeration.TournamentType
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.OffsetDateTime
@@ -202,7 +202,7 @@ class DeserializerTest {
         assertEquals(4, tournament.participantsCount)
         assertEquals(0, tournament.predictionMethod)
         assertEquals(null, tournament.predictionsOpenedAt)
-        assertEquals(false, tournament.private)
+        assertEquals(false, tournament.privateOnly)
         assertEquals(0, tournament.progressMeter)
         assertEquals(1.0F, tournament.pointsForBye)
         assertEquals(0.0F, tournament.pointsForGameTie)
@@ -253,7 +253,7 @@ class DeserializerTest {
         assertEquals(true, participant.active)
         assertEquals(null, participant.checkedInAt)
         assertEquals(created, participant.createdAt)
-        assertEquals(null, participant.finalRank)
+        assertEquals(null, participant.rank)
         assertEquals(null, participant.groupId)
         assertEquals(null, participant.icon)
         assertEquals(16543993L, participant.id)

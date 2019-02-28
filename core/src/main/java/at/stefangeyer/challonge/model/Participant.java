@@ -18,7 +18,7 @@ public class Participant {
     private Boolean active;
     private OffsetDateTime checkedInAt;
     private OffsetDateTime createdAt;
-    private Integer Rank;
+    private Integer finalRank;
     private Long groupId;
     private String icon;
     private Long invitationId;

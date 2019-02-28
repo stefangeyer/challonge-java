@@ -26,5 +26,5 @@ public interface Serializer {
      * @param type   The object's type
      * @return The deserialized object
      */
-    Object deserialize(String string, Type type);
+    <T> T deserialize(String string, Type type);
 }

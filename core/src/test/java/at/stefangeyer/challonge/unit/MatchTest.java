@@ -127,38 +127,38 @@ public class MatchTest {
 
     @Test
     public void testGetMatches() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var local = this.challonge.getMatches(tournament);
+        Tournament tournament = getTournament("tourney123");
+        List<Match> local = this.challonge.getMatches(tournament);
         assertEquals(tournament.getMatches(), local);
     }
 
     @Test
     public void testGetMatch() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var local = this.challonge.getMatch(tournament, 1);
+        Tournament tournament = getTournament("tourney123");
+        Match local = this.challonge.getMatch(tournament, 1);
         assertEquals(tournament.getMatches().get(0), local);
     }
 
     @Test
     public void testUpdateMatch() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
-        var local = this.challonge.updateMatch(match, MatchQuery.builder().winnerId(120L).build());
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+        Match local = this.challonge.updateMatch(match, MatchQuery.builder().winnerId(120L).build());
         assertEquals(120L, (long) local.getWinnerId());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateMatchNoData() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
         this.challonge.updateMatch(match, MatchQuery.builder().build());
     }
 
     @Test
     public void testReopenMatch() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
-        var local = this.challonge.reopenMatch(match);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+        Match local = this.challonge.reopenMatch(match);
         assertEquals(match, local);
     }
 }

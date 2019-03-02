@@ -129,50 +129,50 @@ public class AttachmentTest {
 
     @Test
     public void testGetAttachments() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
-        var local = this.challonge.getAttachments(match);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+        List<Attachment> local = this.challonge.getAttachments(match);
         assertEquals(match.getAttachments(), local);
     }
 
     @Test
     public void testGetAttachment() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
-        var local = this.challonge.getAttachment(match, 1);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+        Attachment local = this.challonge.getAttachment(match, 1);
         assertEquals("Attachment note", local.getDescription());
     }
 
     @Test
     public void testCreateAttachment() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
         assertNotNull(match.getAttachments());
 
-        var attachments = match.getAttachments();
-        var local = this.challonge.createAttachment(match,
+        List<Attachment> attachments = match.getAttachments();
+        Attachment local = this.challonge.createAttachment(match,
                 AttachmentQuery.builder().description("Some new attachment").build());
         assertTrue(attachments.contains(local));
     }
 
     @Test
     public void testUpdateAttachment() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
         assertNotNull(match.getAttachments());
-        var attachments = match.getAttachments();
-        var local = this.challonge.updateAttachment(match, attachments.get(0),
+        List<Attachment> attachments = match.getAttachments();
+        Attachment local = this.challonge.updateAttachment(match, attachments.get(0),
                 AttachmentQuery.builder().url("https://www.google.com").build());
         assertEquals(attachments.get(0), local);
     }
 
     @Test
     public void testDeleteAttachment() throws DataAccessException {
-        var tournament = getTournament("tourney123");
-        var match = tournament.getMatches().get(0);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
         assertNotNull(match.getAttachments());
-        var attachments = match.getAttachments();
-        var local = this.challonge.deleteAttachment(match, attachments.get(0));
+        List<Attachment> attachments = match.getAttachments();
+        Attachment local = this.challonge.deleteAttachment(match, attachments.get(0));
         assertFalse(attachments.contains(local));
     }
 }

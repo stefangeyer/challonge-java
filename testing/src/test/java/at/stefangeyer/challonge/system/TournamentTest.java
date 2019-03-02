@@ -15,7 +15,6 @@ import at.stefangeyer.challonge.model.query.TournamentQuery;
 import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
 import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
-import kotlin.jvm.internal.Intrinsics;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -70,7 +69,6 @@ public class TournamentTest {
                 .grandFinalsModifier(GrandFinalsModifier.SINGLE_MATCH).build();
 
         Tournament tournament = this.challonge.createTournament(query);
-        Intrinsics.checkExpressionValueIsNotNull(tournament, "tournament");
         assertEquals("JavaApiTest", tournament.getName());
         assertEquals("javaapitest", tournament.getUrl());
         assertEquals(4, (int) tournament.getSignupCap());

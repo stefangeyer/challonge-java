@@ -291,7 +291,7 @@ public class TournamentTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateTournamentNoData() throws DataAccessException {
-        var local = this.challonge.updateTournament(this.tournaments.get(0), TournamentQuery.builder().build());
+        Tournament local = this.challonge.updateTournament(this.tournaments.get(0), TournamentQuery.builder().build());
         assertEquals(this.tournaments.get(0), local);
     }
 

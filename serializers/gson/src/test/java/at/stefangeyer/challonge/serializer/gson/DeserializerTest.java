@@ -8,7 +8,6 @@ import at.stefangeyer.challonge.model.enumeration.MatchState;
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
 import at.stefangeyer.challonge.model.enumeration.TournamentState;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
-import kotlin.jvm.internal.Intrinsics;
 import org.junit.Test;
 
 import java.lang.reflect.Type;
@@ -253,7 +252,6 @@ public class DeserializerTest {
     @Test
     public void testParticipantDeserialization() {
         Object var10000 = this.serializer.deserialize(this.participantString, (Type) Participant.class);
-        Intrinsics.checkExpressionValueIsNotNull(var10000, "this.serializer.deserial… Participant::class.java)");
         Participant participant = (Participant) var10000;
         OffsetDateTime created = OffsetDateTime.parse("2015-01-19T16:54:40-05:00");
         OffsetDateTime updated = OffsetDateTime.parse("2015-01-19T16:54:40-05:00");

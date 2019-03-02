@@ -1,7 +1,9 @@
 dependencies {
-    compile project(':core')
-    compile project(':serializers:gson')
-    compile project(':rest:retrofit')
+    testCompile project(':core')
+    testCompile project(':serializers:gson')
+    testCompile project(':rest:retrofit')
+
+    testCompile group: 'commons-io', name: 'commons-io', version: property('commons.io.version')
 }
 
 // Run tests using:

@@ -33,7 +33,7 @@ public class RetrofitRestClient implements RestClient {
         }));
 
         Retrofit retrofit = new Retrofit.Builder().client(httpClientBuilder.build())
-                .baseUrl("https://api.challonge.com/v1/").addConverterFactory(createConverterFactory(serializer))
+                .baseUrl(BASE_URL).addConverterFactory(createConverterFactory(serializer))
                 .build();
 
         this.challongeRetrofit = retrofit.create(ChallongeRetrofit.class);

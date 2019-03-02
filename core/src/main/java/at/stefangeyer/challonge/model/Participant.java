@@ -2,12 +2,14 @@ package at.stefangeyer.challonge.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
 @Builder
+@EqualsAndHashCode(exclude = {"checkedInAt", "createdAt", "updatedAt"})
 public class Participant {
     private Long id;
     private Long tournamentId;

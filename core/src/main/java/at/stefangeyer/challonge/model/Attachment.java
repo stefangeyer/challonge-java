@@ -2,11 +2,13 @@ package at.stefangeyer.challonge.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.OffsetDateTime;
 
 @Data
 @Builder
+@EqualsAndHashCode(exclude = {"createdAt", "updatedAt"})
 public class Attachment {
     private Long id;
     private Long matchId;

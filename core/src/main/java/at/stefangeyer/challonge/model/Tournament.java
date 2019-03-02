@@ -6,12 +6,17 @@ import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
 @Builder
+@EqualsAndHashCode(exclude = {
+        "startAt", "completedAt", "createdAt",
+        "predictionsOpenedAt", "startedAt", "startedCheckingInAt",
+        "updatedAt", "lockedAt"})
 public class Tournament {
     private Long id;
     private String url;

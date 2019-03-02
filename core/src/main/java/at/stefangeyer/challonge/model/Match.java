@@ -3,12 +3,14 @@ package at.stefangeyer.challonge.model;
 import at.stefangeyer.challonge.model.enumeration.MatchState;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
 @Builder
+@EqualsAndHashCode(exclude = {"createdAt", "scheduledTime", "startedAt", "underwayAt", "updatedAt"})
 public class Match {
     private Long id;
     private Long tournamentId;

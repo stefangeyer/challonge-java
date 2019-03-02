@@ -22,6 +22,7 @@ import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,16 +30,19 @@ import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TournamentTest {
-    private static final String TOURNAMENT_URL = "javaapitest";
 
     private Challonge challonge;
+
+    private String tournamentUrl;
 
     public TournamentTest() {
         String username = System.getProperty("challongeUsername");
         String apiKey = System.getProperty("challongeApiKey");
+        this.tournamentUrl = System.getProperty("challongeTournamentUrl");
 
         if (username == null || apiKey == null) {
-            throw new IllegalArgumentException("Required system properties challongeUsername and challongeApiKey are absent");
+            throw new IllegalArgumentException("Required system properties challongeUsername, challongeApiKey or " +
+                    "challongeTournamentUrl are absent");
         }
 
         this.challonge = new Challonge(new Credentials(username, apiKey), new GsonSerializer(), new RetrofitRestClient());
@@ -47,7 +51,7 @@ public class TournamentTest {
     @Test
     public final void aCreateTournamentTest() throws DataAccessException {
         try {
-            Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+            Tournament t = this.challonge.getTournament(this.tournamentUrl);
             // Delete the tournament, if it already exists
             this.challonge.deleteTournament(t);
         } catch (DataAccessException ignored) {
@@ -100,7 +104,7 @@ public class TournamentTest {
     public final void aaCreateSubdomainTournamentTest() throws DataAccessException {
         String subdomain = System.getProperty("challongeSubdomain");
 
-        if (subdomain != null && subdomain.isEmpty()) {
+        if (subdomain != null && !subdomain.isEmpty()) {
             // Delete the tournament, if it already exists
             this.challonge.deleteTournament(Tournament.builder().url("javasubdomaintournament").subdomain(subdomain)
                     .tournamentType(TournamentType.SINGLE_ELIMINATION).build());
@@ -117,7 +121,7 @@ public class TournamentTest {
 
     @Test
     public final void bGetTournamentTest() throws DataAccessException {
-        Tournament tournament = this.challonge.getTournament(TOURNAMENT_URL, false, false);
+        Tournament tournament = this.challonge.getTournament(this.tournamentUrl, false, false);
         assertEquals("JavaApiTest", tournament.getName());
     }
 
@@ -126,7 +130,7 @@ public class TournamentTest {
         TournamentQuery query = TournamentQuery.builder().tournamentType(TournamentType.SWISS).signupCap(6)
                 .acceptAttachments(true).description("TestDescription").holdThirdPlaceMatch(true).build();
 
-        Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+        Tournament t = this.challonge.getTournament(this.tournamentUrl);
         Tournament tournament = this.challonge.updateTournament(t, query);
 
         assertEquals("JavaApiTest", tournament.getName());
@@ -143,11 +147,11 @@ public class TournamentTest {
         OffsetDateTime start = OffsetDateTime.now().plusMinutes(5L);
         TournamentQuery tournamentQuery = TournamentQuery.builder().startAt(start).checkInDuration(10L).build();
 
-        Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+        Tournament t = this.challonge.getTournament(this.tournamentUrl);
         this.challonge.updateTournament(t, tournamentQuery);
 
         List<Participant> participants = this.challonge.bulkAddParticipants(t,
-                List.of(ParticipantQuery.builder().name("User1").build(),
+                Arrays.asList(ParticipantQuery.builder().name("User1").build(),
                         ParticipantQuery.builder().name("User2").build()));
 
         Participant participant1 = participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
@@ -166,7 +170,7 @@ public class TournamentTest {
 
     @Test
     public final void eAbortCheckIns() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+        Tournament t = this.challonge.getTournament(this.tournamentUrl);
         Tournament aborted = this.challonge.abortCheckIn(t, true, false);
 
         List<Participant> participants = aborted.getParticipants();
@@ -181,7 +185,7 @@ public class TournamentTest {
 
     @Test
     public final void fStartTournament() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+        Tournament t = this.challonge.getTournament(this.tournamentUrl);
         Tournament startedTournament = this.challonge.startTournament(t, true, false);
 
         assertEquals(2, startedTournament.getParticipants().size());
@@ -190,7 +194,7 @@ public class TournamentTest {
 
     @Test
     public final void gFinalizeTournament() throws DataAccessException {
-        Tournament tournament = this.challonge.getTournament(TOURNAMENT_URL, true, true);
+        Tournament tournament = this.challonge.getTournament(this.tournamentUrl, true, true);
         Participant user1 = tournament.getParticipants().stream().filter(p -> p.getName().equals("User1")).findFirst().get();
         MatchQuery query = MatchQuery.builder().winnerId(user1.getId()).scoresCsv("1-3,3-0,3-2").build();
         Match toUpdate = tournament.getMatches().get(0);
@@ -204,7 +208,7 @@ public class TournamentTest {
 
     @Test
     public final void hResetTournament() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+        Tournament t = this.challonge.getTournament(this.tournamentUrl);
         Tournament tournament = this.challonge.resetTournament(t, true, true);
 
         assertEquals(tournament.getState(), TournamentState.PENDING);
@@ -213,19 +217,19 @@ public class TournamentTest {
     @Test
     public final void iGetTournaments() throws DataAccessException {
         Optional<Tournament> optional = this.challonge.getTournaments().stream()
-                .filter(t -> t.getUrl().equals(TOURNAMENT_URL)).findFirst();
+                .filter(t -> t.getUrl().equals(this.tournamentUrl)).findFirst();
 
         assertTrue(optional.isPresent());
     }
 
     @Test(expected = DataAccessException.class)
     public final void zDeleteTournamentTest() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(TOURNAMENT_URL);
+        Tournament t = this.challonge.getTournament(this.tournamentUrl);
         Tournament tournament = this.challonge.deleteTournament(t);
 
         assertEquals(tournament.getName(), "JavaApiTest");
 
         // check if the tournament is still there
-        this.challonge.getTournament(TOURNAMENT_URL, false, false);
+        this.challonge.getTournament(this.tournamentUrl, false, false);
     }
 }

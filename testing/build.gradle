@@ -7,13 +7,14 @@ dependencies {
 }
 
 // Run tests using:
-// gradle check -PintegrationTests -DchallongeUsername=<username> -DchallongeApiKey=<apikey> [-DchallongeSubdomain=<subdomain>]
+// gradle check -PsystemTests -DchallongeUsername=<username> -DchallongeApiKey=<apikey> -DchallongeTournamentUrl=<tournamentUrl> [-DchallongeSubdomain=<subdomain>]
 test {
     systemProperty("challongeUsername", System.getProperty("challongeUsername"))
     systemProperty("challongeApiKey", System.getProperty("challongeApiKey"))
     systemProperty("challongeSubdomain", System.getProperty("challongeSubdomain"))
+    systemProperty("challongeTournamentUrl", System.getProperty("challongeTournamentUrl"))
 
     onlyIf {
-        project.hasProperty("integrationTests")
+        project.hasProperty("systemTests")
     }
 }

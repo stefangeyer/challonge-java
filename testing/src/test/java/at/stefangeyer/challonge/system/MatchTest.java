@@ -17,6 +17,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -24,17 +25,20 @@ import static org.junit.Assert.assertNull;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MatchTest {
-
-    private static final String TOURNAMENT_URL = "javaapitest";
     private Challonge challonge;
     private Tournament tournament;
     private List<Participant> participants;
+    
+    private String tournamentUrl;
 
     public MatchTest() {
         String username = System.getProperty("challongeUsername");
         String apiKey = System.getProperty("challongeApiKey");
+        this.tournamentUrl = System.getProperty("challongeTournamentUrl");
+
         if (username == null || apiKey == null) {
-            throw new IllegalArgumentException("Required system properties challongeUsername and challongeApiKey are absent");
+            throw new IllegalArgumentException("Required system properties challongeUsername, challongeApiKey or " +
+                    "challongeTournamentUrl are absent");
         }
 
         this.challonge = new Challonge(new Credentials(username, apiKey), new GsonSerializer(), new RetrofitRestClient());
@@ -42,11 +46,17 @@ public class MatchTest {
 
     @Before
     public void setUp() throws DataAccessException {
-        TournamentQuery query = TournamentQuery.builder().name("Matches").url(TOURNAMENT_URL).build();
+        try {
+            // Delete the tournament, if it already exists
+            this.challonge.deleteTournament(this.challonge.getTournament(this.tournamentUrl));
+        } catch (DataAccessException ignored) {
+        }
+
+        TournamentQuery query = TournamentQuery.builder().name("Matches").url(this.tournamentUrl).build();
 
         Tournament tournament = this.challonge.createTournament(query);
 
-        this.participants = this.challonge.bulkAddParticipants(tournament, List.of(
+        this.participants = this.challonge.bulkAddParticipants(tournament, Arrays.asList(
                 ParticipantQuery.builder().name("User1").seed(1).build(),
                 ParticipantQuery.builder().name("User2").seed(2).build(),
                 ParticipantQuery.builder().name("User3").seed(3).build(),

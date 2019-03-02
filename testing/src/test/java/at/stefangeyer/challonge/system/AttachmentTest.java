@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -29,36 +30,44 @@ import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AttachmentTest {
-    private static final String TOURNAMENT_URL = "javaapitest";
-
     private Challonge challonge;
     private Tournament tournament;
     private Match match;
+    
+    private String tournamentUrl;
 
     public AttachmentTest() {
         String username = System.getProperty("challongeUsername");
         String apiKey = System.getProperty("challongeApiKey");
+        this.tournamentUrl = System.getProperty("challongeTournamentUrl");
+
         if (username == null || apiKey == null) {
-            throw new IllegalArgumentException("Required system properties challongeUsername and challongeApiKey are absent");
+            throw new IllegalArgumentException("Required system properties challongeUsername, challongeApiKey or " +
+                    "challongeTournamentUrl are absent");
         }
 
         this.challonge = new Challonge(new Credentials(username, apiKey), new GsonSerializer(), new RetrofitRestClient());
-
     }
 
     @Before
     public final void setUp() throws DataAccessException {
+        try {
+            // Delete the tournament, if it already exists
+            this.challonge.deleteTournament(this.challonge.getTournament(this.tournamentUrl));
+        } catch (DataAccessException ignored) {
+        }
+
         Tournament tournament = this.challonge.createTournament(TournamentQuery.builder().name("Test")
-                .url(TOURNAMENT_URL).acceptAttachments(true).build());
+                .url(this.tournamentUrl).acceptAttachments(true).build());
 
         ParticipantQuery user1 = ParticipantQuery.builder().name("User1").seed(1).build();
         ParticipantQuery user2 = ParticipantQuery.builder().name("User2").seed(2).build();
 
-        this.challonge.bulkAddParticipants(tournament, List.of(user1, user2));
+        this.challonge.bulkAddParticipants(tournament, Arrays.asList(user1, user2));
 
         this.tournament = this.challonge.startTournament(tournament, false, true);
 
-        this.match = tournament.getMatches().get(0);
+        this.match = this.tournament.getMatches().get(0);
     }
 
     @Test

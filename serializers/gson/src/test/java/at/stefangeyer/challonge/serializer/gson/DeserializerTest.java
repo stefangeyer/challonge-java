@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -183,7 +184,7 @@ public class DeserializerTest {
         OffsetDateTime started = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
         OffsetDateTime updated = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
 
-        List<String> tieBreaks = List.of("match wins vs tied", "game wins", "points scored");
+        List<String> tieBreaks = Arrays.asList("match wins vs tied", "game wins", "points scored");
         assertEquals(true, tournament.getAcceptAttachments());
         assertEquals(true, tournament.getAllowParticipantMatchReporting());
         assertEquals(true, tournament.getAnonymousVoting());

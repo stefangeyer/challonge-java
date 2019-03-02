@@ -11,10 +11,7 @@ import at.stefangeyer.challonge.rest.RestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertTrue;
@@ -32,13 +29,13 @@ public class AttachmentTest {
 
     private Tournament tournament = Tournament.builder()
             .id(10L).url("tourney123").tournamentType(TournamentType.SINGLE_ELIMINATION)
-            .matches(new ArrayList<>(List.of(
-                    Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).attachments(new ArrayList<>(List.of(
+            .matches(new ArrayList<>(Collections.singletonList(
+                    Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).attachments(new ArrayList<>(Arrays.asList(
                             Attachment.builder().id(1L).description("Attachment note").build(),
                             Attachment.builder().id(2L).description("Some description").build(),
                             Attachment.builder().id(3L).url("http://some.resource.com/resource").build()
                     ))).build()
-            ))).participants(new ArrayList<>(List.of(
+            ))).participants(new ArrayList<>(Arrays.asList(
                     Participant.builder().id(1L).tournamentId(10L).name("Participant 1").matches(new ArrayList<>()).build(),
                     Participant.builder().id(2L).tournamentId(10L).name("Participant 2").matches(new ArrayList<>()).build()
             )))

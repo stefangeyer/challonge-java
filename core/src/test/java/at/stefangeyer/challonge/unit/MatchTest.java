@@ -13,9 +13,7 @@ import at.stefangeyer.challonge.rest.RestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static at.stefangeyer.challonge.unit.util.Util.ifNotNull;
@@ -30,15 +28,16 @@ public class MatchTest {
 
     private Tournament tournament = Tournament.builder()
             .id(10L).url("tourney123").tournamentType(TournamentType.SINGLE_ELIMINATION)
-            .matches(new ArrayList<>(List.of(
-                    Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).attachments(new ArrayList<>(List.of(
-                            Attachment.builder().id(1L).description("Attachment note").build()
-                    ))).build(),
+            .matches(new ArrayList<>(Arrays.asList(
+                    Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).attachments(new ArrayList<>(
+                            Collections.singletonList(
+                                    Attachment.builder().id(1L).description("Attachment note").build()
+                            ))).build(),
                     Match.builder().id(2L).tournamentId(10L).player1Id(1L).player2Id(3L).build(),
                     Match.builder().id(3L).tournamentId(10L).player1Id(1L).player2Id(4L).build(),
                     Match.builder().id(4L).tournamentId(10L).player1Id(2L).player2Id(3L).build(),
                     Match.builder().id(5L).tournamentId(10L).player1Id(2L).player2Id(4L).build()
-            ))).participants(new ArrayList<>(List.of(
+            ))).participants(new ArrayList<>(Arrays.asList(
                     Participant.builder().id(1L).tournamentId(10L).name("Participant 1").matches(new ArrayList<>()).build(),
                     Participant.builder().id(2L).tournamentId(10L).name("Participant 2").matches(new ArrayList<>()).build(),
                     Participant.builder().id(3L).tournamentId(10L).name("Participant 3").matches(new ArrayList<>()).build(),

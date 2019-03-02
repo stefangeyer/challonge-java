@@ -34,13 +34,13 @@ public class ParticipantTest {
 
     private Tournament tournament = Tournament.builder()
             .id(10L).url("tourney123").tournamentType(TournamentType.SINGLE_ELIMINATION)
-            .matches(new ArrayList<>(List.of(
+            .matches(new ArrayList<>(Arrays.asList(
                     Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).build(),
                     Match.builder().id(2L).tournamentId(10L).player1Id(1L).player2Id(3L).build(),
                     Match.builder().id(3L).tournamentId(10L).player1Id(1L).player2Id(4L).build(),
                     Match.builder().id(4L).tournamentId(10L).player1Id(2L).player2Id(3L).build(),
                     Match.builder().id(5L).tournamentId(10L).player1Id(2L).player2Id(4L).build()
-            ))).participants(new ArrayList<>(List.of(
+            ))).participants(new ArrayList<>(Arrays.asList(
                     Participant.builder().id(1L).tournamentId(10L).name("Participant 1").matches(new ArrayList<>()).build(),
                     Participant.builder().id(2L).tournamentId(10L).name("Participant 2").matches(new ArrayList<>()).build(),
                     Participant.builder().id(3L).tournamentId(10L).name("Participant 3").matches(new ArrayList<>()).build(),
@@ -190,7 +190,7 @@ public class ParticipantTest {
 
     @Test
     public void testBulkAddParticipant() throws DataAccessException {
-        List<ParticipantQuery> participants = List.of(ParticipantQuery.builder().name("Another Participant 1").build(),
+        List<ParticipantQuery> participants = Arrays.asList(ParticipantQuery.builder().name("Another Participant 1").build(),
                 ParticipantQuery.builder().name("Another Participant 2").build());
         List<Participant> local = this.challonge.bulkAddParticipants(tournament, participants);
         assertTrue(tournament.getParticipants().containsAll(local));
@@ -198,7 +198,7 @@ public class ParticipantTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBulkAddParticipantNoData() throws DataAccessException {
-        this.challonge.bulkAddParticipants(tournament, List.of(ParticipantQuery.builder().build()));
+        this.challonge.bulkAddParticipants(tournament, Arrays.asList(ParticipantQuery.builder().build()));
     }
 
     @Test

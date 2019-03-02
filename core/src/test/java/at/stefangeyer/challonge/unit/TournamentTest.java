@@ -18,10 +18,7 @@ import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static at.stefangeyer.challonge.unit.util.Util.ifNotNull;
@@ -38,13 +35,13 @@ public class TournamentTest {
 
     private Random random = new Random();
 
-    private List<Tournament> tournaments = new ArrayList<>(List.of(
+    private List<Tournament> tournaments = new ArrayList<>(Arrays.asList(
             Tournament.builder().id(10L).url("tourney123")
                     .tournamentType(TournamentType.SINGLE_ELIMINATION)
-                    .participants(new ArrayList<>(List.of(
+                    .participants(new ArrayList<>(Arrays.asList(
                             Participant.builder().id(1L).tournamentId(10L).build(),
                             Participant.builder().id(2L).tournamentId(10L).build()
-                    ))).matches(new ArrayList<>(List.of(
+                    ))).matches(new ArrayList<>(Collections.singletonList(
                     Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).build()
             ))).build(),
             Tournament.builder().id(11002L).url("sometourney")

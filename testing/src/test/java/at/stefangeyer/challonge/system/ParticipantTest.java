@@ -10,11 +10,13 @@ import at.stefangeyer.challonge.model.query.TournamentQuery;
 import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,22 +24,35 @@ import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ParticipantTest {
-    private static final String TOURNAMENT_URL = "javaapitest";
 
     private Challonge challonge;
     private Tournament tournament;
+    
+    private String tournamentUrl;
 
-    public ParticipantTest() throws DataAccessException {
+    public ParticipantTest() {
         String username = System.getProperty("challongeUsername");
         String apiKey = System.getProperty("challongeApiKey");
+        this.tournamentUrl = System.getProperty("challongeTournamentUrl");
+
         if (username == null || apiKey == null) {
-            throw new IllegalArgumentException("Required system properties challongeUsername and challongeApiKey are absent");
+            throw new IllegalArgumentException("Required system properties challongeUsername, challongeApiKey or " +
+                    "challongeTournamentUrl are absent");
         }
 
         this.challonge = new Challonge(new Credentials(username, apiKey), new GsonSerializer(), new RetrofitRestClient());
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        try {
+            // Delete the tournament, if it already exists
+            this.challonge.deleteTournament(this.challonge.getTournament(this.tournamentUrl));
+        } catch (DataAccessException ignored) {
+        }
 
         OffsetDateTime start = OffsetDateTime.now().plusMinutes(75L);
-        TournamentQuery query = TournamentQuery.builder().name("Participants").url(TOURNAMENT_URL)
+        TournamentQuery query = TournamentQuery.builder().name("Participants").url(this.tournamentUrl)
                 .checkInDuration(120L).startAt(start).build();
 
         this.tournament = this.challonge.createTournament(query);
@@ -58,7 +73,7 @@ public class ParticipantTest {
         ParticipantQuery query1 = ParticipantQuery.builder().name("Bulk1").seed(1).build();
         ParticipantQuery query2 = ParticipantQuery.builder().name("Bulk2").inviteNameOrEmail("Bulk").seed(2).misc("BulkAdd").build();
 
-        List<Participant> participants = this.challonge.bulkAddParticipants(this.tournament, List.of(query1, query2));
+        List<Participant> participants = this.challonge.bulkAddParticipants(this.tournament, Arrays.asList(query1, query2));
         Participant participant1 = participants.get(0);
         Participant participant2 = participants.get(1);
 
@@ -102,7 +117,7 @@ public class ParticipantTest {
         ParticipantQuery query2 = ParticipantQuery.builder().name("User2").build();
         ParticipantQuery query3 = ParticipantQuery.builder().name("User3").build();
 
-        this.challonge.bulkAddParticipants(this.tournament, List.of(query1, query2, query3));
+        this.challonge.bulkAddParticipants(this.tournament, Arrays.asList(query1, query2, query3));
 
         List<Participant> randomized = this.challonge.randomizeParticipants(this.tournament);
         assertEquals(3, randomized.size());
@@ -146,7 +161,7 @@ public class ParticipantTest {
         ParticipantQuery query2 = ParticipantQuery.builder().name("User2").build();
         ParticipantQuery query3 = ParticipantQuery.builder().name("User3").build();
 
-        this.challonge.bulkAddParticipants(this.tournament, List.of(query1, query2, query3));
+        this.challonge.bulkAddParticipants(this.tournament, Arrays.asList(query1, query2, query3));
 
         List<Participant> participants = this.challonge.getParticipants(this.tournament);
 

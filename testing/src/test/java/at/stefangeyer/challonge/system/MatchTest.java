@@ -28,7 +28,7 @@ public class MatchTest {
     private Challonge challonge;
     private Tournament tournament;
     private List<Participant> participants;
-    
+
     private String tournamentUrl;
 
     public MatchTest() {

@@ -33,7 +33,7 @@ public class AttachmentTest {
     private Challonge challonge;
     private Tournament tournament;
     private Match match;
-    
+
     private String tournamentUrl;
 
     public AttachmentTest() {

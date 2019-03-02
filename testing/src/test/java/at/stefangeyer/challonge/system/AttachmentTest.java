@@ -82,7 +82,7 @@ public class AttachmentTest {
 
     @Test
     public final void bCreateFileAttachmentTest() throws DataAccessException, IOException {
-        File assetFile = new File(Thread.currentThread().getContextClassLoader().getResource("testfile1.txt").getPath());
+        File assetFile = new File(getClass().getClassLoader().getResource("testfile1.txt").getPath());
         AttachmentQuery query = AttachmentQuery.builder().asset(assetFile).description("TestDescription").build();
 
         Attachment attachment = this.challonge.createAttachment(this.match, query);
@@ -126,14 +126,14 @@ public class AttachmentTest {
 
     @Test
     public final void eUpdateAttachmentTest() throws DataAccessException {
-        File assetFile = new File(Thread.currentThread().getContextClassLoader().getResource("testfile1.txt").getPath());
+        File assetFile = new File(getClass().getClassLoader().getResource("testfile1.txt").getPath());
 
         Attachment createdAttachment = this.challonge.createAttachment(this.match,
                 AttachmentQuery.builder().asset(assetFile).description("Attachment1").build());
 
         assertEquals("testfile1.txt", createdAttachment.getAssetFileName());
 
-        File newAssetFile = new File(Thread.currentThread().getContextClassLoader().getResource("testfile2.txt").getPath());
+        File newAssetFile = new File(getClass().getClassLoader().getResource("testfile2.txt").getPath());
 
         Attachment updatedAttachment = this.challonge.updateAttachment(this.match, createdAttachment,
                 AttachmentQuery.builder().asset(newAssetFile).description("update").build());

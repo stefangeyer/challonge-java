@@ -87,13 +87,11 @@ public interface ChallongeRetrofit {
 
     /**
      * This should be invoked after a tournament's check-in window closes before the tournament is started.
-     * <p>
      * <ol>
      * <li>Marks participants who have not checked in as inactive.</li>
      * <li>Moves inactive participants to bottom seeds (ordered by original seed).</li>
      * <li>Transitions the tournament state from 'checking_in' to 'checked_in'</li>
      * </ol>
-     * <p>
      * NOTE: Checked in participants on the waiting list will be promoted if slots become available.
      *
      * @param tournament          Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
@@ -112,7 +110,6 @@ public interface ChallongeRetrofit {
      * When your tournament is in a 'checking_in' or 'checked_in' state,
      * there's no way to edit the tournament's start time (start_at) or check-in duration (check_in_duration).
      * You must first abort check-in, then you may edit those attributes.
-     * <p>
      * <ol>
      * <li>Makes all participants active and clears their checked_in_at times.</li>
      * <li>Transitions the tournament state from 'checking_in' or 'checked_in' to 'pending'</li>

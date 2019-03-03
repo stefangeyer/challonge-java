@@ -24,7 +24,7 @@ import at.stefangeyer.challonge.service.implementation.SimpleTournamentService;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-public class Challonge {
+public class Challonge implements TournamentService, ParticipantService, MatchService, AttachmentService {
 
     private TournamentService tournamentService;
     private ParticipantService participantService;

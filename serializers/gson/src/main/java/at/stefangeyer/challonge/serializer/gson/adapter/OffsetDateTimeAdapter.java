@@ -5,6 +5,7 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Type adapter for the [OffsetDateTime] class.
@@ -19,10 +20,13 @@ public class OffsetDateTimeAdapter implements JsonSerializer<OffsetDateTime>, Js
         JsonPrimitive jsonPrimitive = json.getAsJsonPrimitive();
 
         if (jsonPrimitive.isString()) {
-            return OffsetDateTime.parse(jsonPrimitive.getAsString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-        } else {
-            throw new JsonParseException("Unable to parse OffsetDateTime. DateTime was not provided as string.");
+            try {
+                return OffsetDateTime.parse(jsonPrimitive.getAsString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            } catch (DateTimeParseException ignored) {
+            }
         }
+
+        throw new JsonParseException("Unable to parse OffsetDateTime. DateTime was not provided as string or an invalid format was used.");
     }
 
     @Override

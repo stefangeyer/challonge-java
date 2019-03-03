@@ -8,11 +8,12 @@ import at.stefangeyer.challonge.model.enumeration.MatchState;
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
 import at.stefangeyer.challonge.model.enumeration.TournamentState;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
+import com.google.gson.JsonParseException;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -38,30 +39,20 @@ public class DeserializerTest {
             fullChallongeUrl("http://challonge.com/sample_tournament_1").signUpUrl(null).reviewBeforeFinalizing(true).
             liveImageUrl("http://images.challonge.com/sample_tournament_1.png").participantsSwappable(false).
             acceptingPredictions(false).participantsLocked(true).gameName("Table Tennis").teamConvertable(false).
-            groupStagesWereStarted(false).participants(new ArrayList<>()).matches(new ArrayList<>()).build();
-
-    private final String tournamentString = "{\"accept_attachments\":true," +
-            "\"allow_participant_match_reporting\":true,\"anonymous_voting\":true,\"category\":\"ABC\"," +
-            "\"check_in_duration\":null,\"completed_at\":null,\"created_at\":\"2015-01-19T16:47:30-05:00\"," +
-            "\"created_by_api\":false,\"credit_capped\":false,\"description\":\"test\",\"game_id\":600," +
-            "\"group_stages_enabled\":false,\"hide_forum\":false,\"hide_seeds\":false,\"hold_third_place_match\":false," +
-            "\"id\":1086875,\"max_predictions_per_user\":1,\"name\":\"Sample Tournament 1\"," +
-            "\"notify_users_when_matches_open\":true,\"notify_users_when_the_tournament_ends\":true," +
-            "\"open_signup\":false,\"participants_count\":4,\"prediction_method\":0,\"predictions_opened_at\":null," +
-            "\"private\":false,\"progress_meter\":0,\"pts_for_bye\":\"1.0\",\"pts_for_game_tie\":\"0.0\"," +
-            "\"pts_for_game_win\":\"0.0\",\"pts_for_match_tie\":\"0.5\",\"pts_for_match_win\":\"1.0\"," +
-            "\"quick_advance\":false,\"ranked_by\":\"match wins\",\"require_score_agreement\":false," +
-            "\"rr_pts_for_game_tie\":\"0.0\",\"rr_pts_for_game_win\":\"0.0\",\"rr_pts_for_match_tie\":\"0.5\"," +
-            "\"rr_pts_for_match_win\":\"1.0\",\"sequential_pairings\":false,\"show_rounds\":true,\"signup_cap\":null," +
-            "\"start_at\":null,\"started_at\":\"2015-01-19T16:57:17-05:00\",\"started_checking_in_at\":null," +
-            "\"state\":\"underway\",\"swiss_rounds\":0,\"teams\":false,\"tie_breaks\":[\"match wins vs tied\"," +
-            "\"game wins\",\"points scored\"],\"tournament_type\":\"single elimination\"," +
-            "\"updated_at\":\"2015-01-19T16:57:17-05:00\",\"url\":\"sample_tournament_1\",\"description_source\":\"\"," +
-            "\"subdomain\":null,\"full_challonge_url\":\"http://challonge.com/sample_tournament_1\"," +
-            "\"live_image_url\":\"http://images.challonge.com/sample_tournament_1.png\",\"sign_up_url\":null," +
-            "\"review_before_finalizing\":true,\"accepting_predictions\":false,\"participants_locked\":true," +
-            "\"game_name\":\"Table Tennis\",\"participants_swappable\":false,\"team_convertable\":false," +
-            "\"group_stages_were_started\":false}";
+            groupStagesWereStarted(false).participants(Arrays.asList(
+            Participant.builder().id(1L).tournamentId(12345L).name("P1").misc("ABC").seed(3)
+                    .active(true).checkedInAt(null).onWaitingList(false).removable(true)
+                    .participatableOrInvitationAttached(false).confirmRemove(true).invitationPending(false)
+                    .canCheckIn(false).checkedIn(false).reactivatable(false).build(),
+            Participant.builder().id(2L).tournamentId(12345L).name("P2").misc("DEF").seed(4)
+                    .active(true).checkedInAt(null).onWaitingList(false).removable(true)
+                    .participatableOrInvitationAttached(false).confirmRemove(true).invitationPending(false)
+                    .canCheckIn(false).checkedIn(false).reactivatable(false).build())).matches(Collections.singletonList(
+            Match.builder().id(1L).tournamentId(12345L).hasAttachment(false).player1IsPrerequisiteMatchLoser(false).
+                    player2IsPrerequisiteMatchLoser(false).round(2).build())).
+            matches(Collections.singletonList(Match.builder().id(1L).tournamentId(12345L).hasAttachment(false).player1IsPrerequisiteMatchLoser(false).
+                    player2IsPrerequisiteMatchLoser(false).round(2).state(MatchState.OPEN).build())).
+            build();
 
     private final Participant participant = Participant.builder().active(true).checkedInAt(null).
             createdAt(OffsetDateTime.parse("2015-01-19T16:54:40-05:00")).finalRank(null).groupId(null).
@@ -73,16 +64,6 @@ public class DeserializerTest {
             emailHash(null).username(null).attachedParticipatablePortraitUrl(null).canCheckIn(false).
             checkedIn(false).reactivatable(false).build();
 
-    private final String participantString = "{\"participant\":{\"active\":true,\"checked_in_at\":null," +
-            "\"created_at\":\"2015-01-19T16:54:40-05:00\",\"final_rank\":null,\"group_id\":null,\"icon\":null," +
-            "\"id\":16543993,\"invitation_id\":null,\"invite_email\":null,\"misc\":null,\"name\":\"Participant #1\"," +
-            "\"on_waiting_list\":false,\"seed\":1,\"tournament_id\":1086875,\"updated_at\":\"2015-01-19T16:54:40-05:00\"," +
-            "\"challonge_username\":null,\"challonge_email_address_verified\":null,\"removable\":true," +
-            "\"participatable_or_invitation_attached\":false,\"confirm_remove\":true,\"invitation_pending\":false," +
-            "\"display_name_with_invitation_email_address\":\"Participant #1\",\"email_hash\":null,\"username\":null," +
-            "\"attached_participatable_portrait_url\":null,\"can_check_in\":false,\"checked_in\":false," +
-            "\"reactivatable\":false}}";
-
     private final Match match = Match.builder().attachmentCount(null).
             createdAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).groupId(null).hasAttachment(false).
             id(23575258L).identifier("A").location(null).loserId(null).player1Id(16543993L).
@@ -93,31 +74,49 @@ public class DeserializerTest {
             updatedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).winnerId(null).prerequisiteMatchIdsCsv("").
             scoresCsv("").build();
 
-    private final String matchString = "{\"match\":{\"attachment_count\":null,\"created_at\":\"2015-01-19T16:57:17-05:00\"," +
-            "\"group_id\":null,\"has_attachment\":false,\"id\":23575258,\"identifier\":\"A\",\"location\":null," +
-            "\"loser_id\":null,\"player1_id\":16543993,\"player1_is_prereq_match_loser\":false," +
-            "\"player1_prereq_match_id\":null,\"player1_votes\":null,\"player2_id\":16543997," +
-            "\"player2_is_prereq_match_loser\":false,\"player2_prereq_match_id\":null,\"player2_votes\":null," +
-            "\"round\":1,\"scheduled_time\":null,\"started_at\":\"2015-01-19T16:57:17-05:00\",\"state\":\"open\"," +
-            "\"tournament_id\":1086875,\"underway_at\":null,\"updated_at\":\"2015-01-19T16:57:17-05:00\"," +
-            "\"winner_id\":null,\"prerequisite_match_ids_csv\":\"\",\"scores_csv\":\"\"}}";
-
     private final Attachment attachment = Attachment.builder().
             id(363084L).matchId(40637548L).userId(12345L).description(null).url("").originalFileName(null).
-            createdAt(OffsetDateTime.parse("2018-09-21T06:21:25.884-04:00")).assetFileSize(null).assetUrl(null).
-            updatedAt(OffsetDateTime.parse("2018-09-21T06:21:25.884-04:00")).assetFileName(null).assetContentType(null).
-            build();
-
-    private final String attachmentString = "{\"match_attachment\":{\"id\":363084,\"match_id\":40637548,\"user_id\":12345," +
-            "\"description\":null,\"url\":\"\",\"original_file_name\":null,\"created_at\":\"2018-09-21T06:21:25.884-04:00\"," +
-            "\"updated_at\":\"2018-09-21T06:21:25.884-04:00\",\"asset_file_name\":null,\"asset_content_type\":null," +
-            "\"asset_file_size\":null,\"asset_url\":null}}";
+            createdAt(OffsetDateTime.parse("2018-09-21T06:21:25.884-04:00")).assetFileSize(null)
+            .assetUrl("https://www.google.com").updatedAt(OffsetDateTime.parse("2018-09-21T06:21:25.884-04:00"))
+            .assetFileName(null).assetContentType(null).build();
 
     private GsonSerializer serializer = new GsonSerializer();
 
     @Test
     public void testTournamentDeserialization() {
-        Tournament tournament = this.serializer.deserialize(this.tournamentString, Tournament.class);
+        String tournamentString = "{\"accept_attachments\":true," +
+                "\"allow_participant_match_reporting\":true,\"anonymous_voting\":true,\"category\":\"ABC\"," +
+                "\"check_in_duration\":null,\"completed_at\":null,\"created_at\":\"2015-01-19T16:47:30-05:00\"," +
+                "\"created_by_api\":false,\"credit_capped\":false,\"description\":\"test\",\"game_id\":600," +
+                "\"group_stages_enabled\":false,\"hide_forum\":false,\"hide_seeds\":false,\"hold_third_place_match\":false," +
+                "\"id\":1086875,\"max_predictions_per_user\":1,\"name\":\"Sample Tournament 1\"," +
+                "\"notify_users_when_matches_open\":true,\"notify_users_when_the_tournament_ends\":true," +
+                "\"open_signup\":false,\"participants_count\":4,\"prediction_method\":0,\"predictions_opened_at\":null," +
+                "\"private\":false,\"progress_meter\":0,\"pts_for_bye\":\"1.0\",\"pts_for_game_tie\":\"0.0\"," +
+                "\"pts_for_game_win\":\"0.0\",\"pts_for_match_tie\":\"0.5\",\"pts_for_match_win\":\"1.0\"," +
+                "\"quick_advance\":false,\"ranked_by\":\"match wins\",\"require_score_agreement\":false," +
+                "\"rr_pts_for_game_tie\":\"0.0\",\"rr_pts_for_game_win\":\"0.0\",\"rr_pts_for_match_tie\":\"0.5\"," +
+                "\"rr_pts_for_match_win\":\"1.0\",\"sequential_pairings\":false,\"show_rounds\":true,\"signup_cap\":null," +
+                "\"start_at\":null,\"started_at\":\"2015-01-19T16:57:17-05:00\",\"started_checking_in_at\":null," +
+                "\"state\":\"underway\",\"swiss_rounds\":0,\"teams\":false,\"tie_breaks\":[\"match wins vs tied\"," +
+                "\"game wins\",\"points scored\"],\"tournament_type\":\"single elimination\"," +
+                "\"updated_at\":\"2015-01-19T16:57:17-05:00\",\"url\":\"sample_tournament_1\",\"description_source\":\"\"," +
+                "\"subdomain\":null,\"full_challonge_url\":\"http://challonge.com/sample_tournament_1\"," +
+                "\"live_image_url\":\"http://images.challonge.com/sample_tournament_1.png\",\"sign_up_url\":null," +
+                "\"review_before_finalizing\":true,\"accepting_predictions\":false,\"participants_locked\":true," +
+                "\"game_name\":\"Table Tennis\",\"participants_swappable\":false,\"team_convertable\":false," +
+                "\"group_stages_were_started\":false,\"participants\":[{\"participant\":{\"id\":1,\"tournament_id\":12345," +
+                "\"name\":\"P1\",\"seed\":3,\"misc\":\"ABC\",\"active\":true,\"on_waiting_list\":false,\"removable\":true," +
+                "\"participatable_or_invitation_attached\":false,\"confirm_remove\":true,\"invitation_pending\":false," +
+                "\"can_check_in\":false,\"checked_in\":false,\"reactivatable\":false}},{\"participant\":{\"id\":2," +
+                "\"tournament_id\":12345,\"name\":\"P2\",\"seed\":4,\"misc\":\"DEF\",\"active\":true,\"active\":true," +
+                "\"on_waiting_list\":false,\"removable\":true,\"participatable_or_invitation_attached\":false," +
+                "\"confirm_remove\":true,\"invitation_pending\":false,\"can_check_in\":false,\"checked_in\":false," +
+                "\"reactivatable\":false}}],\"matches\":[{\"match\":{\"id\":1,\"tournament_id\":12345," +
+                "\"has_attachment\":false,\"player1_is_prereq_match_loser\":false," +
+                "\"player2_is_prereq_match_loser\":false,\"round\":2,\"state\":\"open\"}}]}";
+
+        Tournament tournament = this.serializer.deserialize(tournamentString, Tournament.class);
 
         OffsetDateTime created = OffsetDateTime.parse("2015-01-19T16:47:30-05:00");
         OffsetDateTime started = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
@@ -193,7 +192,17 @@ public class DeserializerTest {
 
     @Test
     public void testParticipantDeserialization() {
-        Participant participant = this.serializer.deserialize(this.participantString, Participant.class);
+        String participantString = "{\"participant\":{\"active\":true,\"checked_in_at\":null," +
+                "\"created_at\":\"2015-01-19T16:54:40-05:00\",\"final_rank\":null,\"group_id\":null,\"icon\":null," +
+                "\"id\":16543993,\"invitation_id\":null,\"invite_email\":null,\"misc\":null,\"name\":\"Participant #1\"," +
+                "\"on_waiting_list\":false,\"seed\":1,\"tournament_id\":1086875,\"updated_at\":\"2015-01-19T16:54:40-05:00\"," +
+                "\"challonge_username\":null,\"challonge_email_address_verified\":null,\"removable\":true," +
+                "\"participatable_or_invitation_attached\":false,\"confirm_remove\":true,\"invitation_pending\":false," +
+                "\"display_name_with_invitation_email_address\":\"Participant #1\",\"email_hash\":null,\"username\":null," +
+                "\"attached_participatable_portrait_url\":null,\"can_check_in\":false,\"checked_in\":false," +
+                "\"reactivatable\":false}}";
+
+        Participant participant = this.serializer.deserialize(participantString, Participant.class);
 
         OffsetDateTime created = OffsetDateTime.parse("2015-01-19T16:54:40-05:00");
         OffsetDateTime updated = OffsetDateTime.parse("2015-01-19T16:54:40-05:00");
@@ -232,7 +241,16 @@ public class DeserializerTest {
 
     @Test
     public void testMatchDeserialization() {
-        Match match = this.serializer.deserialize(this.matchString, Match.class);
+        String matchString = "{\"match\":{\"attachment_count\":null,\"created_at\":\"2015-01-19T16:57:17-05:00\"," +
+                "\"group_id\":null,\"has_attachment\":false,\"id\":23575258,\"identifier\":\"A\",\"location\":null," +
+                "\"loser_id\":null,\"player1_id\":16543993,\"player1_is_prereq_match_loser\":false," +
+                "\"player1_prereq_match_id\":null,\"player1_votes\":null,\"player2_id\":16543997," +
+                "\"player2_is_prereq_match_loser\":false,\"player2_prereq_match_id\":null,\"player2_votes\":null," +
+                "\"round\":1,\"scheduled_time\":null,\"started_at\":\"2015-01-19T16:57:17-05:00\",\"state\":\"open\"," +
+                "\"tournament_id\":1086875,\"underway_at\":null,\"updated_at\":\"2015-01-19T16:57:17-05:00\"," +
+                "\"winner_id\":null,\"prerequisite_match_ids_csv\":\"\",\"scores_csv\":\"\"}}";
+
+        Match match = this.serializer.deserialize(matchString, Match.class);
 
         OffsetDateTime created = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
         OffsetDateTime started = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
@@ -267,7 +285,12 @@ public class DeserializerTest {
 
     @Test
     public void testAttachmentDeserialization() {
-        Attachment attachment = this.serializer.deserialize(this.attachmentString, Attachment.class);
+        String attachmentString = "{\"match_attachment\":{\"id\":363084,\"match_id\":40637548,\"user_id\":12345," +
+                "\"description\":null,\"url\":\"\",\"original_file_name\":null,\"created_at\":\"2018-09-21T06:21:25.884-04:00\"," +
+                "\"updated_at\":\"2018-09-21T06:21:25.884-04:00\",\"asset_file_name\":null,\"asset_content_type\":null," +
+                "\"asset_file_size\":null,\"asset_url\":\"//www.google.com\"}}";
+
+        Attachment attachment = this.serializer.deserialize(attachmentString, Attachment.class);
 
         OffsetDateTime created = OffsetDateTime.parse("2018-09-21T06:21:25.884-04:00");
         OffsetDateTime updated = OffsetDateTime.parse("2018-09-21T06:21:25.884-04:00");
@@ -283,8 +306,18 @@ public class DeserializerTest {
         assertNull(attachment.getAssetFileName());
         assertNull(attachment.getAssetContentType());
         assertNull(attachment.getAssetFileSize());
-        assertNull(attachment.getAssetUrl());
+        assertEquals("https://www.google.com", attachment.getAssetUrl());
 
         assertEquals(this.attachment, attachment);
+    }
+
+    @Test(expected = JsonParseException.class)
+    public void testInvalidDateDeserialization() {
+        String attachmentStringInvalidDate = "{\"match_attachment\":{\"id\":363084,\"match_id\":40637548,\"user_id\":12345," +
+                "\"description\":null,\"url\":\"\",\"original_file_name\":null,\"created_at\":\"2018-09-21T06:21:25.884-04:00\"," +
+                "\"updated_at\":\"2018-09-2:25.8804:00\",\"asset_file_name\":null,\"asset_content_type\":null," +
+                "\"asset_file_size\":null,\"asset_url\":null}}";
+
+        this.serializer.deserialize(attachmentStringInvalidDate, Attachment.class);
     }
 }

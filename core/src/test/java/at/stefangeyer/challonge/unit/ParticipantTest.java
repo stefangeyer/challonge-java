@@ -1,6 +1,7 @@
 package at.stefangeyer.challonge.unit;
 
 import at.stefangeyer.challonge.Challonge;
+import at.stefangeyer.challonge.async.Callback;
 import at.stefangeyer.challonge.exception.DataAccessException;
 import at.stefangeyer.challonge.model.Credentials;
 import at.stefangeyer.challonge.model.Match;
@@ -17,20 +18,25 @@ import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static at.stefangeyer.challonge.unit.util.Util.ifNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 public class ParticipantTest {
 
     private Challonge challonge;
 
     private Random random = new Random();
+
+    private Object[] holder = new Object[1];
 
     private Tournament tournament = Tournament.builder()
             .id(10L).url("tourney123").tournamentType(TournamentType.SINGLE_ELIMINATION)
@@ -54,6 +60,16 @@ public class ParticipantTest {
         when(prc.getParticipants(any())).thenAnswer(
                 i -> this.tournament.getParticipants().stream().map(ParticipantWrapper::new).collect(Collectors.toList()));
 
+        doAnswer(i -> {
+            Callback<List<ParticipantWrapper>> onSuccess = i.getArgument(1);
+
+            List<ParticipantWrapper> participants = prc.getParticipants(i.getArgument(0));
+
+            onSuccess.accept(participants);
+
+            return null;
+        }).when(prc).getParticipants(any(), any(), any());
+
         when(prc.getParticipant(any(), anyLong(), anyBoolean())).thenAnswer(i -> {
             Participant p = getParticipant(i.getArgument(0), i.getArgument(1));
             List<Match> matches = new ArrayList<>();
@@ -67,6 +83,16 @@ public class ParticipantTest {
             return new ParticipantWrapper(p);
         });
 
+        doAnswer(i -> {
+            Callback<ParticipantWrapper> onSuccess = i.getArgument(3);
+
+            ParticipantWrapper participant = prc.getParticipant(i.getArgument(0), i.getArgument(1), i.getArgument(2));
+
+            onSuccess.accept(participant);
+
+            return null;
+        }).when(prc).getParticipant(any(), anyLong(), anyBoolean(), any(), any());
+
         when(prc.addParticipant(any(), any())).thenAnswer(i -> {
             ParticipantQuery data = i.<ParticipantQueryWrapper>getArgument(1).getParticipant();
             Participant p = Participant.builder().id((long) this.random.nextInt(1000)).name(data.getName())
@@ -78,6 +104,16 @@ public class ParticipantTest {
 
             return new ParticipantWrapper(p);
         });
+
+        doAnswer(i -> {
+            Callback<ParticipantWrapper> onSuccess = i.getArgument(2);
+
+            ParticipantWrapper participant = prc.addParticipant(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(participant);
+
+            return null;
+        }).when(prc).addParticipant(any(), any(), any(), any());
 
         when(prc.bulkAddParticipants(any(), any())).thenAnswer(i -> {
             List<ParticipantWrapper> result = new ArrayList<>();
@@ -94,6 +130,16 @@ public class ParticipantTest {
 
             return result;
         });
+
+        doAnswer(i -> {
+            Callback<List<ParticipantWrapper>> onSuccess = i.getArgument(2);
+
+            List<ParticipantWrapper> participants = prc.bulkAddParticipants(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(participants);
+
+            return null;
+        }).when(prc).bulkAddParticipants(any(), any(), any(), any());
 
         when(prc.updateParticipant(any(), anyLong(), any())).thenAnswer(i -> {
             ParticipantQuery data = i.<ParticipantQueryWrapper>getArgument(2).getParticipant();
@@ -116,6 +162,16 @@ public class ParticipantTest {
             return new ParticipantWrapper(updated);
         });
 
+        doAnswer(i -> {
+            Callback<ParticipantWrapper> onSuccess = i.getArgument(3);
+
+            ParticipantWrapper participant = prc.updateParticipant(i.getArgument(0), i.getArgument(1), i.getArgument(2));
+
+            onSuccess.accept(participant);
+
+            return null;
+        }).when(prc).updateParticipant(any(), anyLong(), any(), any(), any());
+
         when(prc.checkInParticipant(any(), anyLong())).thenAnswer(i -> {
             Participant p = getParticipant(i.getArgument(0), i.getArgument(1));
 
@@ -123,6 +179,16 @@ public class ParticipantTest {
 
             return new ParticipantWrapper(p);
         });
+
+        doAnswer(i -> {
+            Callback<ParticipantWrapper> onSuccess = i.getArgument(2);
+
+            ParticipantWrapper participant = prc.checkInParticipant(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(participant);
+
+            return null;
+        }).when(prc).checkInParticipant(any(), anyLong(), any(), any());
 
         when(prc.undoCheckInParticipant(any(), anyLong())).thenAnswer(i -> {
             Participant p = getParticipant(i.getArgument(0), i.getArgument(1));
@@ -132,6 +198,16 @@ public class ParticipantTest {
             return new ParticipantWrapper(p);
         });
 
+        doAnswer(i -> {
+            Callback<ParticipantWrapper> onSuccess = i.getArgument(2);
+
+            ParticipantWrapper participant = prc.undoCheckInParticipant(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(participant);
+
+            return null;
+        }).when(prc).undoCheckInParticipant(any(), anyLong(), any(), any());
+
         when(prc.deleteParticipant(any(), anyLong())).thenAnswer(i -> {
             Participant p = getParticipant(i.getArgument(0), i.getArgument(1));
 
@@ -140,6 +216,16 @@ public class ParticipantTest {
             return new ParticipantWrapper(p);
         });
 
+        doAnswer(i -> {
+            Callback<ParticipantWrapper> onSuccess = i.getArgument(2);
+
+            ParticipantWrapper participant = prc.deleteParticipant(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(participant);
+
+            return null;
+        }).when(prc).deleteParticipant(any(), anyLong(), any(), any());
+
         when(prc.randomizeParticipants(any())).thenAnswer(i -> {
             List<Participant> participants = this.tournament.getParticipants();
 
@@ -147,6 +233,16 @@ public class ParticipantTest {
 
             return participants.stream().map(ParticipantWrapper::new).collect(Collectors.toList());
         });
+
+        doAnswer(i -> {
+            Callback<List<ParticipantWrapper>> onSuccess = i.getArgument(1);
+
+            List<ParticipantWrapper> participants = prc.randomizeParticipants(i.getArgument(0));
+
+            onSuccess.accept(participants);
+
+            return null;
+        }).when(prc).randomizeParticipants(any(), any(), any());
 
         RestClient restClient = mock(RestClient.class);
 
@@ -167,13 +263,47 @@ public class ParticipantTest {
 
     @Test
     public void testGetParticipants() throws DataAccessException {
-        List<Participant> local = this.challonge.getParticipants(tournament);
-        assertEquals(tournament.getParticipants(), local);
+        List<Participant> local = this.challonge.getParticipants(this.tournament);
+        assertEquals(this.tournament.getParticipants(), local);
+    }
+
+    @Test
+    public void testGetParticipantsAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        List<Participant> participants = new ArrayList<>();
+
+        this.challonge.getParticipants(this.tournament, l -> {
+            participants.addAll(l);
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(this.tournament.getParticipants(), participants);
     }
 
     @Test
     public void testGetParticipant() throws DataAccessException {
-        Participant local = this.challonge.getParticipant(tournament, 2);
+        Participant local = this.challonge.getParticipant(this.tournament, 2);
+        assertEquals("Participant 2", local.getName());
+    }
+
+    @Test
+    public void testGetParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        this.challonge.getParticipant(this.tournament, 2, p -> {
+            this.holder[0] = p;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Participant local = (Participant) this.holder[0];
+
         assertEquals("Participant 2", local.getName());
     }
 
@@ -181,6 +311,25 @@ public class ParticipantTest {
     public void testAddParticipant() throws DataAccessException {
         Participant local = this.challonge.addParticipant(tournament, ParticipantQuery.builder().name("New Participants").build());
         assertTrue(tournament.getParticipants().contains(local));
+    }
+
+    @Test
+    public void testAddParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        ParticipantQuery query = ParticipantQuery.builder().name("New Participants").build();
+
+        this.challonge.addParticipant(this.tournament, query, p -> {
+            this.holder[0] = p;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Participant local = (Participant) this.holder[0];
+
+        assertTrue(this.tournament.getParticipants().contains(local));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -196,15 +345,55 @@ public class ParticipantTest {
         assertTrue(tournament.getParticipants().containsAll(local));
     }
 
+    @Test
+    public void testBulkAddParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        List<ParticipantQuery> queries = Arrays.asList(ParticipantQuery.builder().name("Another Participant 1").build(),
+                ParticipantQuery.builder().name("Another Participant 2").build());
+
+        this.challonge.bulkAddParticipants(this.tournament, queries, l -> {
+            this.holder[0] = l;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        List p = (List) this.holder[0];
+
+        assertTrue(tournament.getParticipants().containsAll(p));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testBulkAddParticipantNoData() throws DataAccessException {
-        this.challonge.bulkAddParticipants(tournament, Arrays.asList(ParticipantQuery.builder().build()));
+        this.challonge.bulkAddParticipants(tournament, Collections.singletonList(ParticipantQuery.builder().build()));
     }
 
     @Test
     public void testUpdateParticipant() throws DataAccessException {
         Participant participant = this.tournament.getParticipants().stream().findFirst().get();
         Participant local = this.challonge.updateParticipant(participant, ParticipantQuery.builder().name("New Name").build());
+        assertEquals("New Name", local.getName());
+    }
+
+    @Test
+    public void testUpdateParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Participant participant = this.tournament.getParticipants().stream().findFirst().get();
+        ParticipantQuery query = ParticipantQuery.builder().name("New Name").build();
+
+        this.challonge.updateParticipant(participant, query, p -> {
+            this.holder[0] = p;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Participant local = (Participant) this.holder[0];
+
         assertEquals("New Name", local.getName());
     }
 
@@ -222,9 +411,47 @@ public class ParticipantTest {
     }
 
     @Test
+    public void testCheckInParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Participant participant = this.tournament.getParticipants().stream().findFirst().get();
+
+        this.challonge.checkInParticipant(participant, p -> {
+            this.holder[0] = p;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Participant local = (Participant) this.holder[0];
+
+        assertEquals(participant, local);
+    }
+
+    @Test
     public void testUndoCheckInParticipant() throws DataAccessException {
         Participant participant = this.tournament.getParticipants().stream().findFirst().get();
         Participant local = this.challonge.undoCheckInParticipant(participant);
+        assertEquals(participant, local);
+    }
+
+    @Test
+    public void testUndoCheckInParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Participant participant = this.tournament.getParticipants().stream().findFirst().get();
+
+        this.challonge.undoCheckInParticipant(participant, p -> {
+            this.holder[0] = p;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Participant local = (Participant) this.holder[0];
+
         assertEquals(participant, local);
     }
 
@@ -236,8 +463,44 @@ public class ParticipantTest {
     }
 
     @Test
+    public void testDeleteParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Participant participant = this.tournament.getParticipants().stream().findFirst().get();
+
+        this.challonge.deleteParticipant(participant, p -> {
+            this.holder[0] = p;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Participant local = (Participant) this.holder[0];
+
+        assertEquals(participant, local);
+    }
+
+    @Test
     public void testRandomizeParticipant() throws DataAccessException {
         List<Participant> local = this.challonge.randomizeParticipants(tournament);
-        assertEquals(tournament.getParticipants(), local);
+        assertEquals(this.tournament.getParticipants(), local);
+    }
+
+    @Test
+    public void testRandomizeParticipantAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        this.challonge.randomizeParticipants(this.tournament, l -> {
+            this.holder[0] = l;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        List local = (List) this.holder[0];
+
+        assertEquals(this.tournament.getParticipants(), local);
     }
 }

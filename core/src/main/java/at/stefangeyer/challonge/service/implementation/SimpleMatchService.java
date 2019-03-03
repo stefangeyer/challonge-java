@@ -40,7 +40,8 @@ public class SimpleMatchService implements MatchService {
     @Override
     public void getMatches(Tournament tournament, Participant participant, MatchState state,
                            Callback<List<Match>> onSuccess, Callback<DataAccessException> onFailure) {
-        this.restClient.getMatches(String.valueOf(tournament.getId()), participant.getId(), state,
+        this.restClient.getMatches(String.valueOf(tournament.getId()),
+                participant != null ? participant.getId() : null, state,
                 list -> onSuccess.accept(list.stream().map(MatchWrapper::getMatch)
                         .collect(Collectors.toList())), onFailure);
     }

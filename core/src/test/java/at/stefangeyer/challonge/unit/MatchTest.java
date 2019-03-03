@@ -1,6 +1,7 @@
 package at.stefangeyer.challonge.unit;
 
 import at.stefangeyer.challonge.Challonge;
+import at.stefangeyer.challonge.async.Callback;
 import at.stefangeyer.challonge.exception.DataAccessException;
 import at.stefangeyer.challonge.model.*;
 import at.stefangeyer.challonge.model.enumeration.MatchState;
@@ -14,17 +15,22 @@ import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static at.stefangeyer.challonge.unit.util.Util.ifNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MatchTest {
 
     private Challonge challonge;
+
+    private Object[] holder = new Object[1];
 
     private Tournament tournament = Tournament.builder()
             .id(10L).url("tourney123").tournamentType(TournamentType.SINGLE_ELIMINATION)
@@ -68,6 +74,16 @@ public class MatchTest {
             return matches.stream().map(MatchWrapper::new).collect(Collectors.toList());
         });
 
+        doAnswer(i -> {
+            Callback<List<MatchWrapper>> onSuccess = i.getArgument(3);
+
+            List<MatchWrapper> matches = mrc.getMatches(i.getArgument(0), i.getArgument(1), i.getArgument(2));
+
+            onSuccess.accept(matches);
+
+            return null;
+        }).when(mrc).getMatches(any(), any(), any(), any(), any());
+
         when(mrc.getMatch(any(), anyLong(), anyBoolean())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
             Match m = getMatch(t, i.getArgument(1));
@@ -78,6 +94,16 @@ public class MatchTest {
 
             return new MatchWrapper(m);
         });
+
+        doAnswer(i -> {
+            Callback<MatchWrapper> onSuccess = i.getArgument(3);
+
+            MatchWrapper match = mrc.getMatch(i.getArgument(0), i.getArgument(1), i.getArgument(2));
+
+            onSuccess.accept(match);
+
+            return null;
+        }).when(mrc).getMatch(any(), anyLong(), anyBoolean(), any(), any());
 
         when(mrc.updateMatch(any(), anyLong(), any())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
@@ -93,6 +119,16 @@ public class MatchTest {
             return new MatchWrapper(updated);
         });
 
+        doAnswer(i -> {
+            Callback<MatchWrapper> onSuccess = i.getArgument(3);
+
+            MatchWrapper match = mrc.updateMatch(i.getArgument(0), i.getArgument(1), i.getArgument(2));
+
+            onSuccess.accept(match);
+
+            return null;
+        }).when(mrc).updateMatch(any(), anyLong(), any(), any(), any());
+
         when(mrc.reopenMatch(any(), anyLong())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
             Match m = getMatch(t, i.getArgument(1));
@@ -101,6 +137,16 @@ public class MatchTest {
 
             return new MatchWrapper(m);
         });
+
+        doAnswer(i -> {
+            Callback<MatchWrapper> onSuccess = i.getArgument(2);
+
+            MatchWrapper match = mrc.reopenMatch(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(match);
+
+            return null;
+        }).when(mrc).reopenMatch(any(), anyLong(), any(), any());
 
         RestClient restClient = mock(RestClient.class);
 
@@ -128,8 +174,27 @@ public class MatchTest {
     @Test
     public void testGetMatches() throws DataAccessException {
         Tournament tournament = getTournament("tourney123");
+
         List<Match> local = this.challonge.getMatches(tournament);
+
         assertEquals(tournament.getMatches(), local);
+    }
+
+    @Test
+    public void testGetMatchesAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Tournament tournament = getTournament("tourney123");
+
+        this.challonge.getMatches(tournament, l -> {
+            this.holder[0] = l;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(this.tournament.getMatches(), this.holder[0]);
     }
 
     @Test
@@ -140,10 +205,47 @@ public class MatchTest {
     }
 
     @Test
+    public void testGetMatchAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Tournament tournament = getTournament("tourney123");
+
+        this.challonge.getMatch(tournament, 1, m -> {
+            this.holder[0] = m;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(tournament.getMatches().get(0), this.holder[0]);
+    }
+
+    @Test
     public void testUpdateMatch() throws DataAccessException {
         Tournament tournament = getTournament("tourney123");
         Match match = tournament.getMatches().get(0);
         Match local = this.challonge.updateMatch(match, MatchQuery.builder().winnerId(120L).build());
+        assertEquals(120L, (long) local.getWinnerId());
+    }
+
+    @Test
+    public void testUpdateMatchAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+
+        this.challonge.updateMatch(match, MatchQuery.builder().winnerId(120L).build(), m -> {
+            this.holder[0] = m;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Match local = (Match) this.holder[0];
+
         assertEquals(120L, (long) local.getWinnerId());
     }
 
@@ -159,6 +261,26 @@ public class MatchTest {
         Tournament tournament = getTournament("tourney123");
         Match match = tournament.getMatches().get(0);
         Match local = this.challonge.reopenMatch(match);
+        assertEquals(match, local);
+    }
+
+    @Test
+    public void testReopenMatchAsync() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+
+        this.challonge.reopenMatch(match, m -> {
+            this.holder[0] = m;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Match local = (Match) this.holder[0];
+
         assertEquals(match, local);
     }
 }

@@ -37,6 +37,8 @@ public class TournamentTest {
 
     private Random random = new Random();
 
+    private Object[] holder = new Object[1];
+
     private List<Tournament> tournaments = new ArrayList<>(Arrays.asList(
             Tournament.builder().id(10L).url("tourney123")
                     .tournamentType(TournamentType.SINGLE_ELIMINATION)
@@ -303,7 +305,7 @@ public class TournamentTest {
             onSuccess.accept(tournament);
 
             return null;
-        }).when(trc).startTournament(any(), anyBoolean(), anyBoolean(), any(), any());
+        }).when(trc).finalizeTournament(any(), anyBoolean(), anyBoolean(), any(), any());
 
         when(trc.resetTournament(any(), anyBoolean(), anyBoolean())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
@@ -324,7 +326,7 @@ public class TournamentTest {
             onSuccess.accept(tournament);
 
             return null;
-        }).when(trc).startTournament(any(), anyBoolean(), anyBoolean(), any(), any());
+        }).when(trc).resetTournament(any(), anyBoolean(), anyBoolean(), any(), any());
 
         when(trc.openTournamentForPredictions(any(), anyBoolean(), anyBoolean())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
@@ -345,7 +347,7 @@ public class TournamentTest {
             onSuccess.accept(tournament);
 
             return null;
-        }).when(trc).startTournament(any(), anyBoolean(), anyBoolean(), any(), any());
+        }).when(trc).openTournamentForPredictions(any(), anyBoolean(), anyBoolean(), any(), any());
 
         Serializer serializer = mock(Serializer.class);
 
@@ -376,12 +378,14 @@ public class TournamentTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         this.challonge.getTournaments(l -> {
-            assertEquals(this.tournaments, l);
+            this.holder[0] = l;
             latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(this.tournaments, this.holder[0]);
     }
 
     @Test
@@ -395,12 +399,14 @@ public class TournamentTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         this.challonge.getTournament("tourney123", true, true, t -> {
-            assertEquals(this.tournaments.get(0), t);
+            this.holder[0] = t;
             latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(this.tournaments.get(0), this.holder[0]);
     }
 
     @Test
@@ -416,16 +422,20 @@ public class TournamentTest {
     public void testCreateTournamentAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        this.challonge.createTournament(TournamentQuery.builder().name("TournamentTest").url("sometournament")
-                        .tournamentType(TournamentType.SINGLE_ELIMINATION).build(), local -> {
-                    assertEquals(this.tournaments.stream().filter(
-                            t -> t.getUrl().equals("sometournament")).findFirst().get(), local);
+        TournamentQuery query = TournamentQuery.builder().name("TournamentTest").url("sometournament")
+                .tournamentType(TournamentType.SINGLE_ELIMINATION).build();
+
+        this.challonge.createTournament(query, local -> {
+                    this.holder[0] = local;
                     latch.countDown();
                 },
                 e -> {
                 });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(this.tournaments.stream().filter(t -> t.getUrl().equals("sometournament")).findFirst().get(),
+                this.holder[0]);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -449,12 +459,17 @@ public class TournamentTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         this.challonge.updateTournament(this.tournaments.get(0), TournamentQuery.builder().name("UpdatedName12345").build(), t -> {
-            assertEquals("UpdatedName12345", t.getName());
-            assertEquals(this.tournaments.get(0), t);
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Tournament t = (Tournament) this.holder[0];
+
+        assertEquals("UpdatedName12345", t.getName());
+        assertEquals(this.tournaments.get(0), t);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -479,12 +494,17 @@ public class TournamentTest {
         Tournament toDelete = this.tournaments.get(1);
 
         this.challonge.deleteTournament(toDelete, t -> {
-            assertFalse(this.tournaments.contains(toDelete));
-            assertEquals(toDelete, t);
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
+        Tournament t = (Tournament) this.holder[0];
+
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertFalse(this.tournaments.contains(toDelete));
+        assertEquals(toDelete, t);
     }
 
     @Test
@@ -504,11 +524,14 @@ public class TournamentTest {
         Tournament toUpdate = getTournament("tourney123");
 
         this.challonge.processCheckIns(toUpdate, t -> {
-            assertEquals(this.tournaments.get(0), t);
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(this.tournaments.get(0), this.holder[0]);
     }
 
     @Test
@@ -528,11 +551,14 @@ public class TournamentTest {
         Tournament toUpdate = getTournament("tourney123");
 
         this.challonge.abortCheckIn(toUpdate, t -> {
-            assertEquals(toUpdate, t);
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(toUpdate, this.holder[0]);
     }
 
     @Test
@@ -552,11 +578,14 @@ public class TournamentTest {
         Tournament toUpdate = getTournament("tourney123");
 
         this.challonge.startTournament(toUpdate, t -> {
-            assertEquals(toUpdate, t);
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(toUpdate, this.holder[0]);
     }
 
     @Test
@@ -576,13 +605,16 @@ public class TournamentTest {
         Tournament toUpdate = getTournament("tourney123");
 
         this.challonge.finalizeTournament(toUpdate, t -> {
-            assertEquals(toUpdate, t);
-            assertFalse(t.getParticipants().isEmpty());
-            assertFalse(t.getMatches().isEmpty());
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
+        Tournament t = (Tournament) this.holder[0];
+
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        assertEquals(toUpdate, t);
     }
 
     @Test
@@ -602,13 +634,16 @@ public class TournamentTest {
         Tournament toUpdate = getTournament("tourney123");
 
         this.challonge.resetTournament(toUpdate, t -> {
-            assertEquals(toUpdate, t);
-            assertFalse(t.getParticipants().isEmpty());
-            assertFalse(t.getMatches().isEmpty());
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Tournament t = (Tournament) this.holder[0];
+
+        assertEquals(toUpdate, t);
     }
 
     @Test
@@ -628,12 +663,15 @@ public class TournamentTest {
         Tournament toUpdate = getTournament("tourney123");
 
         this.challonge.openTournamentForPredictions(toUpdate, t -> {
-            assertEquals(toUpdate, t);
-            assertFalse(t.getParticipants().isEmpty());
-            assertFalse(t.getMatches().isEmpty());
+            this.holder[0] = t;
+            latch.countDown();
         }, e -> {
         });
 
         latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Tournament t = (Tournament) this.holder[0];
+
+        assertEquals(toUpdate, t);
     }
 }

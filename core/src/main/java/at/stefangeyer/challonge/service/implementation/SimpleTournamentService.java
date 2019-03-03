@@ -58,75 +58,31 @@ public class SimpleTournamentService implements TournamentService {
 
     @Override
     public Tournament createTournament(TournamentQuery data) throws DataAccessException {
-        if (data.getName() == null && data.getTournamentType() == null &&
-                data.getSubdomain() == null && data.getDescription() == null && data.getOpenSignup() == null &&
-                data.getHoldThirdPlaceMatch() == null && data.getPointsForMatchWin() == null && data.getPointsForMatchTie() == null &&
-                data.getPointsForGameWin() == null && data.getPointsForGameTie() == null && data.getPointsForBye() == null &&
-                data.getSwissRounds() == null && data.getRankedBy() == null && data.getPointsForMatchWin() == null &&
-                data.getPointsForMatchTie() == null && data.getPointsForGameWin() == null &&
-                data.getPointsForGameTie() == null && data.getAcceptAttachments() == null && data.getHideForum() == null &&
-                data.getShowRounds() == null && data.getPrivateOnly() == null && data.getNotifyUsersWhenMatchesOpen() == null &&
-                data.getNotifyUsersWhenTheTournamentEnds() == null && data.getSequentialPairings() == null &&
-                data.getSignupCap() == null && data.getStartAt() == null && data.getCheckInDuration() == null &&
-                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null) {
-            throw new IllegalArgumentException("All data parameters are null. Provide at least one");
-        }
+        validateTournamentQuery(data);
+
         return this.restClient.createTournament(new TournamentQueryWrapper(data)).getTournament();
     }
 
     @Override
     public void createTournament(TournamentQuery data, Callback<Tournament> onSuccess,
                                  Callback<DataAccessException> onFailure) {
-        if (data.getName() == null && data.getTournamentType() == null &&
-                data.getSubdomain() == null && data.getDescription() == null && data.getOpenSignup() == null &&
-                data.getHoldThirdPlaceMatch() == null && data.getPointsForMatchWin() == null && data.getPointsForMatchTie() == null &&
-                data.getPointsForGameWin() == null && data.getPointsForGameTie() == null && data.getPointsForBye() == null &&
-                data.getSwissRounds() == null && data.getRankedBy() == null && data.getPointsForMatchWin() == null &&
-                data.getPointsForMatchTie() == null && data.getPointsForGameWin() == null &&
-                data.getPointsForGameTie() == null && data.getAcceptAttachments() == null && data.getHideForum() == null &&
-                data.getShowRounds() == null && data.getPrivateOnly() == null && data.getNotifyUsersWhenMatchesOpen() == null &&
-                data.getNotifyUsersWhenTheTournamentEnds() == null && data.getSequentialPairings() == null &&
-                data.getSignupCap() == null && data.getStartAt() == null && data.getCheckInDuration() == null &&
-                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null) {
-            throw new IllegalArgumentException("All data parameters are null. Provide at least one");
-        }
+        validateTournamentQuery(data);
+
         this.restClient.createTournament(new TournamentQueryWrapper(data), tw -> onSuccess.accept(tw.getTournament()), onFailure);
     }
 
     @Override
     public Tournament updateTournament(Tournament tournament, TournamentQuery data) throws DataAccessException {
-        if (data.getName() == null && data.getTournamentType() == null &&
-                data.getSubdomain() == null && data.getDescription() == null && data.getOpenSignup() == null &&
-                data.getHoldThirdPlaceMatch() == null && data.getPointsForMatchWin() == null && data.getPointsForMatchTie() == null &&
-                data.getPointsForGameWin() == null && data.getPointsForGameTie() == null && data.getPointsForBye() == null &&
-                data.getSwissRounds() == null && data.getRankedBy() == null && data.getPointsForMatchWin() == null &&
-                data.getPointsForMatchTie() == null && data.getPointsForGameWin() == null &&
-                data.getPointsForGameTie() == null && data.getAcceptAttachments() == null && data.getHideForum() == null &&
-                data.getShowRounds() == null && data.getPrivateOnly() == null && data.getNotifyUsersWhenMatchesOpen() == null &&
-                data.getNotifyUsersWhenTheTournamentEnds() == null && data.getSequentialPairings() == null &&
-                data.getSignupCap() == null && data.getStartAt() == null && data.getCheckInDuration() == null &&
-                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null) {
-            throw new IllegalArgumentException("All data parameters are null. Provide at least one");
-        }
+        validateTournamentQuery(data);
+
         return this.restClient.updateTournament(String.valueOf(tournament.getId()), new TournamentQueryWrapper(data)).getTournament();
     }
 
     @Override
     public void updateTournament(Tournament tournament, TournamentQuery data, Callback<Tournament> onSuccess,
                                  Callback<DataAccessException> onFailure) {
-        if (data.getName() == null && data.getTournamentType() == null &&
-                data.getSubdomain() == null && data.getDescription() == null && data.getOpenSignup() == null &&
-                data.getHoldThirdPlaceMatch() == null && data.getPointsForMatchWin() == null && data.getPointsForMatchTie() == null &&
-                data.getPointsForGameWin() == null && data.getPointsForGameTie() == null && data.getPointsForBye() == null &&
-                data.getSwissRounds() == null && data.getRankedBy() == null && data.getPointsForMatchWin() == null &&
-                data.getPointsForMatchTie() == null && data.getPointsForGameWin() == null &&
-                data.getPointsForGameTie() == null && data.getAcceptAttachments() == null && data.getHideForum() == null &&
-                data.getShowRounds() == null && data.getPrivateOnly() == null && data.getNotifyUsersWhenMatchesOpen() == null &&
-                data.getNotifyUsersWhenTheTournamentEnds() == null && data.getSequentialPairings() == null &&
-                data.getSignupCap() == null && data.getStartAt() == null && data.getCheckInDuration() == null &&
-                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null) {
-            throw new IllegalArgumentException("All data parameters are null. Provide at least one");
-        }
+        validateTournamentQuery(data);
+
         this.restClient.updateTournament(String.valueOf(tournament.getId()), new TournamentQueryWrapper(data),
                 tw -> onSuccess.accept(tw.getTournament()), onFailure);
     }
@@ -225,5 +181,21 @@ public class SimpleTournamentService implements TournamentService {
                                              Callback<Tournament> onSuccess, Callback<DataAccessException> onFailure) {
         this.restClient.openTournamentForPredictions(String.valueOf(tournament.getId()), includeParticipants,
                 includeMatches, tw -> onSuccess.accept(tw.getTournament()), onFailure);
+    }
+
+    private void validateTournamentQuery(TournamentQuery data) {
+        if (data.getName() == null && data.getTournamentType() == null &&
+                data.getSubdomain() == null && data.getDescription() == null && data.getOpenSignup() == null &&
+                data.getHoldThirdPlaceMatch() == null && data.getPointsForMatchWin() == null && data.getPointsForMatchTie() == null &&
+                data.getPointsForGameWin() == null && data.getPointsForGameTie() == null && data.getPointsForBye() == null &&
+                data.getSwissRounds() == null && data.getRankedBy() == null && data.getPointsForMatchWin() == null &&
+                data.getPointsForMatchTie() == null && data.getPointsForGameWin() == null &&
+                data.getPointsForGameTie() == null && data.getAcceptAttachments() == null && data.getHideForum() == null &&
+                data.getShowRounds() == null && data.getPrivateOnly() == null && data.getNotifyUsersWhenMatchesOpen() == null &&
+                data.getNotifyUsersWhenTheTournamentEnds() == null && data.getSequentialPairings() == null &&
+                data.getSignupCap() == null && data.getStartAt() == null && data.getCheckInDuration() == null &&
+                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null) {
+            throw new IllegalArgumentException("All data parameters are null. Provide at least one");
+        }
     }
 }

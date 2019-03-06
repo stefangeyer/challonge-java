@@ -165,7 +165,7 @@ public class RetrofitAttachmentRestClient implements AttachmentRestClient {
     @Override
     public void deleteAttachment(String tournament, long matchId, long attachmentId, Callback<AttachmentWrapper> onSuccess,
                                  Callback<DataAccessException> onFailure) {
-        this.challongeRetrofit.getAttachment(tournament, matchId, attachmentId)
+        this.challongeRetrofit.deleteAttachment(tournament, matchId, attachmentId)
                 .enqueue(callback(onSuccess, onFailure, "Error while deleting attachment"));
     }
 

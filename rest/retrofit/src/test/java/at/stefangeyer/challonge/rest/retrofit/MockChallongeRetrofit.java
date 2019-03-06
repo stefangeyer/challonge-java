@@ -40,10 +40,17 @@ public class MockChallongeRetrofit implements ChallongeRetrofit {
             Tournament.builder().id(10L).url("tourney123")
                     .tournamentType(TournamentType.SINGLE_ELIMINATION)
                     .participants(new ArrayList<>(Arrays.asList(
-                            Participant.builder().id(1L).tournamentId(10L).build(),
-                            Participant.builder().id(2L).tournamentId(10L).build()
+                            Participant.builder().id(1L).tournamentId(10L).name("Participant 1").matches(new ArrayList<>()).build(),
+                            Participant.builder().id(2L).tournamentId(10L).name("Participant 2").matches(new ArrayList<>()).build(),
+                            Participant.builder().id(3L).tournamentId(10L).name("Participant 3").matches(new ArrayList<>()).build(),
+                            Participant.builder().id(4L).tournamentId(10L).name("Participant 4").matches(new ArrayList<>()).build(),
+                            Participant.builder().id(5L).tournamentId(10L).name("Participant 5").matches(new ArrayList<>()).build()
                     ))).matches(new ArrayList<>(Collections.singletonList(
-                    Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).build()
+                    Match.builder().id(1L).tournamentId(10L).player1Id(1L).player2Id(2L).attachments(new ArrayList<>(Arrays.asList(
+                            Attachment.builder().id(1L).description("Attachment note").build(),
+                            Attachment.builder().id(2L).description("Some description").build(),
+                            Attachment.builder().id(3L).url("http://some.resource.com/resource").build()
+                    ))).build()
             ))).build(),
             Tournament.builder().id(11002L).url("sometourney")
                     .tournamentType(TournamentType.ROUND_ROBIN)
@@ -258,6 +265,7 @@ public class MockChallongeRetrofit implements ChallongeRetrofit {
     @Override
     public Call<List<ParticipantWrapper>> getParticipants(String tournament) {
         Tournament t = get(tournament);
+        if (t == null) return Calls.failure(new IllegalArgumentException("no tournament with given identifier"));
         return this.delegate.returningResponse(t.getParticipants().stream().map(ParticipantWrapper::new)
                 .collect(Collectors.toList())).getParticipants(tournament);
     }
@@ -456,8 +464,8 @@ public class MockChallongeRetrofit implements ChallongeRetrofit {
 
         Attachment a = Attachment.builder()
                 .id((long) this.random.nextInt(1000))
-                .assetUrl(url.toString())
-                .description(description.toString()).build();
+                .assetUrl(url != null ? url.toString() : null)
+                .description(description != null ? description.toString() : null).build();
 
         m.getAttachments().add(a);
 
@@ -491,27 +499,27 @@ public class MockChallongeRetrofit implements ChallongeRetrofit {
         return tournaments;
     }
 
-    private <T> T ifNotNull(T t, T def) {
+    protected <T> T ifNotNull(T t, T def) {
         return t != null ? t : def;
     }
 
-    private Tournament get(String key) {
+    protected Tournament get(String key) {
         Optional<Tournament> optional = this.tournaments.stream().filter(
                 t -> t.getId().toString().equals(key) || t.getUrl().equals(key)).findFirst();
         return optional.orElse(null);
     }
 
-    private Participant get(String tournament, long id) {
+    protected Participant get(String tournament, long id) {
         Optional<Participant> optional = get(tournament).getParticipants().stream().filter(p -> p.getId() == id).findFirst();
         return optional.orElse(null);
     }
 
-    private Match get(Tournament t, long id) {
+    protected Match get(Tournament t, long id) {
         Optional<Match> optional = t.getMatches().stream().filter(m -> m.getId().equals(id)).findFirst();
         return optional.orElse(null);
     }
 
-    private Attachment get(Match m, long id) {
+    protected Attachment get(Match m, long id) {
         Optional<Attachment> optional = m.getAttachments().stream().filter(a -> a.getId().equals(id)).findFirst();
         return optional.orElse(null);
     }

@@ -20,6 +20,9 @@ import static org.junit.Assert.assertTrue;
 
 public class RetrofitParticipantTest {
     private static final String TOURNEY_NAME = "tourney123";
+    private static final int PARTICIPANT1_ID = 1;
+    private static final int PARTICIPANT2_ID = 2;
+    private static final int PARTICIPANT3_ID = 3;
 
     private Object[] holder = new Object[1];
 
@@ -31,7 +34,7 @@ public class RetrofitParticipantTest {
     public void testGetParticipants() throws DataAccessException {
         List<Participant> local = this.participantRestClient.getParticipants(TOURNEY_NAME).stream()
                 .map(ParticipantWrapper::getParticipant).collect(Collectors.toList());
-        assertEquals(this.challongeRetrofit.getTournaments().get(0).getParticipants(), local);
+        assertEquals(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants(), local);
     }
 
     @Test
@@ -46,12 +49,12 @@ public class RetrofitParticipantTest {
 
         latch.await(2000, TimeUnit.MILLISECONDS);
 
-        assertEquals(this.challongeRetrofit.getTournaments().get(0).getParticipants(), this.holder[0]);
+        assertEquals(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants(), this.holder[0]);
     }
 
     @Test
     public void testGetParticipant() throws DataAccessException {
-        Participant local = this.participantRestClient.getParticipant(TOURNEY_NAME, 2, false).getParticipant();
+        Participant local = this.participantRestClient.getParticipant(TOURNEY_NAME, PARTICIPANT2_ID, false).getParticipant();
         assertEquals("Participant 2", local.getName());
     }
 
@@ -59,7 +62,7 @@ public class RetrofitParticipantTest {
     public void testGetParticipantAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        this.participantRestClient.getParticipant(TOURNEY_NAME, 2, false, p -> {
+        this.participantRestClient.getParticipant(TOURNEY_NAME, PARTICIPANT2_ID, false, p -> {
             this.holder[0] = p.getParticipant();
             latch.countDown();
         }, e -> {
@@ -76,7 +79,7 @@ public class RetrofitParticipantTest {
     public void testAddParticipant() throws DataAccessException {
         Participant local = this.participantRestClient.addParticipant(TOURNEY_NAME,
                 new ParticipantQueryWrapper(ParticipantQuery.builder().name("New Participants").build())).getParticipant();
-        assertTrue(this.challongeRetrofit.getTournaments().get(0).getParticipants().contains(local));
+        assertTrue(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants().contains(local));
     }
 
     @Test
@@ -95,7 +98,7 @@ public class RetrofitParticipantTest {
 
         Participant local = (Participant) this.holder[0];
 
-        assertTrue(this.challongeRetrofit.getTournaments().get(0).getParticipants().contains(local));
+        assertTrue(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants().contains(local));
     }
 
     @Test
@@ -105,7 +108,7 @@ public class RetrofitParticipantTest {
         List<Participant> local = this.participantRestClient.bulkAddParticipants(TOURNEY_NAME,
                 new ParticipantQueryListWrapper(participants)).stream().map(ParticipantWrapper::getParticipant)
                 .collect(Collectors.toList());
-        assertTrue(this.challongeRetrofit.getTournaments().get(0).getParticipants().containsAll(local));
+        assertTrue(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants().containsAll(local));
     }
 
     @Test
@@ -125,12 +128,12 @@ public class RetrofitParticipantTest {
 
         List p = (List) this.holder[0];
 
-        assertTrue(this.challongeRetrofit.getTournaments().get(0).getParticipants().containsAll(p));
+        assertTrue(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants().containsAll(p));
     }
 
     @Test
     public void testUpdateParticipant() throws DataAccessException {
-        Participant local = this.participantRestClient.updateParticipant(TOURNEY_NAME, 1,
+        Participant local = this.participantRestClient.updateParticipant(TOURNEY_NAME, PARTICIPANT2_ID,
                 new ParticipantQueryWrapper(ParticipantQuery.builder().name("New Name").build())).getParticipant();
         assertEquals("New Name", local.getName());
     }
@@ -141,7 +144,7 @@ public class RetrofitParticipantTest {
 
         ParticipantQuery query = ParticipantQuery.builder().name("New Name").build();
 
-        this.participantRestClient.updateParticipant(TOURNEY_NAME, 2, new ParticipantQueryWrapper(query), p -> {
+        this.participantRestClient.updateParticipant(TOURNEY_NAME, PARTICIPANT3_ID, new ParticipantQueryWrapper(query), p -> {
             this.holder[0] = p.getParticipant();
             latch.countDown();
         }, e -> {
@@ -156,18 +159,17 @@ public class RetrofitParticipantTest {
 
     @Test
     public void testCheckInParticipant() throws DataAccessException {
-        Participant local = this.participantRestClient.checkInParticipant(TOURNEY_NAME, 1).getParticipant();
-        assertEquals(this.challongeRetrofit.getTournaments().get(0).getParticipants().get(0), local);
+        Participant local = this.participantRestClient.checkInParticipant(TOURNEY_NAME, PARTICIPANT1_ID).getParticipant();
+        assertEquals(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants().get(0), local);
     }
 
     @Test
     public void testCheckInParticipantAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        Participant participant = this.challongeRetrofit.getTournaments().get(0)
-                .getParticipants().stream().findFirst().get();
+        Participant participant = this.challongeRetrofit.get(TOURNEY_NAME, PARTICIPANT1_ID);
 
-        this.participantRestClient.checkInParticipant(TOURNEY_NAME, participant.getId(), p -> {
+        this.participantRestClient.checkInParticipant(TOURNEY_NAME, PARTICIPANT1_ID, p -> {
             this.holder[0] = p.getParticipant();
             latch.countDown();
         }, e -> {
@@ -182,7 +184,7 @@ public class RetrofitParticipantTest {
 
     @Test
     public void testUndoCheckInParticipant() throws DataAccessException {
-        Participant participant = this.challongeRetrofit.getTournaments().get(0).getParticipants().stream().findFirst().get();
+        Participant participant = this.challongeRetrofit.get(TOURNEY_NAME, PARTICIPANT1_ID);
         Participant local = this.participantRestClient.undoCheckInParticipant(TOURNEY_NAME, participant.getId()).getParticipant();
         assertEquals(participant, local);
     }
@@ -191,7 +193,7 @@ public class RetrofitParticipantTest {
     public void testUndoCheckInParticipantAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        Participant participant = this.challongeRetrofit.getTournaments().get(0).getParticipants().stream().findFirst().get();
+        Participant participant = this.challongeRetrofit.get(TOURNEY_NAME, PARTICIPANT1_ID);
 
         this.participantRestClient.undoCheckInParticipant(TOURNEY_NAME, participant.getId(), p -> {
             this.holder[0] = p.getParticipant();
@@ -208,9 +210,8 @@ public class RetrofitParticipantTest {
 
     @Test
     public void testDeleteParticipant() throws DataAccessException {
-        Participant participant = this.challongeRetrofit.getTournaments().get(0).getParticipants()
-                .stream().findFirst().get();
-        Participant local = this.participantRestClient.deleteParticipant(TOURNEY_NAME, 1).getParticipant();
+        Participant participant = this.challongeRetrofit.get(TOURNEY_NAME, PARTICIPANT1_ID);
+        Participant local = this.participantRestClient.deleteParticipant(TOURNEY_NAME, PARTICIPANT1_ID).getParticipant();
         assertEquals(participant, local);
     }
 
@@ -218,9 +219,9 @@ public class RetrofitParticipantTest {
     public void testDeleteParticipantAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        Participant participant = this.challongeRetrofit.getTournaments().get(0).getParticipants().stream().findFirst().get();
+        Participant participant = this.challongeRetrofit.get(TOURNEY_NAME, PARTICIPANT1_ID);
 
-        this.participantRestClient.deleteParticipant(TOURNEY_NAME, participant.getId(), p -> {
+        this.participantRestClient.deleteParticipant(TOURNEY_NAME, PARTICIPANT1_ID, p -> {
             this.holder[0] = p.getParticipant();
             latch.countDown();
         }, e -> {
@@ -237,7 +238,7 @@ public class RetrofitParticipantTest {
     public void testRandomizeParticipant() throws DataAccessException {
         List<Participant> local = this.participantRestClient.randomizeParticipants(TOURNEY_NAME)
                 .stream().map(ParticipantWrapper::getParticipant).collect(Collectors.toList());
-        assertEquals(this.challongeRetrofit.getTournaments().get(0).getParticipants(), local);
+        assertEquals(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants(), local);
     }
 
     @Test
@@ -254,6 +255,6 @@ public class RetrofitParticipantTest {
 
         List local = (List) this.holder[0];
 
-        assertEquals(this.challongeRetrofit.getTournaments().get(0).getParticipants(), local);
+        assertEquals(this.challongeRetrofit.get(TOURNEY_NAME).getParticipants(), local);
     }
 }

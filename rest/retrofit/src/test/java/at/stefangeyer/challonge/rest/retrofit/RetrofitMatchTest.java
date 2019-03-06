@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 public class RetrofitMatchTest {
     private static final String TOURNEY_NAME = "tourney123";
+    private static final int MATCH_ID = 1;
 
     private Object[] holder = new Object[1];
 
@@ -32,7 +33,7 @@ public class RetrofitMatchTest {
 
     @Test
     public void testGetMatches() throws DataAccessException {
-        Tournament tournament = get("tourney123");
+        Tournament tournament = get(TOURNEY_NAME);
 
         List<Match> local = this.matchRestClient.getMatches(TOURNEY_NAME, null, null).stream()
                 .map(MatchWrapper::getMatch).collect(Collectors.toList());
@@ -44,7 +45,7 @@ public class RetrofitMatchTest {
     public void testGetMatchesAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        Tournament tournament = get("tourney123");
+        Tournament tournament = get(TOURNEY_NAME);
 
         this.matchRestClient.getMatches(TOURNEY_NAME, null, null, l -> {
             this.holder[0] = l.stream().map(MatchWrapper::getMatch).collect(Collectors.toList());
@@ -59,7 +60,7 @@ public class RetrofitMatchTest {
 
     @Test
     public void testGetMatch() throws DataAccessException {
-        Tournament tournament = get("tourney123");
+        Tournament tournament = get(TOURNEY_NAME);
         Match local = this.matchRestClient.getMatch(TOURNEY_NAME, 1, false).getMatch();
         assertEquals(tournament.getMatches().get(0), local);
     }
@@ -68,9 +69,9 @@ public class RetrofitMatchTest {
     public void testGetMatchAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        Tournament tournament = get("tourney123");
+        Tournament tournament = get(TOURNEY_NAME);
 
-        this.matchRestClient.getMatch(TOURNEY_NAME, 1, false, m -> {
+        this.matchRestClient.getMatch(TOURNEY_NAME, MATCH_ID, false, m -> {
             this.holder[0] = m.getMatch();
             latch.countDown();
         }, e -> {
@@ -78,7 +79,7 @@ public class RetrofitMatchTest {
 
         latch.await(2000, TimeUnit.MILLISECONDS);
 
-        assertEquals(tournament.getMatches().get(0), this.holder[0]);
+        assertEquals(this.challongeRetrofit.get(tournament, MATCH_ID), this.holder[0]);
     }
 
     @Test
@@ -107,8 +108,8 @@ public class RetrofitMatchTest {
 
     @Test
     public void testReopenMatch() throws DataAccessException {
-        Tournament tournament = get("tourney123");
-        Match match = tournament.getMatches().get(0);
+        Tournament tournament = get(TOURNEY_NAME);
+        Match match = this.challongeRetrofit.get(tournament, MATCH_ID);
         Match local = this.matchRestClient.reopenMatch(TOURNEY_NAME, 1).getMatch();
         assertEquals(match, local);
     }
@@ -117,8 +118,8 @@ public class RetrofitMatchTest {
     public void testReopenMatchAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        Tournament tournament = get("tourney123");
-        Match match = tournament.getMatches().get(0);
+        Tournament tournament = get(TOURNEY_NAME);
+        Match match = this.challongeRetrofit.get(tournament, MATCH_ID);
 
         this.matchRestClient.reopenMatch(TOURNEY_NAME, 1, m -> {
             this.holder[0] = m.getMatch();

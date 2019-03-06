@@ -24,6 +24,7 @@ public interface Serializer {
      *
      * @param string The JSON string
      * @param type   The object's type
+     * @param <T> type of the object to deserialize
      * @return The deserialized object
      */
     <T> T deserialize(String string, Type type);

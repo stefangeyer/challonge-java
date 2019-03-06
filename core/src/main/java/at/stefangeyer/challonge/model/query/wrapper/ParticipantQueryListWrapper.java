@@ -5,7 +5,7 @@ import at.stefangeyer.challonge.model.query.ParticipantQuery;
 import java.util.List;
 
 /**
- * Wrapper for easy JSON serialisation of a List<ParticipantQuery>
+ * Wrapper for easy JSON serialisation of a list of ParticipantQuery
  *
  * @author Stefan Geyer
  * @version 2018-07-08

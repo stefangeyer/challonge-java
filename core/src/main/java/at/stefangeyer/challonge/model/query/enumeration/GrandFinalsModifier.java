@@ -5,8 +5,8 @@ package at.stefangeyer.challonge.model.query.enumeration;
  * <p>
  * This option only affects double elimination.
  * <p>
- * null/blank (default) - give the winners bracket finalist two chances to beat the losers bracket finalist<br></br>
- * 'single match' - create only one grand finals match<br></br>
+ * null/blank (default) - give the winners bracket finalist two chances to beat the losers bracket finalist<br>
+ * 'single match' - create only one grand finals match<br>
  * 'skip' - don't create a finals match between winners and losers bracket finalists
  *
  * @author Stefan Geyer

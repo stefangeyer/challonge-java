@@ -23,6 +23,10 @@ subprojects {
         testCompile group: 'org.mockito', name: 'mockito-core', version: property('mockito.version')
     }
 
+    javadoc {
+        options.addBooleanOption('html5', true)
+    }
+
     task sourcesJar(type: Jar) {
         from sourceSets.main.allSource
         classifier = 'sources'

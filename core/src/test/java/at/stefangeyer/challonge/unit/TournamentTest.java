@@ -394,6 +394,11 @@ public class TournamentTest {
         assertEquals(this.tournaments.get(0), local);
     }
 
+    @Test(expected = DataAccessException.class)
+    public void testGetTournamentInvalid() throws DataAccessException {
+        this.challonge.getTournament("abc");
+    }
+
     @Test
     public void testGetTournamentAsync() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);

@@ -1,0 +1,7 @@
+version: 2.1
+orbs:
+  gradle: circleci/gradle@1.0.9
+workflows:
+  checkout-build-test:
+    jobs:
+    - gradle/test

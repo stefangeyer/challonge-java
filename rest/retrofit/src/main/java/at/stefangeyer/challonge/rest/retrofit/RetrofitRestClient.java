@@ -23,18 +23,17 @@ public class RetrofitRestClient implements RestClient {
 
         httpClientBuilder.addInterceptor((chain -> {
             Request original = chain.request();
+
             Request.Builder requestBuilder = original.newBuilder()
                     .header("Authorization", credentials.toHttpAuthString())
                     .header("Accept", "application/json")
                     .method(original.method(), original.body());
-            Request request = requestBuilder.build();
 
-            return chain.proceed(request);
+            return chain.proceed(requestBuilder.build());
         }));
 
-        Retrofit retrofit = new Retrofit.Builder().client(httpClientBuilder.build())
-                .baseUrl(BASE_URL).addConverterFactory(createConverterFactory(serializer))
-                .build();
+        Retrofit retrofit = new Retrofit.Builder().client(httpClientBuilder.build()).baseUrl(BASE_URL)
+                .addConverterFactory(createConverterFactory(serializer)).build();
 
         this.challongeRetrofit = retrofit.create(ChallongeRetrofit.class);
     }

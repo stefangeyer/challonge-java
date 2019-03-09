@@ -1,5 +1,7 @@
 # challonge-kotlin
 
+[![CircleCI](https://circleci.com/gh/stefangeyer/challonge-kotlin.svg?style=svg)](https://circleci.com/gh/stefangeyer/challonge-kotlin)
+
 This library binds the [CHALLONGE! REST API](http://api.challonge.com/v1) calls for Kotlin and any other JVM language. 
 Once completed, this library will replace it's predecessor [challonge-java](https://github.com/stefangeyer/challonge-java).
 

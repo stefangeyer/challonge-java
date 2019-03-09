@@ -7,4 +7,4 @@ workflows:
     - gradle/test:
         test_command: test -PsystemTests
         test_results_path: build/test-results/
-        store_artifacts: build/test-reports/
+        reports_path: build/test-reports/

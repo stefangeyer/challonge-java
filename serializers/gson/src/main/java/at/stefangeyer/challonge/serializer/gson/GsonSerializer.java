@@ -62,4 +62,8 @@ public class GsonSerializer implements Serializer {
     public <T> T deserialize(String string, Type type) {
         return this.gson.fromJson(string, type);
     }
+
+    public Gson getGson() {
+        return gson;
+    }
 }

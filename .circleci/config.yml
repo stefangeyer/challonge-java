@@ -5,6 +5,6 @@ workflows:
   checkout-build-test:
     jobs:
     - gradle/test:
-        test_command: test -PsystemTests
+        test_command: test -PsystemTests --info
         test_results_path: build/test-results/
         reports_path: build/test-reports/

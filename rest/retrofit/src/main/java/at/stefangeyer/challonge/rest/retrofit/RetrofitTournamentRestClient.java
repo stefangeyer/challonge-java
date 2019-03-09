@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-import static at.stefangeyer.challonge.rest.retrofit.RetrofitUtil.callback;
-import static at.stefangeyer.challonge.rest.retrofit.RetrofitUtil.parse;
+import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.callback;
+import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.parse;
 
 /**
  * Retrofit Gson of the tournament rest client

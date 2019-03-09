@@ -1,5 +1,9 @@
 package at.stefangeyer.challonge.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Base64;
 
 /**
@@ -8,15 +12,13 @@ import java.util.Base64;
  * @author Stefan Geyer
  * @version 2018-06-30
  */
+@Data
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Credentials {
 
     private String username;
     private String key;
-
-    public Credentials(String username, String key) {
-        this.username = username;
-        this.key = key;
-    }
 
     public String toHttpAuthString() {
         String credentials = this.username + ":" + this.key;

@@ -11,8 +11,8 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.List;
 
-import static at.stefangeyer.challonge.rest.retrofit.RetrofitUtil.callback;
-import static at.stefangeyer.challonge.rest.retrofit.RetrofitUtil.parse;
+import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.callback;
+import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.parse;
 
 public class RetrofitParticipantRestClient implements ParticipantRestClient {
 

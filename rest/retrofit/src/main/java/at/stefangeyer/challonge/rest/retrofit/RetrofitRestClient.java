@@ -2,38 +2,56 @@ package at.stefangeyer.challonge.rest.retrofit;
 
 import at.stefangeyer.challonge.model.Credentials;
 import at.stefangeyer.challonge.rest.*;
+import at.stefangeyer.challonge.rest.retrofit.converter.RetrofitConverterFactory;
 import at.stefangeyer.challonge.serializer.Serializer;
-import okhttp3.*;
-import retrofit2.Converter;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
+import java.nio.charset.Charset;
 
 public class RetrofitRestClient implements RestClient {
 
     private static final String BASE_URL = "https://api.challonge.com/v1/";
-    private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
 
     private ChallongeRetrofit challongeRetrofit;
+
+    private static int responseCount(Response response) {
+        if (response == null) {
+            return 0;
+        }
+        return 1 + responseCount(response.priorResponse());
+    }
 
     @Override
     public void initialize(Credentials credentials, Serializer serializer) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
+        httpClientBuilder.authenticator((route, response) -> {
+            String credential = okhttp3.Credentials.basic(credentials.getUsername(), credentials.getKey(),
+                    Charset.forName("UTF-8"));
+            // retry authentication 5 times only
+            if (responseCount(response) >= 5) {
+                return null;
+            }
+            return response.request().newBuilder().header("Authorization", credential).build();
+        });
+
         httpClientBuilder.addInterceptor((chain -> {
             Request original = chain.request();
 
             Request.Builder requestBuilder = original.newBuilder()
-                    .header("Authorization", credentials.toHttpAuthString())
                     .header("Accept", "application/json")
                     .method(original.method(), original.body());
 
             return chain.proceed(requestBuilder.build());
         }));
 
+        RetrofitConverterFactory factory = new RetrofitConverterFactory(serializer);
+
         Retrofit retrofit = new Retrofit.Builder().client(httpClientBuilder.build()).baseUrl(BASE_URL)
-                .addConverterFactory(createConverterFactory(serializer)).build();
+                .addConverterFactory(factory).build();
 
         this.challongeRetrofit = retrofit.create(ChallongeRetrofit.class);
     }
@@ -72,20 +90,5 @@ public class RetrofitRestClient implements RestClient {
         } else {
             throw new IllegalStateException("Attempted to create rest client before initialization");
         }
-    }
-
-    private Converter.Factory createConverterFactory(Serializer serializer) {
-        return new Converter.Factory() {
-            public Converter<ResponseBody, Object> responseBodyConverter(Type type, Annotation[] annotations,
-                                                                         Retrofit retrofit) {
-                return value -> serializer.deserialize(value.string(), type);
-            }
-
-            public Converter<Object, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
-                                                                       Annotation[] methodAnnotations,
-                                                                       Retrofit retrofit) {
-                return value -> RequestBody.create(RetrofitRestClient.MEDIA_TYPE, serializer.serialize(value));
-            }
-        };
     }
 }

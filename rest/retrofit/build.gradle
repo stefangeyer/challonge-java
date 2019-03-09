@@ -1,7 +1,6 @@
 dependencies {
     compile project(':core')
     compile group: 'com.squareup.retrofit2', name: 'retrofit', version: property('retrofit.version')
-    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: property('retrofit.version')
 
     testCompile group: 'com.squareup.retrofit2', name: 'retrofit-mock', version: property('retrofit.mock.version')
 }

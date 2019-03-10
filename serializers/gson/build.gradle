@@ -1,0 +1,19 @@
+dependencies {
+    compile project(':core')
+    compile group: 'com.google.code.gson', name: 'gson', version: property('gson.version')
+}
+
+javadoc {
+    options.addBooleanOption('html5', true)
+}
+
+publishing {
+    publications {
+        mavenJava {
+            pom {
+                name = 'Challonge Kotlin Gson Serializer'
+                description = 'Gson serializer for Challonge Kotlin'
+            }
+        }
+    }
+}

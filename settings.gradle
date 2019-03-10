@@ -1,0 +1,5 @@
+rootProject.name = 'parent'
+include 'core', 'testing'
+include 'serializers:gson'
+include 'rest:retrofit'
+enableFeaturePreview('STABLE_PUBLISHING')

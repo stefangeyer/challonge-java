@@ -1,0 +1,10 @@
+version: 2.1
+orbs:
+  gradle: circleci/gradle@1.0.9
+workflows:
+  checkout-build-test:
+    jobs:
+    - gradle/test:
+        test_command: test -PsystemTests -DchallongeUsername=${CHALLONGE_USERNAME} -DchallongeApiKey=${CHALLONGE_API_KEY} -DchallongeTournamentUrl=${CHALLONGE_TOURNAMENT_URL}
+        test_results_path: build/test-results/
+        reports_path: build/test-reports/

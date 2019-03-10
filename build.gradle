@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+allprojects {
+    version '1.0-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    group 'at.stefangeyer.challonge'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: property('junit.version')
+        testCompile group: 'org.mockito', name: 'mockito-core', version: property('mockito.version')
+    }
+
+    javadoc {
+        options.addBooleanOption('html5', true)
+    }
+
+    task sourcesJar(type: Jar) {
+        from sourceSets.main.allSource
+        classifier = 'sources'
+    }
+
+    task javadocJar(type: Jar) {
+        from javadoc
+        classifier = 'javadoc'
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                afterEvaluate {
+                    artifactId = jar.baseName
+                }
+
+                artifact sourcesJar
+                artifact javadocJar
+
+                from components.java
+
+                pom {
+                    url = 'https://github.com/stefangeyer/challonge-kotlin'
+
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'sgeyer'
+                            name = 'Stefan Geyer'
+                            email = 'stefangeyer@outlook.com'
+                        }
+                    }
+
+                    scm {
+                        connection = 'scm:git:git://github.com/stefangeyer/challonge-kotlin.git'
+                        developerConnection = 'scm:git:ssh://github.com/stefangeyer/challonge-kotlin.git'
+                        url = 'https://github.com/stefangeyer/challonge-kotlin'
+                    }
+                }
+            }
+        }
+    }
+}

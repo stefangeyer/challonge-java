@@ -1,0 +1,3 @@
+allprojects {
+    group 'at.stefangeyer.challonge.serializer'
+}

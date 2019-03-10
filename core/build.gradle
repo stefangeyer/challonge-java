@@ -27,8 +27,8 @@ publishing {
     publications {
         mavenJava {
             pom {
-                name = 'Challonge Kotlin'
-                description = 'Kotlin and JVM bindings for the Challonge API'
+                name = 'Challonge Java'
+                description = 'Java and JVM bindings for the Challonge API'
             }
         }
     }

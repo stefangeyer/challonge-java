@@ -53,7 +53,7 @@ subprojects {
                 from components.java
 
                 pom {
-                    url = 'https://github.com/stefangeyer/challonge-kotlin'
+                    url = 'https://github.com/stefangeyer/challonge-java'
 
                     licenses {
                         license {
@@ -71,9 +71,9 @@ subprojects {
                     }
 
                     scm {
-                        connection = 'scm:git:git://github.com/stefangeyer/challonge-kotlin.git'
-                        developerConnection = 'scm:git:ssh://github.com/stefangeyer/challonge-kotlin.git'
-                        url = 'https://github.com/stefangeyer/challonge-kotlin'
+                        connection = 'scm:git:git://github.com/stefangeyer/challonge-java.git'
+                        developerConnection = 'scm:git:ssh://github.com/stefangeyer/challonge-java.git'
+                        url = 'https://github.com/stefangeyer/challonge-java'
                     }
                 }
             }

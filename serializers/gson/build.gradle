@@ -11,8 +11,8 @@ publishing {
     publications {
         mavenJava {
             pom {
-                name = 'Challonge Kotlin Gson Serializer'
-                description = 'Gson serializer for Challonge Kotlin'
+                name = 'Challonge Java Gson Serializer'
+                description = 'Gson serializer for Challonge Java'
             }
         }
     }

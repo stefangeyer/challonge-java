@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/stefangeyer/challonge-java.svg?style=svg)](https://circleci.com/gh/stefangeyer/challonge-java)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/47dc0fcd548d40eb92c2c0f32272b194)](https://www.codacy.com/app/stefangeyer/challonge-java?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=stefangeyer/challonge-java&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/stefangeyer/challonge-java/branch/master/graph/badge.svg)](https://codecov.io/gh/stefangeyer/challonge-java)
 
 This library binds the [CHALLONGE! REST API](http://api.challonge.com/v1) calls for Java and any other JVM language.
 

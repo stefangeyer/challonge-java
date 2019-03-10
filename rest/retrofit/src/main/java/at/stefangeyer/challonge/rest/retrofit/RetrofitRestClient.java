@@ -6,23 +6,17 @@ import at.stefangeyer.challonge.rest.retrofit.converter.RetrofitConverterFactory
 import at.stefangeyer.challonge.serializer.Serializer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 
 import java.nio.charset.Charset;
+
+import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.responseCount;
 
 public class RetrofitRestClient implements RestClient {
 
     private static final String BASE_URL = "https://api.challonge.com/v1/";
 
     private ChallongeRetrofit challongeRetrofit;
-
-    private static int responseCount(Response response) {
-        if (response == null) {
-            return 0;
-        }
-        return 1 + responseCount(response.priorResponse());
-    }
 
     @Override
     public void initialize(Credentials credentials, Serializer serializer) {

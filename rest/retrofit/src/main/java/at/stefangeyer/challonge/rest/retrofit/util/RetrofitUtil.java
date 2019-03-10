@@ -27,6 +27,13 @@ public class RetrofitUtil {
         }
     }
 
+    public static int responseCount(okhttp3.Response response) {
+        if (response == null) {
+            return 0;
+        }
+        return 1 + responseCount(response.priorResponse());
+    }
+
     public static <T> retrofit2.Callback<T> callback(Callback<T> onSuccess, Callback<DataAccessException> onFailure,
                                                      String errorMessage) {
         return new RetrofitCallback<>(onSuccess, onFailure, errorMessage);

@@ -1,23 +1,24 @@
-# challonge-kotlin
+# challonge-java
 
 [![CircleCI](https://circleci.com/gh/stefangeyer/challonge-kotlin.svg?style=svg)](https://circleci.com/gh/stefangeyer/challonge-kotlin)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1769c74da0854cb4895fba208b7b95da)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=stefangeyer/challonge-kotlin&amp;utm_campaign=Badge_Grade)
 
-This library binds the [CHALLONGE! REST API](http://api.challonge.com/v1) calls for Kotlin and any other JVM language. 
-Once completed, this library will replace it's predecessor [challonge-java](https://github.com/stefangeyer/challonge-java).
 
-**This library is still in development, use at own risk**
+This library binds the [CHALLONGE! REST API](http://api.challonge.com/v1) calls for Java and any other JVM language.
 
+<!---
 The main differences between this project and it's previous version are the following:
 - Removal of all unnecessary dependencies
 - Modularization to allow multiple implementations of certain components
 - Usage of Kotlin to make use of it's language features such as default parameter arguments
+-->
 
 ## modules
 
-This project is split up in the 3 main modules core, rest and serializers. As the name suggests, the core module contains
-the main functionality. Rest and serializers contain all implementations of the core module's interfaces `Serializer` 
-and `RestClient`. The different implementations may use 3rd party libraries to achieve their goal.
-Additional implementations may follow in the future.
+This project is split up in the modules core, rest and serializers. While core contains
+the main functionality and interfaces for the rest and serializer package, the latter contains all available 
+implementations of their respective interfaces. Rest and serializers contain all implementations of the core module's interfaces `Serializer` 
+and `RestClient`. Additional implementations may follow in the future.
 
 ### serializers
 

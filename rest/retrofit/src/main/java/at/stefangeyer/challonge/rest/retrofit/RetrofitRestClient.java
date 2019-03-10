@@ -5,11 +5,13 @@ import at.stefangeyer.challonge.rest.*;
 import at.stefangeyer.challonge.rest.retrofit.converter.RetrofitConverterFactory;
 import at.stefangeyer.challonge.serializer.Serializer;
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.Request;
 import retrofit2.Retrofit;
 
 import java.io.Closeable;
 import java.nio.charset.Charset;
+import java.util.Collections;
 
 import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.responseCount;
 
@@ -18,12 +20,36 @@ public class RetrofitRestClient implements RestClient, Closeable {
     private static final String BASE_URL = "https://api.challonge.com/v1/";
 
     private OkHttpClient httpClient;
+    private boolean useHttp1_1;
 
     private ChallongeRetrofit challongeRetrofit;
+
+    /**
+     * Create a Retrofit rest client.
+     * If HTTP 1.1 not used, it may be necessary to close the rest client using {@link #close()} in order for all
+     * running threads to be terminated. See the following <a href="https://github.com/square/okhttp/issues/4029">link</a>
+     * for more information.
+     *
+     * @param useHttp1_1 use HTTP 1.1?
+     */
+    public RetrofitRestClient(boolean useHttp1_1) {
+        this.useHttp1_1 = useHttp1_1;
+    }
+
+    /**
+     * Create a Retrofit rest client using HTTP 1.1
+     */
+    public RetrofitRestClient() {
+        this(true);
+    }
 
     @Override
     public void initialize(Credentials credentials, Serializer serializer) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+
+        if (this.useHttp1_1) {
+            httpClientBuilder.protocols(Collections.singletonList(Protocol.HTTP_1_1));
+        }
 
         httpClientBuilder.authenticator((route, response) -> {
             String credential = okhttp3.Credentials.basic(credentials.getUsername(), credentials.getKey(),

@@ -1,22 +1,17 @@
 version: 2.1
 orbs:
-  gradle: circleci/gradle@1.0.9
   codecov: codecov/codecov@1.0.4
 jobs:
-  coverage:
+  test:
     docker:
       - image: circleci/openjdk:9-jdk
     steps:
       - checkout
-      - run: ./gradlew codeCoverageReport -PsystemTests -DchallongeUsername=${CHALLONGE_USERNAME} -DchallongeApiKey=${CHALLONGE_API_KEY} -DchallongeTournamentUrl=${CHALLONGE_TOURNAMENT_URL}
+      - run: ./gradlew check codeCoverageReport -PsystemTests -DchallongeUsername=${CHALLONGE_USERNAME} -DchallongeApiKey=${CHALLONGE_API_KEY} -DchallongeTournamentUrl=${CHALLONGE_TOURNAMENT_URL}
       - codecov/upload:
           file: build/reports/jacoco/report.xml
 workflows:
   version: 2.1
-  test-and-coverage:
+  build:
     jobs:
-    - gradle/test:
-        test_command: test -PsystemTests -DchallongeUsername=${CHALLONGE_USERNAME} -DchallongeApiKey=${CHALLONGE_API_KEY} -DchallongeTournamentUrl=${CHALLONGE_TOURNAMENT_URL}
-        test_results_path: build/test-results/
-        reports_path: build/test-reports/
-    - coverage
+    - test

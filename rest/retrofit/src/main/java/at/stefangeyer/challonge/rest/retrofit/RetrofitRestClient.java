@@ -8,13 +8,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
 
+import java.io.Closeable;
 import java.nio.charset.Charset;
 
 import static at.stefangeyer.challonge.rest.retrofit.util.RetrofitUtil.responseCount;
 
-public class RetrofitRestClient implements RestClient {
+public class RetrofitRestClient implements RestClient, Closeable {
 
     private static final String BASE_URL = "https://api.challonge.com/v1/";
+
+    private OkHttpClient httpClient;
 
     private ChallongeRetrofit challongeRetrofit;
 
@@ -42,10 +45,11 @@ public class RetrofitRestClient implements RestClient {
             return chain.proceed(requestBuilder.build());
         }));
 
+        this.httpClient = httpClientBuilder.build();
+
         RetrofitConverterFactory factory = new RetrofitConverterFactory(serializer);
 
-        Retrofit retrofit = new Retrofit.Builder().client(httpClientBuilder.build()).baseUrl(BASE_URL)
-                .addConverterFactory(factory).build();
+        Retrofit retrofit = new Retrofit.Builder().client(this.httpClient).baseUrl(BASE_URL).addConverterFactory(factory).build();
 
         this.challongeRetrofit = retrofit.create(ChallongeRetrofit.class);
     }
@@ -84,5 +88,13 @@ public class RetrofitRestClient implements RestClient {
         } else {
             throw new IllegalStateException("Attempted to create rest client before initialization");
         }
+    }
+
+    @Override
+    public void close() {
+        // Stops all non daemon threads used for HTTP/2 which might prevent the application from stopping
+        // See https://github.com/square/okhttp/issues/4029 for further information
+
+        this.httpClient.connectionPool().evictAll();
     }
 }

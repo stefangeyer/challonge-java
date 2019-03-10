@@ -5,23 +5,22 @@ buildscript {
 }
 
 allprojects {
-    version '1.0-SNAPSHOT'
-}
-
-subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven-publish'
     apply plugin: 'jacoco'
-
-    group 'at.stefangeyer.challonge'
+    apply plugin: 'maven-publish'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    group 'at.stefangeyer.challonge'
+    version '1.0-SNAPSHOT'
+
     repositories {
         mavenCentral()
     }
+}
 
+subprojects {
     dependencies {
         testCompile group: 'junit', name: 'junit', version: property('junit.version')
         testCompile group: 'org.mockito', name: 'mockito-core', version: property('mockito.version')

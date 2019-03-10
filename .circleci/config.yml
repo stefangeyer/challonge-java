@@ -8,8 +8,9 @@ jobs:
       - image: circleci/openjdk:9-jdk
     steps:
       - checkout
+      - run: ./gradlew codeCoverageReport
       - codecov/upload:
-          file: build/test-reports/
+          file: build/reports/jacoco/report.xml
 workflows:
   version: 2.1
   test-and-coverage:

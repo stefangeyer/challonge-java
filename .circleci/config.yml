@@ -2,12 +2,20 @@ version: 2.1
 orbs:
   gradle: circleci/gradle@1.0.9
   codecov: codecov/codecov@1.0.4
+jobs:
+  coverage:
+    docker:
+      - image: circleci/openjdk:9-jdk
+    steps:
+      - checkout
+      - codecov/upload:
+          file: build/test-reports/
 workflows:
+  version: 2.1
   test-and-coverage:
     jobs:
     - gradle/test:
         test_command: test -PsystemTests -DchallongeUsername=${CHALLONGE_USERNAME} -DchallongeApiKey=${CHALLONGE_API_KEY} -DchallongeTournamentUrl=${CHALLONGE_TOURNAMENT_URL}
         test_results_path: build/test-results/
         reports_path: build/test-reports/
-    - codecov/upload:
-        file: {{ coverage_report_filepath }}
+    - coverage

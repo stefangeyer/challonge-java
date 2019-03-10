@@ -21,6 +21,7 @@ import com.exsoloscript.challonge.model.enumeration.TournamentState;
 import com.exsoloscript.challonge.model.enumeration.TournamentType;
 import com.exsoloscript.challonge.model.enumeration.query.GrandFinalsModifier;
 import com.google.gson.annotations.SerializedName;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -35,6 +36,7 @@ import java.util.List;
  * @version 20160820.1
  */
 @Data
+@Builder
 @Accessors(fluent = true)
 @EqualsAndHashCode(exclude = {
         "startAt", "completedAt", "createdAt",

@@ -14,7 +14,7 @@
   limitations under the License.
 */
 // GuiceJunitRunner.java, created by Fabio Strozzi on Mar 27, 2011
-package com.exsoloscript.challonge.guice;
+package com.exsoloscript.challonge.integration.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

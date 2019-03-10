@@ -19,6 +19,7 @@ package com.exsoloscript.challonge;
 import com.exsoloscript.challonge.guice.ChallongeModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.apache.commons.lang3.Validate;
 
 /**
  * The only purpose of this class is to instantiate the {@link ChallongeApi} class.
@@ -37,6 +38,11 @@ public class Challonge {
      * @return ChallongeApi
      */
     public static ChallongeApi getFor(String username, String apiKey) {
+        Validate.notNull(username);
+        Validate.notNull(apiKey);
+        Validate.notBlank(username);
+        Validate.notBlank(apiKey);
+
         ChallongeCredentials credentials = new ChallongeCredentials(username, apiKey);
         Injector injector = Guice.createInjector(new ChallongeModule(credentials));
         return injector.getInstance(ChallongeApi.class);

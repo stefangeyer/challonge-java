@@ -32,6 +32,19 @@ import java.util.List;
 public interface RetrofitAttachmentHandler {
 
     /**
+     * Retrieve a match's attachments.
+     *
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
+     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
+     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @return Call
+     */
+    @GET("tournaments/{tournament}/matches/{match_id}/attachments.json")
+    Call<List<Attachment>> getAttachments(@Path("tournament") String tournament,
+                                          @Path("match_id") int matchId);
+
+    /**
      * Retrieve a single match attachment record.
      *
      * @param tournament   Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
@@ -45,19 +58,6 @@ public interface RetrofitAttachmentHandler {
     Call<Attachment> getAttachment(@Path("tournament") String tournament,
                                    @Path("match_id") int matchId,
                                    @Path("attachment_id") int attachmentId);
-
-    /**
-     * Retrieve a match's attachments.
-     *
-     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).
-     *                   If assigned to a subdomain, URL format must be :subdomain-:tournament_url
-     *                   (e.g. 'test-mytourney' for test.challonge.com/mytourney)
-     * @param matchId    The match's unique ID
-     * @return Call
-     */
-    @GET("tournaments/{tournament}/matches/{match_id}/attachments.json")
-    Call<List<Attachment>> getAttachments(@Path("tournament") String tournament,
-                                          @Path("match_id") int matchId);
 
     /**
      * Add a file, link, or text attachment to a match. NOTE: The associated tournament's

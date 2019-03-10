@@ -8,7 +8,7 @@ jobs:
       - image: circleci/openjdk:9-jdk
     steps:
       - checkout
-      - run: ./gradlew codeCoverageReport
+      - run: ./gradlew codeCoverageReport -PsystemTests -DchallongeUsername=${CHALLONGE_USERNAME} -DchallongeApiKey=${CHALLONGE_API_KEY} -DchallongeTournamentUrl=${CHALLONGE_TOURNAMENT_URL}
       - codecov/upload:
           file: build/reports/jacoco/report.xml
 workflows:

@@ -13,9 +13,7 @@ import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,9 +21,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MatchTest {
     private Challonge challonge;
+
     private Tournament tournament;
     private List<Participant> participants;
 
@@ -52,7 +50,7 @@ public class MatchTest {
         } catch (DataAccessException ignored) {
         }
 
-        TournamentQuery query = TournamentQuery.builder().name("Matches").url(this.tournamentUrl).build();
+        TournamentQuery query = TournamentQuery.builder().name("API Match Test").url(this.tournamentUrl).build();
 
         Tournament tournament = this.challonge.createTournament(query);
 
@@ -66,7 +64,7 @@ public class MatchTest {
     }
 
     @Test
-    public void aIndexMatches() throws DataAccessException {
+    public void testIndexMatches() throws DataAccessException {
         List<Match> matches = this.challonge.getMatches(this.tournament);
 
         assertEquals(3, matches.size());
@@ -75,11 +73,10 @@ public class MatchTest {
         Match secondSeed = matches.get(1);
         Match finalMatch = matches.get(2);
 
-        Participant participant1 = this.participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
-        Participant participant2 = this.participants.stream().filter(p -> p.getName().equals("User2")).findFirst().get();
-        Participant participant3 = this.participants.stream().filter(p -> p.getName().equals("User3")).findFirst().get();
-        Participant participant4 = this.participants.stream().filter(p -> p.getName().equals("User4")).findFirst().get();
-
+        Participant participant1 = getParticipant(this.participants, "User1");
+        Participant participant2 = getParticipant(this.participants, "User2");
+        Participant participant3 = getParticipant(this.participants, "User3");
+        Participant participant4 = getParticipant(this.participants, "User4");
 
         assertEquals(participant1.getId(), firstSeed.getPlayer1Id());
         assertEquals(participant4.getId(), firstSeed.getPlayer2Id());
@@ -91,9 +88,9 @@ public class MatchTest {
     }
 
     @Test
-    public void bIndexMatchesForPlayer() throws DataAccessException {
-        Participant participant1 = this.participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
-        Participant participant4 = this.participants.stream().filter(p -> p.getName().equals("User4")).findFirst().get();
+    public void testIndexMatchesForPlayer() throws DataAccessException {
+        Participant participant1 = getParticipant(this.participants, "User1");
+        Participant participant4 = getParticipant(this.participants, "User4");
 
         List<Match> matches = this.challonge.getMatches(this.tournament, participant1);
 
@@ -106,8 +103,8 @@ public class MatchTest {
     }
 
     @Test
-    public void cGetMatch() throws DataAccessException {
-        Participant participant1 = this.participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
+    public void testGetMatch() throws DataAccessException {
+        Participant participant1 = getParticipant(this.participants, "User1");
 
         Match match1 = this.challonge.getMatches(this.tournament, participant1).get(0);
 
@@ -117,8 +114,8 @@ public class MatchTest {
     }
 
     @Test
-    public void dUpdateMatch() throws DataAccessException {
-        Participant participant1 = this.participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
+    public void testUpdateMatch() throws DataAccessException {
+        Participant participant1 = getParticipant(this.participants, "User1");
 
         Match initial = this.challonge.getMatches(this.tournament, participant1).get(0);
         MatchQuery query = MatchQuery.builder().winnerId(participant1.getId()).scoresCsv("1-0,1-0").build();
@@ -129,7 +126,14 @@ public class MatchTest {
     }
 
     @After
-    public void tearDown() throws DataAccessException {
-        this.challonge.deleteTournament(this.tournament);
+    public void tearDown() {
+        try {
+            this.challonge.deleteTournament(this.tournament);
+        } catch (DataAccessException ignored) {
+        }
+    }
+
+    private Participant getParticipant(List<Participant> list, String name) {
+        return list.stream().filter(p -> p.getName().equals(name)).findFirst().orElse(null);
     }
 }

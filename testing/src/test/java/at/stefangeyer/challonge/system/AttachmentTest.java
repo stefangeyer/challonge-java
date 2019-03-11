@@ -12,10 +12,9 @@ import at.stefangeyer.challonge.model.query.TournamentQuery;
 import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,13 +23,14 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AttachmentTest {
     private Challonge challonge;
+
     private Tournament tournament;
     private Match match;
 
@@ -71,7 +71,7 @@ public class AttachmentTest {
     }
 
     @Test
-    public final void aCreateAttachmentTest() throws DataAccessException {
+    public final void testCreateAttachment() throws DataAccessException {
         AttachmentQuery query = AttachmentQuery.builder().description("TestDescription").url("http://www.example.com").build();
 
         Attachment attachment = this.challonge.createAttachment(this.match, query);
@@ -81,8 +81,8 @@ public class AttachmentTest {
     }
 
     @Test
-    public final void bCreateFileAttachmentTest() throws DataAccessException, IOException {
-        File assetFile = new File(getClass().getClassLoader().getResource("testfile1.txt").getPath());
+    public final void testCreateFileAttachment() throws DataAccessException, IOException {
+        File assetFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("testfile1.txt")).getPath());
         AttachmentQuery query = AttachmentQuery.builder().asset(assetFile).description("TestDescription").build();
 
         Attachment attachment = this.challonge.createAttachment(this.match, query);
@@ -97,7 +97,7 @@ public class AttachmentTest {
     }
 
     @Test
-    public final void cGetAttachmentsTest() throws DataAccessException {
+    public final void testGetAttachments() throws DataAccessException {
         Attachment attachment1 = this.challonge.createAttachment(this.match,
                 AttachmentQuery.builder().description("Attachment1").build());
 
@@ -109,14 +109,12 @@ public class AttachmentTest {
         assertEquals(2, attachments.size());
 
 
-        assertEquals(attachment1, attachments.stream().filter(
-                a -> a.getDescription().equals("Attachment1")).findFirst().get());
-        assertEquals(attachment2, attachments.stream().filter(
-                a -> a.getDescription().equals("Attachment2")).findFirst().get());
+        assertEquals(attachment1, getAttachment(attachments, "Attachment1"));
+        assertEquals(attachment2, getAttachment(attachments, "Attachment2"));
     }
 
     @Test
-    public final void dGetAttachmentTest() throws DataAccessException {
+    public final void testGetAttachment() throws DataAccessException {
         Attachment createdAttachment = this.challonge.createAttachment(this.match,
                 AttachmentQuery.builder().description("Attachment1").build());
         Attachment readAttachment = this.challonge.getAttachment(this.match, createdAttachment.getId());
@@ -125,15 +123,15 @@ public class AttachmentTest {
     }
 
     @Test
-    public final void eUpdateAttachmentTest() throws DataAccessException {
-        File assetFile = new File(getClass().getClassLoader().getResource("testfile1.txt").getPath());
+    public final void testUpdateAttachment() throws DataAccessException {
+        File assetFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("testfile1.txt")).getPath());
 
         Attachment createdAttachment = this.challonge.createAttachment(this.match,
                 AttachmentQuery.builder().asset(assetFile).description("Attachment1").build());
 
         assertEquals("testfile1.txt", createdAttachment.getAssetFileName());
 
-        File newAssetFile = new File(getClass().getClassLoader().getResource("testfile2.txt").getPath());
+        File newAssetFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("testfile2.txt")).getPath());
 
         Attachment updatedAttachment = this.challonge.updateAttachment(this.match, createdAttachment,
                 AttachmentQuery.builder().asset(newAssetFile).description("update").build());
@@ -143,7 +141,7 @@ public class AttachmentTest {
     }
 
     @Test
-    public final void fDeleteAttachmentTest() throws DataAccessException {
+    public final void testDeleteAttachment() throws DataAccessException {
         Attachment attachment1 = this.challonge.createAttachment(this.match,
                 AttachmentQuery.builder().description("Attachment1").build());
 
@@ -159,8 +157,15 @@ public class AttachmentTest {
         assertEquals(1, attachmentsAfterDelete.size());
     }
 
-    @Test
-    public final void zDeleteTournament() throws DataAccessException {
-        this.challonge.deleteTournament(this.tournament);
+    @After
+    public void tearDown() {
+        try {
+            this.challonge.deleteTournament(this.tournament);
+        } catch (DataAccessException ignored) {
+        }
+    }
+
+    private Attachment getAttachment(List<Attachment> list, String desc) {
+        return list.stream().filter(a -> a.getDescription().equals(desc)).findFirst().orElse(null);
     }
 }

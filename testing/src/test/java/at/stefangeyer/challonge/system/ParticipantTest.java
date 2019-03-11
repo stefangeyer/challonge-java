@@ -9,11 +9,10 @@ import at.stefangeyer.challonge.model.query.ParticipantQuery;
 import at.stefangeyer.challonge.model.query.TournamentQuery;
 import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.util.Arrays;
@@ -22,7 +21,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ParticipantTest {
 
     private Challonge challonge;
@@ -52,26 +50,28 @@ public class ParticipantTest {
         }
 
         OffsetDateTime start = OffsetDateTime.now().plusMinutes(75L);
-        TournamentQuery query = TournamentQuery.builder().name("Participants").url(this.tournamentUrl)
+        TournamentQuery query = TournamentQuery.builder().name("API Participant Test").url(this.tournamentUrl)
                 .checkInDuration(120L).startAt(start).build();
 
         this.tournament = this.challonge.createTournament(query);
     }
 
     @Test
-    public final void aAddParticipants() throws DataAccessException {
-        ParticipantQuery query = ParticipantQuery.builder().name("Stefan").seed(1).misc("MiscTest").build();
+    public final void testAddParticipants() throws DataAccessException {
+        ParticipantQuery query = ParticipantQuery.builder().name("Stefan").seed(1).misc("MiscTest")
+                .challongeUsername("EXSolo").email("stefan@mail.com").inviteNameOrEmail("invite@mail.com").build();
 
         Participant participant = this.challonge.addParticipant(this.tournament, query);
+
         assertEquals("Stefan", participant.getName());
         assertEquals(1, (int) participant.getSeed());
         assertEquals("MiscTest", participant.getMisc());
     }
 
     @Test
-    public final void bBulkAddParticipants() throws DataAccessException {
+    public final void testBulkAddParticipants() throws DataAccessException {
         ParticipantQuery query1 = ParticipantQuery.builder().name("Bulk1").seed(1).build();
-        ParticipantQuery query2 = ParticipantQuery.builder().name("Bulk2").inviteNameOrEmail("Bulk").seed(2).misc("BulkAdd").build();
+        ParticipantQuery query2 = ParticipantQuery.builder().name("Bulk2").inviteNameOrEmail("bulk").seed(2).misc("BulkAdd").build();
 
         List<Participant> participants = this.challonge.bulkAddParticipants(this.tournament, Arrays.asList(query1, query2));
         Participant participant1 = participants.get(0);
@@ -81,17 +81,17 @@ public class ParticipantTest {
         assertEquals(1, (int) participant1.getSeed());
         assertEquals("Bulk2", participant2.getName());
 
-        assertEquals("bulk", participant2.getUsername().toLowerCase());
+        assertEquals("bulk", participant2.getUsername());
         assertEquals("BulkAdd", participant2.getMisc());
         assertEquals(2, (int) participant2.getSeed());
     }
 
     @Test
-    public final void cUpdateParticipant() throws DataAccessException {
+    public final void testUpdateParticipant() throws DataAccessException {
         ParticipantQuery createQuery = ParticipantQuery.builder().name("Stefan").misc("123").build();
         Participant createdParticipant = this.challonge.addParticipant(this.tournament, createQuery);
-        ParticipantQuery updateQuery = ParticipantQuery.builder().name("Geyer").misc("321").build();
 
+        ParticipantQuery updateQuery = ParticipantQuery.builder().name("Geyer").misc("321").build();
         Participant updatedParticipant = this.challonge.updateParticipant(createdParticipant, updateQuery);
 
         assertEquals("Geyer", updatedParticipant.getName());
@@ -99,10 +99,10 @@ public class ParticipantTest {
     }
 
     @Test(expected = DataAccessException.class)
-    public final void dDeleteParticipant() throws DataAccessException {
+    public final void testDeleteParticipant() throws DataAccessException {
         ParticipantQuery createQuery = ParticipantQuery.builder().name("Stefan").build();
-
         Participant createdParticipant = this.challonge.addParticipant(this.tournament, createQuery);
+
         Participant deletedParticipant = this.challonge.deleteParticipant(createdParticipant);
 
         this.challonge.getParticipant(this.tournament, deletedParticipant.getId(), false);
@@ -112,7 +112,7 @@ public class ParticipantTest {
     }
 
     @Test
-    public final void eRandomizeParticipants() throws DataAccessException {
+    public final void testRandomizeParticipants() throws DataAccessException {
         ParticipantQuery query1 = ParticipantQuery.builder().name("User1").build();
         ParticipantQuery query2 = ParticipantQuery.builder().name("User2").build();
         ParticipantQuery query3 = ParticipantQuery.builder().name("User3").build();
@@ -132,7 +132,7 @@ public class ParticipantTest {
     }
 
     @Test
-    public final void fCheckInParticipant() throws DataAccessException {
+    public final void testCheckInParticipant() throws DataAccessException {
         ParticipantQuery createQuery = ParticipantQuery.builder().name("Stefan").build();
 
         Participant createdParticipant = this.challonge.addParticipant(this.tournament, createQuery);
@@ -143,7 +143,7 @@ public class ParticipantTest {
     }
 
     @Test
-    public final void gUndoCheckInParticipant() throws DataAccessException {
+    public final void testUndoCheckInParticipant() throws DataAccessException {
         ParticipantQuery createQuery = ParticipantQuery.builder().name("Stefan").build();
 
         Participant createdParticipant = this.challonge.addParticipant(this.tournament, createQuery);
@@ -156,7 +156,7 @@ public class ParticipantTest {
     }
 
     @Test
-    public final void hGetParticipants() throws DataAccessException {
+    public final void testGetParticipants() throws DataAccessException {
         ParticipantQuery query1 = ParticipantQuery.builder().name("User1").build();
         ParticipantQuery query2 = ParticipantQuery.builder().name("User2").build();
         ParticipantQuery query3 = ParticipantQuery.builder().name("User3").build();
@@ -165,17 +165,24 @@ public class ParticipantTest {
 
         List<Participant> participants = this.challonge.getParticipants(this.tournament);
 
-        Optional<Participant> user1 = participants.stream().filter(p -> p.getName().equals("User1")).findFirst();
-        Optional<Participant> user2 = participants.stream().filter(p -> p.getName().equals("User2")).findFirst();
-        Optional<Participant> user3 = participants.stream().filter(p -> p.getName().equals("User3")).findFirst();
+        Participant user1 = getParticipant(participants, "User1");
+        Participant user2 = getParticipant(participants, "User2");
+        Participant user3 = getParticipant(participants, "User3");
 
-        assertTrue(user1.isPresent());
-        assertTrue(user2.isPresent());
-        assertTrue(user3.isPresent());
+        assertNotNull(user1);
+        assertNotNull(user2);
+        assertNotNull(user3);
     }
 
-    @Test
-    public final void zDeleteTournament() throws DataAccessException {
-        this.challonge.deleteTournament(this.tournament);
+    @After
+    public void tearDown() {
+        try {
+            this.challonge.deleteTournament(this.tournament);
+        } catch (DataAccessException ignored) {
+        }
+    }
+
+    private Participant getParticipant(List<Participant> list, String name) {
+        return list.stream().filter(p -> p.getName().equals(name)).findFirst().orElse(null);
     }
 }

@@ -3,7 +3,6 @@ package at.stefangeyer.challonge.system;
 import at.stefangeyer.challonge.Challonge;
 import at.stefangeyer.challonge.exception.DataAccessException;
 import at.stefangeyer.challonge.model.Credentials;
-import at.stefangeyer.challonge.model.Match;
 import at.stefangeyer.challonge.model.Participant;
 import at.stefangeyer.challonge.model.Tournament;
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
@@ -15,9 +14,9 @@ import at.stefangeyer.challonge.model.query.TournamentQuery;
 import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
 import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
 import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
-import org.junit.FixMethodOrder;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -27,12 +26,12 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TournamentTest {
 
     private Challonge challonge;
 
     private String tournamentUrl;
+    private Tournament tournament;
 
     public TournamentTest() {
         String username = System.getProperty("challongeUsername");
@@ -47,18 +46,17 @@ public class TournamentTest {
         this.challonge = new Challonge(new Credentials(username, apiKey), new GsonSerializer(), new RetrofitRestClient());
     }
 
-    @Test
-    public final void aCreateTournamentTest() throws DataAccessException {
+    @Before
+    public void setUp() throws Exception {
         try {
-            Tournament t = this.challonge.getTournament(this.tournamentUrl);
             // Delete the tournament, if it already exists
-            this.challonge.deleteTournament(t);
+            this.challonge.deleteTournament(this.challonge.getTournament(this.tournamentUrl));
         } catch (DataAccessException ignored) {
         }
 
         OffsetDateTime dt = OffsetDateTime.of(2025, 8, 22, 10, 0, 0, 0, ZoneOffset.of("-04:00"));
 
-        TournamentQuery query = TournamentQuery.builder().name("JavaApiTest").url("javaapitest")
+        TournamentQuery query = TournamentQuery.builder().name("JavaApiTest").url(this.tournamentUrl)
                 .tournamentType(TournamentType.DOUBLE_ELIMINATION).description("This is a description")
                 .holdThirdPlaceMatch(true).openSignup(true).pointsForMatchWin(2.0F).pointsForMatchTie(0.0F)
                 .pointsForGameWin(1.0F).pointsForGameTie(0.0F).pointsForBye(0.5F).signupCap(4)
@@ -68,47 +66,49 @@ public class TournamentTest {
                 .notifyUsersWhenTheTournamentEnds(true).sequentialPairings(true).startAt(dt).checkInDuration(5L)
                 .grandFinalsModifier(GrandFinalsModifier.SINGLE_MATCH).build();
 
-        Tournament tournament = this.challonge.createTournament(query);
-        assertEquals("JavaApiTest", tournament.getName());
-        assertEquals("javaapitest", tournament.getUrl());
-        assertEquals(4, (int) tournament.getSignupCap());
-        assertEquals(TournamentType.DOUBLE_ELIMINATION, tournament.getTournamentType());
-        assertEquals(tournament.getDescription(), "This is a description");
-        assertEquals(1.0F, tournament.getRoundRobinPointsForGameWin(), 0);
-        assertEquals(1.5F, tournament.getRoundRobinPointsForGameTie(), 0);
-        assertEquals(5.0F, tournament.getRoundRobinPointsForMatchWin(), 0);
-        assertEquals(2.0F, tournament.getRoundRobinPointsForMatchTie(), 0);
-        assertTrue(tournament.getAcceptAttachments());
-        assertTrue(tournament.getHideForum());
-        assertTrue(tournament.getShowRounds());
-        assertTrue(tournament.getPrivateOnly());
-        assertTrue(tournament.getNotifyUsersWhenMatchesOpen());
-        assertTrue(tournament.getNotifyUsersWhenTheTournamentEnds());
-        assertTrue(tournament.getSequentialPairings());
-        assertTrue(tournament.getHoldThirdPlaceMatch());
-        assertTrue(tournament.getOpenSignup());
-        assertEquals(2.0F, tournament.getPointsForMatchWin(), 0);
-        assertEquals(0.0F, tournament.getPointsForMatchTie(), 0);
-        assertEquals(1.0F, tournament.getPointsForGameWin(), 0);
-        assertEquals(0.0F, tournament.getPointsForGameTie(), 0);
-        assertEquals(0.5F, tournament.getPointsForBye(), 0);
-        assertEquals(4, (int) tournament.getSignupCap());
-        assertEquals(RankedBy.MATCH_WINS, tournament.getRankedBy());
-        assertEquals(5L, (long) tournament.getCheckInDuration());
-        assertEquals(GrandFinalsModifier.SINGLE_MATCH, tournament.getGrandFinalsModifier());
+        this.tournament = this.challonge.createTournament(query);
     }
 
     @Test
-    public final void aaCreateSubdomainTournamentTest() throws DataAccessException {
+    public final void testCreateTournament() {
+        assertEquals("JavaApiTest", this.tournament.getName());
+        assertEquals(this.tournamentUrl, this.tournament.getUrl());
+        assertEquals(4, (int) this.tournament.getSignupCap());
+        assertEquals(TournamentType.DOUBLE_ELIMINATION, this.tournament.getTournamentType());
+        assertEquals(this.tournament.getDescription(), "This is a description");
+        assertEquals(1.0F, this.tournament.getRoundRobinPointsForGameWin(), 0);
+        assertEquals(1.5F, this.tournament.getRoundRobinPointsForGameTie(), 0);
+        assertEquals(5.0F, this.tournament.getRoundRobinPointsForMatchWin(), 0);
+        assertEquals(2.0F, this.tournament.getRoundRobinPointsForMatchTie(), 0);
+        assertTrue(this.tournament.getAcceptAttachments());
+        assertTrue(this.tournament.getHideForum());
+        assertTrue(this.tournament.getShowRounds());
+        assertTrue(this.tournament.getPrivateOnly());
+        assertTrue(this.tournament.getNotifyUsersWhenMatchesOpen());
+        assertTrue(this.tournament.getNotifyUsersWhenTheTournamentEnds());
+        assertTrue(this.tournament.getSequentialPairings());
+        assertTrue(this.tournament.getHoldThirdPlaceMatch());
+        assertTrue(this.tournament.getOpenSignup());
+        assertEquals(2.0F, this.tournament.getPointsForMatchWin(), 0);
+        assertEquals(0.0F, this.tournament.getPointsForMatchTie(), 0);
+        assertEquals(1.0F, this.tournament.getPointsForGameWin(), 0);
+        assertEquals(0.0F, this.tournament.getPointsForGameTie(), 0);
+        assertEquals(0.5F, this.tournament.getPointsForBye(), 0);
+        assertEquals(4, (int) this.tournament.getSignupCap());
+        assertEquals(RankedBy.MATCH_WINS, this.tournament.getRankedBy());
+        assertEquals(5L, (long) this.tournament.getCheckInDuration());
+        assertEquals(GrandFinalsModifier.SINGLE_MATCH, this.tournament.getGrandFinalsModifier());
+    }
+
+    @Test
+    public final void testCreateSubdomainTournament() throws DataAccessException {
         String subdomain = System.getProperty("challongeSubdomain");
 
         if (subdomain != null && !subdomain.isEmpty()) {
-            // Delete the tournament, if it already exists
-            this.challonge.deleteTournament(Tournament.builder().url("javasubdomaintournament").subdomain(subdomain)
-                    .tournamentType(TournamentType.SINGLE_ELIMINATION).build());
+            this.challonge.deleteTournament(Tournament.builder().url(this.tournamentUrl).subdomain(subdomain).build());
 
             TournamentQuery query = TournamentQuery.builder().subdomain(subdomain).name("JavaApiTest Subdomain")
-                    .url("javasubdomaintournament").build();
+                    .url(this.tournamentUrl).build();
             Tournament tournament = this.challonge.createTournament(query);
 
             assertEquals(subdomain, tournament.getSubdomain());
@@ -118,116 +118,168 @@ public class TournamentTest {
     }
 
     @Test
-    public final void bGetTournamentTest() throws DataAccessException {
+    public final void testGetTournament() throws DataAccessException {
         Tournament tournament = this.challonge.getTournament(this.tournamentUrl, false, false);
-        assertEquals("JavaApiTest", tournament.getName());
+
+        assertEquals(this.tournament, tournament);
     }
 
     @Test
-    public final void cUpdateTournamentTest() throws DataAccessException {
-        TournamentQuery query = TournamentQuery.builder().tournamentType(TournamentType.SWISS).signupCap(6)
-                .acceptAttachments(true).description("TestDescription").holdThirdPlaceMatch(true).build();
+    public final void testUpdateTournament() throws DataAccessException {
+        OffsetDateTime dt = OffsetDateTime.of(2026, 8, 22, 10, 0, 0, 0, ZoneOffset.of("-04:00"));
 
-        Tournament t = this.challonge.getTournament(this.tournamentUrl);
-        Tournament tournament = this.challonge.updateTournament(t, query);
+        TournamentQuery query = TournamentQuery.builder().name("JavaUpdateTest").tournamentType(TournamentType.SWISS)
+                .description("TestDescription")
+                .pointsForMatchWin(2.5F).pointsForMatchTie(1.0F).pointsForGameWin(1.5F).pointsForGameTie(1.0F)
+                .pointsForBye(1.5F).signupCap(6).rankedBy(RankedBy.GAME_WINS).roundRobinPointsForGameWin(1.5F)
+                .roundRobinPointsForGameTie(2.5F).roundRobinPointsForMatchWin(5.5F).roundRobinPointsForMatchTie(1.0F)
+                .acceptAttachments(false).hideForum(false).showRounds(false).privateOnly(false).notifyUsersWhenMatchesOpen(false)
+                .notifyUsersWhenTheTournamentEnds(false).sequentialPairings(false).holdThirdPlaceMatch(false).openSignup(false)
+                .startAt(dt).checkInDuration(10L).grandFinalsModifier(GrandFinalsModifier.SKIP).build();
 
-        assertEquals("JavaApiTest", tournament.getName());
-        assertEquals("javaapitest", tournament.getUrl());
-        assertEquals(TournamentType.SWISS, tournament.getTournamentType());
+        Tournament tournament = this.challonge.updateTournament(this.tournament, query);
+
+        assertEquals("JavaUpdateTest", tournament.getName());
         assertEquals(6, (int) tournament.getSignupCap());
-        assertTrue(tournament.getAcceptAttachments());
+        assertEquals(TournamentType.SWISS, tournament.getTournamentType());
         assertEquals("TestDescription", tournament.getDescription());
-        assertTrue(tournament.getHoldThirdPlaceMatch());
+        assertEquals(1.5F, tournament.getRoundRobinPointsForGameWin(), 0);
+        assertEquals(2.5F, tournament.getRoundRobinPointsForGameTie(), 0);
+        assertEquals(5.5F, tournament.getRoundRobinPointsForMatchWin(), 0);
+        assertEquals(1.0F, tournament.getRoundRobinPointsForMatchTie(), 0);
+        assertFalse(tournament.getAcceptAttachments());
+        assertFalse(tournament.getHideForum());
+        assertFalse(tournament.getShowRounds());
+        assertFalse(tournament.getPrivateOnly());
+        assertFalse(tournament.getNotifyUsersWhenMatchesOpen());
+        assertFalse(tournament.getNotifyUsersWhenTheTournamentEnds());
+        assertFalse(tournament.getSequentialPairings());
+        assertFalse(tournament.getHoldThirdPlaceMatch());
+        assertFalse(tournament.getOpenSignup());
+        assertEquals(2.5F, tournament.getPointsForMatchWin(), 0);
+        assertEquals(1.0F, tournament.getPointsForMatchTie(), 0);
+        assertEquals(1.5F, tournament.getPointsForGameWin(), 0);
+        assertEquals(1.0F, tournament.getPointsForGameTie(), 0);
+        assertEquals(1.5F, tournament.getPointsForBye(), 0);
+        assertEquals(RankedBy.GAME_WINS, tournament.getRankedBy());
+        assertEquals(10L, (long) tournament.getCheckInDuration());
+        assertEquals(GrandFinalsModifier.SKIP, tournament.getGrandFinalsModifier());
     }
 
     @Test
-    public final void dProcessCheckIns() throws DataAccessException {
+    public final void testCheckIns() throws DataAccessException {
         OffsetDateTime start = OffsetDateTime.now().plusMinutes(5L);
         TournamentQuery tournamentQuery = TournamentQuery.builder().startAt(start).checkInDuration(10L).build();
 
-        Tournament t = this.challonge.getTournament(this.tournamentUrl);
-        this.challonge.updateTournament(t, tournamentQuery);
+        this.challonge.updateTournament(this.tournament, tournamentQuery);
 
-        List<Participant> participants = this.challonge.bulkAddParticipants(t,
+        List<Participant> added = this.challonge.bulkAddParticipants(this.tournament,
                 Arrays.asList(ParticipantQuery.builder().name("User1").build(),
                         ParticipantQuery.builder().name("User2").build()));
 
-        Participant participant1 = participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
-        Participant participant2 = participants.stream().filter(p -> p.getName().equals("User2")).findFirst().get();
+        Participant p1BeforeProcess = getParticipant(added, "User1");
+        Participant p2BeforeProcess = getParticipant(added, "User2");
 
-        assertEquals(1, (int) participant1.getSeed());
+        assertTrue(p1BeforeProcess.getCheckedIn());
+        assertTrue(p2BeforeProcess.getCheckedIn());
 
+        Participant p1AfterCheckOut = this.challonge.undoCheckInParticipant(p1BeforeProcess);
 
-        assertEquals(2, (int) participant2.getSeed());
+        assertFalse(p1AfterCheckOut.getCheckedIn());
 
-        this.challonge.checkInParticipant(participant2);
+        this.challonge.checkInParticipant(p2BeforeProcess);
 
-        Tournament processed = this.challonge.processCheckIns(t, true, false);
+        Tournament processed = this.challonge.processCheckIns(this.tournament, true, false);
+
         assertEquals(TournamentState.CHECKED_IN, processed.getState());
-    }
 
-    @Test
-    public final void eAbortCheckIns() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(this.tournamentUrl);
-        Tournament aborted = this.challonge.abortCheckIn(t, true, false);
+        Participant p1AfterProcess = getParticipant(processed.getParticipants(), "User1");
+        Participant p2AfterProcess = getParticipant(processed.getParticipants(), "User2");
 
-        List<Participant> participants = aborted.getParticipants();
+        assertFalse(p1AfterProcess.getActive());
+        assertTrue(p2AfterProcess.getCheckedIn());
+        assertTrue(p2AfterProcess.getActive());
 
-        Participant participant1 = participants.stream().filter(p -> p.getName().equals("User1")).findFirst().get();
-        Participant participant2 = participants.stream().filter(p -> p.getName().equals("User2")).findFirst().get();
+        Tournament aborted = this.challonge.abortCheckIn(this.tournament, true, false);
 
-        assertNull(participant1.getCheckedInAt());
-        assertNull(participant2.getCheckedInAt());
+        Participant p1AfterAbort = getParticipant(aborted.getParticipants(), "User1");
+        Participant p2AfterAbort = getParticipant(aborted.getParticipants(), "User2");
+
+        assertNull(p1AfterAbort.getCheckedInAt());
+        assertNull(p2AfterAbort.getCheckedInAt());
         assertEquals(TournamentState.PENDING, aborted.getState());
     }
 
     @Test
-    public final void fStartTournament() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(this.tournamentUrl);
-        Tournament startedTournament = this.challonge.startTournament(t, true, false);
+    public final void testStartAndFinalizeTournament() throws DataAccessException {
+        List<Participant> participants = this.challonge.bulkAddParticipants(this.tournament, Arrays.asList(
+                ParticipantQuery.builder().name("User1").build(),
+                ParticipantQuery.builder().name("User2").build()));
+
+        Tournament startedTournament = this.challonge.startTournament(this.tournament, true, true);
 
         assertEquals(2, startedTournament.getParticipants().size());
         assertEquals(TournamentState.UNDERWAY, startedTournament.getState());
-    }
 
-    @Test
-    public final void gFinalizeTournament() throws DataAccessException {
-        Tournament tournament = this.challonge.getTournament(this.tournamentUrl, true, true);
-        Participant user1 = tournament.getParticipants().stream().filter(p -> p.getName().equals("User1")).findFirst().get();
-        MatchQuery query = MatchQuery.builder().winnerId(user1.getId()).scoresCsv("1-3,3-0,3-2").build();
-        Match toUpdate = tournament.getMatches().get(0);
+        Participant user1 = getParticipant(participants, "User1");
+        Participant user2 = getParticipant(participants, "User2");
 
-        Match match = this.challonge.updateMatch(toUpdate, query);
-        assertEquals("1-3,3-0,3-2", match.getScoresCsv());
+        MatchQuery query1 = MatchQuery.builder().winnerId(user1.getId()).scoresCsv("1-3,3-0,3-2").build();
+        this.challonge.updateMatch(startedTournament.getMatches().get(0), query1);
 
-        Tournament finalizedTournament = this.challonge.finalizeTournament(tournament, true, true);
+        MatchQuery query2 = MatchQuery.builder().winnerId(user2.getId()).scoresCsv("3-4,3-1,4-2").build();
+        this.challonge.updateMatch(startedTournament.getMatches().get(1), query2);
+
+        MatchQuery query3 = MatchQuery.builder().winnerId(user1.getId()).scoresCsv("0-3,3-0,3-0").build();
+        this.challonge.updateMatch(startedTournament.getMatches().get(2), query3);
+
+        Tournament finalizedTournament = this.challonge.finalizeTournament(this.tournament, true, true);
         assertEquals(TournamentState.COMPLETE, finalizedTournament.getState());
     }
 
     @Test
-    public final void hResetTournament() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(this.tournamentUrl);
-        Tournament tournament = this.challonge.resetTournament(t, true, true);
+    public final void testResetTournament() throws DataAccessException {
+        this.challonge.bulkAddParticipants(this.tournament, Arrays.asList(
+                ParticipantQuery.builder().name("User1").build(),
+                ParticipantQuery.builder().name("User2").build()));
+
+        Tournament started = this.challonge.startTournament(this.tournament, true, true);
+
+        assertEquals(3, started.getMatches().size());
+
+        Tournament tournament = this.challonge.resetTournament(this.tournament, true, true);
 
         assertEquals(tournament.getState(), TournamentState.PENDING);
+        assertEquals(0, tournament.getMatches().size());
     }
 
     @Test
-    public final void iGetTournaments() throws DataAccessException {
+    public final void testGetTournaments() throws DataAccessException {
         Optional<Tournament> optional = this.challonge.getTournaments().stream()
-                .filter(t -> t.getUrl().equals(this.tournamentUrl)).findFirst();
+                .filter(t -> t.getUrl().equals(this.tournament.getUrl())).findFirst();
 
         assertTrue(optional.isPresent());
     }
 
     @Test(expected = DataAccessException.class)
-    public final void zDeleteTournamentTest() throws DataAccessException {
-        Tournament t = this.challonge.getTournament(this.tournamentUrl);
-        Tournament tournament = this.challonge.deleteTournament(t);
+    public final void testDeleteTournament() throws DataAccessException {
+        Tournament tournament = this.challonge.deleteTournament(this.tournament);
 
-        assertEquals(tournament.getName(), "JavaApiTest");
+        assertEquals(this.tournament.getName(), tournament.getName());
 
         // check if the tournament is still there
         this.challonge.getTournament(this.tournamentUrl, false, false);
+    }
+
+    @After
+    public void tearDown() {
+        try {
+            this.challonge.deleteTournament(this.tournament);
+        } catch (DataAccessException ignored) {
+        }
+    }
+
+    private Participant getParticipant(List<Participant> list, String name) {
+        return list.stream().filter(p -> p.getName().equals(name)).findFirst().orElse(null);
     }
 }

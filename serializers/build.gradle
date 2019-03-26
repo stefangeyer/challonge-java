@@ -3,5 +3,9 @@ allprojects {
 }
 
 task localPublish {
-    dependsOn('gson:publishToMavenLocal')
+    dependsOn('gson:localPublish')
+}
+
+task remotePublish {
+    dependsOn('gson:remotePublish')
 }

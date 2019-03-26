@@ -16,11 +16,18 @@ task delombok(type: DelombokTask, dependsOn: compileJava) {
     }
 }
 
+task localPublish {
+    dependsOn('publishToMavenLocal')
+}
+
+task remotePublish {
+    dependsOn('publish')
+}
+
 javadoc {
     dependsOn delombok
     source = delombok.outputDir
     failOnError = false
-    options.addBooleanOption('html5', true)
 }
 
 publishing {

@@ -8,6 +8,7 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
+    apply plugin: 'signing'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -27,7 +28,9 @@ subprojects {
     }
 
     javadoc {
-        options.addBooleanOption('html5', true)
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
     }
 
     task sourcesJar(type: Jar) {
@@ -41,6 +44,14 @@ subprojects {
     }
 
     publishing {
+        repositories {
+            maven {
+                def releasesRepoUrl = "$buildDir/repos/releases"
+                def snapshotsRepoUrl = "$buildDir/repos/snapshots"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            }
+        }
+
         publications {
             mavenJava(MavenPublication) {
                 afterEvaluate {
@@ -79,12 +90,22 @@ subprojects {
             }
         }
     }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
 }
 
 task localPublish {
-    dependsOn('core:publishToMavenLocal')
+    dependsOn('core:localPublish')
     dependsOn('serializers:localPublish')
     dependsOn('rest:localPublish')
+}
+
+task remotePublish {
+    dependsOn('core:remotePublish')
+    dependsOn('serializers:remotePublish')
+    dependsOn('rest:remotePublish')
 }
 
 task codeCoverageReport(type: JacocoReport) {

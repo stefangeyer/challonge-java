@@ -3,5 +3,9 @@ allprojects {
 }
 
 task localPublish {
-    dependsOn('retrofit:publishToMavenLocal')
+    dependsOn('retrofit:localPublish')
+}
+
+task remotePublish {
+    dependsOn('retrofit:remotePublish')
 }

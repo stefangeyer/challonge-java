@@ -5,10 +5,6 @@ dependencies {
     testCompile group: 'com.squareup.retrofit2', name: 'retrofit-mock', version: property('retrofit.mock.version')
 }
 
-javadoc {
-    options.addBooleanOption('html5', true)
-}
-
 publishing {
     publications {
         mavenJava {
@@ -18,4 +14,12 @@ publishing {
             }
         }
     }
+}
+
+task localPublish {
+    dependsOn('publishToMavenLocal')
+}
+
+task remotePublish {
+    dependsOn('publish')
 }

@@ -1,3 +1,7 @@
 allprojects {
     group 'at.stefangeyer.challonge.rest'
 }
+
+task localPublish {
+    dependsOn('retrofit:publishToMavenLocal')
+}

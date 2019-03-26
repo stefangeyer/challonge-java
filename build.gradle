@@ -81,6 +81,12 @@ subprojects {
     }
 }
 
+task localPublish {
+    dependsOn('core:publishToMavenLocal')
+    dependsOn('serializers:localPublish')
+    dependsOn('rest:localPublish')
+}
+
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 

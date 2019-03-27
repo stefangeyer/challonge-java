@@ -25,19 +25,16 @@ compile group: 'at.stefangeyer.challonge', name: 'core', version: '2.0'
 </dependency>
 ```
 
-<!---
-The main differences between this project and it's previous version are the following:
-- Removal of all unnecessary dependencies
-- Modularization to allow multiple implementations of certain components
-- Usage of Kotlin to make use of it's language features such as default parameter arguments
--->
-
 ## modules
 
 This project is split up in the modules core, rest and serializers. While core contains
 the main functionality and interfaces for the rest and serializer package, the latter contains all available 
 implementations of their respective interfaces. Rest and serializers contain all implementations of the core module's interfaces `Serializer` 
 and `RestClient`. Additional implementations may follow in the future.
+
+## examples
+
+Check the [wiki](https://github.com/stefangeyer/challonge-java/wiki) for instructions on how get started.
 
 ### serializers
 

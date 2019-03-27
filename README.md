@@ -25,16 +25,16 @@ compile group: 'at.stefangeyer.challonge', name: 'core', version: '2.0'
 </dependency>
 ```
 
+## examples
+
+Check the [wiki](https://github.com/stefangeyer/challonge-java/wiki) for instructions on how get started.
+
 ## modules
 
 This project is split up in the modules core, rest and serializers. While core contains
 the main functionality and interfaces for the rest and serializer package, the latter contains all available 
 implementations of their respective interfaces. Rest and serializers contain all implementations of the core module's interfaces `Serializer` 
 and `RestClient`. Additional implementations may follow in the future.
-
-## examples
-
-Check the [wiki](https://github.com/stefangeyer/challonge-java/wiki) for instructions on how get started.
 
 ### serializers
 

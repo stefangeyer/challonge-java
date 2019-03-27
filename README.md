@@ -12,7 +12,7 @@ Released under the MIT license.
 ## gradle
 
 ```groovy
-compile group: 'at.stefangeyer.challonge', name: 'core', version: '2.0'
+implementation group: 'at.stefangeyer.challonge', name: 'core', version: '2.0'
 ```
 
 ## maven

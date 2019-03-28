@@ -44,5 +44,5 @@ public class TournamentQuery {
     private Long checkInDuration;
     private GrandFinalsModifier grandFinalsModifier;
     private List<String> tieBreaks;
-
+    private String gameName;
 }

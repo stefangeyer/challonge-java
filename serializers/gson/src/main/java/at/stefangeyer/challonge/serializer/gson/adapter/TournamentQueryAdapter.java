@@ -134,6 +134,10 @@ public class TournamentQueryAdapter implements JsonSerializer<TournamentQuery> {
             entity.add("tie_breaks", context.serialize(src.getTieBreaks()));
         }
 
+        if (src.getGameName() != null) {
+            entity.add("game_name", context.serialize(src.getGameName()));
+        }
+
         return entity;
     }
 }

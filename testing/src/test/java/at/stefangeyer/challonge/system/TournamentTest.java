@@ -64,7 +64,7 @@ public class TournamentTest {
                 .roundRobinPointsForMatchWin(5.0F).roundRobinPointsForMatchTie(2.0F).acceptAttachments(true)
                 .hideForum(true).showRounds(true).privateOnly(true).notifyUsersWhenMatchesOpen(true)
                 .notifyUsersWhenTheTournamentEnds(true).sequentialPairings(true).startAt(dt).checkInDuration(5L)
-                .grandFinalsModifier(GrandFinalsModifier.SINGLE_MATCH).build();
+                .grandFinalsModifier(GrandFinalsModifier.SINGLE_MATCH).gameName("Some Game").build();
 
         this.tournament = this.challonge.createTournament(query);
     }
@@ -97,6 +97,7 @@ public class TournamentTest {
         assertEquals(4, (int) this.tournament.getSignupCap());
         assertEquals(RankedBy.MATCH_WINS, this.tournament.getRankedBy());
         assertEquals(5L, (long) this.tournament.getCheckInDuration());
+        assertEquals("Some Game", this.tournament.getGameName());
         assertEquals(GrandFinalsModifier.SINGLE_MATCH, this.tournament.getGrandFinalsModifier());
     }
 

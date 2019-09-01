@@ -27,7 +27,7 @@ public class RetrofitTournamentTest {
 
     private MockChallongeRetrofit challongeRetrofit = MockChallongeRetrofitFactory.create();
 
-    private RetrofitTournamentRestClient tournamentRestClient = new RetrofitTournamentRestClient(challongeRetrofit);
+    private RetrofitRestClient tournamentRestClient = new RetrofitRestClient(challongeRetrofit, false);
 
     @Test
     public void testGetTournaments() throws DataAccessException {

@@ -150,8 +150,6 @@ public class MatchTest {
 
         RestClient restClient = mock(RestClient.class);
 
-        when(restClient.createMatchRestClient()).thenReturn(mrc);
-
         Serializer serializer = mock(Serializer.class);
 
         this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);

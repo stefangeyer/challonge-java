@@ -28,7 +28,7 @@ public class RetrofitParticipantTest {
 
     private MockChallongeRetrofit challongeRetrofit = MockChallongeRetrofitFactory.create();
 
-    private RetrofitParticipantRestClient participantRestClient = new RetrofitParticipantRestClient(this.challongeRetrofit);
+    private RetrofitRestClient participantRestClient = new RetrofitRestClient(challongeRetrofit, false);
 
     @Test
     public void testGetParticipants() throws DataAccessException {

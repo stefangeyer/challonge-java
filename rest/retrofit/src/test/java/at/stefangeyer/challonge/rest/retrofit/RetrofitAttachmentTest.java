@@ -28,7 +28,7 @@ public class RetrofitAttachmentTest {
 
     private MockChallongeRetrofit challongeRetrofit = MockChallongeRetrofitFactory.create();
 
-    private RetrofitAttachmentRestClient attachmentRestClient = new RetrofitAttachmentRestClient(this.challongeRetrofit);
+    private RetrofitRestClient attachmentRestClient = new RetrofitRestClient(challongeRetrofit, false);
 
     @Test
     public void testGetAttachments() throws DataAccessException {

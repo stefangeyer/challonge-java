@@ -24,7 +24,7 @@ public class RetrofitMatchTest {
 
     private MockChallongeRetrofit challongeRetrofit = MockChallongeRetrofitFactory.create();
 
-    private RetrofitMatchRestClient matchRestClient = new RetrofitMatchRestClient(this.challongeRetrofit);
+    private RetrofitRestClient matchRestClient = new RetrofitRestClient(challongeRetrofit, false);
 
     private Tournament get(String key) {
         return this.challongeRetrofit.getTournaments().stream()

@@ -246,8 +246,6 @@ public class ParticipantTest {
 
         RestClient restClient = mock(RestClient.class);
 
-        when(restClient.createParticipantRestClient()).thenReturn(prc);
-
         Serializer serializer = mock(Serializer.class);
 
         this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);

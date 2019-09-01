@@ -353,8 +353,6 @@ public class TournamentTest {
 
         RestClient restClient = mock(RestClient.class);
 
-        when(restClient.createTournamentRestClient()).thenReturn(trc);
-
         this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);
     }
 

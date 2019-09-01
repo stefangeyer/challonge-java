@@ -153,8 +153,6 @@ public class AttachmentTest {
 
         RestClient restClient = mock(RestClient.class);
 
-        when(restClient.createAttachmentRestClient()).thenReturn(arc);
-
         Serializer serializer = mock(Serializer.class);
 
         this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);

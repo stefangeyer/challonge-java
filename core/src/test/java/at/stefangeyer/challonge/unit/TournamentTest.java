@@ -14,7 +14,6 @@ import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
 import at.stefangeyer.challonge.model.query.wrapper.TournamentQueryWrapper;
 import at.stefangeyer.challonge.model.wrapper.TournamentWrapper;
 import at.stefangeyer.challonge.rest.RestClient;
-import at.stefangeyer.challonge.rest.TournamentRestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
@@ -59,7 +58,7 @@ public class TournamentTest {
                     .matches(new ArrayList<>()).build()));
 
     public TournamentTest() throws DataAccessException {
-        TournamentRestClient trc = mock(TournamentRestClient.class);
+        RestClient trc = mock(RestClient.class);
 
         when(trc.getTournaments(any(), any(), any(), any(), any())).thenAnswer(i -> this.tournaments.stream()
                 .filter(t -> i.getArgument(0) == null || t.getState().equals(i.getArgument(0)))
@@ -351,9 +350,7 @@ public class TournamentTest {
 
         Serializer serializer = mock(Serializer.class);
 
-        RestClient restClient = mock(RestClient.class);
-
-        this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);
+        this.challonge = new Challonge(new Credentials("", ""), serializer, trc);
     }
 
     private Tournament getTournament(String key) throws DataAccessException {

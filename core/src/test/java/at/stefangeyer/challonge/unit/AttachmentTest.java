@@ -7,7 +7,6 @@ import at.stefangeyer.challonge.model.*;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.AttachmentQuery;
 import at.stefangeyer.challonge.model.wrapper.AttachmentWrapper;
-import at.stefangeyer.challonge.rest.AttachmentRestClient;
 import at.stefangeyer.challonge.rest.RestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
@@ -48,7 +47,7 @@ public class AttachmentTest {
             .build();
 
     public AttachmentTest() throws DataAccessException {
-        AttachmentRestClient arc = mock(AttachmentRestClient.class);
+        RestClient arc = mock(RestClient.class);
 
         when(arc.getAttachments(any(), anyLong())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
@@ -151,11 +150,9 @@ public class AttachmentTest {
             return null;
         }).when(arc).deleteAttachment(any(), anyLong(), anyLong(), any(), any());
 
-        RestClient restClient = mock(RestClient.class);
-
         Serializer serializer = mock(Serializer.class);
 
-        this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);
+        this.challonge = new Challonge(new Credentials("", ""), serializer, arc);
     }
 
     private Tournament getTournament(String key) {

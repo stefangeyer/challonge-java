@@ -12,7 +12,6 @@ import at.stefangeyer.challonge.model.query.ParticipantQuery;
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryListWrapper;
 import at.stefangeyer.challonge.model.query.wrapper.ParticipantQueryWrapper;
 import at.stefangeyer.challonge.model.wrapper.ParticipantWrapper;
-import at.stefangeyer.challonge.rest.ParticipantRestClient;
 import at.stefangeyer.challonge.rest.RestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class ParticipantTest {
             ))).build();
 
     public ParticipantTest() throws DataAccessException {
-        ParticipantRestClient prc = mock(ParticipantRestClient.class);
+        RestClient prc = mock(RestClient.class);
 
         when(prc.getParticipants(any())).thenAnswer(
                 i -> this.tournament.getParticipants().stream().map(ParticipantWrapper::new).collect(Collectors.toList()));
@@ -244,11 +243,9 @@ public class ParticipantTest {
             return null;
         }).when(prc).randomizeParticipants(any(), any(), any());
 
-        RestClient restClient = mock(RestClient.class);
-
         Serializer serializer = mock(Serializer.class);
 
-        this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);
+        this.challonge = new Challonge(new Credentials("", ""), serializer, prc);
     }
 
     private Participant getParticipant(String tournament, long id) throws DataAccessException {

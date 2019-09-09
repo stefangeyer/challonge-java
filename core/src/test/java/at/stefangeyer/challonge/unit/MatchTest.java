@@ -9,7 +9,6 @@ import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.MatchQuery;
 import at.stefangeyer.challonge.model.query.wrapper.MatchQueryWrapper;
 import at.stefangeyer.challonge.model.wrapper.MatchWrapper;
-import at.stefangeyer.challonge.rest.MatchRestClient;
 import at.stefangeyer.challonge.rest.RestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
@@ -52,7 +51,7 @@ public class MatchTest {
             ))).build();
 
     public MatchTest() throws DataAccessException {
-        MatchRestClient mrc = mock(MatchRestClient.class);
+        RestClient mrc = mock(RestClient.class);
 
         when(mrc.getMatches(any(), any(), any())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
@@ -148,11 +147,9 @@ public class MatchTest {
             return null;
         }).when(mrc).reopenMatch(any(), anyLong(), any(), any());
 
-        RestClient restClient = mock(RestClient.class);
-
         Serializer serializer = mock(Serializer.class);
 
-        this.challonge = new Challonge(new Credentials("", ""), serializer, restClient);
+        this.challonge = new Challonge(new Credentials("", ""), serializer, mrc);
     }
 
     private Tournament getTournament(String key) {

@@ -3,6 +3,7 @@ package at.stefangeyer.challonge.model.enumeration;
 public enum TournamentState {
     CHECKING_IN("checking_in"),
     CHECKED_IN("checked_in"),
+    ACCEPTING_PREDICTIONS("accepting_predictions"),
     PENDING("pending"),
     UNDERWAY("underway"),
     GROUP_STAGES_UNDERWAY("group_stages_underway"),

@@ -49,6 +49,7 @@ public class RetrofitRestClient implements RestClient, Closeable {
      * for more information.
      *
      * @param useHttp2 use HTTP 2 or HTTP 1.1
+     * @param challongeRetrofit The retrofit implementation to use. Can be null if initialized via @{link {@link #initialize(Credentials, Serializer)}}
      */
     public RetrofitRestClient(ChallongeRetrofit challongeRetrofit, boolean useHttp2) {
         this.challongeRetrofit = challongeRetrofit;
@@ -57,6 +58,8 @@ public class RetrofitRestClient implements RestClient, Closeable {
 
     /**
      * Create a Retrofit rest client using the default implementation
+     *
+     * @param useHttp2 use HTTP 2 or HTTP 1.1
      */
     public RetrofitRestClient(boolean useHttp2) {
         this(null, useHttp2);

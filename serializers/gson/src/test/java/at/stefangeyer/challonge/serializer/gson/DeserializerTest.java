@@ -13,11 +13,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static at.stefangeyer.challonge.model.enumeration.TieBreak.GAME_WINS;
-import static at.stefangeyer.challonge.model.enumeration.TieBreak.MATCH_WINS_VS_TIED;
-import static at.stefangeyer.challonge.model.enumeration.TieBreak.POINTS_SCORED;
+import static at.stefangeyer.challonge.model.enumeration.TieBreak.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class DeserializerTest {
     private final Tournament tournament = Tournament.builder().
@@ -42,15 +41,18 @@ public class DeserializerTest {
             groupStagesWereStarted(false).participants(Arrays.asList(
             Participant.builder().id(1L).tournamentId(12345L).name("P1").misc("ABC").seed(3)
                     .active(true).checkedInAt(null).onWaitingList(false).removable(true)
+                    .displayName("display name").checkInOpen(true).hasIrrelevantSeed(true)
                     .participatableOrInvitationAttached(false).confirmRemove(true).invitationPending(false)
                     .canCheckIn(false).checkedIn(false).reactivatable(false).build(),
             Participant.builder().id(2L).tournamentId(12345L).name("P2").misc("DEF").seed(4)
                     .active(true).checkedInAt(null).onWaitingList(false).removable(true)
+                    .displayName("display name").checkInOpen(true).hasIrrelevantSeed(true)
                     .participatableOrInvitationAttached(false).confirmRemove(true).invitationPending(false)
                     .canCheckIn(false).checkedIn(false).reactivatable(false).build())).matches(Collections.singletonList(
             Match.builder().id(1L).tournamentId(12345L).hasAttachment(false).player1IsPrerequisiteMatchLoser(false).
                     player2IsPrerequisiteMatchLoser(false).round(2).build())).
             matches(Collections.singletonList(Match.builder().id(1L).tournamentId(12345L).hasAttachment(false).player1IsPrerequisiteMatchLoser(false).
+                    completedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).optional(true).forfeited(true).
                     player2IsPrerequisiteMatchLoser(false).round(2).state(MatchState.OPEN).build())).
             build();
 
@@ -58,6 +60,7 @@ public class DeserializerTest {
             createdAt(OffsetDateTime.parse("2015-01-19T16:54:40-05:00")).finalRank(null).groupId(null).
             icon(null).id(16543993L).invitationId(null).inviteEmail(null).misc(null).name("Participant #1").
             onWaitingList(false).seed(1).tournamentId(1086875L).
+            displayName("display name").checkInOpen(true).hasIrrelevantSeed(true).
             updatedAt(OffsetDateTime.parse("2015-01-19T16:54:40-05:00")).challongeUsername(null).
             challongeEmailAddressVerified(null).removable(true).participatableOrInvitationAttached(false).
             confirmRemove(true).invitationPending(false).displayNameWithInvitationEmailAddress("Participant #1").
@@ -71,6 +74,7 @@ public class DeserializerTest {
             player2Id(16543997L).player2IsPrerequisiteMatchLoser(false).player2PrerequisiteMatchId(null).
             player2Votes(null).round(1).scheduledTime(null).startedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).
             state(MatchState.OPEN).tournamentId(1086875L).underwayAt(null).
+            completedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).optional(true).forfeited(true).
             updatedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).winnerId(null).prerequisiteMatchIdsCsv("").
             scoresCsv("").build();
 
@@ -109,13 +113,16 @@ public class DeserializerTest {
                 "\"game_name\":\"Table Tennis\",\"participants_swappable\":false,\"team_convertable\":false," +
                 "\"group_stages_were_started\":false,\"participants\":[{\"participant\":{\"id\":1,\"tournament_id\":12345," +
                 "\"name\":\"P1\",\"seed\":3,\"misc\":\"ABC\",\"active\":true,\"on_waiting_list\":false,\"removable\":true," +
+                "\"display_name\": \"display name\", \"check_in_open\": true, \"has_irrelevant_seed\": true," +
                 "\"participatable_or_invitation_attached\":false,\"confirm_remove\":true,\"invitation_pending\":false," +
                 "\"can_check_in\":false,\"checked_in\":false,\"reactivatable\":false}},{\"participant\":{\"id\":2," +
                 "\"tournament_id\":12345,\"name\":\"P2\",\"seed\":4,\"misc\":\"DEF\",\"active\":true,\"active\":true," +
+                "\"display_name\": \"display name\", \"check_in_open\": true, \"has_irrelevant_seed\": true," +
                 "\"on_waiting_list\":false,\"removable\":true,\"participatable_or_invitation_attached\":false," +
                 "\"confirm_remove\":true,\"invitation_pending\":false,\"can_check_in\":false,\"checked_in\":false," +
                 "\"reactivatable\":false}}],\"matches\":[{\"match\":{\"id\":1,\"tournament_id\":12345," +
                 "\"has_attachment\":false,\"player1_is_prereq_match_loser\":false," +
+                "\"completed_at\":\"2015-01-19T16:57:17-05:00\", \"optional\": true, \"forfeited\": true," +
                 "\"player2_is_prereq_match_loser\":false,\"round\":2,\"state\":\"open\"}}]}";
 
         Tournament tournament = this.serializer.deserialize(tournamentString, Tournament.class);
@@ -201,6 +208,7 @@ public class DeserializerTest {
     public void testParticipantDeserialization() {
         String participantString = "{\"participant\":{\"active\":true,\"checked_in_at\":null," +
                 "\"created_at\":\"2015-01-19T16:54:40-05:00\",\"final_rank\":null,\"group_id\":null,\"icon\":null," +
+                "\"display_name\": \"display name\", \"check_in_open\": true, \"has_irrelevant_seed\": true," +
                 "\"id\":16543993,\"invitation_id\":null,\"invite_email\":null,\"misc\":null,\"name\":\"Participant #1\"," +
                 "\"on_waiting_list\":false,\"seed\":1,\"tournament_id\":1086875,\"updated_at\":\"2015-01-19T16:54:40-05:00\"," +
                 "\"challonge_username\":null,\"challonge_email_address_verified\":null,\"removable\":true," +
@@ -214,6 +222,9 @@ public class DeserializerTest {
         OffsetDateTime created = OffsetDateTime.parse("2015-01-19T16:54:40-05:00");
         OffsetDateTime updated = OffsetDateTime.parse("2015-01-19T16:54:40-05:00");
 
+        assertEquals("display name", participant.getDisplayName());
+        assertEquals(true, participant.getCheckInOpen());
+        assertEquals(true, participant.getHasIrrelevantSeed());
         assertEquals(true, participant.getActive());
         assertNull(participant.getCheckedInAt());
         assertEquals(created, participant.getCreatedAt());
@@ -255,6 +266,7 @@ public class DeserializerTest {
                 "\"player2_is_prereq_match_loser\":false,\"player2_prereq_match_id\":null,\"player2_votes\":null," +
                 "\"round\":1,\"scheduled_time\":null,\"started_at\":\"2015-01-19T16:57:17-05:00\",\"state\":\"open\"," +
                 "\"tournament_id\":1086875,\"underway_at\":null,\"updated_at\":\"2015-01-19T16:57:17-05:00\"," +
+                "\"completed_at\":\"2015-01-19T16:57:17-05:00\", \"optional\": true, \"forfeited\": true," +
                 "\"winner_id\":null,\"prerequisite_match_ids_csv\":\"\",\"scores_csv\":\"\"}}";
 
         Match match = this.serializer.deserialize(matchString, Match.class);
@@ -262,7 +274,11 @@ public class DeserializerTest {
         OffsetDateTime created = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
         OffsetDateTime started = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
         OffsetDateTime updated = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
+        OffsetDateTime completed = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
 
+        assertEquals(completed, match.getCompletedAt());
+        assertTrue(match.getOptional());
+        assertTrue(match.getForfeited());
         assertNull(match.getAttachmentCount());
         assertEquals(created, match.getCreatedAt());
         assertNull(match.getGroupId());

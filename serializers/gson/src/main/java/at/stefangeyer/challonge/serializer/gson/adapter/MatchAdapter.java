@@ -53,6 +53,9 @@ public class MatchAdapter implements JsonDeserializer<Match> {
         int round = e.get("round").getAsInt();
         OffsetDateTime scheduledTime = context.deserialize(e.get("scheduled_time"), OffsetDateTime.class);
         OffsetDateTime underwayAt = context.deserialize(e.get("underway_at"), OffsetDateTime.class);
+        OffsetDateTime completedAt = context.deserialize(e.get("completed_at"), OffsetDateTime.class);
+        Boolean optional = e.get("optional").getAsBoolean();
+        Boolean forfeited = e.get("forfeited").getAsBoolean();
         List<Attachment> attachments = context.deserialize(e.get("attachments"), new TypeToken<List<Attachment>>() {
         }.getType());
 
@@ -65,6 +68,7 @@ public class MatchAdapter implements JsonDeserializer<Match> {
                 .player2IsPrerequisiteMatchLoser(player2IsPrerequisiteMatchLoser)
                 .player2PrerequisiteMatchId(player2PrerequisiteMatchId).player2Votes(player2Votes)
                 .prerequisiteMatchIdsCsv(prerequisiteMatchIdsCsv).round(round).scheduledTime(scheduledTime)
+                .completedAt(completedAt).optional(optional).forfeited(forfeited)
                 .underwayAt(underwayAt).attachments(attachments).build();
     }
 

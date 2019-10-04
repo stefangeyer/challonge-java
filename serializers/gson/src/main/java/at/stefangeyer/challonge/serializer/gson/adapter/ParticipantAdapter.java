@@ -53,6 +53,9 @@ public class ParticipantAdapter implements JsonDeserializer<Participant> {
         boolean participatableOrInvitationAttached = e.get("participatable_or_invitation_attached").getAsBoolean();
         boolean reactivatable = e.get("reactivatable").getAsBoolean();
         boolean removable = e.get("removable").getAsBoolean();
+        String displayName = e.get("display_name").getAsString();
+        Boolean checkInOpen = e.get("check_in_open").getAsBoolean();
+        Boolean hasIrrelevantSeed = e.get("has_irrelevant_seed").getAsBoolean();
         String username = getOrNull(e, "username") != null ? getOrNull(e, "username").getAsString() : null;
         List<Match> matches = context.deserialize(e.get("matches"), new TypeToken<List<Match>>() {
         }.getType());
@@ -66,6 +69,7 @@ public class ParticipantAdapter implements JsonDeserializer<Participant> {
                 .checkedInAt(checkedInAt).confirmRemove(confirmRemove).emailHash(emailHash).finalRank(finalRank)
                 .icon(icon).invitationId(invitationId).invitationPending(invitationPending).onWaitingList(onWaitingList)
                 .participatableOrInvitationAttached(participatableOrInvitationAttached).reactivatable(reactivatable)
+                .displayName(displayName).checkInOpen(checkInOpen).hasIrrelevantSeed(hasIrrelevantSeed)
                 .removable(removable).username(username).matches(matches).build();
     }
 

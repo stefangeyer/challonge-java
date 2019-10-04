@@ -14,6 +14,9 @@ public class Participant {
     private Long id;
     private Long tournamentId;
     private String name;
+    private String displayName;
+    private Boolean checkInOpen;
+    private Boolean hasIrrelevantSeed;
     private String challongeUsername;
     private Integer seed;
     private String misc;

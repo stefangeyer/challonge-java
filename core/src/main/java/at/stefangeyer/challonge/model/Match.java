@@ -36,7 +36,10 @@ public class Match {
     private MatchState state;
     private OffsetDateTime underwayAt;
     private OffsetDateTime updatedAt;
+    private OffsetDateTime completedAt;
     private String prerequisiteMatchIdsCsv;
     private String scoresCsv;
+    private Boolean optional;
+    private Boolean forfeited;
     private List<Attachment> attachments;
 }

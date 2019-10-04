@@ -1,6 +1,7 @@
 package at.stefangeyer.challonge.serializer.gson;
 
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
+import at.stefangeyer.challonge.model.enumeration.TieBreak;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.AttachmentQuery;
 import at.stefangeyer.challonge.model.query.MatchQuery;
@@ -25,7 +26,7 @@ public class SerializerTest {
             .pointsForGameTie(1F).pointsForBye(1F).swissRounds(2).rankedBy(RankedBy.GAME_WINS).roundRobinPointsForGameWin(2F)
             .roundRobinPointsForGameTie(1F).roundRobinPointsForMatchTie(1F).roundRobinPointsForMatchWin(1F).showRounds(false)
             .privateOnly(false).notifyUsersWhenMatchesOpen(false).notifyUsersWhenTheTournamentEnds(true).sequentialPairings(true)
-            .signupCap(2).tieBreaks(Collections.singletonList("game wins")).build();
+            .signupCap(2).tieBreaks(Collections.singletonList(TieBreak.GAME_WINS)).build();
 
     private final ParticipantQuery participantQuery = ParticipantQuery.builder()
             .challongeUsername("EXSolo").email("exsolo@mail.com").inviteNameOrEmail("EXSolo")

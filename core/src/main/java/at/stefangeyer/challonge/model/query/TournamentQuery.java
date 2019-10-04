@@ -1,6 +1,7 @@
 package at.stefangeyer.challonge.model.query;
 
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
+import at.stefangeyer.challonge.model.enumeration.TieBreak;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
 import lombok.Builder;
@@ -43,6 +44,6 @@ public class TournamentQuery {
     private OffsetDateTime startAt;
     private Long checkInDuration;
     private GrandFinalsModifier grandFinalsModifier;
-    private List<String> tieBreaks;
+    private List<TieBreak> tieBreaks;
     private String gameName;
 }

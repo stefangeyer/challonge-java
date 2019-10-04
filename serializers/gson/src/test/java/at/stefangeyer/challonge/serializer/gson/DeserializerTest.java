@@ -4,10 +4,7 @@ import at.stefangeyer.challonge.model.Attachment;
 import at.stefangeyer.challonge.model.Match;
 import at.stefangeyer.challonge.model.Participant;
 import at.stefangeyer.challonge.model.Tournament;
-import at.stefangeyer.challonge.model.enumeration.MatchState;
-import at.stefangeyer.challonge.model.enumeration.RankedBy;
-import at.stefangeyer.challonge.model.enumeration.TournamentState;
-import at.stefangeyer.challonge.model.enumeration.TournamentType;
+import at.stefangeyer.challonge.model.enumeration.*;
 import com.google.gson.JsonParseException;
 import org.junit.Test;
 
@@ -16,11 +13,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static at.stefangeyer.challonge.model.enumeration.TieBreak.GAME_WINS;
+import static at.stefangeyer.challonge.model.enumeration.TieBreak.MATCH_WINS_VS_TIED;
+import static at.stefangeyer.challonge.model.enumeration.TieBreak.POINTS_SCORED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class DeserializerTest {
-
     private final Tournament tournament = Tournament.builder().
             acceptAttachments(true).allowParticipantMatchReporting(true).anonymousVoting(true).category("ABC").
             checkInDuration(null).completedAt(null).createdAt(OffsetDateTime.parse("2015-01-19T16:47:30-05:00")).
@@ -33,8 +32,9 @@ public class DeserializerTest {
             roundRobinPointsForGameTie(0.0F).roundRobinPointsForGameWin(0.0F).roundRobinPointsForMatchTie(0.5F).
             roundRobinPointsForMatchWin(1.0F).sequentialPairings(false).showRounds(true).signupCap(null).startAt(null).
             startedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).startedCheckingInAt(null).
+            ranked(true).predictTheLosersBracket(true).roundRobinIterations(3).registrationFee(2.0F).registrationType("free").
             state(TournamentState.UNDERWAY).swissRounds(0).teams(false).descriptionSource("").subdomain(null).
-            tieBreaks(Arrays.asList("match wins vs tied", "game wins", "points scored")).url("sample_tournament_1").
+            tieBreaks(Arrays.asList(MATCH_WINS_VS_TIED, TieBreak.GAME_WINS, TieBreak.POINTS_SCORED)).url("sample_tournament_1").
             tournamentType(TournamentType.SINGLE_ELIMINATION).updatedAt(OffsetDateTime.parse("2015-01-19T16:57:17-05:00")).
             fullChallongeUrl("http://challonge.com/sample_tournament_1").signUpUrl(null).reviewBeforeFinalizing(true).
             liveImageUrl("http://images.challonge.com/sample_tournament_1.png").participantsSwappable(false).
@@ -86,6 +86,8 @@ public class DeserializerTest {
     public void testTournamentDeserialization() {
         String tournamentString = "{\"accept_attachments\":true," +
                 "\"allow_participant_match_reporting\":true,\"anonymous_voting\":true,\"category\":\"ABC\"," +
+                "\"ranked\":true,\"predict_the_losers_bracket\":true,\"rr_iterations\":3," +
+                "\"registration_fee\":2.0,\"registration_type\":\"free\"," +
                 "\"check_in_duration\":null,\"completed_at\":null,\"created_at\":\"2015-01-19T16:47:30-05:00\"," +
                 "\"created_by_api\":false,\"credit_capped\":false,\"description\":\"test\",\"game_id\":600," +
                 "\"group_stages_enabled\":false,\"hide_forum\":false,\"hide_seeds\":false,\"hold_third_place_match\":false," +
@@ -122,7 +124,12 @@ public class DeserializerTest {
         OffsetDateTime started = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
         OffsetDateTime updated = OffsetDateTime.parse("2015-01-19T16:57:17-05:00");
 
-        List<String> tieBreaks = Arrays.asList("match wins vs tied", "game wins", "points scored");
+        List<TieBreak> tieBreaks = Arrays.asList(MATCH_WINS_VS_TIED, GAME_WINS, POINTS_SCORED);
+        assertEquals(true, tournament.getRanked());
+        assertEquals(true, tournament.getPredictTheLosersBracket());
+        assertEquals(3L, (long) tournament.getRoundRobinIterations());
+        assertEquals(2.0F, tournament.getRegistrationFee(), 0);
+        assertEquals("free", tournament.getRegistrationType());
         assertEquals(true, tournament.getAcceptAttachments());
         assertEquals(true, tournament.getAllowParticipantMatchReporting());
         assertEquals(true, tournament.getAnonymousVoting());

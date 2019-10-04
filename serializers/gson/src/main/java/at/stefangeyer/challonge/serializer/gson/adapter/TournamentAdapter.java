@@ -4,6 +4,7 @@ import at.stefangeyer.challonge.model.Match;
 import at.stefangeyer.challonge.model.Participant;
 import at.stefangeyer.challonge.model.Tournament;
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
+import at.stefangeyer.challonge.model.enumeration.TieBreak;
 import at.stefangeyer.challonge.model.enumeration.TournamentState;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
@@ -78,9 +79,9 @@ public class TournamentAdapter implements JsonDeserializer<Tournament> {
         TournamentState state = TournamentState.valueOf(e.get("state").getAsString().replace(" ", "_").toUpperCase());
         Boolean teams = getOrNull(e, "teams") != null ? getOrNull(e, "teams").getAsBoolean() : null;
 
-        List<String> tieBreaks = new ArrayList<>();
+        List<TieBreak> tieBreaks = new ArrayList<>();
         if (getOrNull(e, "tie_breaks") != null) {
-            getOrNull(e, "tie_breaks").getAsJsonArray().forEach(inner -> tieBreaks.add(inner.getAsString()));
+            getOrNull(e, "tie_breaks").getAsJsonArray().forEach(inner -> tieBreaks.add(TieBreak.valueOf(inner.getAsString().replace(" ", "_").toUpperCase())));
         }
 
         String descriptionSource = getOrNull(e, "description_source") != null ? getOrNull(e, "description_source").getAsString() : null;
@@ -98,6 +99,11 @@ public class TournamentAdapter implements JsonDeserializer<Tournament> {
         String liveImageUrl = getOrNull(e, "live_image_url") != null ? getOrNull(e, "live_image_url").getAsString() : null;
         boolean reviewBeforeFinalizing = e.get("review_before_finalizing").getAsBoolean();
         boolean acceptingPredictions = e.get("accepting_predictions").getAsBoolean();
+        Boolean ranked = e.get("ranked").getAsBoolean();
+        Boolean predictTheLosersBracket = e.get("predict_the_losers_bracket").getAsBoolean();
+        Integer roundRobinIterations = e.get("rr_iterations").getAsInt();
+        Float registrationFee = e.get("registration_fee").getAsFloat();
+        String registrationType = e.get("registration_type").getAsString();
 
         GrandFinalsModifier grandFinalsModifier = null;
         if (getOrNull(e, "grand_finals_modifier") != null) {
@@ -143,7 +149,9 @@ public class TournamentAdapter implements JsonDeserializer<Tournament> {
                 .participantsSwappable(participantsSwappable).teamConvertable(teamConvertable)
                 .groupStagesWereStarted(groupStagesWereStarted).lockedAt(lockedAt).eventId(eventId)
                 .publicPredictionsBeforeStartTime(publicPredictionsBeforeStartTime)
-                .grandFinalsModifier(grandFinalsModifier).participants(participants).matches(matches).build();
+                .grandFinalsModifier(grandFinalsModifier).participants(participants).matches(matches)
+                .ranked(ranked).predictTheLosersBracket(predictTheLosersBracket).roundRobinIterations(roundRobinIterations)
+                .registrationFee(registrationFee).registrationType(registrationType).build();
     }
 
     private JsonElement getOrNull(JsonObject o, String key) {

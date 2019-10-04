@@ -1,5 +1,6 @@
 package at.stefangeyer.challonge.serializer.gson.adapter;
 
+import at.stefangeyer.challonge.model.enumeration.TieBreak;
 import at.stefangeyer.challonge.model.query.TournamentQuery;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -7,6 +8,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
+import java.util.stream.Collectors;
 
 public class TournamentQueryAdapter implements JsonSerializer<TournamentQuery> {
 
@@ -131,7 +133,7 @@ public class TournamentQueryAdapter implements JsonSerializer<TournamentQuery> {
         }
 
         if (src.getTieBreaks() != null) {
-            entity.add("tie_breaks", context.serialize(src.getTieBreaks()));
+            entity.add("tie_breaks", context.serialize(src.getTieBreaks().stream().map(TieBreak::toString).collect(Collectors.toList())));
         }
 
         if (src.getGameName() != null) {

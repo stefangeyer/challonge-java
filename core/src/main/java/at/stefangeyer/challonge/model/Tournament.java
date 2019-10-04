@@ -1,6 +1,7 @@
 package at.stefangeyer.challonge.model;
 
 import at.stefangeyer.challonge.model.enumeration.RankedBy;
+import at.stefangeyer.challonge.model.enumeration.TieBreak;
 import at.stefangeyer.challonge.model.enumeration.TournamentState;
 import at.stefangeyer.challonge.model.enumeration.TournamentType;
 import at.stefangeyer.challonge.model.query.enumeration.GrandFinalsModifier;
@@ -26,6 +27,8 @@ public class Tournament {
     private String description;
     private Boolean openSignup;
     private Boolean holdThirdPlaceMatch;
+    private Boolean ranked;
+    private Boolean predictTheLosersBracket;
     private Float pointsForMatchWin;
     private Float pointsForMatchTie;
     private Float pointsForGameWin;
@@ -33,6 +36,7 @@ public class Tournament {
     private Float pointsForBye;
     private Integer swissRounds;
     private RankedBy rankedBy;
+    private Integer roundRobinIterations;
     private Float roundRobinPointsForGameWin;
     private Float roundRobinPointsForGameTie;
     private Float roundRobinPointsForMatchWin;
@@ -43,6 +47,8 @@ public class Tournament {
     private Boolean privateOnly;
     private Boolean notifyUsersWhenTheTournamentEnds;
     private Boolean sequentialPairings;
+    private Float registrationFee;
+    private String registrationType;
     private Integer signupCap;
     private OffsetDateTime startAt;
     private Long checkInDuration;
@@ -68,7 +74,7 @@ public class Tournament {
     private OffsetDateTime startedCheckingInAt;
     private TournamentState state;
     private Boolean teams;
-    private List<String> tieBreaks;
+    private List<TieBreak> tieBreaks;
     private OffsetDateTime updatedAt;
     private String descriptionSource;
     private String fullChallongeUrl;

@@ -100,8 +100,8 @@ public class TournamentAdapter implements JsonDeserializer<Tournament> {
         boolean reviewBeforeFinalizing = e.get("review_before_finalizing").getAsBoolean();
         boolean acceptingPredictions = e.get("accepting_predictions").getAsBoolean();
         Boolean ranked = e.get("ranked").getAsBoolean();
-        Boolean predictTheLosersBracket = e.get("predict_the_losers_bracket").getAsBoolean();
-        Integer roundRobinIterations = e.get("rr_iterations").getAsInt();
+        Boolean predictTheLosersBracket = getOrNull(e, "predict_the_losers_bracket") != null ? e.get("predict_the_losers_bracket").getAsBoolean() : null;
+        Integer roundRobinIterations = getOrNull(e, "rr_iterations") != null ? e.get("rr_iterations").getAsInt() : null;
         Float registrationFee = e.get("registration_fee").getAsFloat();
         String registrationType = e.get("registration_type").getAsString();
 

@@ -55,7 +55,7 @@ public class MatchAdapter implements JsonDeserializer<Match> {
         OffsetDateTime underwayAt = context.deserialize(e.get("underway_at"), OffsetDateTime.class);
         OffsetDateTime completedAt = context.deserialize(e.get("completed_at"), OffsetDateTime.class);
         Boolean optional = e.get("optional").getAsBoolean();
-        Boolean forfeited = e.get("forfeited").getAsBoolean();
+        Boolean forfeited = getOrNull(e, "forfeited") != null ? e.get("forfeited").getAsBoolean() : null;
         List<Attachment> attachments = context.deserialize(e.get("attachments"), new TypeToken<List<Attachment>>() {
         }.getType());
 

@@ -54,7 +54,7 @@ public class MatchAdapter implements JsonDeserializer<Match> {
         OffsetDateTime scheduledTime = context.deserialize(e.get("scheduled_time"), OffsetDateTime.class);
         OffsetDateTime underwayAt = context.deserialize(e.get("underway_at"), OffsetDateTime.class);
         OffsetDateTime completedAt = context.deserialize(e.get("completed_at"), OffsetDateTime.class);
-        Boolean optional = e.get("optional").getAsBoolean();
+        Boolean optional = getOrNull(e, "optional") != null ? e.get("optional").getAsBoolean() : null;
         Boolean forfeited = getOrNull(e, "forfeited") != null ? e.get("forfeited").getAsBoolean() : null;
         List<Attachment> attachments = context.deserialize(e.get("attachments"), new TypeToken<List<Attachment>>() {
         }.getType());

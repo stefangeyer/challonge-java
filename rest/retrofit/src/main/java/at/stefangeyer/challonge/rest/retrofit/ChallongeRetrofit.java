@@ -363,7 +363,7 @@ public interface ChallongeRetrofit {
                                            @Path("match_id") long matchId);
 
     /**
-     * Marks a match as not underway
+     * Unmarks a match as underway
      *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID

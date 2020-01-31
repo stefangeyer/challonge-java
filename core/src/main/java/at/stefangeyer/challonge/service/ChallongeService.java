@@ -586,18 +586,18 @@ public interface ChallongeService {
     void markMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure);
 
     /**
-     * Marks a match as not underway
+     * Unmarks a match as underway
      *
-     * @param match The match to mark as not underway. Must contain the tournament- and match id
+     * @param match The match to unmark as underway. Must contain the tournament- and match id
      * @return The updated match
      * @throws DataAccessException Exchange with the rest api failed
      */
     Match unmarkMatchAsUnderway(Match match) throws DataAccessException;
 
     /**
-     * Marks a match as not underway
+     * Unmarks a match as underway
      *
-     * @param match     The match to mark as not underway. Must contain the tournament- and match id
+     * @param match     The match to unmark as underway. Must contain the tournament- and match id
      * @param onSuccess Called with result if call was successful
      * @param onFailure Called with exception if call was not successful
      */

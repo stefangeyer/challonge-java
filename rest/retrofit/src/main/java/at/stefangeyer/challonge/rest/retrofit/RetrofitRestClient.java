@@ -721,7 +721,7 @@ public class RetrofitRestClient implements RestClient, Closeable {
         try {
             response = this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId).execute();
         } catch (IOException e) {
-            throw new DataAccessException("Error while marking match as not underway", e);
+            throw new DataAccessException("Error while unmarking match as underway", e);
         }
 
         return parse(response);
@@ -733,7 +733,7 @@ public class RetrofitRestClient implements RestClient, Closeable {
         checkInitialized();
 
         this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId)
-                .enqueue(callback(onSuccess, onFailure, "Error while marking match as not underway"));
+                .enqueue(callback(onSuccess, onFailure, "Error while unmarking match as underway"));
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Challonge implements ChallongeService {
     public Challonge(Credentials credentials, Serializer serializer, RestClient restClient) {
         // Initialize factory
         restClient.initialize(credentials, serializer);
-        
+
         this.service = new SimpleChallongeService(restClient);
     }
 
@@ -363,19 +363,19 @@ public class Challonge implements ChallongeService {
     }
 
     public final Match markMatchAsUnderway(Match match) throws DataAccessException {
-    	return this.service.markMatchAsUnderway(match);
+        return this.service.markMatchAsUnderway(match);
     }
 
     public final void markMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure) {
-    	this.service.markMatchAsUnderway(match, onSuccess, onFailure);
+        this.service.markMatchAsUnderway(match, onSuccess, onFailure);
     }
 
     public final Match unmarkMatchAsUnderway(Match match) throws DataAccessException {
-    	return this.service.unmarkMatchAsUnderway(match);
+        return this.service.unmarkMatchAsUnderway(match);
     }
 
     public final void unmarkMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure) {
-    	this.service.unmarkMatchAsUnderway(match, onSuccess, onFailure);
+        this.service.unmarkMatchAsUnderway(match, onSuccess, onFailure);
     }
 
     public final Match reopenMatch(Match match) throws DataAccessException {

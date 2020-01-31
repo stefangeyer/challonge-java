@@ -679,7 +679,7 @@ public interface RestClient {
 
     /**
      * Marks a match as underway
-     * 
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID
      * @return The updated match
@@ -689,7 +689,7 @@ public interface RestClient {
 
     /**
      * Marks a match as underway
-     * 
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID
      * @param onSuccess  Called with result if call was successful
@@ -700,7 +700,7 @@ public interface RestClient {
 
     /**
      * Marks a match as not underway
-     * 
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID
      * @return The updated match
@@ -710,7 +710,7 @@ public interface RestClient {
 
     /**
      * Marks a match as underway
-     * 
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID
      * @param onSuccess  Called with result if call was successful

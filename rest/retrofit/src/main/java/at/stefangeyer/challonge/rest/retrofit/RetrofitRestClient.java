@@ -690,22 +690,22 @@ public class RetrofitRestClient implements RestClient, Closeable {
 
     @Override
     public MatchWrapper markMatchAsUnderway(String tournament, long matchId) throws DataAccessException {
-    	checkInitialized();
+        checkInitialized();
 
-    	Response<MatchWrapper> response;
+        Response<MatchWrapper> response;
 
-    	try {
-    		response = this.challongeRetrofit.markMatchAsUnderway(tournament, matchId).execute();
-    	} catch(IOException e) {
-    		throw new DataAccessException("Error while marking match as underway", e);
-    	}
+        try {
+            response = this.challongeRetrofit.markMatchAsUnderway(tournament, matchId).execute();
+        } catch (IOException e) {
+            throw new DataAccessException("Error while marking match as underway", e);
+        }
 
-    	return parse(response);
+        return parse(response);
     }
 
     @Override
     public void markMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
-    		Callback<DataAccessException> onFailure) {
+                                    Callback<DataAccessException> onFailure) {
         checkInitialized();
 
         this.challongeRetrofit.markMatchAsUnderway(tournament, matchId)
@@ -716,21 +716,21 @@ public class RetrofitRestClient implements RestClient, Closeable {
     public MatchWrapper unmarkMatchAsUnderway(String tournament, long matchId) throws DataAccessException {
         checkInitialized();
 
-    	Response<MatchWrapper> response;
+        Response<MatchWrapper> response;
 
-    	try {
-    		response = this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId).execute();
-    	} catch(IOException e) {
-    		throw new DataAccessException("Error while marking match as not underway", e);
-    	}
+        try {
+            response = this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId).execute();
+        } catch (IOException e) {
+            throw new DataAccessException("Error while marking match as not underway", e);
+        }
 
-    	return parse(response);
+        return parse(response);
     }
 
     @Override
     public void unmarkMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
-    		Callback<DataAccessException> onFailure) {
-    	checkInitialized();
+                                      Callback<DataAccessException> onFailure) {
+        checkInitialized();
 
         this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId)
                 .enqueue(callback(onSuccess, onFailure, "Error while marking match as not underway"));

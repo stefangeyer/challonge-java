@@ -569,7 +569,7 @@ public interface ChallongeService {
 
     /**
      * Marks a match as underway
-     * 
+     *
      * @param match The match to mark as underway. Must contain the tournament- and match id
      * @return The updated match
      * @throws DataAccessException Exchange with the rest api failed
@@ -578,7 +578,7 @@ public interface ChallongeService {
 
     /**
      * Marks a match as underway
-     * 
+     *
      * @param match     The match to mark as underway. Must contain the tournament- and match id
      * @param onSuccess Called with result if call was successful
      * @param onFailure Called with exception if call was not successful
@@ -587,7 +587,7 @@ public interface ChallongeService {
 
     /**
      * Marks a match as not underway
-     * 
+     *
      * @param match The match to mark as not underway. Must contain the tournament- and match id
      * @return The updated match
      * @throws DataAccessException Exchange with the rest api failed
@@ -596,7 +596,7 @@ public interface ChallongeService {
 
     /**
      * Marks a match as not underway
-     * 
+     *
      * @param match     The match to mark as not underway. Must contain the tournament- and match id
      * @param onSuccess Called with result if call was successful
      * @param onFailure Called with exception if call was not successful

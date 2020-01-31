@@ -353,7 +353,7 @@ public interface ChallongeRetrofit {
 
     /**
      * Marks a match as underway
-     * 
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID
      * @return Call
@@ -364,14 +364,14 @@ public interface ChallongeRetrofit {
 
     /**
      * Marks a match as not underway
-     * 
+     *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
      * @param matchId    The match's unique ID
      * @return Call
      */
     @POST("tournaments/{tournament}/matches/{match_id}/unmark_as_underway.json")
     Call<MatchWrapper> unmarkMatchAsUnderway(@Path("tournament") String tournament,
-                                           @Path("match_id") long matchId);
+                                             @Path("match_id") long matchId);
 
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it

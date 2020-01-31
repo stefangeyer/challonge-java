@@ -298,58 +298,58 @@ public class MatchTest {
 
     @Test
     public void testMarkMatchAsUnderway() throws DataAccessException {
-    	Tournament tournament = getTournament("tourney123");
-    	Match match = tournament.getMatches().get(0);
-    	Match local = this.challonge.markMatchAsUnderway(match);
-    	assertNotNull(local.getUnderwayAt());
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+        Match local = this.challonge.markMatchAsUnderway(match);
+        assertNotNull(local.getUnderwayAt());
     }
 
     @Test
     public void testMarkMatchAsUnderwayAsync() throws InterruptedException {
-    	CountDownLatch latch = new CountDownLatch(0);
+        CountDownLatch latch = new CountDownLatch(0);
 
-    	Tournament tournament = getTournament("tourney123");
-    	Match match = tournament.getMatches().get(0);
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
 
-    	this.challonge.markMatchAsUnderway(match, m -> {
-    		this.holder[0] = m;
-    		latch.countDown();
-    	}, e -> {
-    	});
+        this.challonge.markMatchAsUnderway(match, m -> {
+            this.holder[0] = m;
+            latch.countDown();
+        }, e -> {
+        });
 
-    	latch.await(2000, TimeUnit.MILLISECONDS);
+        latch.await(2000, TimeUnit.MILLISECONDS);
 
-    	Match local = (Match) this.holder[0];
-    	assertNotNull(local.getUnderwayAt());
+        Match local = (Match) this.holder[0];
+        assertNotNull(local.getUnderwayAt());
     }
 
     @Test
     public void testUnmarkMatchAsUnderway() throws DataAccessException {
-    	Tournament tournament = getTournament("tourney123");
-    	Match match = tournament.getMatches().get(0);
-    	Match local = this.challonge.unmarkMatchAsUnderway(match);
-    	assertNull(local.getUnderwayAt());
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+        Match local = this.challonge.unmarkMatchAsUnderway(match);
+        assertNull(local.getUnderwayAt());
     }
 
     @Test
     public void testUnmarkMatchAsUnderwayAsync() throws InterruptedException {
-    	CountDownLatch latch = new CountDownLatch(0);
-    	
-    	Tournament tournament = getTournament("tourney123");
-    	Match match = tournament.getMatches().get(0);
-    	
-    	this.challonge.unmarkMatchAsUnderway(match, m -> {
-    		this.holder[0] = m;
-    		latch.countDown();
-    	}, e -> {
-    	});
-    	
-    	latch.await(2000, TimeUnit.MILLISECONDS);
-    	
-    	Match local = (Match) this.holder[0];
-    	assertNull(local.getUnderwayAt());
+        CountDownLatch latch = new CountDownLatch(0);
+
+        Tournament tournament = getTournament("tourney123");
+        Match match = tournament.getMatches().get(0);
+
+        this.challonge.unmarkMatchAsUnderway(match, m -> {
+            this.holder[0] = m;
+            latch.countDown();
+        }, e -> {
+        });
+
+        latch.await(2000, TimeUnit.MILLISECONDS);
+
+        Match local = (Match) this.holder[0];
+        assertNull(local.getUnderwayAt());
     }
-    
+
     @Test
     public void testReopenMatch() throws DataAccessException {
         Tournament tournament = getTournament("tourney123");

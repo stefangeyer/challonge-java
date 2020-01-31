@@ -350,6 +350,7 @@ public interface ChallongeRetrofit {
     Call<MatchWrapper> updateMatch(@Path("tournament") String tournament,
                                    @Path("match_id") long matchId,
                                    @Body MatchQueryWrapper match);
+
     /**
      * Marks a match as underway
      * 
@@ -360,6 +361,7 @@ public interface ChallongeRetrofit {
     @POST("tournaments/{tournament}/matches/{match_id}/mark_as_underway.json")
     Call<MatchWrapper> markMatchAsUnderway(@Path("tournament") String tournament,
                                            @Path("match_id") long matchId);
+
     /**
      * Marks a match as not underway
      * 

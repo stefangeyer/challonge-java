@@ -575,7 +575,7 @@ public interface ChallongeService {
      * @throws DataAccessException Exchange with the rest api failed
      */
     Match markMatchAsUnderway(Match match) throws DataAccessException;
-    
+
     /**
      * Marks a match as underway
      * 
@@ -584,7 +584,7 @@ public interface ChallongeService {
      * @param onFailure Called with exception if call was not successful
      */
     void markMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure);
-    
+
     /**
      * Marks a match as not underway
      * 
@@ -593,7 +593,7 @@ public interface ChallongeService {
      * @throws DataAccessException Exchange with the rest api failed
      */
     Match unmarkMatchAsUnderway(Match match) throws DataAccessException;
-    
+
     /**
      * Marks a match as not underway
      * 
@@ -602,7 +602,7 @@ public interface ChallongeService {
      * @param onFailure Called with exception if call was not successful
      */
     void unmarkMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure);
-    
+
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it.
      *

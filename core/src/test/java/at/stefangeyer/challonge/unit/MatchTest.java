@@ -151,7 +151,7 @@ public class MatchTest {
 
             return null;
         }).when(mrc).markMatchAsUnderway(any(), anyLong(), any(), any());
-        
+
         when(mrc.unmarkMatchAsUnderway(any(), anyLong())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
             Match m = getMatch(t, i.getArgument(1));
@@ -172,7 +172,7 @@ public class MatchTest {
 
             return null;
         }).when(mrc).unmarkMatchAsUnderway(any(), anyLong(), any(), any());
-        
+
         when(mrc.reopenMatch(any(), anyLong())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
             Match m = getMatch(t, i.getArgument(1));
@@ -307,22 +307,22 @@ public class MatchTest {
     @Test
     public void testMarkMatchAsUnderwayAsync() throws InterruptedException {
     	CountDownLatch latch = new CountDownLatch(0);
-    	
+
     	Tournament tournament = getTournament("tourney123");
     	Match match = tournament.getMatches().get(0);
-    	
+
     	this.challonge.markMatchAsUnderway(match, m -> {
     		this.holder[0] = m;
     		latch.countDown();
     	}, e -> {
     	});
-    	
+
     	latch.await(2000, TimeUnit.MILLISECONDS);
-    	
+
     	Match local = (Match) this.holder[0];
     	assertNotNull(local.getUnderwayAt());
     }
-    
+
     @Test
     public void testUnmarkMatchAsUnderway() throws DataAccessException {
     	Tournament tournament = getTournament("tourney123");
@@ -330,7 +330,7 @@ public class MatchTest {
     	Match local = this.challonge.unmarkMatchAsUnderway(match);
     	assertNull(local.getUnderwayAt());
     }
-    
+
     @Test
     public void testUnmarkMatchAsUnderwayAsync() throws InterruptedException {
     	CountDownLatch latch = new CountDownLatch(0);

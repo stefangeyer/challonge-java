@@ -13,6 +13,7 @@ import at.stefangeyer.challonge.rest.RestClient;
 import at.stefangeyer.challonge.serializer.Serializer;
 import org.junit.Test;
 
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,8 @@ import java.util.stream.Collectors;
 
 import static at.stefangeyer.challonge.unit.util.Util.ifNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -128,6 +131,48 @@ public class MatchTest {
             return null;
         }).when(mrc).updateMatch(any(), anyLong(), any(), any(), any());
 
+        when(mrc.markMatchAsUnderway(any(), anyLong())).thenAnswer(i -> {
+            Tournament t = getTournament(i.getArgument(0));
+            Match m = getMatch(t, i.getArgument(1));
+
+            Match updated = Match.builder().id(m.getId()).tournamentId(m.getTournamentId())
+                    .underwayAt(OffsetDateTime.now())
+                    .build();
+
+            return new MatchWrapper(updated);
+        });
+
+        doAnswer(i -> {
+            Callback<MatchWrapper> onSuccess = i.getArgument(2);
+
+            MatchWrapper match = mrc.markMatchAsUnderway(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(match);
+
+            return null;
+        }).when(mrc).markMatchAsUnderway(any(), anyLong(), any(), any());
+        
+        when(mrc.unmarkMatchAsUnderway(any(), anyLong())).thenAnswer(i -> {
+            Tournament t = getTournament(i.getArgument(0));
+            Match m = getMatch(t, i.getArgument(1));
+
+            Match updated = Match.builder().id(m.getId()).tournamentId(m.getTournamentId())
+                    .underwayAt(null)
+                    .build();
+
+            return new MatchWrapper(updated);
+        });
+
+        doAnswer(i -> {
+            Callback<MatchWrapper> onSuccess = i.getArgument(2);
+
+            MatchWrapper match = mrc.unmarkMatchAsUnderway(i.getArgument(0), i.getArgument(1));
+
+            onSuccess.accept(match);
+
+            return null;
+        }).when(mrc).unmarkMatchAsUnderway(any(), anyLong(), any(), any());
+        
         when(mrc.reopenMatch(any(), anyLong())).thenAnswer(i -> {
             Tournament t = getTournament(i.getArgument(0));
             Match m = getMatch(t, i.getArgument(1));
@@ -251,6 +296,60 @@ public class MatchTest {
         this.challonge.updateMatch(match, MatchQuery.builder().build());
     }
 
+    @Test
+    public void testMarkMatchAsUnderway() throws DataAccessException {
+    	Tournament tournament = getTournament("tourney123");
+    	Match match = tournament.getMatches().get(0);
+    	Match local = this.challonge.markMatchAsUnderway(match);
+    	assertNotNull(local.getUnderwayAt());
+    }
+
+    @Test
+    public void testMarkMatchAsUnderwayAsync() throws InterruptedException {
+    	CountDownLatch latch = new CountDownLatch(0);
+    	
+    	Tournament tournament = getTournament("tourney123");
+    	Match match = tournament.getMatches().get(0);
+    	
+    	this.challonge.markMatchAsUnderway(match, m -> {
+    		this.holder[0] = m;
+    		latch.countDown();
+    	}, e -> {
+    	});
+    	
+    	latch.await(2000, TimeUnit.MILLISECONDS);
+    	
+    	Match local = (Match) this.holder[0];
+    	assertNotNull(local.getUnderwayAt());
+    }
+    
+    @Test
+    public void testUnmarkMatchAsUnderway() throws DataAccessException {
+    	Tournament tournament = getTournament("tourney123");
+    	Match match = tournament.getMatches().get(0);
+    	Match local = this.challonge.unmarkMatchAsUnderway(match);
+    	assertNull(local.getUnderwayAt());
+    }
+    
+    @Test
+    public void testUnmarkMatchAsUnderwayAsync() throws InterruptedException {
+    	CountDownLatch latch = new CountDownLatch(0);
+    	
+    	Tournament tournament = getTournament("tourney123");
+    	Match match = tournament.getMatches().get(0);
+    	
+    	this.challonge.unmarkMatchAsUnderway(match, m -> {
+    		this.holder[0] = m;
+    		latch.countDown();
+    	}, e -> {
+    	});
+    	
+    	latch.await(2000, TimeUnit.MILLISECONDS);
+    	
+    	Match local = (Match) this.holder[0];
+    	assertNull(local.getUnderwayAt());
+    }
+    
     @Test
     public void testReopenMatch() throws DataAccessException {
         Tournament tournament = getTournament("tourney123");

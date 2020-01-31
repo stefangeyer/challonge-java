@@ -685,7 +685,55 @@ public class RetrofitRestClient implements RestClient, Closeable {
         checkInitialized();
 
         this.challongeRetrofit.updateMatch(tournament, matchId, match)
-                .enqueue(callback(onSuccess, onFailure, "Error while updating matches"));
+                .enqueue(callback(onSuccess, onFailure, "Error while updating match"));
+    }
+
+    @Override
+    public MatchWrapper markMatchAsUnderway(String tournament, long matchId) throws DataAccessException {
+        checkInitialized();
+
+        Response<MatchWrapper> response;
+
+        try {
+            response = this.challongeRetrofit.markMatchAsUnderway(tournament, matchId).execute();
+        } catch (IOException e) {
+            throw new DataAccessException("Error while marking match as underway", e);
+        }
+
+        return parse(response);
+    }
+
+    @Override
+    public void markMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
+                                    Callback<DataAccessException> onFailure) {
+        checkInitialized();
+
+        this.challongeRetrofit.markMatchAsUnderway(tournament, matchId)
+                .enqueue(callback(onSuccess, onFailure, "Error while marking match as underway"));
+    }
+
+    @Override
+    public MatchWrapper unmarkMatchAsUnderway(String tournament, long matchId) throws DataAccessException {
+        checkInitialized();
+
+        Response<MatchWrapper> response;
+
+        try {
+            response = this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId).execute();
+        } catch (IOException e) {
+            throw new DataAccessException("Error while unmarking match as underway", e);
+        }
+
+        return parse(response);
+    }
+
+    @Override
+    public void unmarkMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
+                                      Callback<DataAccessException> onFailure) {
+        checkInitialized();
+
+        this.challongeRetrofit.unmarkMatchAsUnderway(tournament, matchId)
+                .enqueue(callback(onSuccess, onFailure, "Error while unmarking match as underway"));
     }
 
     @Override

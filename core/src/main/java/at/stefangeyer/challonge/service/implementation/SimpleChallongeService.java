@@ -388,6 +388,28 @@ public class SimpleChallongeService implements ChallongeService {
     }
 
     @Override
+    public Match markMatchAsUnderway(Match match) throws DataAccessException {
+        return this.restClient.markMatchAsUnderway(String.valueOf(match.getTournamentId()), match.getId()).getMatch();
+    }
+
+    @Override
+    public void markMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure) {
+        this.restClient.markMatchAsUnderway(String.valueOf(match.getTournamentId()), match.getId(),
+                mw -> onSuccess.accept(mw.getMatch()), onFailure);
+    }
+
+    @Override
+    public Match unmarkMatchAsUnderway(Match match) throws DataAccessException {
+        return this.restClient.unmarkMatchAsUnderway(String.valueOf(match.getTournamentId()), match.getId()).getMatch();
+    }
+
+    @Override
+    public void unmarkMatchAsUnderway(Match match, Callback<Match> onSuccess, Callback<DataAccessException> onFailure) {
+        this.restClient.unmarkMatchAsUnderway(String.valueOf(match.getTournamentId()), match.getId(),
+                mw -> onSuccess.accept(mw.getMatch()), onFailure);
+    }
+
+    @Override
     public Match reopenMatch(Match match) throws DataAccessException {
         return this.restClient.reopenMatch(String.valueOf(match.getTournamentId()), match.getId()).getMatch();
     }

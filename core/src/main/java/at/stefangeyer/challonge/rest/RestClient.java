@@ -696,7 +696,7 @@ public interface RestClient {
      * @param onFailure  Called with exception if call was not successful
      */
     void markMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
-    		                 Callback<DataAccessException> onFailure);
+                             Callback<DataAccessException> onFailure);
 
     /**
      * Marks a match as not underway
@@ -717,7 +717,7 @@ public interface RestClient {
      * @param onFailure  Called with exception if call was not successful
      */
     void unmarkMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
-    		                   Callback<DataAccessException> onFailure);
+                               Callback<DataAccessException> onFailure);
 
     /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it

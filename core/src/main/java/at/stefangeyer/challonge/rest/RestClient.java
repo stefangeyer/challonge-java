@@ -678,6 +678,48 @@ public interface RestClient {
                      Callback<DataAccessException> onFailure);
 
     /**
+     * Marks a match as underway
+     * 
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @return The updated match
+     * @throws DataAccessException Exchange with the rest api failed
+     */
+    MatchWrapper markMatchAsUnderway(String tournament, long matchId) throws DataAccessException;
+
+    /**
+     * Marks a match as underway
+     * 
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @param onSuccess  Called with result if call was successful
+     * @param onFailure  Called with exception if call was not successful
+     */
+    void markMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
+    		                 Callback<DataAccessException> onFailure);
+
+    /**
+     * Marks a match as not underway
+     * 
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @return The updated match
+     * @throws DataAccessException Exchange with the rest api failed
+     */
+    MatchWrapper unmarkMatchAsUnderway(String tournament, long matchId) throws DataAccessException;
+
+    /**
+     * Marks a match as underway
+     * 
+     * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim). If assigned to a subdomain, URL format must be :subdomain-:tournament_url (e.g. 'test-mytourney' for test.challonge.com/mytourney)
+     * @param matchId    The match's unique ID
+     * @param onSuccess  Called with result if call was successful
+     * @param onFailure  Called with exception if call was not successful
+     */
+    void unmarkMatchAsUnderway(String tournament, long matchId, Callback<MatchWrapper> onSuccess,
+    		                   Callback<DataAccessException> onFailure);
+
+    /**
      * Reopens a match that was marked completed, automatically resetting matches that follow it
      *
      * @param tournament Tournament ID (e.g. 10230) or URL (e.g. 'single_elim' for challonge.com/single_elim).

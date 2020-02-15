@@ -14,7 +14,7 @@ allprojects {
     targetCompatibility = 1.8
 
     group 'at.stefangeyer.challonge'
-    version '3.0.0-SNAPSHOT'
+    version '2.1.0'
 
     repositories {
         mavenCentral()

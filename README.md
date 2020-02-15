@@ -12,7 +12,7 @@ Released under the MIT license.
 ## gradle
 
 ```groovy
-implementation group: 'at.stefangeyer.challonge', name: 'core', version: '2.0.1'
+implementation group: 'at.stefangeyer.challonge', name: 'core', version: '2.1.0'
 ```
 
 ## maven
@@ -21,7 +21,7 @@ implementation group: 'at.stefangeyer.challonge', name: 'core', version: '2.0.1'
 <dependency>
     <groupId>at.stefangeyer.challonge</groupId>
     <artifactId>core</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 

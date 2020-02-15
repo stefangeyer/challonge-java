@@ -19,6 +19,7 @@ public enum TournamentType {
         this.converted = converted;
     }
 
+    @Override
     public String toString() {
         return this.converted;
     }

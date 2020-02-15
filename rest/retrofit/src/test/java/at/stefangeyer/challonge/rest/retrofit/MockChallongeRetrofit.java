@@ -440,6 +440,26 @@ public class MockChallongeRetrofit implements ChallongeRetrofit {
     }
 
     @Override
+    public Call<MatchWrapper> markMatchAsUnderway(String tournament, long matchId) {
+        Tournament t = get(tournament);
+        Match m = get(t, matchId);
+
+        m.setUnderwayAt(OffsetDateTime.now());
+
+        return this.delegate.returningResponse(new MatchWrapper(m)).markMatchAsUnderway(tournament, matchId);
+    }
+
+    @Override
+    public Call<MatchWrapper> unmarkMatchAsUnderway(String tournament, long matchId) {
+        Tournament t = get(tournament);
+        Match m = get(t, matchId);
+
+        m.setUnderwayAt(null);
+
+        return this.delegate.returningResponse(new MatchWrapper(m)).unmarkMatchAsUnderway(tournament, matchId);
+    }
+
+    @Override
     public Call<List<AttachmentWrapper>> getAttachments(String tournament, long matchId) {
         Tournament t = get(tournament);
         Match m = get(t, matchId);
@@ -495,31 +515,31 @@ public class MockChallongeRetrofit implements ChallongeRetrofit {
         return this.delegate.returningResponse(new AttachmentWrapper(a)).deleteAttachment(tournament, matchId, attachmentId);
     }
 
-    public List<Tournament> getTournaments() {
-        return tournaments;
-    }
-
-    protected <T> T ifNotNull(T t, T def) {
+    private <T> T ifNotNull(T t, T def) {
         return t != null ? t : def;
     }
 
-    protected Tournament get(String key) {
+    List<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    Tournament get(String key) {
         Optional<Tournament> optional = this.tournaments.stream().filter(
                 t -> t.getId().toString().equals(key) || t.getUrl().equals(key)).findFirst();
         return optional.orElse(null);
     }
 
-    protected Participant get(String tournament, long id) {
+    Participant get(String tournament, long id) {
         Optional<Participant> optional = get(tournament).getParticipants().stream().filter(p -> p.getId() == id).findFirst();
         return optional.orElse(null);
     }
 
-    protected Match get(Tournament t, long id) {
+    Match get(Tournament t, long id) {
         Optional<Match> optional = t.getMatches().stream().filter(m -> m.getId().equals(id)).findFirst();
         return optional.orElse(null);
     }
 
-    protected Attachment get(Match m, long id) {
+    Attachment get(Match m, long id) {
         Optional<Attachment> optional = m.getAttachments().stream().filter(a -> a.getId().equals(id)).findFirst();
         return optional.orElse(null);
     }

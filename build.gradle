@@ -80,7 +80,7 @@ subprojects {
                     licenses {
                         license {
                             name = 'The MIT License'
-                            url = 'https://choosealicense.com/licenses/mit/'
+                            url = 'https://github.com/stefangeyer/challonge-java/blob/master/LICENSE.txt'
                         }
                     }
 

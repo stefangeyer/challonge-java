@@ -207,7 +207,7 @@ public class SimpleChallongeService implements ChallongeService {
                 data.getShowRounds() == null && data.getPrivateOnly() == null && data.getNotifyUsersWhenMatchesOpen() == null &&
                 data.getNotifyUsersWhenTheTournamentEnds() == null && data.getSequentialPairings() == null &&
                 data.getSignupCap() == null && data.getStartAt() == null && data.getCheckInDuration() == null &&
-                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null) {
+                data.getGrandFinalsModifier() == null && data.getTieBreaks() == null && data.getGameName() == null) {
             throw new IllegalArgumentException("All data parameters are null. Provide at least one");
         }
     }
